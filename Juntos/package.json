@@ -1,7 +1,7 @@
 {
-  "name": "Juntos",
+  "name": "juntos",
   "version": "0.0.1",
-  "author": "Ionic Framework",
+  "author": "Daniel Gasevic, Ngoc Minh Thu Nguyen, Paul David Hiller",
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",
