@@ -1,0 +1,7 @@
+{
+  "name": "Juntos",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
