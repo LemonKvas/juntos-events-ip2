@@ -15,6 +15,11 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
+  {
+    path: 'event-create',
+    loadChildren: () => import('./event-create/event-create.module').then( m => m.EventCreatePageModule)
+  },
+
 ];
 
 @NgModule({
