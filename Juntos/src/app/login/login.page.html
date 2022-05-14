@@ -5,5 +5,28 @@
 </ion-header>
 
 <ion-content>
+  <div class="loginDiv">
+    <ion-grid>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="10">
+            <ion-segment (ionChange)="switchUserLogin($event)" value="user">
+              <ion-segment-button value="user">
+                <ion-label>NutzerIn</ion-label>
+              </ion-segment-button>
+              <ion-segment-button value="organizer">
+                <ion-label>VeranstalterIn</ion-label>
+              </ion-segment-button>
+            </ion-segment>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="10"  [ngSwitch]="loginIndicator">
+            <app-login-child *ngSwitchCase="'user'" [userType]="1"></app-login-child>
+            <app-login-child *ngSwitchCase="'organizer'" [userType]="2"></app-login-child>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+  </div>
 
 </ion-content>

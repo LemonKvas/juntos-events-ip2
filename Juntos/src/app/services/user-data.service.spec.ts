@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { UserDataService } from './user-data.service';
+import {UserDataService} from 'src/app/services/user-data.service';
 
 describe('UserDataService', () => {
   let service: UserDataService;
@@ -13,4 +13,5 @@ describe('UserDataService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
 });

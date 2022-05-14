@@ -1,0 +1,38 @@
+<ion-grid>
+  <ion-row class="ion-justify-content-center">
+    <ion-col size="11">
+      <ion-input type="text" placeholder="E-Mail" [(ngModel)]="authService.email"></ion-input>
+    </ion-col>
+  </ion-row>
+  <ion-row class="ion-justify-content-center">
+    <ion-col size="11">
+      <ion-input type="password" placeholder="Passwort" [(ngModel)]="authService.password"></ion-input>
+    </ion-col>
+  </ion-row>
+  <ion-row class="ion-justify-content-center">
+    <ion-col size="5.5">
+      <ion-button class="loginAndRegisterBtn" (click)="authService.EmailRegister(userType)">Registrieren</ion-button>
+    </ion-col>
+    <ion-col size="5.5">
+      <ion-button class="loginAndRegisterBtn" (click)="authService.EmailLogin()">Anmelden</ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-row class="ion-justify-content-center">
+    <ion-col size="auto">
+      <p>ODER</p>
+    </ion-col>
+  </ion-row>
+  <ion-row class="ion-justify-content-center">
+    <ion-col size="11">
+      <ion-button class="loginAndRegisterBtn" (click)="authService.GoogleAuth(userType)">Mit Google anmelden</ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-row class="ion-justify-content-center">
+    <ion-col size="11">
+      <ion-button class="loginAndRegisterBtn">Mit Facebook anmelden</ion-button>
+    </ion-col>
+  </ion-row>
+
+  <!--TODO: Apple Login Button je nach Platoform-->
+
+</ion-grid>
