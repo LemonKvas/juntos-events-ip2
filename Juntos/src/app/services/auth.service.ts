@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {AngularFireAuth} from "@angular/fire/compat/auth";
 import firebase from "firebase/compat/app";
 import {UserDataService} from "src/app/services/user-data.service";
+import User from "src/app/models/classes/user";
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 
 @Injectable({
@@ -9,10 +10,23 @@ import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 })
 
 export class AuthService {
+
+  user: User;
   public email!: string;
   public password!: string;
 
-  constructor(private afAuth: AngularFireAuth, private userDataService: UserDataService) {}
+  constructor(private afAuth: AngularFireAuth, private userDataService: UserDataService) {
+    this.afAuth.authState.subscribe(async firebaseUser => {
+        if(firebaseUser){
+          this.user = await this.userDataService.getUserById(firebaseUser.uid);
+        }
+        this.user = undefined;
+      }
+
+    )
+    console.log(this.user);
+
+  }
 
   checkEmailAndPasswort() {
     return this.email != undefined && this.password != undefined
@@ -22,6 +36,7 @@ export class AuthService {
   }
   //Login with E-Mail and password
   EmailLogin() {
+    console.log(this.user);
     if (this.checkEmailAndPasswort) {
       this.afAuth.signInWithEmailAndPassword(this.email, this.password)
         .then((userCredential) => {

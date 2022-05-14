@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/compat/firestore";
 import firebase from "firebase/compat/app";
 import User from "../models/classes/user";
+import {getDoc} from "firebase/firestore";
 import UserCredential = firebase.auth.UserCredential;
 
 
@@ -15,6 +16,12 @@ export class UserDataService {
   constructor(private afs: AngularFirestore) {
     this.userCollection = this.afs.collection(`user`);
     console.log(this.userCollection);
+  }
+
+  async getUserById(userId: string){
+    let docRef = this.userCollection.doc(userId).ref;
+    let docSnap = await getDoc(docRef);
+    return <User>docSnap.data();
   }
 
   async createNewUserInFirestore(userCredential: UserCredential, userType: string | number){
