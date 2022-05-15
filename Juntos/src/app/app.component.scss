@@ -3,13 +3,16 @@ ion-content {
   --offset-bottom: auto!important;
   --overflow: hidden;
   overflow: auto;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  font-family: Agrandir-Regular, serif !important;
   &::-webkit-scrollbar {
     display: none;
   }
 }
 
 
-ion-button {
-  text-transform: none;
-  letter-spacing: normal; // this fixes wide spacing
+ion-button, ion-label {
+  text-transform: none !important;
+  letter-spacing: normal !important;
 }

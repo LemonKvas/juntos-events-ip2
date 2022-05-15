@@ -1,1 +1,19 @@
+ion-button, p{
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  font-family: Agrandir-Regular, serif !important;
+}
 
+ion-input{
+  font-family: Agrandir-Regular, serif !important;
+}
+
+ion-input::placeholder {
+  font-family: Agrandir-Thin, serif !important;
+}
+
+ion-item {
+  --border-color: grey; // default underline color
+  --highlight-color-invalid: red; // invalid underline color
+  --highlight-color-valid:  #FF8766; // valid underline color
+}

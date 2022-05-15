@@ -1,12 +1,16 @@
 <ion-grid>
   <ion-row class="ion-justify-content-center">
     <ion-col size="11">
-      <ion-input type="text" placeholder="E-Mail" [(ngModel)]="authService.email"></ion-input>
+      <ion-item>
+        <ion-input type="text" placeholder="E-Mail" [(ngModel)]="authService.email"></ion-input>
+      </ion-item>
     </ion-col>
   </ion-row>
   <ion-row class="ion-justify-content-center">
     <ion-col size="11">
-      <ion-input type="password" placeholder="Passwort" [(ngModel)]="authService.password"></ion-input>
+      <ion-item>
+        <ion-input type="password" placeholder="Passwort" [(ngModel)]="authService.password"></ion-input>
+      </ion-item>
     </ion-col>
   </ion-row>
   <ion-row class="ion-justify-content-evenly">
@@ -17,7 +21,7 @@
       <ion-button expand="block" (click)="authService.EmailLogin()">Anmelden</ion-button>
     </ion-col>
   </ion-row>
-  <ion-row class="ion-justify-content-center">
+  <ion-row class="ion-justify-content-center" style="height: 3rem;margin-top: -0.3rem;">
     <ion-col size="auto">
       <p>ODER</p>
     </ion-col>
