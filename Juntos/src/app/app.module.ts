@@ -22,7 +22,7 @@ import {AngularFireModule} from "@angular/fire/compat";
     AngularFireAuthModule,
     AngularFireStorageModule,
     AngularFireDatabaseModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy}],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

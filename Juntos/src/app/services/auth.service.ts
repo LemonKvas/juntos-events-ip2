@@ -66,7 +66,7 @@ export class AuthService {
 
   EmailRegister(userType){
     if (this.checkEmailAndPasswort){
-      this.afAuth.createUserWithEmailAndPassword(this.email, this.password)
+      return this.afAuth.createUserWithEmailAndPassword(this.email, this.password)
         .then((userCredential) => {
           console.log(userCredential);
           this.userDataService.createNewUserInFirestore(userCredential, userType);
