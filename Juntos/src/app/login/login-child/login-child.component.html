@@ -9,12 +9,12 @@
       <ion-input type="password" placeholder="Passwort" [(ngModel)]="authService.password"></ion-input>
     </ion-col>
   </ion-row>
-  <ion-row class="ion-justify-content-center">
-    <ion-col size="5.5">
-      <ion-button class="loginAndRegisterBtn" (click)="authService.EmailRegister(userType)">Registrieren</ion-button>
+  <ion-row class="ion-justify-content-evenly">
+    <ion-col size="6">
+      <ion-button expand="block" (click)="authService.EmailRegister(userType)">Registrieren</ion-button>
     </ion-col>
-    <ion-col size="5.5">
-      <ion-button class="loginAndRegisterBtn" (click)="authService.EmailLogin()">Anmelden</ion-button>
+    <ion-col size="6">
+      <ion-button expand="block" (click)="authService.EmailLogin()">Anmelden</ion-button>
     </ion-col>
   </ion-row>
   <ion-row class="ion-justify-content-center">
@@ -23,13 +23,13 @@
     </ion-col>
   </ion-row>
   <ion-row class="ion-justify-content-center">
-    <ion-col size="11">
-      <ion-button class="loginAndRegisterBtn" (click)="authService.GoogleAuth(userType)">Mit Google anmelden</ion-button>
+    <ion-col size="12">
+      <ion-button expand="block" (click)="authService.GoogleAuth(userType)">Mit Google anmelden</ion-button>
     </ion-col>
   </ion-row>
   <ion-row class="ion-justify-content-center">
-    <ion-col size="11">
-      <ion-button class="loginAndRegisterBtn">Mit Facebook anmelden</ion-button>
+    <ion-col size="12">
+      <ion-button expand="block" (click)="authService.FacebookAuth(userType)">Mit Facebook anmelden</ion-button>
     </ion-col>
   </ion-row>
 

@@ -7,3 +7,9 @@ ion-content {
     display: none;
   }
 }
+
+
+ion-button {
+  text-transform: none;
+  letter-spacing: normal; // this fixes wide spacing
+}
