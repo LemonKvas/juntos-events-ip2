@@ -1,0 +1,86 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Event erstellen</ion-title>
+
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">
+        <ion-icon name="close-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list lines="full">
+    <ion-item>
+      <ion-label position="stacked">Event Name*</ion-label>
+      <ion-input class="ion-text-start"></ion-input>
+    </ion-item>
+
+    <ion-item button="true" id="open-date-input">
+      <ion-label position="stacked">Date</ion-label>
+      <ion-text slot="end">{{ dateValue }}</ion-text>
+      <ion-popover trigger="open-date-input" show-backdrop="false">
+        <ng-template>
+          <ion-datetime [(ngModel)]="dateValue"
+            #popoverDatetime
+            presentation="date"
+            (ionChange)="dateValue = formatDate(popoverDatetime.value)"
+          ></ion-datetime>
+        </ng-template>
+      </ion-popover>
+    </ion-item>
+
+    <ion-item button="true" id="open-time-input">
+      <ion-label position="stacked">Time</ion-label>
+      <ion-text slot="end">{{ timeValue }}</ion-text>
+      <ion-popover trigger="open-time-input" show-backdrop="false">
+        <ng-template>
+          <ion-datetime [(ngModel)]="timeValue"
+            #popoverDatetime
+            presentation="time"
+            (ionChange)="timeValue = formatTime(popoverDatetime.value)"
+          ></ion-datetime>
+        </ng-template>
+      </ion-popover>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Beschreibung*</ion-label>
+      <ion-textarea placeholder="Das Event ist..."></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Adresse*</ion-label>
+      <ion-input type="text" placeholder="Straße"></ion-input>
+      <ion-input type="number" placeholder="Hausnummer"></ion-input>
+      <ion-input type="number" placeholder="PLZ"></ion-input>
+      <ion-input type="text" placeholder="Ort"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Preis*</ion-label>
+      <ion-input placeholder=""></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Max. Teilnehmeranzahl</ion-label>
+      <ion-input type="number" min="0" placeholder=""></ion-input>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
+<ion-footer>
+  <ion-button class="ion-padding-horizontal" id="eventSaveBtn" expand="block" (click)="save()">
+    Veröffentlichen
+  </ion-button>
+  <ion-toolbar>
+  </ion-toolbar>
+</ion-footer>
