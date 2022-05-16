@@ -21,7 +21,7 @@
   <ion-list lines="full">
     <ion-item>
       <ion-label position="stacked">Event Name*</ion-label>
-      <ion-input class="ion-text-start"></ion-input>
+      <ion-input class="ion-text-start" [(ngModel)]="eventName"></ion-input>
     </ion-item>
 
     <ion-item button="true" id="open-date-input">
@@ -54,31 +54,31 @@
 
     <ion-item>
       <ion-label position="stacked">Beschreibung*</ion-label>
-      <ion-textarea placeholder="Das Event ist..."></ion-textarea>
+      <ion-textarea [(ngModel)]="eventDescription" placeholder="Das Event ist..."></ion-textarea>
     </ion-item>
 
     <ion-item>
       <ion-label position="stacked">Adresse*</ion-label>
-      <ion-input type="text" placeholder="Straße"></ion-input>
-      <ion-input type="number" placeholder="Hausnummer"></ion-input>
-      <ion-input type="number" placeholder="PLZ"></ion-input>
-      <ion-input type="text" placeholder="Ort"></ion-input>
+      <ion-input type="text" placeholder="Straße" [(ngModel)]="eventStreet"></ion-input>
+      <ion-input type="number" placeholder="Hausnummer" [(ngModel)]="eventStreetNumber"></ion-input>
+      <ion-input type="number" placeholder="PLZ" [(ngModel)]="eventZip"></ion-input>
+      <ion-input type="text" placeholder="Ort" [(ngModel)]="eventCity"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="stacked">Preis*</ion-label>
-      <ion-input placeholder=""></ion-input>
+      <ion-input [(ngModel)]="eventPrice"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label position="stacked">Max. Teilnehmeranzahl</ion-label>
-      <ion-input type="number" min="0" placeholder=""></ion-input>
+      <ion-label position="stacked">Max. Teilnehmeranzahl*</ion-label>
+      <ion-input type="number" min="0" [(ngModel)]="eventMaxParticipants"></ion-input>
     </ion-item>
   </ion-list>
 
 </ion-content>
 <ion-footer>
-  <ion-button class="ion-padding-horizontal" id="eventSaveBtn" expand="block" (click)="save()">
+  <ion-button class="ion-padding-horizontal" id="eventSaveBtn" expand="block" (click)="addEvent()">
     Veröffentlichen
   </ion-button>
   <ion-toolbar>

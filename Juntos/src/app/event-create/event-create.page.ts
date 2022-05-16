@@ -2,8 +2,9 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import { Router} from '@angular/router';
 import { Location } from "@angular/common";
 import { Event } from '../model/event.model';
-import {IonDatetime, ModalController} from "@ionic/angular";
+import {IonDatetime} from "@ionic/angular";
 import { format, parseISO } from "date-fns";
+import {EventService} from "../service/event.service";
 
 @Component({
   selector: 'app-event-create',
@@ -14,22 +15,47 @@ export class EventCreatePage implements OnInit {
   @Input() event: Event;
   @ViewChild('eventName')
   @ViewChild(IonDatetime, {static: true}) datetime: IonDatetime;
-  dateValue = '';
-  dateValue2 = format(new Date(), 'dd-mm-yyyy') + 'T09:00:00.000Z';
-  timeValue = '';
   eventName: string;
+  dateValue;
+  timeValue;
+  eventDescription = '';
+  eventStreet = '';
+  eventStreetNumber = '';
+  eventZip = 0;
+  eventCity = '';
+  eventPrice = 0;
+  eventMaxParticipants = 0;
+  eventCategories = [];
   today;
   errors: Map<string, string> = new Map<string, string>();
 
-  constructor(private router: Router, private location: Location, public modalController: ModalController) {
+  constructor(private router: Router, private location: Location,
+              private eventService: EventService) {
     this.today = new Date();
-    console.log(this.today);
   }
 
   ngOnInit() {
   }
 
-  save(){
+  async addEvent(){
+    this.event = new Event(
+      null,
+      null,
+      this.eventName,
+      null,
+      this.dateValue,
+      this.timeValue,
+      this.eventPrice,
+      this.eventDescription,
+      this.eventCategories,
+      null,
+      this.eventMaxParticipants,
+      this.eventStreet,
+      this.eventStreetNumber,
+      this.eventZip,
+      this.eventCity,
+    );
+    await this.eventService.addEvent(this.event);
   }
 
   back(){
