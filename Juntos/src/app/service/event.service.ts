@@ -14,15 +14,14 @@ export class EventService {
   constructor(private afs: AngularFirestore) {
     this.eventsCollections = this.afs.collection('events');
   }
+
   async addEvent(event: Event): Promise<void>{
-    try {
-      event.eventId = this.afs.createId();
-    } catch (e) {
-      console.log(e);
-    }
-    console.log(event);
-    await this.afs.doc<Event>(`events/${event.eventId}/`).set(event);
+    event.eventId = this.afs.createId();
+    const data = JSON.parse(JSON.stringify(event));
+    await this.eventsCollections.doc().set(data)
+      .catch((err) => console.log(err));
   }
+
   removeEvent(id: string){
     return this.eventsCollections.doc(id).delete();
   }

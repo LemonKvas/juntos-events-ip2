@@ -2,7 +2,7 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import { Location } from "@angular/common";
 import { Event } from '../model/event.model';
-import {IonDatetime, NavController} from "@ionic/angular";
+import {IonDatetime} from "@ionic/angular";
 import {EventService} from "../service/event.service";
 import {FormControl, FormGroup} from "@angular/forms";
 
@@ -36,8 +36,7 @@ export class EventCreatePage implements OnInit {
   events: Event[];
   public createEventForm: FormGroup;
   constructor(private router: Router, private location: Location,
-              private route: ActivatedRoute, private eventService: EventService,
-              private navCtrl: NavController) {
+              private route: ActivatedRoute, private eventService: EventService) {
     this.today = new Date();
     this.createEventForm = new FormGroup({
       eventName: new FormControl(),
@@ -98,7 +97,7 @@ export class EventCreatePage implements OnInit {
       this.createEventForm.reset();
       this.eventDate = '';
       // later navigate to event-detail page
-      this.navCtrl.pop();
+      this.router.navigate(['home']);
     }
   }
   remove(item){
