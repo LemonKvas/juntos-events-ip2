@@ -25,7 +25,7 @@ export class EventCreatePage implements OnInit {
   categories = ['Musik', 'Natur', 'Sport', 'Essen & Trinken', 'Party', 'Einweihung', 'Festival'];
   selectedCategories = [];
   participants = [];
-  maxParticipants = 0;
+  maxParticipants;
   address: Map<string, string> = new Map<string, string>();
   street = '';
   house = '';
