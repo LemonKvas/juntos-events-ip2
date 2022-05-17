@@ -18,63 +18,86 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-list lines="full">
-    <ion-item>
-      <ion-label position="stacked">Event Name*</ion-label>
-      <ion-input class="ion-text-start" [(ngModel)]="eventName"></ion-input>
-    </ion-item>
+  <form [formGroup]="createEventForm">
+    <ion-list lines="full">
+      <ion-item>
+        <ion-label position="stacked">Event Name*</ion-label>
+        <ion-input class="ion-text-start" formControlName="eventName" [(ngModel)]="eventName"></ion-input>
+      </ion-item>
+      <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
+         *ngIf="errors.get('eventName')">
+        {{errors.get('eventName')}}
+      </p>
 
-    <ion-item button="true" id="open-date-input">
-      <ion-label position="stacked">Date</ion-label>
-      <ion-text slot="end">{{ dateValue }}</ion-text>
-      <ion-popover trigger="open-date-input" show-backdrop="false">
-        <ng-template>
-          <ion-datetime [(ngModel)]="dateValue"
-            #popoverDatetime
-            presentation="date"
-            (ionChange)="dateValue = formatDate(popoverDatetime.value)"
-          ></ion-datetime>
-        </ng-template>
-      </ion-popover>
-    </ion-item>
+      <ion-item button="true" id="open-date-input">
+        <ion-label position="stacked">Date</ion-label>
+        <ion-text>{{ eventDate | date:'EEE, dd-MM-YYYY H:mm' }}</ion-text>
+        <ion-popover trigger="open-date-input" show-backdrop="false">
+          <ng-template>
+            <ion-datetime formControlName="eventDate"
+                          [(ngModel)]="eventDate"
+                          #popoverDatetime
+                          (ionChange)="setDate(popoverDatetime.value)"
+            ></ion-datetime>
+          </ng-template>
+        </ion-popover>
+      </ion-item>
+      <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
+         *ngIf="errors.get('eventDate')">
+        {{errors.get('eventDate')}}
+      </p>
 
-    <ion-item button="true" id="open-time-input">
-      <ion-label position="stacked">Time</ion-label>
-      <ion-text slot="end">{{ timeValue }}</ion-text>
-      <ion-popover trigger="open-time-input" show-backdrop="false">
-        <ng-template>
-          <ion-datetime [(ngModel)]="timeValue"
-            #popoverDatetime
-            presentation="time"
-            (ionChange)="timeValue = formatTime(popoverDatetime.value)"
-          ></ion-datetime>
-        </ng-template>
-      </ion-popover>
-    </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Beschreibung*</ion-label>
+        <ion-textarea formControlName="eventBio" [(ngModel)]="eventBio" placeholder="Das Event ist..."></ion-textarea>
+      </ion-item>
+      <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
+         *ngIf="errors.get('eventBio')">
+        {{errors.get('eventBio')}}
+      </p>
 
-    <ion-item>
-      <ion-label position="stacked">Beschreibung*</ion-label>
-      <ion-textarea [(ngModel)]="eventDescription" placeholder="Das Event ist..."></ion-textarea>
-    </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Adresse*</ion-label>
+        <ion-input formControlName="street" type="text" placeholder="Straße" [(ngModel)]="street"></ion-input>
+        <ion-input formControlName="house" type="text" placeholder="Hausnummer" [(ngModel)]="house"></ion-input>
+        <ion-input formControlName="zipCode" type="number" placeholder="PLZ" [(ngModel)]="zipCode"></ion-input>
+        <ion-input formControlName="city" type="text" placeholder="Ort" [(ngModel)]="city"></ion-input>
+      </ion-item>
+      <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
+         *ngIf="errors.get('eventAddress')">
+        {{errors.get('eventAddress')}}
+      </p>
 
-    <ion-item>
-      <ion-label position="stacked">Adresse*</ion-label>
-      <ion-input type="text" placeholder="Straße" [(ngModel)]="eventStreet"></ion-input>
-      <ion-input type="number" placeholder="Hausnummer" [(ngModel)]="eventStreetNumber"></ion-input>
-      <ion-input type="number" placeholder="PLZ" [(ngModel)]="eventZip"></ion-input>
-      <ion-input type="text" placeholder="Ort" [(ngModel)]="eventCity"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Preis*</ion-label>
+        <ion-input formControlName="price" [(ngModel)]="price"></ion-input>
+      </ion-item>
+      <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
+         *ngIf="errors.get('price')">
+        {{errors.get('price')}}
+      </p>
 
-    <ion-item>
-      <ion-label position="stacked">Preis*</ion-label>
-      <ion-input [(ngModel)]="eventPrice"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Max. Teilnehmeranzahl*</ion-label>
+        <ion-input formControlName="maxParticipants" type="number" min="0" [(ngModel)]="maxParticipants"></ion-input>
+      </ion-item>
+      <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
+         *ngIf="errors.get('maxParticipants')">
+        {{errors.get('maxParticipants')}}
+      </p>
 
-    <ion-item>
-      <ion-label position="stacked">Max. Teilnehmeranzahl*</ion-label>
-      <ion-input type="number" min="0" [(ngModel)]="eventMaxParticipants"></ion-input>
-    </ion-item>
-  </ion-list>
+      <ion-item>
+        <ion-label position="stacked">Kategorien*</ion-label>
+        <ion-select formControlName="selectedCategories" [(ngModel)]="selectedCategories" multiple="true">
+          <ion-select-option *ngFor="let categorie of categories; let i = index">{{categorie}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
+         *ngIf="errors.get('categories')">
+        {{errors.get('categories')}}
+      </p>
+    </ion-list>
+  </form>
 
 </ion-content>
 <ion-footer>

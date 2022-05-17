@@ -1,14 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  Firestore,
-  collection,
-  collectionData,
-  doc,
-  docData,
-  addDoc,
-  deleteDoc,
-  updateDoc
-} from '@angular/fire/firestore';
+import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/compat/firestore";
 import { Event } from '../model/event.model';
 import {Observable} from "rxjs";
 
@@ -16,30 +7,23 @@ import {Observable} from "rxjs";
   providedIn: 'root'
 })
 export class EventService {
-  private events: Event[];
-  private event: Event;
 
-  constructor(private firestore: Firestore) {
+  private eventsCollections: AngularFirestoreCollection<Event>;
+  private events: Observable<Event[]>;
+
+  constructor(private afs: AngularFirestore) {
+    this.eventsCollections = this.afs.collection('events');
   }
-  addEvent(event: Event) {
-    const eventRef = collection(this.firestore, 'events');
-    return addDoc(eventRef, event);
+  async addEvent(event: Event): Promise<void>{
+    try {
+      event.eventId = this.afs.createId();
+    } catch (e) {
+      console.log(e);
+    }
+    console.log(event);
+    await this.afs.doc<Event>(`events/${event.eventId}/`).set(event);
   }
-  deleteEvent(event: Event){
-    const eventDocRef = doc(this.firestore, `events/${event.eventId}`);
-    return deleteDoc(eventDocRef);
-  }
-  updateEvent(event: Event){
-    const eventDocRef = doc(this.firestore, `events/${event.eventId}`);
-    Object.assign(this.event, event);
-    return updateDoc(eventDocRef, {event: this.event});
-  }
-  getAllEvents(): Observable<Event> {
-    const eventRef = collection(this.firestore, 'events');
-    return collectionData(eventRef) as Observable<Event>;
-  }
-  getEventById(id: string): Observable<Event>{
-    const eventDocRef = doc(this.firestore, `events/${id}`);
-    return docData(eventDocRef, {idField: id}) as Observable<Event>;
+  removeEvent(id: string){
+    return this.eventsCollections.doc(id).delete();
   }
 }
