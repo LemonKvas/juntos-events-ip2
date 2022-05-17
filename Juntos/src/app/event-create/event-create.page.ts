@@ -5,6 +5,7 @@ import { Event } from '../model/event.model';
 import {IonDatetime} from "@ionic/angular";
 import {EventService} from "../service/event.service";
 import {FormControl, FormGroup} from "@angular/forms";
+import {AlertService} from "../service/alert.service";
 
 @Component({
   selector: 'app-event-create',
@@ -35,8 +36,10 @@ export class EventCreatePage implements OnInit {
   errors: Map<string, string> = new Map<string, string>();
   events: Event[];
   public createEventForm: FormGroup;
+
   constructor(private router: Router, private location: Location,
-              private route: ActivatedRoute, private eventService: EventService) {
+              private route: ActivatedRoute, private eventService: EventService,
+              public alertService: AlertService) {
     this.today = new Date();
     this.createEventForm = new FormGroup({
       eventName: new FormControl(),
@@ -60,24 +63,34 @@ export class EventCreatePage implements OnInit {
     this.address.set("city", this.city);
     this.errors.clear();
     if(!this.eventName){
+      this.alertService.emptyInputsAlert();
       this.errors.set('eventName', 'Event Name darf nicht leer sein!');
     } else if(!this.eventDate){
+      this.alertService.emptyInputsAlert();
       this.errors.set('eventDate', 'Datum und Uhrzeit darf nicht leer sein!');
     } else if(!this.eventBio){
+      this.alertService.emptyInputsAlert();
       this.errors.set('eventBio', 'Beschreibung darf nicht leer sein!');
     } else if(!this.street){
+      this.alertService.emptyInputsAlert();
       this.errors.set('eventAddress', 'Straße darf nicht leer sein!');
     } else if(!this.house){
+      this.alertService.emptyInputsAlert();
       this.errors.set('eventAddress', 'Hausnummer darf nicht leer sein!');
     } else if(!this.zipCode){
+      this.alertService.emptyInputsAlert();
       this.errors.set('eventAddress', 'PLZ darf nicht leer sein!');
     } else if(!this.city){
+      this.alertService.emptyInputsAlert();
       this.errors.set('eventAddress', 'Stadt darf nicht leer sein!');
     } else if(!this.price){
+      this.alertService.emptyInputsAlert();
       this.errors.set('price', 'Preis darf nicht leer sein!');
     } else if(!this.maxParticipants){
+      this.alertService.emptyInputsAlert();
       this.errors.set('maxParticipants', 'Feld darf nicht leer sein!');
     } else if(this.selectedCategories.length === 0){
+      this.alertService.emptyInputsAlert();
       this.errors.set('categories', 'Wähle mind. eine Kategorie aus!');
     } else if(this.errors.size === 0){
       this.event = new Event(
@@ -105,8 +118,7 @@ export class EventCreatePage implements OnInit {
     this.location.back();
   }
   back(){
-    this.router.navigate(['home']);
-    //this.location.back();
+    this.alertService.unsaveAlert();
   }
   setDate(dateTime: string){
     this.eventDate = dateTime;
