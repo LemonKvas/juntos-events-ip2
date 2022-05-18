@@ -22,6 +22,7 @@
     "@angular/platform-browser-dynamic": "~13.3.5",
     "@angular/router": "~13.3.5",
     "@awesome-cordova-plugins/firebase": "^5.41.0",
+    "@capacitor/android": "3.5.1",
     "@capacitor/app": "1.1.1",
     "@capacitor/core": "3.5.0",
     "@capacitor/haptics": "1.1.4",

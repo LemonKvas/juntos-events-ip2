@@ -15,15 +15,13 @@ export class AuthService {
 
   user: User;
   token;
-  public email!: string;
-  public password!: string;
+
 
   constructor(private afAuth: AngularFireAuth, private userDataService: UserDataService) {
     this.afAuth.authState.subscribe(async firebaseUser => {
-      console.log(firebaseUser);
       this.user = undefined;
       this.token = undefined;
-      if(firebaseUser){
+      if(firebaseUser && !firebaseUser.multiFactor["user"].isAnonymous){
           this.user = await this.userDataService.getUserById(firebaseUser.uid);
           this.token = firebaseUser.getIdTokenResult(false);
         }
@@ -43,15 +41,26 @@ export class AuthService {
     return Number(role) >= Number(JSON.parse(localStorage.getItem('user')).rights);
   }
 
-  checkEmailAndPasswort() {
-    return this.email != undefined && this.password != undefined
-      && this.email.trim().length > 3 && this.email.includes('@')
-      && this.password.trim().length > 5;
+  checkEmailAndPasswort(email, password) {
+    return email != undefined && password != undefined
+      && email.trim().length > 3 && email.includes('@')
+      && password.trim().length > 5;
+  }
+
+  //anonymous login
+  AnonymousAuth(){
+    this.afAuth.signInAnonymously()
+      .then(userCredentials => {
+        console.log(userCredentials);
+      })
+      .catch((error) => {
+        console.log(error.message)
+      })
   }
   //Login with E-Mail and password
-  EmailLogin() {
+  EmailLogin(email, password) {
     if (this.checkEmailAndPasswort) {
-      this.afAuth.signInWithEmailAndPassword(this.email, this.password)
+      this.afAuth.signInWithEmailAndPassword(email, password)
         .then((userCredential) => {
           console.log(userCredential)
         })
@@ -64,15 +73,15 @@ export class AuthService {
     //TODO: alerts einfügen statt console logs
   }
 
-  EmailRegister(userType){
+  EmailRegister(userType, email, password){
     if (this.checkEmailAndPasswort){
-      return this.afAuth.createUserWithEmailAndPassword(this.email, this.password)
+      return this.afAuth.createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
           console.log(userCredential);
           this.userDataService.createNewUserInFirestore(userCredential, userType);
         })
         .catch((error) => {
-          if(String(error.code).includes('email-already-in-use')) this.EmailLogin();
+          if(String(error.code).includes('email-already-in-use')) this.EmailLogin(email, password);
         });
     }
   }
