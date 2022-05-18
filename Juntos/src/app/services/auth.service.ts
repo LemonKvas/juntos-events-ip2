@@ -5,6 +5,7 @@ import {UserDataService} from "src/app/services/user-data.service";
 import User from "src/app/models/classes/user";
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 import FacebookAuthProvider = firebase.auth.FacebookAuthProvider;
+import {Router} from "@angular/router";
 
 
 @Injectable({
@@ -18,7 +19,7 @@ export class AuthService {
   public email!: string;
   public password!: string;
 
-  constructor(private afAuth: AngularFireAuth, private userDataService: UserDataService) {
+  constructor(private afAuth: AngularFireAuth, private userDataService: UserDataService, private router: Router) {
     this.afAuth.authState.subscribe(async firebaseUser => {
       console.log(firebaseUser);
       this.user = undefined;
@@ -53,6 +54,7 @@ export class AuthService {
     if (this.checkEmailAndPasswort) {
       this.afAuth.signInWithEmailAndPassword(this.email, this.password)
         .then((userCredential) => {
+          //TODO: redirect to event list
           console.log(userCredential)
         })
         .catch((error) => {
@@ -70,6 +72,7 @@ export class AuthService {
         .then((userCredential) => {
           console.log(userCredential);
           this.userDataService.createNewUserInFirestore(userCredential, userType);
+          this.router.navigate(['/edit-user'])
         })
         .catch((error) => {
           if(String(error.code).includes('email-already-in-use')) this.EmailLogin();
@@ -102,6 +105,7 @@ export class AuthService {
         }
         console.log(userCredential);
         console.log('You have been successfully logged in!');
+        this.router.navigate(['/edit-user'])
       })
       .catch((error) => {
         console.log(error);

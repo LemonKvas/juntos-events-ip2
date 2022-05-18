@@ -12,4 +12,7 @@ export class EditUserPage implements OnInit {
   ngOnInit() {
   }
 
+  uploadAvatar() {
+  console.log('uploadAvatar')
+  }
 }
