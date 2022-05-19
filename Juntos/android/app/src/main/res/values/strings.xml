@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Juntos</string>
+    <string name="title_activity_main">Juntos</string>
+    <string name="package_name">com.juntos.events</string>
+    <string name="custom_url_scheme">com.juntos.events</string>
+</resources>
