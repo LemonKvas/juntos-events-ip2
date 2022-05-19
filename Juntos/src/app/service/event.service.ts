@@ -18,8 +18,8 @@ export class EventService {
   async addEvent(event: Event): Promise<void>{
     event.eventId = this.afs.createId();
     const data = JSON.parse(JSON.stringify(event));
-    await this.eventsCollections.doc().set(data)
-      .catch((err) => console.log(err));
+    await this.eventsCollections.doc(event.eventId).set(data)
+     .catch((err) => console.log(err));
   }
 
   removeEvent(id: string){

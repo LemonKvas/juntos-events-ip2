@@ -6,6 +6,7 @@ import {IonDatetime} from "@ionic/angular";
 import {EventService} from "../service/event.service";
 import {FormControl, FormGroup} from "@angular/forms";
 import {AlertService} from "../service/alert.service";
+import {PhotoService} from "../service/photo.service";
 
 @Component({
   selector: 'app-event-create',
@@ -27,22 +28,25 @@ export class EventCreatePage implements OnInit {
   selectedCategories = [];
   participants = [];
   maxParticipants;
-  address: Map<string, string> = new Map<string, string>();
+  address: Map<string, string>;
   street = '';
   house = '';
-  zipCode = '';
+  zipCode: number;
   city = '';
   today;
   errors: Map<string, string> = new Map<string, string>();
   events: Event[];
+  uploadStatus = false;
+  photoUploads = [];
   public createEventForm: FormGroup;
 
   constructor(private router: Router, private location: Location,
               private route: ActivatedRoute, private eventService: EventService,
-              public alertService: AlertService) {
+              public alertService: AlertService, public photoService: PhotoService) {
     this.today = new Date();
     this.createEventForm = new FormGroup({
       eventName: new FormControl(),
+      photoURLs: new FormControl(),
       eventDate: new FormControl(),
       eventBio: new FormControl(),
       street: new FormControl(),
@@ -57,10 +61,7 @@ export class EventCreatePage implements OnInit {
   ngOnInit() {
   }
   addEvent(){
-    this.address.set("street", this.street);
-    this.address.set("house", this.house);
-    this.address.set("zipCode", this.zipCode);
-    this.address.set("city", this.city);
+    this.photoURLs.push(this.photoService.imgName);
     this.errors.clear();
     if(!this.eventName){
       this.alertService.emptyInputsAlert();
@@ -74,9 +75,6 @@ export class EventCreatePage implements OnInit {
     } else if(!this.street){
       this.alertService.emptyInputsAlert();
       this.errors.set('eventAddress', 'Straße darf nicht leer sein!');
-    } else if(!this.house){
-      this.alertService.emptyInputsAlert();
-      this.errors.set('eventAddress', 'Hausnummer darf nicht leer sein!');
     } else if(!this.zipCode){
       this.alertService.emptyInputsAlert();
       this.errors.set('eventAddress', 'PLZ darf nicht leer sein!');
@@ -86,7 +84,7 @@ export class EventCreatePage implements OnInit {
     } else if(!this.price){
       this.alertService.emptyInputsAlert();
       this.errors.set('price', 'Preis darf nicht leer sein!');
-    } else if(!this.maxParticipants){
+    } else if(this.maxParticipants === undefined){
       this.alertService.emptyInputsAlert();
       this.errors.set('maxParticipants', 'Feld darf nicht leer sein!');
     } else if(this.selectedCategories.length === 0){
@@ -102,13 +100,18 @@ export class EventCreatePage implements OnInit {
         this.selectedCategories,
         this.participants,
         this.maxParticipants,
-        this.address,
+        this.street,
+        this.house,
+        this.zipCode,
+        this.city,
         'eventId',
         '',
       );
+      console.log(this.event);
       this.eventService.addEvent(this.event);
       this.createEventForm.reset();
       this.eventDate = '';
+      this.photoUploads = [];
       // later navigate to event-detail page
       this.router.navigate(['home']);
     }
@@ -122,5 +125,22 @@ export class EventCreatePage implements OnInit {
   }
   setDate(dateTime: string){
     this.eventDate = dateTime;
+  }
+  uploadPhoto(event){
+    this.uploadStatus = true;
+    this.photoService.storePhoto(event.target.files[0]).then((res: any) => {
+      if(res){
+        this.uploadStatus = false;
+        this.photoService.photos.unshift(res);
+      }
+    },
+      (error: any) =>{
+        this.uploadStatus = false;
+        console.log(error);
+      });
+  }
+  addPhotoToGallery(event){
+    this.photoService.addNewToGallery();
+    this.uploadPhoto(event);
   }
 }
