@@ -43,4 +43,12 @@ export class AlertService {
     });
     this.alert.present();
   }
+  async eventDraftAlert(){
+    this.alert = await this.alertService.create({
+      header: 'ACHTUNG',
+      message: 'Geben Sie dem Event Entwurf bitte einen Namen.',
+      buttons: ['OK']
+    });
+    this.alert.present();
+  }
 }

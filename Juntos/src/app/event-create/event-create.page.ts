@@ -122,30 +122,36 @@ export class EventCreatePage implements OnInit {
   }
   saveEventAsDraft(){
     this.publishStatus = false;
-    this.event = new Event(
-      this.eventName,
-      this.photoURLs,
-      new Date(this.eventDate),
-      this.price,
-      this.eventBio,
-      this.selectedCategories,
-      this.participants,
-      this.maxParticipants,
-      this.street,
-      this.house,
-      this.zipCode,
-      this.city,
-      this.publishStatus,
-      'eventId',
-      '',
-    );
-    console.log(this.event);
-    this.eventService.addEvent(this.event);
-    this.createEventForm.reset();
-    this.eventDate = '';
-    this.photoUploads = [];
-    // later navigate to event-detail page
-    this.router.navigate(['home']);
+    if(!this.eventName){
+      this.alertService.eventDraftAlert();
+      this.errors.set('eventName', 'Event Name darf nicht leer sein!');
+    } else {
+      this.event = new Event(
+        this.eventName,
+        this.photoURLs,
+        new Date(this.eventDate),
+        this.price,
+        this.eventBio,
+        this.selectedCategories,
+        this.participants,
+        this.maxParticipants,
+        this.street,
+        this.house,
+        this.zipCode,
+        this.city,
+        this.publishStatus,
+        'eventId',
+        '',
+      );
+      console.log(this.event);
+      this.eventService.addEvent(this.event);
+      this.createEventForm.reset();
+      this.eventDate = '';
+      this.photoUploads = [];
+      this.publishStatus = false;
+      // later navigate to event-detail page
+      this.router.navigate(['home']);
+    }
   }
   remove(item){
     this.eventService.removeEvent(item.id);
