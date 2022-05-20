@@ -19,7 +19,8 @@ export class EventCreatePage implements OnInit {
   @ViewChild(IonDatetime, {static: true}) datetime: IonDatetime;
   eventName: string;
   photoURLs = [];
-  eventDate = '';
+  creationDate = new Date();
+  eventDate: Date;
   date = '';
   time = '';
   price = '';
@@ -28,7 +29,7 @@ export class EventCreatePage implements OnInit {
   selectedCategories = [];
   participants = [];
   maxParticipants;
-  address: Map<string, string>;
+  address: object;
   street = '';
   house = '';
   zipCode: number;

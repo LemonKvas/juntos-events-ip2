@@ -1,27 +1,25 @@
 export class Event{
   name?: string;
   photoURLs?: string[];
+  creationDate?: Date;
   eventDate?: Date;
   price?: string;
   bio?: string;
   categories?: string[];
   participants?: string[];
   maxParticipants?: number;
-  //address?: Map<string, string>;
-  street?: string;
-  house?: string;
-  zipCode?: number;
-  city?: string;
+  address?: object;
   publishStatus?: boolean;
   eventId?: string;
   creatorId?: string;
 
 
-  constructor(name?: string, photoURLs?: string[], eventDate?: Date,
+  constructor(name?: string, photoURLs?: string[], creationDate?: Date, eventDate?: Date,
               price?: string, bio?: string, categories?: string[], participants?: string[], maxParticipants?: number,
-              street?: string, house?: string, zipCode?: number, city?: string, publishStatus?: boolean, eventId?: string, creatorId?: string) {
+              address?: object, publishStatus?: boolean, eventId?: string, creatorId?: string) {
     this.name = name;
     this.photoURLs = photoURLs;
+    this.creationDate = creationDate;
     this.eventDate = eventDate;
     this.price = price;
     this.bio = bio;
