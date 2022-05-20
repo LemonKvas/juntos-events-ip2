@@ -14,5 +14,6 @@ export class EditUserPage implements OnInit {
 
   uploadAvatar() {
   console.log('uploadAvatar')
+  //  TODO: imageupload, delete old image when new is uploaded, set photoURL in user
   }
 }

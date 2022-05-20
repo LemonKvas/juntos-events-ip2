@@ -116,6 +116,7 @@ export class AuthService {
     this.afAuth.signOut().then(() => {
       localStorage.removeItem('user');
       localStorage.removeItem('token');
+    //  TODO: maybe redirect after logout
     })
   }
 
