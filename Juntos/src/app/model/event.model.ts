@@ -28,10 +28,7 @@ export class Event{
     this.categories = categories;
     this.participants = participants;
     this.maxParticipants = maxParticipants;
-    this.street = street;
-    this.house = house;
-    this.zipCode = zipCode;
-    this.city = city;
+    this.address = address;
     this.publishStatus = publishStatus;
     this.eventId = eventId;
     this.creatorId = creatorId;

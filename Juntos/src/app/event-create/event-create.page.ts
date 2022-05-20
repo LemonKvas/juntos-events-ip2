@@ -61,6 +61,29 @@ export class EventCreatePage implements OnInit {
   }
   ngOnInit() {
   }
+  setInputValues(){
+    this.address = {
+      'street': this.street,
+      'house': this.house,
+      'zipCode': this.zipCode,
+      'city': this.city,
+    };
+    this.event = new Event(
+      this.eventName,
+      this.photoURLs,
+      this.creationDate,
+      new Date(this.eventDate),
+      this.price,
+      this.eventBio,
+      this.selectedCategories,
+      this.participants,
+      this.maxParticipants,
+      this.address,
+      this.publishStatus,
+      'eventId',
+      '',
+    );
+  }
   addEvent(){
     this.publishStatus = true;
     this.photoURLs.push(this.photoService.imgName);
@@ -93,31 +116,10 @@ export class EventCreatePage implements OnInit {
       this.alertService.emptyInputsAlert();
       this.errors.set('categories', 'Wähle mind. eine Kategorie aus!');
     } else if(this.errors.size === 0){
-      this.event = new Event(
-        this.eventName,
-        this.photoURLs,
-        new Date(this.eventDate),
-        this.price,
-        this.eventBio,
-        this.selectedCategories,
-        this.participants,
-        this.maxParticipants,
-        this.street,
-        this.house,
-        this.zipCode,
-        this.city,
-        this.publishStatus,
-        'eventId',
-        '',
-      );
+      this.setInputValues();
       console.log(this.event);
       this.eventService.addEvent(this.event);
-      this.createEventForm.reset();
-      this.eventDate = '';
-      this.photoUploads = [];
-      this.publishStatus = false;
-      // later navigate to event-detail page
-      this.router.navigate(['home']);
+      this.clearEventForm();
     }
   }
   saveEventAsDraft(){
@@ -126,32 +128,19 @@ export class EventCreatePage implements OnInit {
       this.alertService.eventDraftAlert();
       this.errors.set('eventName', 'Event Name darf nicht leer sein!');
     } else {
-      this.event = new Event(
-        this.eventName,
-        this.photoURLs,
-        new Date(this.eventDate),
-        this.price,
-        this.eventBio,
-        this.selectedCategories,
-        this.participants,
-        this.maxParticipants,
-        this.street,
-        this.house,
-        this.zipCode,
-        this.city,
-        this.publishStatus,
-        'eventId',
-        '',
-      );
+      this.setInputValues();
       console.log(this.event);
       this.eventService.addEvent(this.event);
-      this.createEventForm.reset();
-      this.eventDate = '';
-      this.photoUploads = [];
-      this.publishStatus = false;
-      // later navigate to event-detail page
-      this.router.navigate(['home']);
+      this.clearEventForm();
     }
+  }
+  clearEventForm(){
+    this.createEventForm.reset();
+    this.eventDate = null;
+    this.photoUploads = [];
+    this.publishStatus = false;
+    // later navigate to event-detail page
+    this.router.navigate(['home']);
   }
   remove(item){
     this.eventService.removeEvent(item.id);
@@ -161,7 +150,7 @@ export class EventCreatePage implements OnInit {
     this.alertService.unsaveAlert();
   }
   setDate(dateTime: string){
-    this.eventDate = dateTime;
+    this.eventDate = new Date(dateTime);
   }
   uploadPhoto(event){
     this.uploadStatus = true;

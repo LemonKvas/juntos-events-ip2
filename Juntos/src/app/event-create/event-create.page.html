@@ -34,8 +34,8 @@
 
         <ion-row>
           <ion-item button="true" id="open-date-input">
-            <ion-label position="stacked">Date</ion-label>
-            <ion-text>{{ eventDate | date:'EEE, dd-MM-YYYY H:mm' }}</ion-text>
+            <ion-label position="stacked">Date*</ion-label>
+            <ion-text>{{ eventDate | date:'EEE, dd-MM-yyyy H:mm Z' }}</ion-text>
             <ion-popover trigger="open-date-input" show-backdrop="false">
               <ng-template>
                 <ion-datetime formControlName="eventDate"
