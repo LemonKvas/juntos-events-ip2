@@ -34,14 +34,12 @@
 
         <ion-row>
           <ion-item button="true" id="open-date-input">
-            <ion-label position="stacked">Date*</ion-label>
-            <ion-text>{{ eventDate | date:'EEE, dd-MM-yyyy H:mm Z' }}</ion-text>
+            <ion-label position="stacked">Datum & Uhrzeit*</ion-label>
+            <ion-input placeholder="z.B. 'Sat, 06-07-2022 18:00' ">{{ eventDate | date:'EEE, dd-MM-yyyy H:mmZ' }}</ion-input>
             <ion-popover trigger="open-date-input" show-backdrop="false">
               <ng-template>
                 <ion-datetime formControlName="eventDate"
                               [(ngModel)]="eventDate"
-                              #popoverDatetime
-                              (ionChange)="setDate(popoverDatetime.value)"
                 ></ion-datetime>
               </ng-template>
             </ion-popover>
@@ -71,7 +69,7 @@
             <ion-input formControlName="zipCode" type="number" placeholder="PLZ" [(ngModel)]="zipCode"></ion-input>
             <ion-input formControlName="city" type="text" placeholder="Ort" [(ngModel)]="city"></ion-input>
           </ion-item>
-          <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
+          <p class="ion-text-end ion-padding-end" placeholder="z.B. 'Musik', 'Essen & Trinken' etc." style="color:var(--ion-color-danger)"
              *ngIf="errors.get('eventAddress')">
             {{errors.get('eventAddress')}}
           </p>
@@ -80,7 +78,7 @@
         <ion-row>
           <ion-item>
             <ion-label position="stacked">Preis*</ion-label>
-            <ion-input formControlName="price" [(ngModel)]="price"></ion-input>
+            <ion-input formControlName="price" placeholder="Gebe 0 für kostenlos ein." [(ngModel)]="price"></ion-input>
           </ion-item>
           <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
              *ngIf="errors.get('price')">
@@ -91,7 +89,7 @@
         <ion-row>
           <ion-item>
             <ion-label position="stacked">Max. Teilnehmeranzahl*</ion-label>
-            <ion-input formControlName="maxParticipants" type="number" min="0" [(ngModel)]="maxParticipants"></ion-input>
+            <ion-input formControlName="maxParticipants" placeholder="z.B. 20" type="number" min="0" [(ngModel)]="maxParticipants"></ion-input>
           </ion-item>
           <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
              *ngIf="errors.get('maxParticipants')">

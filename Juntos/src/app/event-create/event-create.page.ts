@@ -20,7 +20,7 @@ export class EventCreatePage implements OnInit {
   eventName: string;
   photoURLs = [];
   creationDate = new Date();
-  eventDate: Date;
+  eventDate: any;
   date = '';
   time = '';
   price = '';
@@ -149,9 +149,6 @@ export class EventCreatePage implements OnInit {
   }
   back(){
     this.alertService.unsaveAlert();
-  }
-  setDate(dateTime: string){
-    this.eventDate = new Date(dateTime);
   }
   uploadPhoto(event){
     this.uploadStatus = true;
