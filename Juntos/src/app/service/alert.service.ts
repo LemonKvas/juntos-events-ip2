@@ -39,7 +39,7 @@ export class AlertService {
     this.alert = await this.alertService.create({
       header: 'ACHTUNG',
       message: 'Bitte füllen Sie alle mit * gekennzeichneten Felder aus.',
-      buttons: ['Ok']
+      buttons: ['OK']
     });
     this.alert.present();
   }

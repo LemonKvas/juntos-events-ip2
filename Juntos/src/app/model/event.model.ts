@@ -12,13 +12,14 @@ export class Event{
   house?: string;
   zipCode?: number;
   city?: string;
+  publishStatus?: boolean;
   eventId?: string;
   creatorId?: string;
 
 
   constructor(name?: string, photoURLs?: string[], eventDate?: Date,
               price?: string, bio?: string, categories?: string[], participants?: string[], maxParticipants?: number,
-              street?: string, house?: string, zipCode?: number, city?: string, eventId?: string, creatorId?: string) {
+              street?: string, house?: string, zipCode?: number, city?: string, publishStatus?: boolean, eventId?: string, creatorId?: string) {
     this.name = name;
     this.photoURLs = photoURLs;
     this.eventDate = eventDate;
@@ -31,6 +32,7 @@ export class Event{
     this.house = house;
     this.zipCode = zipCode;
     this.city = city;
+    this.publishStatus = publishStatus;
     this.eventId = eventId;
     this.creatorId = creatorId;
   }

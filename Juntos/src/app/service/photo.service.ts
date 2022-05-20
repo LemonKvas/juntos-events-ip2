@@ -16,7 +16,7 @@ export class PhotoService {
   }
   photoName(){
     const newTime = Math.floor(Date.now() / 1000);
-    return JSON.stringify(Math.floor(Math.random() * 20) + newTime);
+    return JSON.stringify(Math.floor(Math.random() * 30) + newTime);
   }
   async storePhoto(imgData: any){
     try {

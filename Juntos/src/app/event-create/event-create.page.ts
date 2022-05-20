@@ -33,6 +33,7 @@ export class EventCreatePage implements OnInit {
   house = '';
   zipCode: number;
   city = '';
+  publishStatus = false;
   today;
   errors: Map<string, string> = new Map<string, string>();
   events: Event[];
@@ -61,6 +62,7 @@ export class EventCreatePage implements OnInit {
   ngOnInit() {
   }
   addEvent(){
+    this.publishStatus = true;
     this.photoURLs.push(this.photoService.imgName);
     this.errors.clear();
     if(!this.eventName){
@@ -104,6 +106,7 @@ export class EventCreatePage implements OnInit {
         this.house,
         this.zipCode,
         this.city,
+        this.publishStatus,
         'eventId',
         '',
       );
@@ -112,9 +115,37 @@ export class EventCreatePage implements OnInit {
       this.createEventForm.reset();
       this.eventDate = '';
       this.photoUploads = [];
+      this.publishStatus = false;
       // later navigate to event-detail page
       this.router.navigate(['home']);
     }
+  }
+  saveEventAsDraft(){
+    this.publishStatus = false;
+    this.event = new Event(
+      this.eventName,
+      this.photoURLs,
+      new Date(this.eventDate),
+      this.price,
+      this.eventBio,
+      this.selectedCategories,
+      this.participants,
+      this.maxParticipants,
+      this.street,
+      this.house,
+      this.zipCode,
+      this.city,
+      this.publishStatus,
+      'eventId',
+      '',
+    );
+    console.log(this.event);
+    this.eventService.addEvent(this.event);
+    this.createEventForm.reset();
+    this.eventDate = '';
+    this.photoUploads = [];
+    // later navigate to event-detail page
+    this.router.navigate(['home']);
   }
   remove(item){
     this.eventService.removeEvent(item.id);
