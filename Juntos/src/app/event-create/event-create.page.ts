@@ -87,7 +87,6 @@ export class EventCreatePage implements OnInit {
   }
   addEvent(){
     this.publishStatus = true;
-    this.photoURLs.push(this.photoService.imgName);
     this.errors.clear();
     if(!this.eventName){
       this.alertService.emptyInputsAlert();
@@ -156,6 +155,7 @@ export class EventCreatePage implements OnInit {
       if(res){
         this.uploadStatus = false;
         this.photoService.photos.unshift(res);
+        this.photoURLs.push(this.photoService.photoID);
       }
     },
       (error: any) =>{

@@ -12,15 +12,13 @@ export class PhotoService {
   photoURL: string;
   location = 'event-photos/';
   imgName: string;
+  photoID: string;
   constructor(private afs: AngularFirestore, private afStorage: AngularFireStorage) {
-  }
-  photoName(){
-    const newTime = Math.floor(Date.now() / 1000);
-    return JSON.stringify(Math.floor(Math.random() * 30) + newTime);
   }
   async storePhoto(imgData: any){
     try {
-      this.imgName = this.photoName();
+      this.photoID = this.afs.createId();
+      this.imgName = this.photoID + '_' + imgData.name;
       return new Promise((resolve, reject) => {
         const photoRef = this.afStorage.ref(this.location + this.imgName);
 
@@ -35,6 +33,7 @@ export class PhotoService {
     } catch (e) {
       console.log(e);
     }
+    this.photos = [];
   }
   public async addNewToGallery() {
     const capturedPhoto = await Camera.getPhoto({
@@ -47,7 +46,7 @@ export class PhotoService {
       webviewPath: capturedPhoto.webPath,
       type: capturedPhoto.format,
     });
-    this.storePhoto(capturedPhoto);
+    await this.storePhoto(capturedPhoto);
     this.photoURL = capturedPhoto.webPath.substring(5);
   }
 }
