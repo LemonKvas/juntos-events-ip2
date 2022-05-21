@@ -11,17 +11,14 @@ export class PhotoService {
   public photos: EventPhoto[] = [];
   photoURL: string;
   location = 'event-photos/';
-  imgName: string;
   photoID: string;
   constructor(private afs: AngularFirestore, private afStorage: AngularFireStorage) {
   }
   async storePhoto(imgData: any){
     try {
-      this.photoID = this.afs.createId();
-      this.imgName = this.photoID + '_' + imgData.name;
+      this.photoID = this.afs.createId() + '.jpeg';
       return new Promise((resolve, reject) => {
-        const photoRef = this.afStorage.ref(this.location + this.imgName);
-
+        const photoRef = this.afStorage.ref(this.location + this.photoID);
         photoRef.put(imgData).then(function(){
           photoRef.getDownloadURL().subscribe((url:any) => {
             resolve(url);
@@ -35,19 +32,19 @@ export class PhotoService {
     }
     this.photos = [];
   }
-  public async addNewToGallery() {
+  async addNewToGallery() {
     const capturedPhoto = await Camera.getPhoto({
-      resultType: CameraResultType.Uri,
+      resultType: CameraResultType.DataUrl,
+      allowEditing: false,
       source: CameraSource.Camera,
       quality: 100,
     });
     this.photos.unshift({
-      name: capturedPhoto.webPath.substring(27),
+      name: JSON.stringify(this.photoID),
       webviewPath: capturedPhoto.webPath,
       type: capturedPhoto.format,
     });
     await this.storePhoto(capturedPhoto);
-    this.photoURL = capturedPhoto.webPath.substring(5);
   }
 }
 export interface EventPhoto {

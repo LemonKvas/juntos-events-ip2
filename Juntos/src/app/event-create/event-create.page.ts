@@ -2,7 +2,7 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import { Location } from "@angular/common";
 import { Event } from '../model/event.model';
-import {IonDatetime} from "@ionic/angular";
+import {ActionSheetController, IonDatetime} from "@ionic/angular";
 import {EventService} from "../service/event.service";
 import {FormControl, FormGroup} from "@angular/forms";
 import {AlertService} from "../service/alert.service";
@@ -44,7 +44,8 @@ export class EventCreatePage implements OnInit {
 
   constructor(private router: Router, private location: Location,
               private route: ActivatedRoute, private eventService: EventService,
-              public alertService: AlertService, public photoService: PhotoService) {
+              public alertService: AlertService, public photoService: PhotoService,
+              public actionSheetCtrl: ActionSheetController) {
     this.today = new Date();
     this.createEventForm = new FormGroup({
       eventName: new FormControl(),
@@ -117,7 +118,6 @@ export class EventCreatePage implements OnInit {
       this.errors.set('categories', 'Wähle mind. eine Kategorie aus!');
     } else if(this.errors.size === 0){
       this.setInputValues();
-      console.log(this.event);
       this.eventService.addEvent(this.event);
       this.clearEventForm();
     }
@@ -129,7 +129,6 @@ export class EventCreatePage implements OnInit {
       this.errors.set('eventName', 'Event Name darf nicht leer sein!');
     } else {
       this.setInputValues();
-      console.log(this.event);
       this.eventService.addEvent(this.event);
       this.clearEventForm();
     }
@@ -154,7 +153,7 @@ export class EventCreatePage implements OnInit {
     this.photoService.storePhoto(event.target.files[0]).then((res: any) => {
       if(res){
         this.uploadStatus = false;
-        this.photoService.photos.unshift(res);
+        this.photoUploads.unshift(res);
         this.photoURLs.push(this.photoService.photoID);
       }
     },
@@ -163,8 +162,7 @@ export class EventCreatePage implements OnInit {
         console.log(error);
       });
   }
-  addPhotoToGallery(event){
+  addPhotoToGallery(){
     this.photoService.addNewToGallery();
-    this.uploadPhoto(event);
   }
 }
