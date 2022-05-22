@@ -2,7 +2,7 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import { Location } from "@angular/common";
 import { Event } from '../model/event.model';
-import {ActionSheetController, IonDatetime} from "@ionic/angular";
+import {IonDatetime} from "@ionic/angular";
 import {EventService} from "../service/event.service";
 import {FormControl, FormGroup} from "@angular/forms";
 import {AlertService} from "../service/alert.service";
@@ -44,9 +44,23 @@ export class EventCreatePage implements OnInit {
 
   constructor(private router: Router, private location: Location,
               private route: ActivatedRoute, private eventService: EventService,
-              public alertService: AlertService, public photoService: PhotoService,
-              public actionSheetCtrl: ActionSheetController) {
+              public alertService: AlertService, public photoService: PhotoService) {
     this.today = new Date();
+    this.event = new Event(
+      this.eventName,
+      this.photoURLs,
+      this.creationDate,
+      this.eventDate,
+      this.price,
+      this.eventBio,
+      this.categories,
+      this.participants,
+      this.maxParticipants,
+      this.address,
+      this.publishStatus,
+      null,
+      null,
+    );
     this.createEventForm = new FormGroup({
       eventName: new FormControl(),
       photoURLs: new FormControl(),
@@ -86,67 +100,67 @@ export class EventCreatePage implements OnInit {
       '',
     );
   }
-  addEvent(){
+  async addEvent(){
     this.publishStatus = true;
     this.errors.clear();
     if(!this.eventName){
-      this.alertService.emptyInputsAlert();
+      await this.alertService.emptyInputsAlert();
       this.errors.set('eventName', 'Event Name darf nicht leer sein!');
     } else if(!this.eventDate){
-      this.alertService.emptyInputsAlert();
+      await this.alertService.emptyInputsAlert();
       this.errors.set('eventDate', 'Datum und Uhrzeit darf nicht leer sein!');
     } else if(!this.eventBio){
-      this.alertService.emptyInputsAlert();
+      await this.alertService.emptyInputsAlert();
       this.errors.set('eventBio', 'Beschreibung darf nicht leer sein!');
     } else if(!this.street){
-      this.alertService.emptyInputsAlert();
+      await this.alertService.emptyInputsAlert();
       this.errors.set('eventAddress', 'Straße darf nicht leer sein!');
     } else if(!this.zipCode){
-      this.alertService.emptyInputsAlert();
+      await this.alertService.emptyInputsAlert();
       this.errors.set('eventAddress', 'PLZ darf nicht leer sein!');
     } else if(!this.city){
-      this.alertService.emptyInputsAlert();
+      await this.alertService.emptyInputsAlert();
       this.errors.set('eventAddress', 'Stadt darf nicht leer sein!');
     } else if(!this.price){
-      this.alertService.emptyInputsAlert();
+      await this.alertService.emptyInputsAlert();
       this.errors.set('price', 'Preis darf nicht leer sein!');
     } else if(this.maxParticipants === undefined){
-      this.alertService.emptyInputsAlert();
+      await this.alertService.emptyInputsAlert();
       this.errors.set('maxParticipants', 'Feld darf nicht leer sein!');
     } else if(this.selectedCategories.length === 0){
-      this.alertService.emptyInputsAlert();
+      await this.alertService.emptyInputsAlert();
       this.errors.set('categories', 'Wähle mind. eine Kategorie aus!');
     } else if(this.errors.size === 0){
       this.setInputValues();
-      this.eventService.addEvent(this.event);
-      this.clearEventForm();
+      await this.eventService.addEvent(this.event);
+      await this.clearEventForm();
     }
   }
-  saveEventAsDraft(){
+  async saveEventAsDraft(){
     this.publishStatus = false;
     if(!this.eventName){
-      this.alertService.eventDraftAlert();
+      await this.alertService.eventDraftAlert();
       this.errors.set('eventName', 'Event Name darf nicht leer sein!');
     } else {
       this.setInputValues();
-      this.eventService.addEvent(this.event);
-      this.clearEventForm();
+      await this.eventService.addEvent(this.event);
+      await this.clearEventForm();
     }
   }
-  clearEventForm(){
+  async clearEventForm(){
     this.createEventForm.reset();
     this.eventDate = null;
     this.photoUploads = [];
     this.publishStatus = false;
     // later navigate to event-detail page
-    this.router.navigate(['home']);
+    await this.router.navigate(['home']);
   }
-  remove(item){
-    this.eventService.removeEvent(item.id);
+  async remove(item){
+    await this.eventService.removeEvent(item.id);
     this.location.back();
   }
-  back(){
-    this.alertService.unsaveAlert();
+  async back(){
+    await this.alertService.unsaveAlert();
   }
   uploadPhoto(event){
     this.uploadStatus = true;
@@ -162,7 +176,7 @@ export class EventCreatePage implements OnInit {
         console.log(error);
       });
   }
-  addPhotoToGallery(){
-    this.photoService.addNewToGallery();
+  async addPhotoToGallery(){
+    await this.photoService.addNewToGallery();
   }
 }
