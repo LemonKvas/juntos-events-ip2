@@ -4,6 +4,8 @@ import firebase from "firebase/compat/app";
 import User from "../models/classes/user";
 import {getDoc} from "firebase/firestore";
 import UserCredential = firebase.auth.UserCredential;
+import {Router} from "@angular/router";
+import {AlertService} from "../service/alert.service";
 
 
 @Injectable({
@@ -13,7 +15,7 @@ export class UserDataService {
 
   private readonly userCollection!: AngularFirestoreCollection;
 
-  constructor(private afs: AngularFirestore) {
+  constructor(private afs: AngularFirestore, private router: Router, public alertService: AlertService) {
     this.userCollection = this.afs.collection(`user`);
     console.log(this.userCollection);
   }
@@ -26,7 +28,7 @@ export class UserDataService {
 
   async getCurrentUser() {
     const userData = localStorage.getItem('user');
-    return <any>JSON.parse(userData);
+    return JSON.parse(userData);
   }
 
   async createNewUserInFirestore(userCredential: UserCredential, userType: string | number){
@@ -47,6 +49,26 @@ export class UserDataService {
     const data = JSON.parse(JSON.stringify(user));
     await this.userCollection.doc(userCredential.user.uid).set(data)
       .catch((err) => console.log(err));
+
+  }
+
+  async updateCurrentUser(data: any) {
+    let db = firebase.firestore();
+
+    let user = await this.getCurrentUser();
+    let userId = user.userId;
+    console.log(user);
+    console.log(typeof user)
+    console.log(userId)
+    console.log(data)
+
+    db.collection('user').doc(userId).update(data).then((res) => {
+      this.router.navigate(['event-list'])
+    }).catch((e) => {
+      this.alertService.basicAlert('Bearbeiten des Profils fehlgeschlagen', 'Bitte versuchen Sie es später noch mal', ['OK']);
+      console.log('error');
+      console.log(e);
+    });
 
   }
 }
