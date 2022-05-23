@@ -108,6 +108,17 @@ export class AuthService {
       });
   }
 
+  //anonymous login
+  AnonymousAuth(){
+    this.afAuth.signInAnonymously()
+        .then(userCredentials => {
+          console.log(userCredentials);
+        })
+        .catch((error) => {
+          console.log(error.message)
+        })
+  }
+
   SignOut() {
     this.afAuth.signOut().then(() => {
       localStorage.removeItem('user');
