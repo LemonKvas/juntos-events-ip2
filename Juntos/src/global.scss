@@ -39,3 +39,10 @@
   font-family: "Twister";
   src: url("./assets/fonts/Twister.ttf");
 }
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}

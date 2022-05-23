@@ -9,9 +9,8 @@ import {environment} from '../environments/environment';
 import {AngularFireAuthModule} from "@angular/fire/compat/auth";
 import {AngularFireDatabaseModule} from "@angular/fire/compat/database";
 import {AngularFireStorageModule} from "@angular/fire/compat/storage";
-
-
 import {AngularFireModule} from "@angular/fire/compat";
+
 
 
 @NgModule({
@@ -23,10 +22,11 @@ import {AngularFireModule} from "@angular/fire/compat";
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFireStorageModule,
-    AngularFireDatabaseModule,
-    AngularFireDatabaseModule,
-],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy}],
+    AngularFireDatabaseModule],
+  providers: [{
+    provide: RouteReuseStrategy,
+    useClass: IonicRouteStrategy
+  }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

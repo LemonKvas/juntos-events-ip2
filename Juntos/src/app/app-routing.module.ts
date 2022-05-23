@@ -14,10 +14,21 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
-  },  {
+  },
+  {
     path: 'edit-user',
     loadChildren: () => import('./edit-user/edit-user.module').then( m => m.EditUserPageModule)
   },
+
+  {
+    path: 'event-create',
+    loadChildren: () => import('./event-create/event-create.module').then( m => m.EventCreatePageModule)
+  },
+  {
+    path: 'event-list',
+    loadChildren: () => import('./event-list/event-list.module').then( m => m.EventListPageModule)
+  },
+
 
 ];
 

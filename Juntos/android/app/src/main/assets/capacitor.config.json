@@ -1,0 +1,6 @@
+{
+	"appId": "com.juntos.events",
+	"appName": "Juntos",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}
