@@ -153,7 +153,7 @@ export class EventCreatePage implements OnInit {
     this.photoUploads = [];
     this.publishStatus = false;
     // later navigate to event-detail page
-    await this.router.navigate(['home']);
+    await this.router.navigate(['event-list']);
   }
   async remove(item){
     await this.eventService.removeEvent(item.id);
