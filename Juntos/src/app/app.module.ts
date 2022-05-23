@@ -9,10 +9,7 @@ import {environment} from '../environments/environment';
 import {AngularFireAuthModule} from "@angular/fire/compat/auth";
 import {AngularFireDatabaseModule} from "@angular/fire/compat/database";
 import {AngularFireStorageModule} from "@angular/fire/compat/storage";
-import {getApp} from "@angular/fire/app";
-import {provideAuth, getAuth} from "@angular/fire/auth";
-import {initializeAuth, indexedDBLocalPersistence} from "firebase/auth";
-import {Capacitor} from "@capacitor/core";
+
 
 import {AngularFireModule} from "@angular/fire/compat";
 
@@ -27,15 +24,7 @@ import {AngularFireModule} from "@angular/fire/compat";
     AngularFireAuthModule,
     AngularFireStorageModule,
     AngularFireDatabaseModule,
-    provideAuth(() => {
-    if (Capacitor.isNativePlatform()) {
-      return initializeAuth(getApp(), {
-        persistence: indexedDBLocalPersistence
-      });
-    } else {
-      return getAuth();
-    }
-})
+    AngularFireDatabaseModule,
 ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy}],
   bootstrap: [AppComponent],
