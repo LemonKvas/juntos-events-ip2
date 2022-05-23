@@ -9,7 +9,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "compodoc": "npx compodoc -p tsconfig.json"
   },
   "private": true,
   "dependencies": {
@@ -30,8 +31,8 @@
     "@capacitor/keyboard": "1.2.2",
     "@capacitor/status-bar": "1.0.8",
     "@ionic/angular": "^6.1.3",
+    "capacitor": "^0.5.5",
     "@ionic/pwa-elements": "^3.1.1",
-    "cordova-plugin-firebase": "^2.0.5",
     "firebase": "^9.6.11",
     "rxjs": "~7.5.5",
     "tslib": "^2.4.0",
@@ -71,5 +72,5 @@
     "ts-node": "~10.7.0",
     "typescript": "~4.6.3"
   },
-  "description": "An Ionic project"
+  "description": "Juntos Events web and mobile application"
 }

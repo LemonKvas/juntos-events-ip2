@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">Juntos</string>
     <string name="title_activity_main">Juntos</string>
-    <string name="package_name">io.ionic.starter</string>
-    <string name="custom_url_scheme">io.ionic.starter</string>
+    <string name="package_name">com.juntos.events</string>
+    <string name="custom_url_scheme">com.juntos.events</string>
+    <string name="server_client_id">295740835695-o2nmb8i91d50u37lku1mibm7h0i4rm43.apps.googleusercontent.com</string>
 </resources>

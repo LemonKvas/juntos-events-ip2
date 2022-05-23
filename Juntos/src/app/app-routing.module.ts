@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
 
 const routes: Routes = [
   {
@@ -16,9 +16,15 @@ const routes: Routes = [
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
   {
+    path: 'edit-user',
+    loadChildren: () => import('./edit-user/edit-user.module').then( m => m.EditUserPageModule)
+  },
+
+  {
     path: 'event-create',
     loadChildren: () => import('./event-create/event-create.module').then( m => m.EventCreatePageModule)
-  },  {
+  },
+  {
     path: 'event-list',
     loadChildren: () => import('./event-list/event-list.module').then( m => m.EventListPageModule)
   },
@@ -32,4 +38,5 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
+
 export class AppRoutingModule { }
