@@ -3,6 +3,7 @@ import {AngularFireAuth} from "@angular/fire/compat/auth";
 import firebase from "firebase/compat/app";
 import {UserDataService} from "src/app/services/user-data.service";
 import User from "src/app/models/classes/user";
+import {GoogleAuth} from "@codetrix-studio/capacitor-google-auth";
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 import FacebookAuthProvider = firebase.auth.FacebookAuthProvider;
 
@@ -84,6 +85,16 @@ export class AuthService {
           if(String(error.code).includes('email-already-in-use')) this.EmailLogin(email, password);
         });
     }
+  }
+
+  async GoogleMobileAuth(userType) {
+    await GoogleAuth.signIn().then(async (user) => {
+
+      console.log(user);
+    }).catch((error) =>{
+      console.log(error);
+      return error.message;
+    });
   }
 
   // Sign in with Google

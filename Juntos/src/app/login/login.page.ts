@@ -14,6 +14,7 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
+
   }
 
   switchUserLogin(event: any) {

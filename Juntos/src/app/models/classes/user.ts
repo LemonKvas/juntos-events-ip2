@@ -1,7 +1,7 @@
 import {Feedback} from "src/app/models/interfaces/feedback";
 import {RegisteredEvent} from "src/app/models/interfaces/registered-event";
 import {Badge} from "src/app/models/interfaces/badge";
-import userRoles from "src/app/models/interfaces/userRoles";
+import userRoles from "src/app/models/enums/userRoles";
 
 export class User {
   userId: string;
