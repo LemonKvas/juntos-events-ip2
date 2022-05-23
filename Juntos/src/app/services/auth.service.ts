@@ -20,15 +20,15 @@ export class AuthService {
 
   constructor(private afAuth: AngularFireAuth, private userDataService: UserDataService) {
     this.afAuth.authState.subscribe(async firebaseUser => {
-      console.log(firebaseUser);
-      this.user = undefined;
-      this.token = undefined;
-      if(firebaseUser){
+        console.log(firebaseUser);
+        this.user = undefined;
+        this.token = undefined;
+        if(firebaseUser){
           this.user = await this.userDataService.getUserById(firebaseUser.uid);
           this.token = firebaseUser.getIdTokenResult(false);
         }
-      localStorage.setItem('user', JSON.stringify(this.user));
-      localStorage.setItem('token', JSON.stringify(firebaseUser.getIdTokenResult(true)));
+        localStorage.setItem('user', JSON.stringify(this.user));
+        localStorage.setItem('token', JSON.stringify(firebaseUser.getIdTokenResult(true)));
       }
     )
   }
