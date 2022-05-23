@@ -89,11 +89,16 @@ export class AuthService {
 
   async GoogleMobileAuth(userType) {
     await GoogleAuth.signIn().then(async (user) => {
-
-      console.log(user);
+      const credential = await firebase.auth.GoogleAuthProvider.credential(user.authentication.idToken);
+      await this.afAuth.signInWithCredential(credential)
+          .then((userCredential)=>{
+            this.CheckForNewUser(userCredential, userType);
+          })
+          .catch((error) => {
+            console.log("firebase error", error);
+          })
     }).catch((error) =>{
-      console.log(error);
-      return error.message;
+      console.log("google error", error);
     });
   }
 
@@ -117,15 +122,19 @@ export class AuthService {
     return this.afAuth
       .signInWithPopup(provider)
       .then((userCredential) => {
-        if(userCredential.additionalUserInfo.isNewUser){
-          this.userDataService.createNewUserInFirestore(userCredential, userType);
-        }
+        this.CheckForNewUser(userCredential, userType);
         console.log(userCredential);
         console.log('You have been successfully logged in!');
       })
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  CheckForNewUser(userCredential, userType){
+    if(userCredential.additionalUserInfo.isNewUser){
+      this.userDataService.createNewUserInFirestore(userCredential, userType);
+    }
   }
 
   SignOut() {

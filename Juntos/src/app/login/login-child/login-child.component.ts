@@ -16,6 +16,8 @@ export class LoginChildComponent implements OnInit {
   password: string;
   deviceIndicator: device;
 
+  test;
+
 
 
   constructor(private authService: AuthService) {
