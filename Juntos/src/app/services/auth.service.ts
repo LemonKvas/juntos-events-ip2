@@ -108,6 +108,10 @@ export class AuthService {
   }
 
   FacebookAuth(userType) {
+    //TODO: MOBILE FUNKTIONIERT NUR MIT URLS
+    //Dieses Tutorial benutzen:
+    //https://enappd.com/blog/facebook-login-in-capacitor-apps-with-ionic-angular/128/
+    //clientid 6ea09df3fcf00feb02b55194fc03d8c6
     //TODO: Nutzungsbedingungen URL & URL zur Datenrichtlinie bei Meta Developer hinzufügen
     //https://www.devopsschool.com/blog/error-app-not-set-up-this-app-is-still-in-development-mode-and-you-dont-have-access-to-it/#:~:text=returns%20this%20error-,App%20not%20set%20up%3A%20This%20app%20is%20still%20in%20development,t%20login%20with%20their%20facebook.
     return this.AuthLogin(new FacebookAuthProvider(), userType);
