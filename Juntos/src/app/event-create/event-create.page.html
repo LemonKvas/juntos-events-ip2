@@ -4,7 +4,7 @@
 
     <ion-buttons slot="start">
       <ion-button (click)="back()">
-        <ion-icon name="close-circle-outline"></ion-icon>
+        <ion-icon name="close-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
 
@@ -29,10 +29,9 @@
           <ion-item button="true" id="open-date-input">
             <ion-label position="stacked">Datum & Uhrzeit*</ion-label>
             <ion-input>{{ eventDate | date:'EEE, dd-MM-yyyy H:mmZ' }}</ion-input>
-            <ion-popover trigger="open-date-input" show-backdrop="false">
-              <ng-template>
-                <ion-datetime [(ngModel)]="eventDate"
-                ></ion-datetime>
+            <ion-popover id="eventDatePopover" trigger="open-date-input" show-backdrop="false" size="cover">
+              <ng-template id="eventDateIonDatetime">
+                <ion-datetime [(ngModel)]="eventDate"></ion-datetime>
               </ng-template>
             </ion-popover>
           </ion-item>
@@ -52,7 +51,7 @@
             <ion-input type="number" placeholder="PLZ" [(ngModel)]="zipCode"></ion-input>
             <ion-input type="text" placeholder="Ort" [(ngModel)]="city"></ion-input>
           </ion-item>
-          <p class="ion-text-end ion-padding-end" placeholder="z.B. 'Musik', 'Essen & Trinken' etc." style="color:var(--ion-color-danger)"
+          <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
              *ngIf="errors.get('eventAddress')">
             {{errors.get('eventAddress')}}
           </p>

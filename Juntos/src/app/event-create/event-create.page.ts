@@ -135,6 +135,7 @@ export class EventCreatePage implements OnInit {
       await this.eventService.addEvent(this.event);
       await this.clearEventForm();
     }
+    await this.router.navigate(['event-list']);
   }
   async saveEventAsDraft(){
     this.publishStatus = false;
@@ -146,14 +147,13 @@ export class EventCreatePage implements OnInit {
       await this.eventService.addEvent(this.event);
       await this.clearEventForm();
     }
+    await this.router.navigate(['home']);
   }
   async clearEventForm(){
     this.createEventForm.reset();
     this.eventDate = null;
     this.photoUploads = [];
     this.publishStatus = false;
-    // later navigate to event-detail page
-    await this.router.navigate(['event-list']);
   }
   async remove(item){
     await this.eventService.removeEvent(item.id);
@@ -161,6 +161,7 @@ export class EventCreatePage implements OnInit {
   }
   async back(){
     await this.alertService.unsaveAlert();
+    await this.router.navigate(['home']);
   }
   uploadPhoto(event){
     this.uploadStatus = true;

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Event } from '../model/event.model';
 import { EventService } from '../service/event.service';
-import { PhotoService} from '../service/photo.service';
+import { Share } from '@capacitor/share';
 
 @Component({
   selector: 'app-event-list',
@@ -10,7 +10,6 @@ import { PhotoService} from '../service/photo.service';
 })
 export class EventListPage implements OnInit {
   events: Event[] = [];
-
   constructor(private eventService: EventService) {
   }
 
@@ -22,6 +21,28 @@ export class EventListPage implements OnInit {
           ... e.payload.doc.data() as Event
         }
       });
+    });
+  }
+  getPrice(event: Event): string{
+    if(event.price === '0' || event.price === undefined || event.price === null){
+      event.price = 'Kostenlos';
+      return event.price;
+    }
+    return event.price;
+  }
+  async shareEvent(){
+    const msgText = 'Hallo,\n';
+    Share.canShare().then(canShare => {
+      if(canShare.value){
+        Share.share({
+          title: 'Juntos Event',
+          text: msgText,
+          dialogTitle: 'Event teilen'
+        }).then((v) => console.log('ok: ', v))
+          .catch(err => console.log(err));
+      } else {
+        console.log('Error: Sharing not available!');
+      }
     });
   }
 }
