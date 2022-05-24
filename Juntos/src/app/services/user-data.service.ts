@@ -24,6 +24,13 @@ export class UserDataService {
     return <User>docSnap.data();
   }
 
+
+
+  async getCurrentUser() {
+    const userData = localStorage.getItem('user');
+    return <any>JSON.parse(userData);
+  }
+
   async createNewUserInFirestore(userCredential: UserCredential | any, userType: string | number){
     let user: User;
     if(userCredential.additionalUserInfo.providerId == "google.com"){

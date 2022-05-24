@@ -15,14 +15,6 @@
       "oauth_client": [
         {
           "client_id": "295740835695-o2nmb8i91d50u37lku1mibm7h0i4rm43.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.juntos.events",
-            "certificate_hash": "837c8052bb6d5349b0f824bb1304eaf4f34a637d"
-          }
-        },
-        {
-          "client_id": "295740835695-o2nmb8i91d50u37lku1mibm7h0i4rm43.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
