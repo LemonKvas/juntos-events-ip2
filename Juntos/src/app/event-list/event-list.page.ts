@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Event } from 'src/app/models/classes/event.model';
 import { EventService } from 'src/app/services/event.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-event-list',
@@ -10,7 +11,7 @@ import { EventService } from 'src/app/services/event.service';
 export class EventListPage implements OnInit {
   events: Event[] = [];
 
-  constructor(private eventService: EventService) {
+  constructor(private eventService: EventService, private router: Router) {
   }
 
   ngOnInit() {
@@ -22,5 +23,9 @@ export class EventListPage implements OnInit {
         }
       });
     });
+  }
+
+  createEvent() {
+    this.router.navigate(['event-create']);
   }
 }
