@@ -6,6 +6,8 @@ import User from "src/app/models/classes/user";
 import {GoogleAuth} from "@codetrix-studio/capacitor-google-auth";
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 import FacebookAuthProvider = firebase.auth.FacebookAuthProvider;
+import {Router} from "@angular/router";
+import {AlertService} from "../service/alert.service";
 
 
 @Injectable({
@@ -18,7 +20,7 @@ export class AuthService {
     token;
 
 
-    constructor(private afAuth: AngularFireAuth, private userDataService: UserDataService) {
+    constructor(private afAuth: AngularFireAuth, private userDataService: UserDataService, private router: Router, public alertService: AlertService) {
         this.afAuth.authState.subscribe(async firebaseUser => {
                 this.user = undefined;
                 this.token = undefined;
@@ -53,6 +55,7 @@ export class AuthService {
         this.afAuth.signInAnonymously()
             .then(userCredentials => {
                 console.log(userCredentials);
+              this.router.navigate(['event-list']);
             })
             .catch((error) => {
                 console.log(error.message)
@@ -64,14 +67,17 @@ export class AuthService {
             this.afAuth.signInWithEmailAndPassword(email, password)
                 .then((userCredential) => {
                     console.log(userCredential)
+                  this.router.navigate(['event-list']);
                 })
                 .catch((error) => {
                     console.log(error.message)
+                  this.alertService.basicAlert('Email oder Passwort haben die Anforderungen nicht erfüllt', 'Bitte versuchen Sie es mit anderen Werten', ['OK']);
                 });
             return;
         }
         console.log("Email oder Passwort haben die Anforderungen nicht erfüllt")
         //TODO: alerts einfügen statt console logs
+      this.alertService.basicAlert('Email oder Passwort haben die Anforderungen nicht erfüllt', 'Bitte versuchen Sie es mit anderen Werten', ['OK']);
     }
 
     EmailRegister(userType, email, password){
@@ -80,9 +86,14 @@ export class AuthService {
                 .then((userCredential) => {
                     console.log(userCredential);
                     this.userDataService.createNewUserInFirestore(userCredential, userType);
+                  this.router.navigate(['edit-user']);
                 })
                 .catch((error) => {
                     if(String(error.code).includes('email-already-in-use')) this.EmailLogin(email, password);
+                    else {
+                      //TODO
+                      this.alertService.basicAlert('Email oder Passwort haben die Anforderungen nicht erfüllt', 'Bitte versuchen Sie es mit anderen Werten', ['OK']);
+                    }
                 });
         }
     }
@@ -119,6 +130,10 @@ export class AuthService {
             .then((userCredential) => {
                 if(userCredential.additionalUserInfo.isNewUser){
                     this.userDataService.createNewUserInFirestore(userCredential, userType);
+
+                    this.router.navigate(['edit-user']);
+                } else {
+                  this.router.navigate(['event-list']);
                 }
                 console.log(userCredential);
                 console.log('You have been successfully logged in!');

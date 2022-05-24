@@ -1,13 +1,13 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button>
+      <ion-button (click)="close()">
         <ion-icon name="close-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>Profil bearbeiten</ion-title>
     <ion-buttons slot="end">
-      <ion-button>
+      <ion-button (click)="updateUser()">
         <ion-icon name="create-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -20,7 +20,7 @@
     <ion-row class="ion-justify-content-center ion-align-items-center">
       <ion-col size="auto">
         <ion-avatar>
-          <img src="https://cdn.picpng.com/head/head-the-dummy-avatar-man-tie-72756.png">
+          <img alt="User avatar" src={{photoUrl}}>
         </ion-avatar>
       </ion-col>
     </ion-row>
@@ -35,7 +35,8 @@
       <ion-col>
         <ion-item>
           <ion-label position="stacked">Vorname</ion-label>
-          <ion-input></ion-input>
+          <ion-input [(ngModel)]="firstName">
+          </ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -44,7 +45,8 @@
       <ion-col>
         <ion-item>
           <ion-label position="stacked">Nachname</ion-label>
-          <ion-input></ion-input>
+          <ion-input [(ngModel)]="lastName"
+          ></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -53,7 +55,8 @@
       <ion-col>
         <ion-item>
           <ion-label position="stacked">Benutzername</ion-label>
-          <ion-input></ion-input>
+          <ion-input [(ngModel)]="userName"
+          ></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -62,7 +65,8 @@
       <ion-col>
         <ion-item>
           <ion-label position="stacked">Sprachen</ion-label>
-          <ion-input></ion-input>
+          <ion-input [(ngModel)]="languages"
+          ></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -71,7 +75,8 @@
       <ion-col>
         <ion-item>
           <ion-label position="stacked">Beschreibung</ion-label>
-          <ion-textarea></ion-textarea>
+          <ion-textarea [(ngModel)]="description"
+          ></ion-textarea>
         </ion-item>
       </ion-col>
     </ion-row>
