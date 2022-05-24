@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Event } from 'src/app/models/classes/event.model';
-import { EventService } from 'src/app/services/event.service';
-import {Router} from "@angular/router";
+import { Event } from '../model/event.model';
+import { EventService } from '../service/event.service';
+import { Share } from '@capacitor/share';
 
 @Component({
   selector: 'app-event-list',
@@ -10,11 +10,12 @@ import {Router} from "@angular/router";
 })
 export class EventListPage implements OnInit {
   events: Event[] = [];
-
-  constructor(private eventService: EventService, private router: Router) {
+  constructor(private eventService: EventService) {
   }
-
   ngOnInit() {
+    this.getEvents();
+  }
+  getEvents(){
     this.eventService.getAllEvents().subscribe((res) => {
       this.events = res.map((e) => {
         return {
@@ -24,8 +25,26 @@ export class EventListPage implements OnInit {
       });
     });
   }
-
-  createEvent() {
-    this.router.navigate(['event-create']);
+  getPrice(event: Event): string{
+    if(event.price === '0' || event.price === undefined || event.price === null){
+      event.price = 'Kostenlos';
+      return event.price;
+    }
+    return event.price;
+  }
+  async shareEvent(){
+    const msgText = 'Hallo,\n';
+    Share.canShare().then(canShare => {
+      if(canShare.value){
+        Share.share({
+          title: 'Juntos Event',
+          text: msgText,
+          dialogTitle: 'Event teilen'
+        }).then((v) => console.log('ok: ', v))
+          .catch(err => console.log(err));
+      } else {
+        console.log('Error: Sharing not available!');
+      }
+    });
   }
 }

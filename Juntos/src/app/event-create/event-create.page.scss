@@ -7,7 +7,7 @@ p {
 ion-title {
   --ion-font-family: 'Yeseva One';
   font-family: "Yeseva One", cursive;
-  font-size: 4vw;
+  font-size: 4.5vw;
 }
 ion-content {
   --ion-font-family: 'Signika Negative';
@@ -25,6 +25,7 @@ ion-content {
 ion-item {
   padding-top: 5px;
   padding-bottom: 5px;
+  margin: 10px auto;
   border: 1px solid white;
   border-radius: 15px;
   background-color: white;
@@ -54,6 +55,19 @@ ion-col {
 ion-img {
   width: auto;
   height: auto;
+}
+#eventDatePopover {
+  ion-backdrop  {
+    opacity: 0.20 !important
+  }
+  .popover-wrapper{
+    #eventDateIonDatetime{
+      width: 50vw;
+      height: 55vw;
+      max-height: 100px;
+      max-width: 250px;
+    }
+  }
 }
 #eventDraftBtn, #eventPublishBtn {
   font-size: 2.5vh;

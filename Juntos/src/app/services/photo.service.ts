@@ -14,9 +14,12 @@ export class PhotoService {
   photoID: string;
   constructor(private afs: AngularFirestore, private afStorage: AngularFireStorage) {
   }
+  async getPhotoById(id: any){
+    return this.afStorage.ref(this.location + JSON.stringify(id));
+  }
   async storePhoto(imgData: any){
     try {
-      this.photoID = this.afs.createId() + '.jpeg';
+      this.photoID = this.afs.createId();
       return new Promise((resolve, reject) => {
         const photoRef = this.afStorage.ref(this.location + this.photoID);
         photoRef.put(imgData).then(function(){
