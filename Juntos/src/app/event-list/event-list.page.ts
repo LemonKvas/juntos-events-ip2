@@ -14,6 +14,9 @@ export class EventListPage implements OnInit {
   }
 
   ngOnInit() {
+    this.getEvents();
+  }
+  getEvents(){
     this.eventService.getAllEvents().subscribe((res) => {
       this.events = res.map((e) => {
         return {
