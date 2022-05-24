@@ -89,11 +89,16 @@ export class AuthService {
 
     async GoogleMobileAuth(userType) {
         await GoogleAuth.signIn().then(async (user) => {
-
-            console.log(user);
+            const credential = await firebase.auth.GoogleAuthProvider.credential(user.authentication.idToken);
+            await this.afAuth.signInWithCredential(credential)
+                .then((userCredential)=>{
+                    this.CheckForNewUser(userCredential, userType);
+                })
+                .catch((error) => {
+                    console.log("firebase error", error);
+                })
         }).catch((error) =>{
-            console.log(error);
-            return error.message;
+            console.log("google error", error);
         });
     }
 
@@ -103,6 +108,10 @@ export class AuthService {
     }
 
     FacebookAuth(userType) {
+        //TODO: MOBILE FUNKTIONIERT NUR MIT URLS
+        //Dieses Tutorial benutzen:
+        //https://enappd.com/blog/facebook-login-in-capacitor-apps-with-ionic-angular/128/
+        //clientid 6ea09df3fcf00feb02b55194fc03d8c6
         //TODO: Nutzungsbedingungen URL & URL zur Datenrichtlinie bei Meta Developer hinzufügen
         //https://www.devopsschool.com/blog/error-app-not-set-up-this-app-is-still-in-development-mode-and-you-dont-have-access-to-it/#:~:text=returns%20this%20error-,App%20not%20set%20up%3A%20This%20app%20is%20still%20in%20development,t%20login%20with%20their%20facebook.
         return this.AuthLogin(new FacebookAuthProvider(), userType);
@@ -117,9 +126,7 @@ export class AuthService {
         return this.afAuth
             .signInWithPopup(provider)
             .then((userCredential) => {
-                if(userCredential.additionalUserInfo.isNewUser){
-                    this.userDataService.createNewUserInFirestore(userCredential, userType);
-                }
+                this.CheckForNewUser(userCredential, userType);
                 console.log(userCredential);
                 console.log('You have been successfully logged in!');
             })
@@ -128,74 +135,20 @@ export class AuthService {
             });
     }
 
+    CheckForNewUser(userCredential, userType){
+        if(userCredential.additionalUserInfo.isNewUser){
+            this.userDataService.createNewUserInFirestore(userCredential, userType);
+        }
+    }
+
     SignOut() {
         this.afAuth.signOut().then(() => {
             localStorage.removeItem('user');
             localStorage.removeItem('token');
         })
     }
-  }
-
-  async GoogleMobileAuth(userType) {
-    await GoogleAuth.signIn().then(async (user) => {
-      const credential = await firebase.auth.GoogleAuthProvider.credential(user.authentication.idToken);
-      await this.afAuth.signInWithCredential(credential)
-          .then((userCredential)=>{
-            this.CheckForNewUser(userCredential, userType);
-          })
-          .catch((error) => {
-            console.log("firebase error", error);
-          })
-    }).catch((error) =>{
-      console.log("google error", error);
-    });
-  }
-
-  // Sign in with Google
-  GoogleAuth(userType) {
-    return this.AuthLogin(new GoogleAuthProvider(), userType);
-  }
-
-  FacebookAuth(userType) {
-    //TODO: MOBILE FUNKTIONIERT NUR MIT URLS
-    //Dieses Tutorial benutzen:
-    //https://enappd.com/blog/facebook-login-in-capacitor-apps-with-ionic-angular/128/
-    //clientid 6ea09df3fcf00feb02b55194fc03d8c6
-    //TODO: Nutzungsbedingungen URL & URL zur Datenrichtlinie bei Meta Developer hinzufügen
-    //https://www.devopsschool.com/blog/error-app-not-set-up-this-app-is-still-in-development-mode-and-you-dont-have-access-to-it/#:~:text=returns%20this%20error-,App%20not%20set%20up%3A%20This%20app%20is%20still%20in%20development,t%20login%20with%20their%20facebook.
-    return this.AuthLogin(new FacebookAuthProvider(), userType);
-  }
 
 
-  // Auth logic to run auth providers
-  AuthLogin(provider, userType) {
-    provider.setCustomParameters({
-      'display': 'popup'
-    });
-    return this.afAuth
-      .signInWithPopup(provider)
-      .then((userCredential) => {
-        this.CheckForNewUser(userCredential, userType);
-        console.log(userCredential);
-        console.log('You have been successfully logged in!');
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
-  CheckForNewUser(userCredential, userType){
-    if(userCredential.additionalUserInfo.isNewUser){
-      this.userDataService.createNewUserInFirestore(userCredential, userType);
-    }
-  }
-
-  SignOut() {
-    this.afAuth.signOut().then(() => {
-      localStorage.removeItem('user');
-      localStorage.removeItem('token');
-    })
-  }
 
 
 }
