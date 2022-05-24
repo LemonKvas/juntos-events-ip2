@@ -53,7 +53,6 @@ export class AuthService {
     AnonymousAuth(){
         this.afAuth.signInAnonymously()
             .then(userCredentials => {
-                console.log(userCredentials);
                 this.router.navigate(['event-list']);
             })
             .catch((error) => {
@@ -76,7 +75,6 @@ export class AuthService {
         }
         console.log("Email oder Passwort haben die Anforderungen nicht erfüllt")
         //TODO: alerts einfügen statt console logs
-      this.alertService.basicAlert('Email oder Passwort haben die Anforderungen nicht erfüllt', 'Bitte versuchen Sie es mit anderen Werten', ['OK']);
     }
 
     EmailRegister(userType, email, password){
@@ -124,6 +122,7 @@ export class AuthService {
         //https://www.devopsschool.com/blog/error-app-not-set-up-this-app-is-still-in-development-mode-and-you-dont-have-access-to-it/#:~:text=returns%20this%20error-,App%20not%20set%20up%3A%20This%20app%20is%20still%20in%20development,t%20login%20with%20their%20facebook.
         return this.AuthLogin(new FacebookAuthProvider(), userType);
     }
+
 
     // Auth logic to run auth providers
     AuthLogin(provider, userType) {
