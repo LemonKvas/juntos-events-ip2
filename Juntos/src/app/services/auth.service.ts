@@ -19,7 +19,6 @@ export class AuthService {
     user: User;
     token;
 
-
     constructor(private afAuth: AngularFireAuth, private userDataService: UserDataService, private router: Router, public alertService: AlertService) {
         this.afAuth.authState.subscribe(async firebaseUser => {
                 this.user = undefined;
@@ -55,19 +54,19 @@ export class AuthService {
         this.afAuth.signInAnonymously()
             .then(userCredentials => {
                 console.log(userCredentials);
-              this.router.navigate(['event-list']);
+                this.router.navigate(['event-list']);
             })
             .catch((error) => {
                 console.log(error.message)
             })
     }
+
     //Login with E-Mail and password
     EmailLogin(email, password) {
         if (this.checkEmailAndPasswort) {
             this.afAuth.signInWithEmailAndPassword(email, password)
                 .then((userCredential) => {
-                    console.log(userCredential)
-                  this.router.navigate(['event-list']);
+                    this.router.navigate(['event-list']);
                 })
                 .catch((error) => {
                     console.log(error.message)
@@ -84,9 +83,7 @@ export class AuthService {
         if (this.checkEmailAndPasswort){
             return this.afAuth.createUserWithEmailAndPassword(email, password)
                 .then((userCredential) => {
-                    console.log(userCredential);
-                    this.userDataService.createNewUserInFirestore(userCredential, userType);
-                  this.router.navigate(['edit-user']);
+                    this.CheckForNewUser(userCredential, userType);
                 })
                 .catch((error) => {
                     if(String(error.code).includes('email-already-in-use')) this.EmailLogin(email, password);
@@ -128,7 +125,6 @@ export class AuthService {
         return this.AuthLogin(new FacebookAuthProvider(), userType);
     }
 
-
     // Auth logic to run auth providers
     AuthLogin(provider, userType) {
         provider.setCustomParameters({
@@ -138,7 +134,6 @@ export class AuthService {
             .signInWithPopup(provider)
             .then((userCredential) => {
                 this.CheckForNewUser(userCredential, userType);
-                console.log(userCredential);
                 console.log('You have been successfully logged in!');
             })
             .catch((error) => {
@@ -146,9 +141,12 @@ export class AuthService {
             });
     }
 
-    CheckForNewUser(userCredential, userType){
+    async CheckForNewUser(userCredential, userType){
         if(userCredential.additionalUserInfo.isNewUser){
-            this.userDataService.createNewUserInFirestore(userCredential, userType);
+            await this.userDataService.createNewUserInFirestore(userCredential, userType);
+            await this.router.navigate(['edit-user']);
+        } else {
+            await this.router.navigate(['event-list']);
         }
     }
 
@@ -158,8 +156,5 @@ export class AuthService {
             localStorage.removeItem('token');
         })
     }
-
-
-
 
 }
