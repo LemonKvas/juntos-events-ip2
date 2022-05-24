@@ -12,7 +12,6 @@ export class EventListPage implements OnInit {
   events: Event[] = [];
   constructor(private eventService: EventService) {
   }
-
   ngOnInit() {
     this.getEvents();
   }
