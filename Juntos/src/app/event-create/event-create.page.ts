@@ -1,12 +1,12 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import { Location } from "@angular/common";
-import { Event } from '../model/event.model';
+import { Event } from 'src/app/models/classes/event.model';
 import {IonDatetime} from "@ionic/angular";
-import {EventService} from "../service/event.service";
+import {EventService} from "src/app/services/event.service";
 import {FormControl, FormGroup} from "@angular/forms";
-import {AlertService} from "../service/alert.service";
-import {PhotoService} from "../service/photo.service";
+import {AlertService} from "src/app/services/alert.service";
+import {PhotoService} from "src/app/services/photo.service";
 
 @Component({
   selector: 'app-event-create',

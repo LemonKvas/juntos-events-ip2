@@ -5,7 +5,7 @@ import User from "../models/classes/user";
 import {getDoc} from "firebase/firestore";
 import UserCredential = firebase.auth.UserCredential;
 import {Router} from "@angular/router";
-import {AlertService} from "../service/alert.service";
+import {AlertService} from "src/app/services/alert.service";
 
 
 @Injectable({

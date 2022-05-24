@@ -7,7 +7,7 @@ import {GoogleAuth} from "@codetrix-studio/capacitor-google-auth";
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 import FacebookAuthProvider = firebase.auth.FacebookAuthProvider;
 import {Router} from "@angular/router";
-import {AlertService} from "../service/alert.service";
+import {AlertService} from "src/app/services/alert.service";
 
 
 @Injectable({

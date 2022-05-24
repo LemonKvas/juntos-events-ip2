@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {UserDataService} from "../services/user-data.service";
-import {AlertService} from "../service/alert.service";
+import {AlertService} from "src/app/services/alert.service";
 import {Router} from "@angular/router";
 
 @Component({
@@ -93,8 +93,6 @@ export class EditUserPage implements OnInit {
       'description' : this.description,
       'photoUrl' : this.photoUrl,
     };
-
-
     this.userDataService.updateCurrentUser(data);
   }
 }

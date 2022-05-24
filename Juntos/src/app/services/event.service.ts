@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/compat/firestore";
-import { Event } from '../model/event.model';
+import { Event } from 'src/app/models/classes/event.model';
 import {Observable} from "rxjs";
 
 @Injectable({
