@@ -27,7 +27,11 @@ const routes: Routes = [
     path: 'event-list',
     loadChildren: () => import('./event-list/event-list.module').then( m => m.EventListPageModule),
     canActivate: [LoggedInGuard]
+  },  {
+    path: 'user-profile',
+    loadChildren: () => import('./user-profile/user-profile.module').then( m => m.UserProfilePageModule)
   },
+
 
 
 ];

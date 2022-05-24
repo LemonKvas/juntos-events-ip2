@@ -1,6 +1,6 @@
 import {fakeAsync, TestBed} from '@angular/core/testing';
 
-import {AuthService} from './auth.service';
+import {AuthService} from 'src/app/services/auth.service';
 
 import {AngularFireAuth} from "@angular/fire/compat/auth";
 
