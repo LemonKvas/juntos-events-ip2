@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Event } from '../model/event.model';
-import { EventService } from '../service/event.service';
+import { Event } from '../models/classes/event.model';
+import { EventService } from '../services/event.service';
 import { Share } from '@capacitor/share';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-event-list',
@@ -10,7 +11,7 @@ import { Share } from '@capacitor/share';
 })
 export class EventListPage implements OnInit {
   events: Event[] = [];
-  constructor(private eventService: EventService) {
+  constructor(private eventService: EventService, private router: Router) {
   }
   ngOnInit() {
     this.getEvents();
@@ -46,5 +47,8 @@ export class EventListPage implements OnInit {
         console.log('Error: Sharing not available!');
       }
     });
+  }
+  createEvent(){
+    this.router.navigate(['event-create']);
   }
 }
