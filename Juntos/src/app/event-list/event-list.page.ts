@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Event } from '../models/classes/event.model';
 import { EventService } from '../services/event.service';
 import { Share } from '@capacitor/share';
-import {Router} from "@angular/router";
+import {NavigationExtras, Router} from '@angular/router';
 
 @Component({
   selector: 'app-event-list',
@@ -11,27 +11,19 @@ import {Router} from "@angular/router";
 })
 export class EventListPage implements OnInit {
   events: Event[] = [];
-  constructor(private eventService: EventService, private router: Router) {
+  selectedEvent: Event;
+  constructor(public eventService: EventService, private router: Router) {
   }
   ngOnInit() {
     this.getEvents();
   }
   getEvents(){
     this.eventService.getAllEvents().subscribe((res) => {
-      this.events = res.map((e) => {
-        return {
+      this.events = res.map((e) => ({
           eventId: e.payload.doc.id,
           ... e.payload.doc.data() as Event
-        }
-      });
+        }));
     });
-  }
-  getPrice(event: Event): string{
-    if(event.price === '0' || event.price === undefined || event.price === null){
-      event.price = 'Kostenlos';
-      return event.price;
-    }
-    return event.price;
   }
   async shareEvent(){
     const msgText = 'Hallo,\n';
@@ -50,5 +42,27 @@ export class EventListPage implements OnInit {
   }
   createEvent(){
     this.router.navigate(['event-create']);
+  }
+  /* Navigate to Event Details */
+  async eventDetailsState(id: string){
+     this.selectedEvent = await this.eventService.getEventById(id);
+     const navigationExtras: NavigationExtras = {
+       state: {
+         name: this.selectedEvent.name,
+         photoURLs: this.selectedEvent.photoURLs,
+         creationDate: this.selectedEvent.creationDate,
+         eventDate: this.selectedEvent.eventDate,
+         price: this.selectedEvent.price,
+         bio: this.selectedEvent.bio,
+         categories: this.selectedEvent.categories,
+         participants: this.selectedEvent.participants,
+         maxParticipants: this.selectedEvent,
+         address: this.selectedEvent.address,
+         publishStatus: this.selectedEvent.publishStatus,
+         eventId: this.selectedEvent.eventId,
+         creatorId: this.selectedEvent.creatorId,
+       }
+     };
+     await this.router.navigateByUrl(`event-details/${id}`, navigationExtras);
   }
 }

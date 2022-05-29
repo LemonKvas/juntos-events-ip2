@@ -27,12 +27,12 @@
           </ion-col>
           <ion-col size="6">
             <!-- (click) on event name or photo to go to the detail page of the event -->
-            <h1>{{event.name}}</h1>
+            <h1 button (click)="eventDetailsState(event.eventId)">{{event.name}}</h1>
             <p>{{event.eventDate | date: 'dd.MM.yyyy'}} um {{event.eventDate | date: 'H:mm'}}</p>
             <p>{{event.address['street']}} {{event.address['house']}}, <br>
                {{event.address['zipCode']}} {{event.address['city']}}
             </p>
-            <p *ngIf="getPrice(event)"><strong>{{event.price}}</strong></p>
+            <p *ngIf="this.eventService.getPrice(event)"><strong>{{event.price}}</strong></p>
           </ion-col>
           <ion-col size="2">
             <ion-buttons>

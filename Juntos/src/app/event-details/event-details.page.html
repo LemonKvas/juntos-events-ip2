@@ -1,0 +1,95 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-button slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="heart-outline"></ion-icon>
+      </ion-button>
+      <ion-button>
+        <ion-icon name="share-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="ion-justify-content-center">
+    <!-- Image + Event Name -->
+    <ion-row>
+      <ion-img src="{{event.photoURLs[0] | fireStorageImg: '/event-photos' | async }}"></ion-img>
+      <p>{{event.name}}</p>
+    </ion-row>
+    <!-- Event Data e.g. Date & Time -->
+    <p>{{event.eventDate | date: 'dd.MM.yyyy'}} um {{event.eventDate | date: 'H:mm'}}</p>
+    <ion-row>
+    </ion-row>
+    <ion-row>
+      <ion-segment>
+        <ion-segment-button>
+          <ion-label>
+            <!-- Event Creater Name + Profile Photo -->
+            Veranstalter*In
+          </ion-label>
+        </ion-segment-button>
+        <ion-segment-button>
+          <ion-label>
+            <!-- Participants List -->
+            Teilnehmer*Innen
+          </ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-row>
+    <ion-row class="ion-justify-content-end">
+      <ion-col size="9">
+        <ion-label class="event-details">Beschreibung</ion-label>
+        <p>{{event.bio}}</p>
+      </ion-col>
+      <ion-col size="3">
+        <!-- Rating display in stars -->
+        <ion-icon name="star-outline"></ion-icon>
+        <ion-icon name="star-outline"></ion-icon>
+        <ion-icon name="star-outline"></ion-icon>
+        <ion-icon name="star-outline"></ion-icon>
+        <ion-icon name="star-outline"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-label class="event-details">Standort</ion-label>
+        <p>
+          {{event.address['street']}} {{event.address['house']}}, {{event.address['zipCode']}} {{event.address['city']}}
+        </p>
+      </ion-col>
+      <ng-container></ng-container>
+    </ion-row>
+    <ion-row>
+      <!-- Google Maps -->
+    </ion-row>
+    <ion-row>
+      <ion-label class="event-details">Kommentare</ion-label>
+      <ion-list>
+        <!-- Review / Feedback Area -->
+        <ion-item></ion-item>
+      </ion-list>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer class="ion-justify-content-center">
+  <ion-toolbar>
+    <ion-row class="ion-align-items-center">
+      <ion-col class="ion-text-center" id="eventSaveAsDraftBtnCol" size-sm="6">
+        <p *ngIf="eventService.getPrice(event)">{{event.price}}</p>
+      </ion-col>
+      <ion-col class="ion-text-center" size-sm="6">
+        <ion-button id="eventPartakeBtn" (click)="attendEvent()">
+          Teilnehmen
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>
