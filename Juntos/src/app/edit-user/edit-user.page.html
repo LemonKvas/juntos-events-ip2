@@ -64,9 +64,10 @@
     <ion-row>
       <ion-col>
         <ion-item>
-          <ion-label position="stacked">Sprachen</ion-label>
-          <ion-input [(ngModel)]="languages"
-          ></ion-input>
+          <ion-label position="stacked">Sprachen*</ion-label>
+          <ion-select [(ngModel)]="languages" multiple="true">
+            <ion-select-option *ngFor="let allLanguage of allLanguages; let i = index">{{allLanguage.name}}</ion-select-option>
+          </ion-select>
         </ion-item>
       </ion-col>
     </ion-row>
