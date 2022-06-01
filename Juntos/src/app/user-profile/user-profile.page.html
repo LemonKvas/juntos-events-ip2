@@ -1,11 +1,21 @@
 <ng-container *ngIf="userLoaded">
 
+  <!-- Profil Titel festlegen -->
   <ion-header>
     <ion-toolbar>
-      <ion-title>userProfile</ion-title>
+      <ion-title *ngIf="user.userName else firstNameProfileTitle">{{user.userName}}</ion-title>
     </ion-toolbar>
   </ion-header>
 
+  <ng-template #firstNameProfileTitle>
+    <ion-title *ngIf="user.firstName else standardProfileTitle">{{user.firstName}}</ion-title>
+  </ng-template>
+
+  <ng-template #standardProfileTitle>
+    <ion-title>Profile</ion-title>
+  </ng-template>
+
+  <!-- Profil Inhalt -->
   <ion-content >
     <ion-grid>
 
@@ -14,6 +24,16 @@
           <ion-avatar>
             <img *ngIf="user.photoUrl; else basicProfilePhoto" alt="User avatar" src="{{user.photoUrl}}">
           </ion-avatar>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-center ion-align-items-center">
+        <ion-col size="4" class="ion-align-self-center" style="text-align: center">
+          <!-- Name unter Bild festlegen -->
+          <h2 *ngIf="user.firstName else usernameCaption">{{user.firstName}}</h2>
+          <ng-template #usernameCaption>
+            <h2 *ngIf="user.userName" >{{user.userName}}</h2>
+          </ng-template>
+          <!-- weiter mit User Bio -->
         </ion-col>
       </ion-row>
       <ion-row class="ion-justify-content-center">
@@ -25,7 +45,7 @@
       </ion-row>
       <ion-row class="ion-justify-content-center">
         <ion-col size="10">
-          <ion-progress-bar value="0.5"></ion-progress-bar>
+          <ion-progress-bar value="{{socialPointsCalculated}}"></ion-progress-bar>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -47,7 +67,9 @@
           <ng-container *ngSwitchCase="'events'" >
             <ion-list lines="full" class="ion-align-items-center">
               <ion-row class="ion-align-items-center" size="12" *ngFor="let event of events; let i = index">
-               <app-event-item [event]="event"></app-event-item>
+                <ion-col class="ion-justify-content-center" size="12">
+                  <app-event-item [event]="event"></app-event-item>
+                </ion-col>
               </ion-row>
             </ion-list>
           </ng-container>

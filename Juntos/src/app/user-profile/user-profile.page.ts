@@ -23,6 +23,7 @@ export class UserProfilePage implements OnInit {
   user;
   eventAndBadgesIndicator;
   events: Event[] = [];
+  socialPointsCalculated;
 
 
   constructor(private location: Location, private userDataService: UserDataService, private router: Router,
@@ -37,6 +38,8 @@ export class UserProfilePage implements OnInit {
         this.platform.is('iphone'));
     this.checkUser()
         .then(() => {
+          //TODO: calculate points korrekt kalkulieren wenn Badges implementiert wurden
+          this.socialPointsCalculated = `${0 + "."}${this.user.socialPoints}`;
           this.userLoaded = true;
         });
     this.getAttendedEvents();

@@ -26,14 +26,26 @@ export class UserDataService {
     return <User>docSnap.data();
   }
 
-  getCurrentUser() {
-    const userData = localStorage.getItem('user');
-    return JSON.parse(userData);
+  async getCurrentUser(): Promise<any> {
+    try {
+      const userData = localStorage.getItem('user');
+      const jsonParsedUserData = JSON.parse(userData);
+      return Promise.resolve(jsonParsedUserData);
+    }
+    catch (e){
+      return Promise.reject(e);
+    }
   }
 
   getCurrentUserID() {
-    let userDataJson = this.getCurrentUser();
-    return userDataJson.userId;
+    return this.getCurrentUser()
+        .then((userData) => {
+          return userData.userId;
+        })
+        .catch((e) => {
+          console.log(e.message);
+          return 0;
+        })
   }
 
   async createNewUserInFirestore(userCredential: UserCredential | any, userType: string | number){

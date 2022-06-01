@@ -1,6 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, HostListener, Input, OnInit} from '@angular/core';
 import {Event} from "src/app/models/classes/event.model";
 import {Share} from "@capacitor/share";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-event-item',
@@ -9,8 +10,18 @@ import {Share} from "@capacitor/share";
 })
 export class EventItemComponent{
   @Input() event: Event;
+  windowWithOver800: boolean;
 
-  constructor() { }
+  constructor() {
+    this.onResize(undefined);
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.windowWithOver800 = window.innerWidth > 800;
+  }
+
+
 
   getPrice(event: Event): string{
     if(event.price === '0' || event.price === undefined || event.price === null){
@@ -19,6 +30,7 @@ export class EventItemComponent{
     }
     return event.price;
   }
+
 
   async shareEvent(){
     const msgText = 'Hallo,\n';
