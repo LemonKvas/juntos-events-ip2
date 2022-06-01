@@ -10,6 +10,7 @@ import {AngularFireAuthModule} from "@angular/fire/compat/auth";
 import {AngularFireDatabaseModule} from "@angular/fire/compat/database";
 import {AngularFireStorageModule} from "@angular/fire/compat/storage";
 import {AngularFireModule} from "@angular/fire/compat";
+import { SharedModule } from './shared/shared.module';
 
 
 
@@ -22,7 +23,8 @@ import {AngularFireModule} from "@angular/fire/compat";
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFireStorageModule,
-    AngularFireDatabaseModule],
+    AngularFireDatabaseModule,
+    SharedModule],
   providers: [{
     provide: RouteReuseStrategy,
     useClass: IonicRouteStrategy

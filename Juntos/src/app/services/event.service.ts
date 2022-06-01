@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/compat/firestore";
 import { Event } from 'src/app/models/classes/event.model';
 import {Observable} from "rxjs";
+import {query, where} from "@angular/fire/firestore";
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +35,11 @@ export class EventService {
   }
   async removeEvent(id: string){
     await this.eventsCollections.doc(id).delete();
+  }
+
+  getAttendedEventsForOneUser(userId: string){
+    const userEventCollection = this.afs.collection('events',
+            ref => ref.where('participants', 'array-contains', userId));
+    return userEventCollection.valueChanges();
   }
 }

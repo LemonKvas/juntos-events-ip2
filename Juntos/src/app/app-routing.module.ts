@@ -4,12 +4,16 @@ import {LoggedInGuard} from "src/app/guards/logged-in.guard";
 
 const routes: Routes = [
   {
+    path: 'home',
+    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+  },
+  {
     path: 'login',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
@@ -27,8 +31,9 @@ const routes: Routes = [
     path: 'event-list',
     loadChildren: () => import('./event-list/event-list.module').then( m => m.EventListPageModule),
     canActivate: [LoggedInGuard]
-  },  {
-    path: 'user-profile',
+  },
+  {
+    path: 'profile/:userId',
     loadChildren: () => import('./user-profile/user-profile.module').then( m => m.UserProfilePageModule)
   },
 

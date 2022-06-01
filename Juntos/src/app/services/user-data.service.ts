@@ -26,11 +26,14 @@ export class UserDataService {
     return <User>docSnap.data();
   }
 
-
-
-  async getCurrentUser() {
+  getCurrentUser() {
     const userData = localStorage.getItem('user');
     return JSON.parse(userData);
+  }
+
+  getCurrentUserID() {
+    let userDataJson = this.getCurrentUser();
+    return userDataJson.userId;
   }
 
   async createNewUserInFirestore(userCredential: UserCredential | any, userType: string | number){

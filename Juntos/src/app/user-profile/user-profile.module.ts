@@ -7,14 +7,17 @@ import { IonicModule } from '@ionic/angular';
 import { UserProfilePageRoutingModule } from './user-profile-routing.module';
 
 import { UserProfilePage } from './user-profile.page';
+import {EventItemComponent} from "src/app/event-item/event-item.component";
+import {SharedModule} from "src/app/shared/shared.module";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    UserProfilePageRoutingModule
-  ],
-  declarations: [UserProfilePage]
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        UserProfilePageRoutingModule,
+        SharedModule
+    ],
+    declarations: [UserProfilePage, EventItemComponent]
 })
 export class UserProfilePageModule {}

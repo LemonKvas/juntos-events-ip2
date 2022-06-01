@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AuthService} from "src/app/services/auth.service";
-import {isPlatform} from "@ionic/angular";
+import {Platform} from "@ionic/angular";
 import {GoogleAuth} from "@codetrix-studio/capacitor-google-auth";
-import {device} from "src/app/models/enums/device";
+import {DeviceService} from "src/app/services/device.service";
 
 @Component({
   selector: 'app-login-child',
@@ -14,23 +14,20 @@ export class LoginChildComponent implements OnInit {
   @Input() userType: number | string;
   email: string;
   password: string;
-  deviceIndicator: device;
-
   test;
+  deviceIndicator;
 
 
 
-  constructor(private authService: AuthService) {
-    if(!isPlatform('capacitor')){
+  constructor(private authService: AuthService, private platform: Platform, private deviceService: DeviceService){
+    if(!this.platform.is('capacitor')){
       GoogleAuth.initialize();
     }
   }
 
   ngOnInit(){
-    if(isPlatform('android')){
+    if(this.platform.is('mobile') || this.platform.is('ios') || this.platform.is('android')){
       this.deviceIndicator = 1;
-    } else if (isPlatform('ios')){
-      this.deviceIndicator = 2;
     } else {
       this.deviceIndicator = 0;
     }
