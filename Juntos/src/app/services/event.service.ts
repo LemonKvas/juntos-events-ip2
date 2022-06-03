@@ -30,7 +30,7 @@ export class EventService {
     return document.data();
   }
   getPrice(event: Event): string{
-    if(event.price === '0' || event.price === undefined || event.price === null){
+    if(event.price === '0' || event.price === undefined || event.price === null) {
       event.price = 'Kostenlos';
       return event.price;
     }
