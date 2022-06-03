@@ -17,13 +17,18 @@ export class UserDataService {
 
   constructor(private afs: AngularFirestore, private router: Router, public alertService: AlertService) {
     this.userCollection = this.afs.collection(`user`);
-    console.log(this.userCollection);
   }
 
-  async getUserById(userId: string){
+  /*** GET USER FUNCTIONS ***/
+
+  async getUserById(userId: string) {
     let docRef = this.userCollection.doc(userId).ref;
     let docSnap = await getDoc(docRef);
     return <User>docSnap.data();
+  }
+
+  getUserById_Observable(userId: string) {
+    return this.userCollection.doc(userId).valueChanges();
   }
 
   async getCurrentUser(): Promise<any> {
@@ -31,41 +36,52 @@ export class UserDataService {
       const userData = localStorage.getItem('user');
       const jsonParsedUserData = JSON.parse(userData);
       return Promise.resolve(jsonParsedUserData);
-    }
-    catch (e){
+    } catch (e) {
       return Promise.reject(e);
     }
   }
 
-  getCurrentUserID() {
-    return this.getCurrentUser()
-        .then((userData) => {
-          return userData.userId;
-        })
-        .catch((e) => {
-          console.log(e.message);
-          return 0;
-        })
+  async getCurrentUserID() {
+    try {
+      const userData = await this.getCurrentUser();
+      return userData.userId;
+    } catch (e) {
+      console.log(e.message);
+      return undefined;
+    }
   }
 
-  async createNewUserInFirestore(userCredential: UserCredential | any, userType: string | number){
+  async getCurrentUserRole() {
+    try {
+      const userData = await this.getCurrentUser();
+      return userData.rights;
+    } catch(e) {
+      console.log(e.message);
+      return undefined;
+    }
+  }
+
+  /*** CRUD Firestore User ***/
+
+
+  async createNewUserInFirestore(userCredential: UserCredential | any, userType: string | number) {
     let user: User;
-    if(userCredential.additionalUserInfo.providerId == "google.com"){
+    if (userCredential.additionalUserInfo.providerId == "google.com") {
       user = new User(String(userCredential.user.uid), userCredential.additionalUserInfo.profile["email"] || "Please contact Juntos", Number(userType),
-        userCredential.additionalUserInfo.profile["verified_email"] || false, undefined,
-        userCredential.additionalUserInfo.profile["given_name"] || undefined,
-        userCredential.additionalUserInfo.profile["family_name"] || undefined,
-        undefined, undefined, undefined,
-        userCredential.additionalUserInfo.profile["name"] || undefined,
-        undefined,
-        userCredential.additionalUserInfo.profile["picture"] || undefined
+          userCredential.additionalUserInfo.profile["verified_email"] || false, undefined,
+          userCredential.additionalUserInfo.profile["given_name"] || undefined,
+          userCredential.additionalUserInfo.profile["family_name"] || undefined,
+          undefined, undefined, undefined,
+          userCredential.additionalUserInfo.profile["name"] || undefined,
+          undefined,
+          userCredential.additionalUserInfo.profile["picture"] || undefined
       );
     } else {
       user = new User(String(userCredential.user.uid), userCredential.user["_delegate"].email || "Please contact Juntos", Number(userType))
     }
     const data = JSON.parse(JSON.stringify(user));
     await this.userCollection.doc(userCredential.user.uid).set(data)
-      .catch((err) => console.log(err));
+        .catch((err) => console.log(err));
 
   }
 
@@ -88,4 +104,17 @@ export class UserDataService {
     });
 
   }
+
+  /*** Friends Data ***/
+
+  async isUserFriendWith(potentialFriendId,) {
+    try {
+      return await this.getCurrentUser().then((userData) => {
+        return userData.friends.includes(potentialFriendId);
+      })
+    } catch (e) {
+      return false;
+    }
+  }
+
 }

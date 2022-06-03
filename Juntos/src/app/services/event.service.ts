@@ -37,9 +37,9 @@ export class EventService {
     await this.eventsCollections.doc(id).delete();
   }
 
-  getAttendedEventsForOneUser(userId: string){
-    const userEventCollection = this.afs.collection('events',
-            ref => ref.where('participants', 'array-contains', userId));
-    return userEventCollection.valueChanges();
-  }
+    getAttendedEventsForOneUser(userId: string){
+      const userEventCollection = this.afs.collection('events',
+              ref => ref.where('participants', 'array-contains', userId));
+      return userEventCollection.valueChanges();
+    }
 }

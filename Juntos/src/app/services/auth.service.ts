@@ -24,14 +24,27 @@ export class AuthService {
                 this.user = undefined;
                 this.token = undefined;
                 if(firebaseUser && !firebaseUser.multiFactor["user"].isAnonymous){
-                    this.user = await this.userDataService.getUserById(firebaseUser.uid);
+                    this.refreshUserData(firebaseUser.uid);
                     this.token = firebaseUser.getIdTokenResult(false);
-                }
+                    localStorage.setItem('token', JSON.stringify(firebaseUser.getIdTokenResult(true)));
+                } else {
                 localStorage.setItem('user', JSON.stringify(this.user));
                 localStorage.setItem('token', JSON.stringify(firebaseUser.getIdTokenResult(true)));
+                }
             }
         )
     }
+
+    refreshUserData(userId){
+        this.userDataService.getUserById_Observable(userId).subscribe((userData)=>{
+            console.log(userData);
+            if(userData){
+                this.user = userData as unknown as User;
+                localStorage.setItem('user', JSON.stringify(this.user));
+            }
+        })
+    }
+
 
     isloggedin() {
         const user = JSON.parse(localStorage.getItem('user'));

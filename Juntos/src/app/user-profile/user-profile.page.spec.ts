@@ -21,4 +21,13 @@ describe('UserProfilePage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('ownProfile should be false', () => {
+      // @ts-ignore
+    component["currentUserId"] = 23;
+    component["checkUser"]();
+    const ownProfile: boolean = component["ownProfile"];
+    expect(ownProfile).toEqual(false);
+
+  })
 });

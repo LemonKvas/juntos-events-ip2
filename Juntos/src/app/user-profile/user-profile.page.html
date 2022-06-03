@@ -1,12 +1,16 @@
 <ng-container *ngIf="userLoaded">
 
-  <!-- Profil Titel festlegen -->
+  <!-- Header -->
   <ion-header>
     <ion-toolbar>
       <ion-title *ngIf="user.userName else firstNameProfileTitle">{{user.userName}}</ion-title>
+      <ion-buttons slot="end" *ngIf="ownProfile else friendButtons">
+        <ion-button>EDIT IRGENDWAS</ion-button>
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
 
+  <!--Titel Optionen-->
   <ng-template #firstNameProfileTitle>
     <ion-title *ngIf="user.firstName else standardProfileTitle">{{user.firstName}}</ion-title>
   </ng-template>
@@ -15,10 +19,24 @@
     <ion-title>Profile</ion-title>
   </ng-template>
 
+  <!--Button Optionen -->
+  <ng-template #friendButtons>
+    <ng-template *ngIf="isFriends else noFriends">
+      <ion-button slot="end">Freund*In entfernen</ion-button>
+    </ng-template>
+  </ng-template>
+
+  <ng-template #noFriends>
+    <ion-button slot="end">Freund*In hinzufügen</ion-button>
+  </ng-template>
+
+  <ng-template #followButton>
+  </ng-template>
+
+
   <!-- Profil Inhalt -->
   <ion-content >
     <ion-grid>
-
       <ion-row class="ion-justify-content-center ion-align-items-center">
         <ion-col size="auto">
           <ion-avatar>
