@@ -4,6 +4,9 @@ import {EventService} from '../services/event.service';
 import {Event} from '../models/classes/event.model';
 import User from '../models/classes/user';
 import {RegisteredEvent} from '../models/interfaces/registered-event';
+import {AuthService} from '../services/auth.service';
+import {UserDataService} from '../services/user-data.service';
+import {AlertService} from '../services/alert.service';
 
 @Component({
   selector: 'app-event-details/',
@@ -15,25 +18,31 @@ export class EventDetailsPage implements OnInit {
   eventId: string;
   participant: User;
   registeredEvent: RegisteredEvent;
-  constructor(private router: Router, public eventService: EventService) {
+  constructor(private router: Router, public eventService: EventService, private authService: AuthService,
+              private userService: UserDataService, public alertServie: AlertService) {
     this.event = this.router.getCurrentNavigation().extras.state;
   }
   async ngOnInit() {
   }
-  attendEvent(){
-    if(this.event.price === 'Kostenlos'){
-      this.registeredEvent = {
-        eventId: this.event.eventId,
-        ticket: true,
-      };
+  async attendEvent(event: Event){
+    if(this.authService.isloggedin() === false ){
+      this.alertServie.plsSignInAlert();
     } else {
-      this.registeredEvent = {
-        eventId: this.event.eventId,
-        ticket: false,
-      };
+      this.participant = await this.userService.getCurrentUser();
+      if(this.event.price === 'Kostenlos'){
+        this.registeredEvent = {
+          eventId: this.event.eventId,
+          ticket: true,
+        };
+      } else {
+        this.registeredEvent = {
+          eventId: this.event.eventId,
+          ticket: false,
+        };
+      }
+      this.event.participants.unshift(this.participant.userId);
+      await this.userService.addRegisteredEvent(this.registeredEvent);
+      await this.alertServie.partakeEvent(event);
     }
-    console.log('registeredEvent: ' + JSON.stringify(this.registeredEvent));
-    this.event.participants.unshift(this.participant.userId);
-    this.participant.registeredEvents.unshift(this.registeredEvent);
   }
 }

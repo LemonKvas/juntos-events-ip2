@@ -86,7 +86,7 @@
         <p *ngIf="eventService.getPrice(event)">{{event.price}}</p>
       </ion-col>
       <ion-col class="ion-text-center" size-sm="6">
-        <ion-button id="eventPartakeBtn" (click)="attendEvent()">
+        <ion-button id="eventPartakeBtn" (click)="attendEvent(event)">
           Teilnehmen
         </ion-button>
       </ion-col>
