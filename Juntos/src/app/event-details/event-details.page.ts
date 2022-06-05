@@ -41,6 +41,7 @@ export class EventDetailsPage implements OnInit {
         };
       }
       this.event.participants.unshift(this.participant.userId);
+      this.eventService.addRegisteredUser(this.event);
       await this.userService.addRegisteredEvent(this.registeredEvent);
       await this.alertServie.partakeEvent(event);
     }

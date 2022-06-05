@@ -36,4 +36,7 @@ export class EventService {
     }
     return event.price;
   }
+  async addRegisteredUser(event: Event){
+    await this.eventsCollections.doc(event.eventId).update({'participants': event.participants});
+  }
 }
