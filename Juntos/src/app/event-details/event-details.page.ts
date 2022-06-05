@@ -26,7 +26,7 @@ export class EventDetailsPage implements OnInit {
   }
   async attendEvent(event: Event){
     if(this.authService.isloggedin() === false ){
-      this.alertServie.plsSignInAlert();
+      await this.alertServie.plsSignInAlert();
     } else {
       this.participant = await this.userService.getCurrentUser();
       if(this.event.price === 'Kostenlos'){
@@ -41,7 +41,7 @@ export class EventDetailsPage implements OnInit {
         };
       }
       this.event.participants.unshift(this.participant.userId);
-      this.eventService.addRegisteredUser(this.event);
+      await this.eventService.addRegisteredUser(this.event);
       await this.userService.addRegisteredEvent(this.registeredEvent);
       await this.alertServie.partakeEvent(event);
     }
