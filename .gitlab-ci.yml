@@ -4,7 +4,7 @@ build:
     - cd Juntos/
     - npm install
   script: 
-    - ionic build --prod
+    - ng build
   artifacts:
     expire_in: 1 day
     paths:
