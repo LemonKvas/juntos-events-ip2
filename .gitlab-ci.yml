@@ -1,6 +1,5 @@
 build:
   stage: build
-  image: trion/ng-cli
   before_script:
     - npm ci
   script: 
