@@ -1,12 +1,13 @@
 build:
   stage: build
   before_script:
+    - cd Juntos/
     - npm ci
   script: 
-    - ng build --prod
+    - ionic build --prod
   artifacts:
     expire_in: 1 day
     paths:
-      - dist/
+      - www/
   tags:
     - npm
