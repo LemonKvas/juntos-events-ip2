@@ -1,7 +1,7 @@
 image: agileek/ionic-framework
 
 stages:
-  - deploy
+  [build, deploy]
 
 cache:
   untracked: true
@@ -10,6 +10,7 @@ cache:
     - node_modules/
 
 build:
+  stage: build
   before_script:
     - cd Juntos/
     - npm install
