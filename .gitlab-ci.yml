@@ -1,10 +1,11 @@
-  build: 
-    stage: build 
-    image: svaseghi/node-chrome:v1 
-    before_script: 
-        - export CHROME_BIN=/usr/bin/google-chrome 
-        - npm ci 
- 
-    script: 
-        - npm run build 
-        - npm run test:ci 
+image: node:16.15.0-bullseye
+
+stages:
+  -setup
+  -test
+
+insall:
+  stage: setup
+  script:
+    npm ci
+    
