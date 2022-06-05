@@ -8,8 +8,7 @@ stages:
 build:
   stage: build
   before_script:
-    - npm install -g n lts
-    - npm install -g @angular/cli@latest
+    - npm install -g @angular/cli@8.0.x
     - cd Juntos/
     - npm install
   script: 
