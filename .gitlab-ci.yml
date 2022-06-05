@@ -6,8 +6,6 @@ install_dependencies:
   stage: dependencies
   script:
     - npm install
-  only:
-    - master
   cache:
     key:
       files:
