@@ -4,6 +4,7 @@ build:
     - cd Juntos/
     - npm install
   script: 
+    - ls
     - cd Juntos/
     - ng build
   artifacts:
