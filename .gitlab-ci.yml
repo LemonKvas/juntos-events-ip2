@@ -4,10 +4,11 @@ build:
     - cd Juntos/
     - npm install
   script: 
+    - cd Juntos/
     - ng build
   artifacts:
     expire_in: 1 day
     paths:
-      - www/
+      - Juntos/www/
   tags:
     - npm
