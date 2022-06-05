@@ -10,4 +10,5 @@ build:
     paths:
       - dist/
   tags:
-    - docker
+    - Node.js (shared)
+
