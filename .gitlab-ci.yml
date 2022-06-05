@@ -1,10 +1,9 @@
 image: node:16.15.0-bullseye
 
 stages:
-  -setup
-  -test
+  [setup, test]
 
-insall:
+install:
   stage: setup
   script:
     npm ci
