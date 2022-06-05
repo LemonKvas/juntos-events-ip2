@@ -1,35 +1,22 @@
-image: agileek/ionic-framework
+
 
 stages:
   [build, deploy]
 
-cache:
-  untracked: true
-  key: "$CI_PROJECT_ID"
-  paths:
-    - node_modules/
+
 
 build:
   stage: build
   before_script:
+    - npm install -g n lts
+    - npm install -g @angular/cli@latest
     - cd Juntos/
     - npm install
-  script:
-    - ionic build
+  script: 
+    - ng build
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - Juntos/www/
   tags:
-    - kaniko 
-
-#build:
-#  stage: build
-#  before_script:
-#    - npm install -g @angular/cli@latest
-#    - cd Juntos/
-#    - npm install
-#  script: 
-#    - ng build
-#  artifacts:
-#    expire_in: 1 day
-#    paths:
-#      - Juntos/www/
-#  tags:
-#    - npm
+    - npm
