@@ -1,10 +1,16 @@
-image: node:14.15.5-alpine
-
 stages:
-  [setup, test]
+  [dependencies, test]
 
-install:
-  stage: setup
+install_dependencies:
+  image: node:12-alpine
+  stage: dependencies
   script:
-    npm ci
-    
+    - npm install
+  only:
+    - master
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - node_modules
