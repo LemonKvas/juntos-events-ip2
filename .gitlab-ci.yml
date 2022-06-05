@@ -1,34 +1,13 @@
-    
-stages:
-  [build,dependencies]
-
-
 build:
   stage: build
-  image:
-    name: gcr.io/kaniko-project/executor:debug
-    entrypoint: [""]
-  script:
-    - mkdir -p /kaniko/.docker
-    - echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
-    - >-
-      /kaniko/executor
-      --context "${CI_PROJECT_DIR}"
-      --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
-      --destination "${CI_REGISTRY_IMAGE}:${CI_COMMIT_TAG}"
-  rules:
-    - if: $CI_COMMIT_TAG
-
-install_dependencies:
-  image: node:12-alpine
-  stage: dependencies
-  script:
-    - npm install
-  only:
-    - master
-  cache:
-    key:
-      files:
-        - package-lock.json
+  image: trion/ng-cli
+  before_script:
+    - npm ci
+  script: 
+    - ng build --prod
+  artifacts:
+    expire_in: 1 day
     paths:
-      - node_modules
+      - dist/
+  tags:
+    - docker
