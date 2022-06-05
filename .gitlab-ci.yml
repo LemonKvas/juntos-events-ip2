@@ -2,7 +2,7 @@ build:
   stage: build
   before_script:
     - cd Juntos/
-    - npm ci
+    - npm install
   script: 
     - ionic build --prod
   artifacts:
