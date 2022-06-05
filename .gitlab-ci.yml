@@ -17,7 +17,7 @@ build:
     paths:
       - Juntos/www/
   tags:
-    - node
+    - nodejs
 
 Static:
   stage: test
@@ -32,5 +32,5 @@ Static:
     - npm outdated || true
     - npm audit || true
   tags:
-    - node
+    - nodejs
 
