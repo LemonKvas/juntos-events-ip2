@@ -17,7 +17,7 @@ build:
   script:
     - ionic build
   tags:
-    - alpine 
+    - kaniko 
 
 #build:
 #  stage: build
