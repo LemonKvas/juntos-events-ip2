@@ -1,11 +1,10 @@
 build:
   stage: build
   before_script:
+    - npm install -g @angular/cli@latest
     - cd Juntos/
     - npm install
   script: 
-    - ls
-    - cd Juntos/
     - ng build
   artifacts:
     expire_in: 1 day
