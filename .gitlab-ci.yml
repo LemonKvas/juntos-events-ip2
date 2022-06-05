@@ -1,21 +1,36 @@
 
 
 stages:
-  [build, deploy]
-
-
+  [build, test, deploy]
 
 build:
   stage: build
   before_script:
-    - npm install -g @angular/cli@6.0.8
     - cd Juntos/
+    - node -v
+    - npm -v
+  script:
     - npm install
-  script: 
-    - ng build
+    - npm run build
   artifacts:
     expire_in: 1 day
     paths:
       - Juntos/www/
   tags:
-    - npm
+    - node
+
+Static:
+  stage: test
+  before_script:
+    - ls
+    - cd Junots/
+  script:
+    - npm install
+    - npm run test
+    - npm run e2e
+    - npm run lint
+    - npm outdated || true
+    - npm audit || true
+  tags:
+    - node
+
