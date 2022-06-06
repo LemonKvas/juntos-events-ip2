@@ -103,7 +103,7 @@ export class EventCreatePage implements OnInit {
       this.address,
       this.publishStatus,
       'eventId',
-      '',
+      this.creatorId,
     );
   }
   async addEvent(){
