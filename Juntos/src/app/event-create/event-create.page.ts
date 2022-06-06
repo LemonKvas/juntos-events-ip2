@@ -7,6 +7,8 @@ import {EventService} from "src/app/services/event.service";
 import {FormControl, FormGroup} from "@angular/forms";
 import {AlertService} from "src/app/services/alert.service";
 import {PhotoService} from "src/app/services/photo.service";
+import {UserDataService} from "../services/user-data.service";
+import User from '../models/classes/user';
 
 @Component({
   selector: 'app-event-create',
@@ -40,12 +42,16 @@ export class EventCreatePage implements OnInit {
   events: Event[];
   uploadStatus = false;
   photoUploads = [];
+  creator: User;
+  creatorId = '';
   public createEventForm: FormGroup;
 
   constructor(private router: Router, private location: Location,
               private route: ActivatedRoute, private eventService: EventService,
-              public alertService: AlertService, public photoService: PhotoService) {
+              public alertService: AlertService, public photoService: PhotoService,
+              private userService: UserDataService) {
     this.today = new Date();
+    this.getCreatorData();
     this.event = new Event(
       this.eventName,
       this.photoURLs,
@@ -59,7 +65,7 @@ export class EventCreatePage implements OnInit {
       this.address,
       this.publishStatus,
       null,
-      null,
+      this.creatorId,
     );
     this.createEventForm = new FormGroup({
       eventName: new FormControl(),
@@ -146,6 +152,10 @@ export class EventCreatePage implements OnInit {
       await this.eventService.addEvent(this.event);
       await this.clearEventForm();
     }
+  }
+  async getCreatorData(){
+    this.creator = await this.userService.getCurrentUser();
+    this.creatorId = this.creator.userId;
   }
   async clearEventForm(){
     this.createEventForm.reset();
