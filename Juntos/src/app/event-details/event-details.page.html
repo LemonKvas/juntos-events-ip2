@@ -83,7 +83,8 @@
   <ion-toolbar>
     <ion-row class="ion-align-items-center">
       <ion-col class="ion-text-center" id="eventSaveAsDraftBtnCol" size-sm="6">
-        <p *ngIf="eventService.getPrice(event)">{{event.price}}</p>
+        <p *ngIf="this.eventService.freeEvent(event)"><strong>{{event.price}}€</strong></p>
+        <p *ngIf="!this.eventService.freeEvent(event)"><strong>{{event.price}}</strong></p>
       </ion-col>
       <ion-col class="ion-text-center" size-sm="6">
         <ion-button id="eventPartakeBtn" (click)="attendEvent(event)">

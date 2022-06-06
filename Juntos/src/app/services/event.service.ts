@@ -37,6 +37,14 @@ export class EventService {
     }
     return event.price;
   }
+  freeEvent(event: Event): boolean{
+    if(event.price === '0' || event.price === 'Kostenlos'){
+      this.getPrice(event);
+      return false;
+    } else {
+      return true;
+    }
+  }
   async addRegisteredUser(event: Event){
     let db = firebase.firestore().collection('events');
     await db.doc(event.eventId).update({participants: firebase.firestore.FieldValue.arrayUnion(...event.participants)});
