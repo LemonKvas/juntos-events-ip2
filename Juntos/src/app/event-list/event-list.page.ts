@@ -65,4 +65,12 @@ export class EventListPage implements OnInit {
      };
      await this.router.navigateByUrl(`event-details/${id}`, navigationExtras);
   }
+  freeEvent(event: Event): boolean{
+    if(event.price === '0' || event.price === 'Kostenlos'){
+      this.eventService.getPrice(event);
+      return false;
+    } else {
+      return true;
+    }
+  }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/compat/firestore';
 import { Event } from 'src/app/models/classes/event.model';
 import {Observable} from 'rxjs';
+import firebase from "firebase/compat";
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +38,8 @@ export class EventService {
     return event.price;
   }
   async addRegisteredUser(event: Event){
-    await this.eventsCollections.doc(event.eventId).update({'participants': event.participants});
+    let db = firebase.firestore().collection('events');
+    await db.doc(event.eventId).update({'participants': firebase.firestore.FieldValue.arrayUnion(event.participants)});
+    //await this.eventsCollections.doc(event.eventId).update({'participants': event.participants});
   }
 }
