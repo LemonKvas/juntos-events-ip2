@@ -20,6 +20,12 @@ export class EventService {
   getAllEvents(){
     return this.afs.collection('events').snapshotChanges();
   }
+  getPublishedEvents(){
+    return this.afs.collection('events', ref => ref.where('publishStatus', '==', true)).snapshotChanges();
+  }
+  getEventDrafts(){
+    return this.afs.collection('events', ref => ref.where('publishStatus', '==', false)).snapshotChanges();
+  }
   async addEvent(event: Event): Promise<void>{
     event.eventId = this.afs.createId();
     this.eventId = event.eventId;

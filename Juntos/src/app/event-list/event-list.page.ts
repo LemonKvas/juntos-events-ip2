@@ -18,7 +18,7 @@ export class EventListPage implements OnInit {
     this.getEvents();
   }
   getEvents(){
-    this.eventService.getAllEvents().subscribe((res) => {
+    this.eventService.getPublishedEvents().subscribe((res) => {
       this.events = res.map((e) => ({
           eventId: e.payload.doc.id,
           ... e.payload.doc.data() as Event
