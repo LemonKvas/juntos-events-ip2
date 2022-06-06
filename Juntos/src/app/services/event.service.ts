@@ -2,13 +2,16 @@ import { Injectable } from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/compat/firestore';
 import { Event } from 'src/app/models/classes/event.model';
 import {Observable} from 'rxjs';
-import firebase from "firebase/compat/app";
+import firebase from 'firebase/compat/app';
+import {CreatedEvent} from '../models/interfaces/created-event';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventService {
   eventList: Event[] = [];
+  eventId: string = '';
+  createdEvent: CreatedEvent;
   private eventsCollections: AngularFirestoreCollection<Event>;
   private events: Observable<Event[]>;
   constructor(private afs: AngularFirestore) {
@@ -19,6 +22,7 @@ export class EventService {
   }
   async addEvent(event: Event): Promise<void>{
     event.eventId = this.afs.createId();
+    this.eventId = event.eventId;
     const data = JSON.parse(JSON.stringify(event));
     await this.eventsCollections.doc(event.eventId).set(data)
      .catch((err) => console.log(err));
@@ -29,6 +33,12 @@ export class EventService {
   async getEventById(id: string){
     const document = await this.eventsCollections.doc(id).get().toPromise();
     return document.data();
+  }
+  async createdEventData(publishStatus: boolean){
+    return this.createdEvent = {
+      eventId: this.eventId,
+      publishStatus: publishStatus,
+    }
   }
   getPrice(event: Event): string{
     if(event.price === '0' || event.price === undefined || event.price === null) {

@@ -9,6 +9,7 @@ import {AlertService} from "src/app/services/alert.service";
 import {PhotoService} from "src/app/services/photo.service";
 import {UserDataService} from "../services/user-data.service";
 import User from '../models/classes/user';
+import {CreatedEvent} from "../models/interfaces/created-event";
 
 @Component({
   selector: 'app-event-create',
@@ -44,6 +45,7 @@ export class EventCreatePage implements OnInit {
   photoUploads = [];
   creator: User;
   creatorId = '';
+  createdEvent: CreatedEvent;
   public createEventForm: FormGroup;
 
   constructor(private router: Router, private location: Location,
@@ -139,6 +141,8 @@ export class EventCreatePage implements OnInit {
     } else if(this.errors.size === 0){
       this.setInputValues();
       await this.eventService.addEvent(this.event);
+      this.createdEvent = await this.eventService.createdEventData(this.publishStatus);
+      await this.userService.addCreatedEvent(this.createdEvent);
       await this.clearEventForm();
     }
   }
@@ -150,6 +154,8 @@ export class EventCreatePage implements OnInit {
     } else {
       this.setInputValues();
       await this.eventService.addEvent(this.event);
+      this.createdEvent = await this.eventService.createdEventData(this.publishStatus);
+      await this.userService.addCreatedEvent(this.createdEvent);
       await this.clearEventForm();
     }
   }

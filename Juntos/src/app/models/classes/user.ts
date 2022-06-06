@@ -2,6 +2,7 @@ import {Feedback} from "src/app/models/interfaces/feedback";
 import {RegisteredEvent} from "src/app/models/interfaces/registered-event";
 import {Badge} from "src/app/models/interfaces/badge";
 import userRoles from "src/app/models/enums/userRoles";
+import {CreatedEvent} from "../interfaces/created-event";
 
 export class User {
   userId: string;
@@ -22,6 +23,7 @@ export class User {
   favoriteCreators?: string[];
   feedback?: Feedback[];
   registeredEvents?: RegisteredEvent[];
+  createdEvents?: CreatedEvent[];
   socialPoints: number;
   badges?: Badge[];
 
@@ -29,7 +31,7 @@ export class User {
               firstName?: string, lastName?: string, birthDate?: string, languages?: string[], paymentUrl?: string,
               userName?: string, premium?: boolean, photoUrl?: string, bio?: string, friends?: string[],
               socialMedia?: string[], favoriteCreators?: string[], feedback?: Feedback[],
-              registeredEvents?: RegisteredEvent[], badges?: Badge[]
+              registeredEvents?: RegisteredEvent[], createdEvents?: CreatedEvent[], badges?: Badge[]
               ){
     this.userId = userId;
     this.email = email;
@@ -50,6 +52,7 @@ export class User {
     if(favoriteCreators != undefined) this.favoriteCreators = favoriteCreators;
     if(feedback != undefined) this.feedback = feedback;
     if(registeredEvents != undefined) this.registeredEvents = registeredEvents;
+    if(createdEvents != undefined) this.createdEvents = createdEvents;
     if(badges != undefined) this.badges = badges;
   }
 

@@ -79,4 +79,10 @@ export class UserDataService {
     let userId = user.userId;
     await db.doc(userId).update({'registeredEvents': firebase.firestore.FieldValue.arrayUnion(event)});
   }
+  async addCreatedEvent(event: any){
+    let db = firebase.firestore().collection('user');
+    let user = await this.getCurrentUser();
+    let userId = user.userId;
+    await db.doc(userId).update({'createdEvents': firebase.firestore.FieldValue.arrayUnion(event)});
+  }
 }
