@@ -49,7 +49,7 @@ export class UserProfilePage implements OnInit, OnDestroy {
         this.platform.is('iphone'));
     this.loadUser()
         .then(() => {
-          //TODO: calculate points korrekt kalkulieren wenn Badges implementiert wurden
+          //TODO: calculate points korrekt kalkulieren wenn Badges implementiert wurden!
         });
   }
 
