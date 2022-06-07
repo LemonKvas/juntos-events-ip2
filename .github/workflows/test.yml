@@ -32,6 +32,7 @@ jobs:
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
+        run: cd ./Juntos
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
