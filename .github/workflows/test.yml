@@ -42,14 +42,11 @@ jobs:
 
       - name: save install of dependencies
         run: npm ci
-        #working-directory: ./Juntos
 
-      - name: run tests
-        run: npm run test
-        #working-directory: ./Juntos
+      #- name: run tests
+      #  run: npm run test
 
       - name: run linter
         run: npm run lint --if-present
-        #working-directory: ./Juntos
 
 
