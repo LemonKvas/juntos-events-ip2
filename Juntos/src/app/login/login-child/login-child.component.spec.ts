@@ -2,10 +2,10 @@ import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {IonicModule} from '@ionic/angular';
 
 import {LoginChildComponent} from './login-child.component';
-import {AuthService} from "src/app/services/auth.service";
+import {AuthService} from 'src/app/services/auth.service';
 import {AngularFireAuth} from '@angular/fire/compat/auth';
-import {FIREBASE_OPTIONS} from "@angular/fire/compat";
-import {environment} from "src/environments/environment";
+import {FIREBASE_OPTIONS} from '@angular/fire/compat';
+import {environment} from 'src/environments/environment';
 
 export const authStub: any = {
   authState: {},
@@ -49,11 +49,11 @@ describe('LoginChildComponent', () => {
   it('should click Registrieren button', ()=>{
     spyOn(authService, 'EmailLogin');
 
-    let button = fixture.debugElement.nativeElement.querySelector('button');
+    const button = fixture.debugElement.nativeElement.querySelector('button');
     button.click();
 
     fixture.whenStable().then(() => {
       expect(authService.EmailLogin).toHaveBeenCalled();
-    })
-  })
+    });
+  });
 });

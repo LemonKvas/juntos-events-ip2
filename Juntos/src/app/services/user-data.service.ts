@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/compat/firestore";
-import firebase from "firebase/compat/app";
-import User from "../models/classes/user";
-import {getDoc} from "firebase/firestore";
+import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/compat/firestore';
+import firebase from 'firebase/compat/app';
+import User from '../models/classes/user';
+import {getDoc} from 'firebase/firestore';
 import UserCredential = firebase.auth.UserCredential;
-import {Router} from "@angular/router";
-import {AlertService} from "src/app/services/alert.service";
+import {Router} from '@angular/router';
+import {AlertService} from 'src/app/services/alert.service';
 
 
 @Injectable({
@@ -22,8 +22,8 @@ export class UserDataService {
   /*** GET USER FUNCTIONS ***/
 
   async getUserById(userId: string) {
-    let docRef = this.userCollection.doc(userId).ref;
-    let docSnap = await getDoc(docRef);
+    const docRef = this.userCollection.doc(userId).ref;
+    const docSnap = await getDoc(docRef);
     return <User>docSnap.data();
   }
 
@@ -66,18 +66,18 @@ export class UserDataService {
 
   async createNewUserInFirestore(userCredential: UserCredential | any, userType: string | number) {
     let user: User;
-    if (userCredential.additionalUserInfo.providerId == "google.com") {
-      user = new User(String(userCredential.user.uid), userCredential.additionalUserInfo.profile["email"] || "Please contact Juntos", Number(userType),
-          userCredential.additionalUserInfo.profile["verified_email"] || false, undefined,
-          userCredential.additionalUserInfo.profile["given_name"] || undefined,
-          userCredential.additionalUserInfo.profile["family_name"] || undefined,
+    if (userCredential.additionalUserInfo.providerId == 'google.com') {
+      user = new User(String(userCredential.user.uid), userCredential.additionalUserInfo.profile.email || 'Please contact Juntos', Number(userType),
+          userCredential.additionalUserInfo.profile.verified_email || false, undefined,
+          userCredential.additionalUserInfo.profile.given_name || undefined,
+          userCredential.additionalUserInfo.profile.family_name || undefined,
           undefined, undefined, undefined,
-          userCredential.additionalUserInfo.profile["name"] || undefined,
+          userCredential.additionalUserInfo.profile.name || undefined,
           undefined,
-          userCredential.additionalUserInfo.profile["picture"] || undefined
+          userCredential.additionalUserInfo.profile.picture || undefined
       );
     } else {
-      user = new User(String(userCredential.user.uid), userCredential.user["_delegate"].email || "Please contact Juntos", Number(userType))
+      user = new User(String(userCredential.user.uid), userCredential.user._delegate.email || 'Please contact Juntos', Number(userType));
     }
     const data = JSON.parse(JSON.stringify(user));
     await this.userCollection.doc(userCredential.user.uid).set(data)
@@ -86,35 +86,23 @@ export class UserDataService {
   }
 
   async updateCurrentUser(data: any) {
-    let db = firebase.firestore();
+    const db = firebase.firestore();
 
-    let user = await this.getCurrentUser();
-    let userId = user.userId;
+    const user = await this.getCurrentUser();
+    const userId = user.userId;
     console.log(user);
-    console.log(typeof user)
-    console.log(userId)
-    console.log(data)
+    console.log(typeof user);
+    console.log(userId);
+    console.log(data);
 
     db.collection('user').doc(userId).update(data).then((res) => {
-      this.router.navigate(['event-list'])
+      this.router.navigate(['event-list']);
     }).catch((e) => {
       this.alertService.basicAlert('Bearbeiten des Profils fehlgeschlagen', 'Bitte versuchen Sie es später noch mal', ['OK']);
       console.log('error');
       console.log(e);
     });
 
-  }
-
-  /*** Friends Data ***/
-
-  async isUserFriendWith(potentialFriendId,) {
-    try {
-      return await this.getCurrentUser().then((userData) => {
-        return userData.friends.includes(potentialFriendId);
-      })
-    } catch (e) {
-      return false;
-    }
   }
 
 }

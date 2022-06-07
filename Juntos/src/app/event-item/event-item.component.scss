@@ -13,11 +13,9 @@ ion-item {
       min-width: 10rem;
       max-width: 20rem;
     }
-
     @media (max-width: 820px) {
       min-width: 40rem;
     }
-
     @media (max-width: 1100px) {
       min-width: 50rem;
       max-height: 10rem;
@@ -62,6 +60,7 @@ h1 {
   }
 
 }
+
 p {
   font-size: 0.6rem;
   @media (max-width: 576px) {

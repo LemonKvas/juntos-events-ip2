@@ -1,13 +1,14 @@
-import {Component, OnDestroy, OnInit, Renderer2} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import { Location } from '@angular/common';
-import {UserDataService} from "src/app/services/user-data.service";
-import {Router} from "@angular/router";
-import {EventService} from "src/app/services/event.service";
+import {UserDataService} from 'src/app/services/user-data.service';
+import {Router} from '@angular/router';
+import {EventService} from 'src/app/services/event.service';
 import { Event } from '../models/classes/event.model';
-import {Platform} from "@ionic/angular";
-import { AuthService } from '../services/auth.service';
-import User from "src/app/models/classes/user";
+import {Platform} from '@ionic/angular';
+import User from 'src/app/models/classes/user';
 import { Subscription } from 'rxjs';
+import {FriendsService} from "src/app/services/friends.service";
+import friendButtonIndicator from "src/app/models/enums/friendButtonIndicator";
 
 
 @Component({
@@ -20,21 +21,25 @@ export class UserProfilePage implements OnInit, OnDestroy {
   public userLoaded: boolean;
   private currentUserId;
   private readonly profileUserId;
-  ownProfile: boolean;
   private currentLocation: Location;
   private userSubscription: Subscription;
+  private currentUserSubscription: Subscription;
+  ownProfile: boolean;
   isDesktop: boolean;
   user;
   eventAndBadgesIndicator;
   events: Event[] = [];
   socialPointsCalculated;
   isFriends: boolean;
-  followFriendsButtonText: string;
+  followFriendsIndicator: friendButtonIndicator;
+  followFriendsIcon: string;
 
 
 
   constructor(private location: Location, private userDataService: UserDataService, private router: Router,
-              private eventService: EventService, private platform: Platform, private authService: AuthService) {
+              private eventService: EventService, private platform: Platform, private friendService: FriendsService) {
+    this.followFriendsIndicator = undefined;
+    this.isFriends = false;
     this.currentLocation = location;
     this.profileUserId = this.currentLocation.path().split('/').pop();
   }
@@ -45,9 +50,7 @@ export class UserProfilePage implements OnInit, OnDestroy {
     this.loadUser()
         .then(() => {
           //TODO: calculate points korrekt kalkulieren wenn Badges implementiert wurden
-            console.log(this.userSubscription);
         });
-    this.getAttendedEvents();
   }
 
 
@@ -60,20 +63,20 @@ export class UserProfilePage implements OnInit, OnDestroy {
       this.currentUserId = await this.userDataService.getCurrentUserID();
       this.ownProfile = this.location.isCurrentPathEqualTo('/profile/' + this.currentUserId);
       console.log(this.ownProfile, this.currentUserId, this.profileUserId);
-      this.userSubscription = this.userDataService.getUserById_Observable(this.profileUserId).subscribe(
+      this.userSubscription = await this.userDataService.getUserById_Observable(this.profileUserId).subscribe(
            async (userData) => {
              if (userData) {
-               this.user = userData as unknown as User;
-               this.socialPointsCalculated = `${0 + "."}${this.user.socialPoints}`;
+               this.user = await userData as unknown as User;
+               this.socialPointsCalculated = `${0 + '.'}${this.user.socialPoints}`;
                this.userLoaded = true;
-               if (!this.ownProfile) this.isFriends = await this.userDataService.isUserFriendWith(this.profileUserId);
-               console.log(this.isFriends);
+               this.getAttendedEvents();
+               //onStorageChange updates addfriendbutton text and frienship status
+               await this.checkFrienshipStatus();
              } else {
-               throw new Error("Nutzer konnte nicht geladen werden");
+               throw new Error('Nutzer konnte nicht geladen werden');
              }
-             console.log(userData);
            }
-      )
+      );
     }
     catch (e) {
       console.log(e);
@@ -81,21 +84,100 @@ export class UserProfilePage implements OnInit, OnDestroy {
     }
   }
 
-  getAttendedEvents(){
-    this.eventService.getAttendedEventsForOneUser(this.profileUserId).forEach(
-        (eventDocs: any[]) => {
-          this.events = eventDocs;
+  async checkFrienshipStatus(){
+    try {
+      if (this.currentUserId) {
+        if (!this.ownProfile) {
+          this.currentUserSubscription = this.userDataService.getUserById_Observable(this.currentUserId).subscribe(async ()=>{
+          this.isFriends = await this.friendService.isUserFriendWith(this.profileUserId);
+          await this.determineFollowFriendsIndicator();
+        })
         }
-    )
-  }
-
-  determineFollowFriendsButtonText(){
-    const isNormalUser = this.authService.hasRole(1);
-    if(this.isFriends && this.user.role < 2 && this.authService.hasRole(2)) {
-      this.followFriendsButtonText = ""
+      }
+    }
+    catch (e) {
+      console.log(e);
     }
   }
 
+  getAttendedEvents(){
+    if(this.user.registeredEvents){
+      const attendedEventIds = this.user.registeredEvents.reduce((attendedEventIds, event) =>{
+        if(event.ticket) {
+          attendedEventIds.push(event.eventId);
+        }
+        return attendedEventIds;
+      }, []);
+      this.eventService.getMultipleEventsByEventId(attendedEventIds).forEach(
+          (eventDocs: any[]) => {
+            this.events = eventDocs;
+          }
+      );
+    }
+  }
+
+  async determineFollowFriendsButtonFunction(indicator){
+    let outlinedIcon = this.followFriendsIcon;
+    try{
+      switch(indicator.followFriendsIndicator) {
+        case 0: {
+          //this.followFriendsIcon = 'person-add';
+          console.log("Freund hinzufügen");
+          //TODO: add addfriend function
+          break;
+        }
+        case 1: {
+          //this.followFriendsIcon = 'person-remove';
+          await this.friendService.unfriendUser(this.profileUserId)
+              .then((result)=>{
+                console.log(result);
+              })
+          break;
+        }
+        case 2: {
+          //this.followFriendsIcon = 'person-add';
+          await this.friendService.followOrganizer(this.profileUserId)
+              .then((result) => {
+                console.log(result)
+              })
+          break;
+        }
+        case 3: {
+          //this.followFriendsIcon = 'person-remove';
+          await this.friendService.unfollowOrganizer(this.profileUserId)
+              .then((result) => {
+                console.log(result);
+              });
+          break;
+        }
+      }
+    }
+    catch (e) {
+      console.log(e);
+    }
+    finally {
+      //this.followFriendsIcon = outlinedIcon;
+    }
+  }
+
+  /**
+   * followFriendsIndicator: 0=befriend; 1=unfriend; 2=follow; 3=unfollow
+   */
+  async determineFollowFriendsIndicator(){
+    let isNormalUser = await this.userDataService.getCurrentUserRole();
+    if(isNormalUser == null || isNormalUser == 1) {
+      this.followFriendsIndicator = undefined;
+    }
+    console.log(this.user.rights);
+    if(isNormalUser === ( 0 || 2)) {
+      this.followFriendsIndicator = isNormalUser == (0 || 2) ?
+          (this.user.rights == (0 || 2) ?
+                  (!this.isFriends ? 0 : 1) :
+                  (!this.isFriends ? 2 : 3)
+          ) : undefined;
+    }
+    this.followFriendsIcon = this.followFriendsIndicator == (0 || 3) ? 'person-add-outline' : 'person-remove-outline';
+  }
 
   switchProfileEventAndBadges(event: any) {
     this.eventAndBadgesIndicator = event.detail.value;

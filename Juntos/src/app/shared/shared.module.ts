@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {FireStorageImgPipe} from "src/app/models/pipes/fire-storage-img.pipe";
+import {FireStorageImgPipe} from 'src/app/models/pipes/fire-storage-img.pipe';
 
 
 

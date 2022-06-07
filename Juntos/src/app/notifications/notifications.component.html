@@ -1,0 +1,17 @@
+<ion-popover trigger="trigger-button" [dismissOnSelect]="false">
+  <ng-template>
+    <ion-content>
+      <ion-list >
+        <ion-item [button]="true" [detail]="false">
+          <ion-label>Option 1</ion-label>
+        </ion-item>
+        <ion-item [button]="true" [detail]="false">
+          <ion-label>Option 2</ion-label>
+        </ion-item>
+        <ion-item [button]="true" [detail]="true" id="nested-trigger">
+          <ion-label>Option 3</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-popover>

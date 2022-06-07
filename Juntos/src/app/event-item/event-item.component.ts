@@ -1,7 +1,7 @@
 import {Component, HostListener, Input, OnInit} from '@angular/core';
-import {Event} from "src/app/models/classes/event.model";
-import {Share} from "@capacitor/share";
-import {Observable} from "rxjs";
+import {Event} from 'src/app/models/classes/event.model';
+import {Share} from '@capacitor/share';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-event-item',

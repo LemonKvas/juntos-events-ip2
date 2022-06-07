@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Event } from '../models/classes/event.model';
 import { EventService } from '../services/event.service';
 import { Share } from '@capacitor/share';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-event-list',
@@ -18,12 +18,10 @@ export class EventListPage implements OnInit {
   }
   getEvents(){
     this.eventService.getAllEvents().subscribe((res) => {
-      this.events = res.map((e) => {
-        return {
+      this.events = res.map((e) => ({
           eventId: e.payload.doc.id,
           ... e.payload.doc.data() as Event
-        }
-      });
+        }));
     });
   }
   getPrice(event: Event): string{

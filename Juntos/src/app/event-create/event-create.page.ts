@@ -1,12 +1,12 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import { Location } from "@angular/common";
+import { Location } from '@angular/common';
 import { Event } from 'src/app/models/classes/event.model';
-import {IonDatetime} from "@ionic/angular";
-import {EventService} from "src/app/services/event.service";
-import {FormControl, FormGroup} from "@angular/forms";
-import {AlertService} from "src/app/services/alert.service";
-import {PhotoService} from "src/app/services/photo.service";
+import {IonDatetime} from '@ionic/angular';
+import {EventService} from 'src/app/services/event.service';
+import {FormControl, FormGroup} from '@angular/forms';
+import {AlertService} from 'src/app/services/alert.service';
+import {PhotoService} from 'src/app/services/photo.service';
 
 @Component({
   selector: 'app-event-create',
@@ -79,10 +79,10 @@ export class EventCreatePage implements OnInit {
   }
   setInputValues(){
     this.address = {
-      'street': this.street,
-      'house': this.house,
-      'zipCode': this.zipCode,
-      'city': this.city,
+      street: this.street,
+      house: this.house,
+      zipCode: this.zipCode,
+      city: this.city,
     };
     this.event = new Event(
       this.eventName,

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AlertController } from "@ionic/angular";
-import { Location } from "@angular/common";
+import { AlertController } from '@ionic/angular';
+import { Location } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
