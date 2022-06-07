@@ -1,6 +1,7 @@
 {
   "root": true,
   "ignorePatterns": ["projects/**/*"],
+
   "overrides": [
     {
       "files": ["*.ts"],
@@ -8,12 +9,20 @@
         "project": ["tsconfig.json", "e2e/tsconfig.json"],
         "createDefaultProgram": true
       },
+      "plugins": [
+        "prettier"
+      ],
       "extends": [
         "plugin:@angular-eslint/ng-cli-compat",
         "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
-        "plugin:@angular-eslint/template/process-inline-templates"
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier"
       ],
       "rules": {
+        "no-console": "warn",
+        "prettier/prettier": "error",
         "@angular-eslint/component-class-suffix": [
           "error",
           {
@@ -38,6 +47,7 @@
         ]
       }
     },
+
     {
       "files": ["*.html"],
       "extends": ["plugin:@angular-eslint/template/recommended"],

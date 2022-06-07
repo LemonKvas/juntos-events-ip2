@@ -12,6 +12,8 @@
     "test": "ng test --watch=false --browsers=ChromeHeadlessCustom",
     "test:watch": "ng test",
     "lint": "ng lint",
+    "lint-and-fix": "ng lint --fix",
+    "prettier-format": "prettier --config .prettierrc.json src --write",
     "e2e": "ng e2e",
     "build:ci": "npm run clean && npm run test && npm run build:prod",
     "compodoc": "npx compodoc -p tsconfig.json"
@@ -63,9 +65,12 @@
     "@typescript-eslint/eslint-plugin": "5.21.0",
     "@typescript-eslint/parser": "5.21.0",
     "eslint": "^8.14.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-jsdoc": "39.2.9",
     "eslint-plugin-prefer-arrow": "1.2.3",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^8.0.1",
     "jasmine-core": "~4.1.0",
     "jasmine-spec-reporter": "~7.0.0",
     "karma": "~6.3.19",
@@ -74,9 +79,16 @@
     "karma-coverage-istanbul-reporter": "~3.0.3",
     "karma-jasmine": "~5.0.0",
     "karma-jasmine-html-reporter": "^1.7.0",
+    "prettier": "^2.6.2",
     "protractor": "~7.0.0",
     "ts-node": "~10.7.0",
     "typescript": "~4.6.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run prettier-format && npm run lint",
+      "pre-push": ""
+    }
   },
   "description": "Juntos Events web and mobile application"
 }
