@@ -5,11 +5,15 @@
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",
+    "clean": "rimraf ./www",
     "start": "ng serve",
     "build": "ng build",
-    "test": "ng test",
+    "build:prod": "ng build --prod",
+    "test": "ng test --watch=false --browsers=ChromeHeadlessCustom",
+    "test:watch": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "build:ci": "npm run clean && npm run test && npm run build:prod",
     "compodoc": "npx compodoc -p tsconfig.json"
   },
   "private": true,
@@ -35,6 +39,7 @@
     "@ionic/pwa-elements": "^3.1.1",
     "capacitor": "^0.5.5",
     "firebase": "^9.6.11",
+    "puppeteer": "^14.2.1",
     "rxjs": "~7.5.5",
     "tslib": "^2.4.0",
     "zone.js": "~0.11.5"
