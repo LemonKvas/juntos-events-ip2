@@ -1,3 +1,5 @@
+
+
 name: Jasmine/Karma Unit tests
 
 on:
@@ -40,7 +42,8 @@ jobs:
       - name: save install of dependencies
         run: npm ci
 
-      - name: run linter
-        run: npm run lint --if-present
+      - name: run tests
+        run: npm run test
+
 
 
