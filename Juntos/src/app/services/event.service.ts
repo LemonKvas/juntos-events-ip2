@@ -4,6 +4,7 @@ import { Event } from 'src/app/models/classes/event.model';
 import {Observable} from 'rxjs';
 import firebase from 'firebase/compat/app';
 import {CreatedEvent} from '../models/interfaces/created-event';
+import {arrayUnion} from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -63,6 +64,6 @@ export class EventService {
   }
   async addRegisteredUser(event: Event){
     const db = firebase.firestore().collection('events');
-    await db.doc(event.eventId).update({participants: firebase.firestore.FieldValue.arrayUnion(...event.participants)});
+    await db.doc(event.eventId).update({participants: arrayUnion(...event.participants)});
   }
 }
