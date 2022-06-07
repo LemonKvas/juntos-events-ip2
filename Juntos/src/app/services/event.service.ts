@@ -10,7 +10,7 @@ import {CreatedEvent} from '../models/interfaces/created-event';
 })
 export class EventService {
   eventList: Event[] = [];
-  eventId: string = '';
+  eventId = '';
   createdEvent: CreatedEvent;
   private eventsCollections: AngularFirestoreCollection<Event>;
   private events: Observable<Event[]>;
@@ -43,8 +43,8 @@ export class EventService {
   async createdEventData(publishStatus: boolean){
     return this.createdEvent = {
       eventId: this.eventId,
-      publishStatus: publishStatus,
-    }
+      publishStatus,
+    };
   }
   getPrice(event: Event): string{
     if(event.price === '0' || event.price === undefined || event.price === null) {
@@ -62,7 +62,7 @@ export class EventService {
     }
   }
   async addRegisteredUser(event: Event){
-    let db = firebase.firestore().collection('events');
+    const db = firebase.firestore().collection('events');
     await db.doc(event.eventId).update({participants: firebase.firestore.FieldValue.arrayUnion(...event.participants)});
   }
 }
