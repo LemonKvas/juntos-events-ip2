@@ -30,7 +30,7 @@
             <h1>{{event.name}}</h1>
             <p>{{event.eventDate | date: 'dd.MM.yyyy'}} um {{event.eventDate | date: 'H:mm'}}</p>
             <p>{{event.address['street']}} {{event.address['house']}}, <br>
-               {{event.address['zipCode']}} {{event.address['city']}}
+              {{event.address['zipCode']}} {{event.address['city']}}
             </p>
             <p *ngIf="getPrice(event)"><strong>{{event.price}}</strong></p>
           </ion-col>
@@ -57,3 +57,7 @@
     </ion-fab-button>
   </ion-fab>
 </ion-content>
+
+<app-footermenu>
+
+</app-footermenu>

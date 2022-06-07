@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {UserDataService} from "../services/user-data.service";
 import {AlertService} from "src/app/services/alert.service";
 import {Router} from "@angular/router";
+import {PhotoService} from "../services/photo.service";
 
 @Component({
   selector: 'app-edit-user',
@@ -202,9 +203,12 @@ export class EditUserPage implements OnInit {
     { code : 'zu', name : 'Zulu' }
   ];
   private description;
-  private photoUrl;
+  private displayUrl;
+  private oldPhotoUrl;
+  private uploadStatus = false;
+  private photoUploads = [];
 
-  constructor(private userDataService : UserDataService, public alertService : AlertService, private router: Router) {
+  constructor(private userDataService : UserDataService, public alertService : AlertService, private router: Router, private photoService: PhotoService) {
 
     this.userData = this.userDataService.getCurrentUser();
     this.userData = this.userData.__zone_symbol__value;
@@ -240,30 +244,47 @@ export class EditUserPage implements OnInit {
     }
 
     if (this.userData.photoUrl) {
-    this.photoUrl = this.userData.photoUrl;
+    this.displayUrl = this.userData.photoUrl;
     } else {
-      this.photoUrl = "https://cdn.picpng.com/head/head-the-dummy-avatar-man-tie-72756.png";
+      this.displayUrl = "https://cdn.picpng.com/head/head-the-dummy-avatar-man-tie-72756.png";
     }
+
+    this.oldPhotoUrl = this.displayUrl;
   }
 
 
 
   ngOnInit() {
+
     //TODO: maybe get userdata from firestore and subscribe
     //this.db.doc(`user/${id}`).valueChanges().subscribe(user => this.user = user);
   }
-
-  uploadAvatar() {
-  console.log('uploadAvatar')
-
-  //  TODO: imageupload, delete old image when new is uploaded, set photoURL in user
+  //TODO: delete old photo if it exists,
+  uploadAvatar(event){
+    this.uploadStatus = true;
+    this.photoService.storePhoto(event.target.files[0], 'avatars/').then((res: any) => {
+        if(res){
+          this.uploadStatus = false;
+          this.photoUploads.unshift(res);
+          this.displayUrl = this.photoService.photoID;
+        }
+      },
+      (error: any) =>{
+        this.uploadStatus = false;
+        console.log(error);
+      });
   }
 
   close() {
+    console.log(this.oldPhotoUrl)
+    // TODO: restore old photo
     if (this.userName.length == 0) {
       this.alertService.basicAlert('Sie müssen einen Benutzernamen angeben', 'Bitte setzen sie einen Benutzernamen', ['OK']);
       return
     }
+    // delete photos which are not in use
+    // this.photoService.deletePhoto()
+
     this.router.navigate(['event-list']);
   }
 
@@ -278,7 +299,7 @@ export class EditUserPage implements OnInit {
       'userName' : this.userName,
       'languages' : this.languages,
       'description' : this.description,
-      'photoUrl' : this.photoUrl,
+      'photoUrl' : this.displayUrl,
     };
     this.userDataService.updateCurrentUser(data);
   }
