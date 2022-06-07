@@ -13,6 +13,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./Juntos
 
     strategy:
       matrix:
@@ -32,21 +35,21 @@ jobs:
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
-        run: cd ./Juntos
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+          cache-dependency-path: Juntos/package-lock.json
 
       - name: save install of dependencies
         run: npm ci
-        working-directory: ./Juntos
+        #working-directory: ./Juntos
 
       - name: run tests
         run: npm run test
-        working-directory: ./Juntos
+        #working-directory: ./Juntos
 
       - name: run linter
         run: npm run lint --if-present
-        working-directory: ./Juntos
+        #working-directory: ./Juntos
 
 
