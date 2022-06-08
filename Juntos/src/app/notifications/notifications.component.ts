@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Notification } from 'src/app/models/interfaces/notification'
-import { NotificationService } from '../services/notification.service';
+import {NotificationService} from "src/app/services/notification.service";
+import { Notification } from "src/app/models/classes/notification.model"
 
 @Component({
   selector: 'app-notifications',
@@ -8,6 +8,7 @@ import { NotificationService } from '../services/notification.service';
   styleUrls: ['./notifications.component.scss'],
 })
 export class NotificationsComponent implements OnInit {
+
   notifications: Notification[] = [];
 
   constructor(private notificationService: NotificationService) { }
@@ -17,8 +18,8 @@ export class NotificationsComponent implements OnInit {
   }
 
   async getNotification(){
-    await this.notificationService.getNotificationInformation();
-
+    await this.notificationService.getNotificationInitializer();
+    this.notifications = this.notificationService.notifications;
   }
 
 }
