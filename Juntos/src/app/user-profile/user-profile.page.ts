@@ -1,4 +1,4 @@
-import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { Location } from '@angular/common';
 import {UserDataService} from 'src/app/services/user-data.service';
 import {Router} from '@angular/router';
@@ -9,6 +9,7 @@ import User from 'src/app/models/classes/user';
 import { Subscription } from 'rxjs';
 import {FriendsService} from "src/app/services/friends.service";
 import friendButtonIndicator from "src/app/models/enums/friendButtonIndicator";
+import {NotificationService} from "src/app/services/notification.service";
 
 
 @Component({
@@ -37,7 +38,8 @@ export class UserProfilePage implements OnInit, OnDestroy {
 
 
   constructor(private location: Location, private userDataService: UserDataService, private router: Router,
-              private eventService: EventService, private platform: Platform, private friendService: FriendsService) {
+              private eventService: EventService, private platform: Platform, private friendService: FriendsService,
+              private notificationService: NotificationService) {
     this.followFriendsIndicator = undefined;
     this.isFriends = false;
     this.currentLocation = location;
@@ -117,7 +119,7 @@ export class UserProfilePage implements OnInit, OnDestroy {
   }
 
   async determineFollowFriendsButtonFunction(indicator){
-    let outlinedIcon = this.followFriendsIcon;
+    //let outlinedIcon = this.followFriendsIcon;
     try{
       switch(indicator.followFriendsIndicator) {
         case 0: {
@@ -184,5 +186,7 @@ export class UserProfilePage implements OnInit, OnDestroy {
   }
 
 
-
+  openNotifications($event) {
+    this.notificationService.presentPopover($event);
+  }
 }
