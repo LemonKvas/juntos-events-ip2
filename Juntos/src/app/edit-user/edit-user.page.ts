@@ -4,6 +4,9 @@ import {AlertService} from "src/app/services/alert.service";
 import {Router} from "@angular/router";
 import {PhotoService} from "../services/photo.service";
 
+/**
+ * Page for editing the user profile
+ */
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.page.html',
@@ -261,10 +264,9 @@ export class EditUserPage implements OnInit {
   }
 
   /**
-   *
+   * Let the user upload an avatar, and updates the avatar
    * @param event
    */
-
   uploadAvatar(event) {
     if (this.oldPhotoUrl != this.displayUrl) {
       this.beforeUrl = this.displayUrl;
@@ -288,10 +290,17 @@ export class EditUserPage implements OnInit {
       });
   }
 
-  deleteAvatar(url) {
+  /**
+   * Deletes the photo in firestore storage with the given url
+   * @param {string} url
+   */
+  deleteAvatar(url : string) {
     this.photoService.deletePhoto(url, 'avatars/');
   }
 
+  /**
+   * Closes the editing page without saving the changes and deletes uploaded photos which are not used
+   */
   close() {
     if (this.userData.userName.length === 0) {
       this.alertService.basicAlert('Sie müssen einen Benutzernamen angeben', 'Bitte setzen sie einen Benutzernamen', ['OK']);
@@ -307,6 +316,9 @@ export class EditUserPage implements OnInit {
     this.router.navigate(['event-list']);
   }
 
+  /**
+   * Updates the user data in firestore
+   */
   updateUser() {
     if (this.userName.length === 0) {
       this.alertService.basicAlert('Sie müssen einen Benutzernamen angeben', 'Bitte setzen sie einen Benutzernamen', ['OK']);
