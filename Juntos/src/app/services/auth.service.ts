@@ -147,6 +147,7 @@ export class AuthService {
         return this.afAuth
             .signInWithPopup(provider)
             .then((userCredential) => {
+              console.log(userCredential);
                 this.CheckForNewUser(userCredential, userType);
                 console.log('You have been successfully logged in!');
             })

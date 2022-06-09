@@ -6,6 +6,7 @@ import {getDoc} from 'firebase/firestore';
 import UserCredential = firebase.auth.UserCredential;
 import {Router} from '@angular/router';
 import {AlertService} from 'src/app/services/alert.service';
+import {arrayUnion} from '@angular/fire/firestore';
 
 
 @Injectable({
@@ -49,7 +50,8 @@ export class UserDataService {
       console.log(e.message);
       return undefined;
     }
-  }
+
+
 
   async getCurrentUserRole() {
     try {
@@ -101,4 +103,16 @@ export class UserDataService {
 
   }
 
+  async addRegisteredEvent(event: any){
+    const db = firebase.firestore().collection('user');
+    const user = await this.getCurrentUser();
+    const userId = user.userId;
+    await db.doc(userId).update({registeredEvents: arrayUnion(event)});
+  }
+  async addCreatedEvent(event: any){
+    const db = firebase.firestore().collection('user');
+    const user = await this.getCurrentUser();
+    const userId = user.userId;
+    await db.doc(userId).update({createdEvents: arrayUnion(event)});
+  }
 }

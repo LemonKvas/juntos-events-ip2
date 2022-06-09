@@ -36,6 +36,15 @@ const routes: Routes = [
     path: 'profile/:userId',
     loadChildren: () => import('./user-profile/user-profile.module').then( m => m.UserProfilePageModule)
   },
+  {
+    path: 'event-details',
+    loadChildren: () => import('./event-details/event-details.module').then( m => m.EventDetailsPageModule)
+  },
+  {
+    path: 'event-details/:id',
+    loadChildren: () => import('./event-details/event-details.module').then( m => m.EventDetailsPageModule)
+
+  },
 
 
 

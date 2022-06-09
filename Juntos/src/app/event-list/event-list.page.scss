@@ -1,16 +1,15 @@
 h1 {
-  font-size: 4.5vw;
+  font-size: 3.5vw;
   font-weight: bold;
 }
 p {
-  font-size: 3vw;
+  font-size: 2vw;
 }
 ion-item {
-  width: 100%;
-  height: 100%;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  margin: 10px auto;
+  width: 90%;
+  height: 40%;
+  //padding: 5px;
+  margin: 5px;
   border: 1px solid white;
   border-radius: 15px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -18,8 +17,23 @@ ion-item {
 ion-img {
   width: 100%;
   height: 100%;
-  border: 1px solid black;
+  object-fit: cover;
 }
 ion-searchbar {
   border-radius: 15px;
+}
+ion-list {
+  margin: 10px;
+  justify-content: center;
+  vertical-align: middle;
+}
+.img-div {
+  width: 20vw;
+  height: 20vw;
+}
+ion-col {
+  margin: 5px;
+  justify-content: center;
+}
+ion-icon {
 }

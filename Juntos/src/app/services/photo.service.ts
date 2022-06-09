@@ -3,7 +3,6 @@ import {AngularFirestore} from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import {Camera, CameraResultType, CameraSource} from '@capacitor/camera';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -17,8 +16,11 @@ export class PhotoService {
   async getPhotoById(id: any){
     return this.afStorage.ref(this.location + JSON.stringify(id));
   }
-  async storePhoto(imgData: any){
+  async storePhoto(imgData: any, loc?: string){
     try {
+      if (loc) {
+        this.location = loc;
+      }
       this.photoID = this.afs.createId();
       return new Promise((resolve, reject) => {
         const photoRef = this.afStorage.ref(this.location + this.photoID);
@@ -34,6 +36,19 @@ export class PhotoService {
       console.log(e);
     }
     this.photos = [];
+  }
+  async deletePhoto(id: string, loc?: string) {
+    try {
+      if (loc) {
+        this.location = loc;
+      }
+      this.photoID = id;
+
+      return this.afStorage.ref(this.location + id).delete();
+
+    } catch (e) {
+      console.log(e);
+    }
   }
   async addNewToGallery() {
     const capturedPhoto = await Camera.getPhoto({
