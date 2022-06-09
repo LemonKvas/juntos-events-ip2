@@ -30,6 +30,7 @@ export class UserDataService {
 
   async getCurrentUser() {
     const userData = localStorage.getItem('user');
+    console.log(userData)
     return JSON.parse(userData);
   }
 
