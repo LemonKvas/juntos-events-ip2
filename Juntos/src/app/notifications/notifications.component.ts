@@ -10,9 +10,8 @@ import {FriendsService} from "src/app/services/friends.service";
 })
 export class NotificationsComponent implements OnInit {
 
-  notifications: BaseNotification[] = [];
 
-  constructor(private notificationService: NotificationService, private friendsService: FriendsService) { }
+  constructor(public readonly notificationService: NotificationService, protected friendsService: FriendsService) { }
 
   ngOnInit() {
     this.getNotification()
@@ -20,16 +19,15 @@ export class NotificationsComponent implements OnInit {
 
   async getNotification(){
     await this.notificationService.getNotificationInitializer();
-    this.notifications = this.notificationService.notifications;
   }
 
-  acceptFriendRequest(senderId){
-    this.friendsService.befriendUser(senderId)
-        .then(response => console.log(response))
+  acceptFriendRequest(notification){
+    this.friendsService.befriendUser(notification.senderId)
+        .then(() => this.notificationService.removeNotification(notification.notificationId))
   }
 
-  declineFriendRequest() {
-    this.notificationService.removeNotification()
+  declineFriendRequest(notificationId) {
+    this.notificationService.removeNotification(notificationId);
   }
 
 }

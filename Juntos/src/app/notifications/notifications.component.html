@@ -1,15 +1,15 @@
 <ion-content>
   <ion-list>
-    <ng-container *ngFor="let notification of notifications">
-      <ion-item [button]="false" [detail]="false">
+    <ng-container *ngFor="let notification of notificationService.notificationsSorted">
+      <ion-item lines="full" [button]="true" [detail]="false">
         <ion-label>
           <h2>{{notification.senderId}}</h2>
           <p>{{notification.content}}</p>
           <ng-container *ngIf="notification.type == 3">
-            <ion-button slot="start">
-              <ion-icon (click)="acceptFriendRequest(notification.senderId)" size="large" style="zoom:0.8" name="checkmark-outline"></ion-icon>
+            <ion-button slot="start" (click)="acceptFriendRequest(notification)">
+              <ion-icon  size="large" style="zoom:0.8" name="checkmark-outline"></ion-icon>
             </ion-button>
-            <ion-button slot="end">
+            <ion-button slot="end" (click)="declineFriendRequest(notification.notificationId)">
               <ion-icon size="large" style="zoom:0.8" name="close-outline"></ion-icon>
             </ion-button>
           </ng-container>

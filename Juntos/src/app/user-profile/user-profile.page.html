@@ -4,10 +4,10 @@
   <ion-header>
     <ion-toolbar>
       <ion-title *ngIf="user.userName else firstNameProfileTitle">{{user.userName}}</ion-title>
-      <ion-buttons slot="end" (click)="openNotifications($event)">
+      <ion-buttons slot="end" *ngIf="ownProfile" (click)="openNotifications($event)">
         <ion-icon size="large" style="zoom:0.8" name="notifications-outline"></ion-icon>
       </ion-buttons>
-      <ion-buttons slot="end" *ngIf="followFriendsIndicator">
+      <ion-buttons slot="end" *ngIf="followFriendsIndicator !== undefined">
           <ion-icon size="large" style="zoom:0.8" [name]="followFriendsIcon" (click)="determineFollowFriendsButtonFunction({followFriendsIndicator})"></ion-icon>
       </ion-buttons>
     </ion-toolbar>

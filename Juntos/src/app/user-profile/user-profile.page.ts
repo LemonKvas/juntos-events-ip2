@@ -121,37 +121,34 @@ export class UserProfilePage implements OnInit, OnDestroy {
   async determineFollowFriendsButtonFunction(indicator){
     //let outlinedIcon = this.followFriendsIcon;
     try{
+      console.log("hey");
       switch(indicator.followFriendsIndicator) {
-        case 0: {
+        case 0:
           //this.followFriendsIcon = 'person-add';
           console.log("Freund hinzufügen");
           await this.notificationService.createNotification(3, this.profileUserId);
           break;
-        }
-        case 1: {
+        case 1:
           //this.followFriendsIcon = 'person-remove';
           await this.friendService.unfriendUser(this.profileUserId)
               .then((result)=>{
                 console.log(result);
               })
           break;
-        }
-        case 2: {
+        case 2:
           //this.followFriendsIcon = 'person-add';
           await this.friendService.followOrganizer(this.profileUserId)
               .then((result) => {
                 console.log(result)
               })
           break;
-        }
-        case 3: {
+        case 3: 
           //this.followFriendsIcon = 'person-remove';
           await this.friendService.unfollowOrganizer(this.profileUserId)
               .then((result) => {
                 console.log(result);
               });
           break;
-        }
       }
     }
     catch (e) {
@@ -167,18 +164,27 @@ export class UserProfilePage implements OnInit, OnDestroy {
    */
   async determineFollowFriendsIndicator(){
     let isNormalUser = await this.userDataService.getCurrentUserRole();
-    if(isNormalUser == null || isNormalUser == 1) {
+    if(isNormalUser ===  0 || isNormalUser === 2 ) {
+      if (this.user.rights === 0 || this.user.rights === 2) {
+        if (this.isFriends) {
+          this.followFriendsIndicator = 1;
+          this.followFriendsIcon = 'person-remove-outline';
+        } else {
+          this.followFriendsIndicator = 0;
+          this.followFriendsIcon = 'person-add-outline';
+        }
+      } else {
+        if (this.isFriends) {
+          this.followFriendsIndicator = 3;
+          this.followFriendsIcon = 'person-remove-outline';
+        } else {
+          this.followFriendsIndicator = 2;
+          this.followFriendsIcon = 'person-add-outline';
+        }
+      }
+    } else {
       this.followFriendsIndicator = undefined;
     }
-    console.log(this.user.rights);
-    if(isNormalUser === ( 0 || 2)) {
-      this.followFriendsIndicator = isNormalUser == (0 || 2) ?
-          (this.user.rights == (0 || 2) ?
-                  (!this.isFriends ? 1 : 0) :
-                  (!this.isFriends ? 3 : 2)
-          ) : undefined;
-    }
-    this.followFriendsIcon = this.followFriendsIndicator == (0 || 3) ? 'person-add-outline' : 'person-remove-outline';
   }
 
   switchProfileEventAndBadges(event: any) {

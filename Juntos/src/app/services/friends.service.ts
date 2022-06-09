@@ -18,7 +18,6 @@ export class FriendsService {
   async isUserFriendWith(potentialFriendId) {
     try {
       return await this.userDataService.getCurrentUser().then((userData) => {
-        console.log(userData);
         return userData.friends.includes(potentialFriendId)});
     } catch (e) {
       return false;
