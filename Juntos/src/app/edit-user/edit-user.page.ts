@@ -212,6 +212,7 @@ export class EditUserPage implements OnInit {
   private uploadStatus = false;
   private photoUploads = [];
 
+
   constructor(private userDataService: UserDataService, public alertService: AlertService, private router: Router, private photoService: PhotoService) {
 
     this.userData = this.userDataService.getCurrentUser();
@@ -221,30 +222,30 @@ export class EditUserPage implements OnInit {
     if (this.userData.firstName) {
       this.firstName = this.userData.firstName;
     } else {
-      this.firstName = "";
+      this.firstName = '';
     }
     if (this.userData.lastName) {
       this.lastName = this.userData.lastName;
     } else {
-      this.lastName = "";
+      this.lastName = '';
     }
 
     if (this.userData.userName) {
       this.userName = this.userData.userName;
     } else {
-      this.userName = "";
+      this.userName = '';
     }
 
     if (this.userData.languages) {
       this.languages = this.userData.languages;
     } else {
-      this.languages = "";
+      this.languages = '';
     }
 
     if (this.userData.description) {
       this.description = this.userData.description;
     } else {
-      this.description = "";
+      this.description = '';
     }
 
     if (this.userData.photoUrl) {
@@ -262,6 +263,7 @@ export class EditUserPage implements OnInit {
     //TODO: maybe get userdata from firestore and subscribe
     //this.db.doc(`user/${id}`).valueChanges().subscribe(user => this.user = user);
   }
+
 
   /**
    * Let the user upload an avatar, and updates the avatar
@@ -304,7 +306,7 @@ export class EditUserPage implements OnInit {
   close() {
     if (this.userData.userName.length === 0) {
       this.alertService.basicAlert('Sie müssen einen Benutzernamen angeben', 'Bitte setzen sie einen Benutzernamen', ['OK']);
-      return
+      return;
     }
     // delete photo which is not in use
     if (this.oldPhotoUrl != this.displayUrl) {
@@ -322,7 +324,7 @@ export class EditUserPage implements OnInit {
   updateUser() {
     if (this.userName.length === 0) {
       this.alertService.basicAlert('Sie müssen einen Benutzernamen angeben', 'Bitte setzen sie einen Benutzernamen', ['OK']);
-      return
+      return;
     }
     if (this.oldPhotoUrl != this.displayUrl) {
       this.deleteAvatar(this.oldPhotoUrl);

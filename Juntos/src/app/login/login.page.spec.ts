@@ -23,18 +23,18 @@ describe('LoginPage', () => {
 
   it('loginIndicator should be initialized with user', ()=>{
     expect(component.loginIndicator).toEqual('user');
-  })
+  });
 
   it('loginIndicator should have changed values after test call', ()=>{
     expect(component.loginIndicator).toEqual('user');
-    let mockEvent = {
+    const mockEvent = {
       detail: {
-        value: "test"
+        value: 'test'
       }
-    }
+    };
     component.switchUserLogin(mockEvent);
     expect(component.loginIndicator).toEqual('test');
-  })
+  });
 
 
 

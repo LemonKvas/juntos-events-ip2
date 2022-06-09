@@ -25,7 +25,7 @@ export class PhotoService {
       return new Promise((resolve, reject) => {
         const photoRef = this.afStorage.ref(this.location + this.photoID);
         photoRef.put(imgData).then(function(){
-          photoRef.getDownloadURL().subscribe((url:any) => {
+          photoRef.getDownloadURL().subscribe((url: any) => {
             resolve(url);
           });
         }).catch((error) => {

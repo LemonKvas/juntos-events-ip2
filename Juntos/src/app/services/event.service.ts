@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/compat/firestore';
 import { Event } from 'src/app/models/classes/event.model';
 import {Observable} from 'rxjs';
+import {documentId} from "@angular/fire/firestore";
 import firebase from 'firebase/compat/app';
 import {CreatedEvent} from '../models/interfaces/created-event';
 import {arrayUnion} from '@angular/fire/firestore';
@@ -37,6 +38,13 @@ export class EventService {
   async removeEvent(id: string){
     await this.eventsCollections.doc(id).delete();
   }
+
+  getMultipleEventsByEventId(eventIds: []){
+    const userEventCollection = this.afs.collection('events',
+        ref => ref.where(documentId(), 'in', eventIds));
+    return userEventCollection.valueChanges();
+  }
+
   async getEventById(id: string){
     const document = await this.eventsCollections.doc(id).get().toPromise();
     return document.data();

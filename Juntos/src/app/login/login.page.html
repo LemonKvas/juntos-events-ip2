@@ -28,8 +28,8 @@
       </ion-row>
       <ion-row class="ion-justify-content-center">
         <ion-col size="12"  [ngSwitch]="loginIndicator">
-            <app-login-child *ngSwitchCase="'user'" [userType]="1"></app-login-child>
-            <app-login-child *ngSwitchCase="'organizer'" [userType]="2"></app-login-child>
+            <app-login-child *ngSwitchCase="'user'" [userType]="2"></app-login-child>
+            <app-login-child *ngSwitchCase="'organizer'" [userType]="1"></app-login-child>
         </ion-col>
       </ion-row>
       <ion-row class="ion-justify-content-center" style="text-align: center">
