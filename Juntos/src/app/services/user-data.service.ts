@@ -90,10 +90,6 @@ export class UserDataService {
 
     const user = await this.getCurrentUser();
     const userId = user.userId;
-    console.log(user);
-    console.log(typeof user);
-    console.log(userId);
-    console.log(data);
 
     db.collection('user').doc(userId).update(data).then((res) => {
       this.router.navigate(['event-list']);

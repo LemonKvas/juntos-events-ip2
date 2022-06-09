@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {NotificationService} from "src/app/services/notification.service";
-import { Notification } from "src/app/models/classes/notification.model"
+import { BaseNotification } from "src/app/models/classes/notification.model"
+import {FriendsService} from "src/app/services/friends.service";
 
 @Component({
   selector: 'app-notifications',
@@ -9,9 +10,9 @@ import { Notification } from "src/app/models/classes/notification.model"
 })
 export class NotificationsComponent implements OnInit {
 
-  notifications: Notification[] = [];
+  notifications: BaseNotification[] = [];
 
-  constructor(private notificationService: NotificationService) { }
+  constructor(private notificationService: NotificationService, private friendsService: FriendsService) { }
 
   ngOnInit() {
     this.getNotification()
@@ -20,6 +21,15 @@ export class NotificationsComponent implements OnInit {
   async getNotification(){
     await this.notificationService.getNotificationInitializer();
     this.notifications = this.notificationService.notifications;
+  }
+
+  acceptFriendRequest(senderId){
+    this.friendsService.befriendUser(senderId)
+        .then(response => console.log(response))
+  }
+
+  declineFriendRequest() {
+    this.notificationService.removeNotification()
   }
 
 }

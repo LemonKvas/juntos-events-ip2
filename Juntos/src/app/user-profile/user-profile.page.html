@@ -29,8 +29,10 @@
       <ion-row class="ion-justify-content-center ion-align-items-center">
         <ion-col size="auto">
           <ion-avatar>
-            <!-- basicProfilePhoto am Ende der HTML Datei (wird nur genutzt wenn Nutzer kein Profilbild gesetzt hat)-->
-            <img *ngIf="user.photoUrl; else basicProfilePhoto" alt="User avatar" src="{{user.photoUrl}}">
+            <img *ngIf="user.photoUrl.includes('.png') || user.photoUrl.includes('googleusercontent'); else noNeed" alt="User avatar" src="{{user.photoUrl}}">
+            <ng-template #noNeed>
+              <img alt="User avatar" src="{{user.photoUrl | fireStorageImg: '/avatars' | async}}">
+            </ng-template>
           </ion-avatar>
         </ion-col>
       </ion-row>
@@ -91,6 +93,3 @@
 </ng-container>
 
 
-<ng-template #basicProfilePhoto>
-  <img alt="Basic user avatar" src="https://cdn.picpng.com/head/head-the-dummy-avatar-man-tie-72756.png">
-</ng-template>

@@ -125,7 +125,7 @@ export class UserProfilePage implements OnInit, OnDestroy {
         case 0: {
           //this.followFriendsIcon = 'person-add';
           console.log("Freund hinzufügen");
-          //TODO: add addfriend function
+          await this.notificationService.createNotification(3, this.profileUserId);
           break;
         }
         case 1: {
@@ -174,8 +174,8 @@ export class UserProfilePage implements OnInit, OnDestroy {
     if(isNormalUser === ( 0 || 2)) {
       this.followFriendsIndicator = isNormalUser == (0 || 2) ?
           (this.user.rights == (0 || 2) ?
-                  (!this.isFriends ? 0 : 1) :
-                  (!this.isFriends ? 2 : 3)
+                  (!this.isFriends ? 1 : 0) :
+                  (!this.isFriends ? 3 : 2)
           ) : undefined;
     }
     this.followFriendsIcon = this.followFriendsIndicator == (0 || 3) ? 'person-add-outline' : 'person-remove-outline';

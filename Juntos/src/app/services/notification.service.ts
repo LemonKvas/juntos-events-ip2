@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {UserDataService} from "src/app/services/user-data.service";
-import {Notification} from "src/app/models/classes/notification.model";
+import {BaseNotification, Notification} from "src/app/models/classes/notification.model";
 import {Observable} from 'rxjs';
-import {AngularFirestore} from "@angular/fire/compat/firestore";
+import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/compat/firestore";
 import {documentId} from "@angular/fire/firestore";
 import {PopoverController} from "@ionic/angular";
 import {NotificationsComponent} from "src/app/notifications/notifications.component";
@@ -12,16 +12,20 @@ import {NotificationsComponent} from "src/app/notifications/notifications.compon
 })
 export class NotificationService {
 
-  public notifications: Notification[] = [];
+  //TODO: get names from senderIds and pass to array
+  public notificationWithExtraInformation: Notification[] = [];
+  public notifications: BaseNotification[] = [];
   private notificationIds: string[] = [];
   private currentUserId: string;
   private currentUserObservable: Observable<any>;
   private NotificationObservable: Observable<any>;
+  private notificationCollecton: AngularFirestoreCollection<any>;
 
   constructor(private userDataService: UserDataService, private afs: AngularFirestore, public popoverController: PopoverController) {
     this.currentUserId = undefined;
     this.currentUserObservable = undefined;
     this.updateUserId();
+    this.notificationCollecton = this.afs.collection('notifications');
   }
 
   async updateUserId(){
@@ -44,8 +48,9 @@ export class NotificationService {
         if (userData.notifications) {
           this.notificationIds = await userData.notifications;
           if(this.notificationIds.length > 0) {
+            //TODO: ADD ORDER BY DATE IN QUERY
             this.NotificationObservable = this.afs.collection('notifications',
-                ref => ref.where(documentId(), 'in', this.notificationIds)).valueChanges();
+                ref => ref.where(documentId(), 'in', this.notificationIds)).valueChanges({idField: 'notificationId'});
             await this.getNotification();
           }
         } else {
@@ -61,12 +66,47 @@ export class NotificationService {
   getNotification() {
     this.NotificationObservable.forEach(
         (notificationDocs: any[]) => {
+          console.log(notificationDocs["id"], notificationDocs);
           this.notifications = notificationDocs;
         }
     )
   }
 
-   async createNotification(){
+  async createNotification(notificationType, receiverId, content?, eventOrUserName?){
+    const notificationId = this.afs.createId();
+    const currentUser = await this.userDataService.getCurrentUser();
+    let notificationContent;
+    let newNotification;
+    switch(notificationType) {
+      case 0: {
+        //JuntosMessage
+        notificationContent = content;
+        break;
+      }
+      case 1: {
+        //EventCreated
+        notificationContent = ""
+        break;
+      }
+      case 2: {
+        //EventJoined
+        notificationContent = ""
+        break;
+      }
+      case 3: {
+        //FriendRequest
+        notificationContent = currentUser.userName + " hat dir eine Freunschaftsanfrage geschickt";
+        break;
+      }
+    }
+
+    newNotification = new BaseNotification(receiverId, this.currentUserId, notificationContent, notificationType, new Date());
+    const data = JSON.parse(JSON.stringify(newNotification));
+    await this.notificationCollecton.doc(notificationId).set(data)
+        .catch((err) => console.log(err));
+  }
+
+  async removeNotification() {
 
   }
 

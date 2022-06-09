@@ -70,4 +70,20 @@ export class FriendsService {
     }
   }
 
+  async befriendUser(userIdToBefriend) {
+    try {
+      const currentUserId = await this.userDataService.getCurrentUserID();
+      await this.userCollection.doc(currentUserId).update({
+        friends: arrayUnion(userIdToBefriend)
+      })
+      await this.userCollection.doc(userIdToBefriend).update({
+        friends: arrayUnion(currentUserId)
+      })
+      return "successfully added";
+    }
+    catch (e) {
+      return "something went wrong";
+    }
+  }
+
 }

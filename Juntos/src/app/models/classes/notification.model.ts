@@ -1,6 +1,6 @@
 import notificationType from "src/app/models/enums/notificationType";
 
-export class Notification {
+export class BaseNotification {
     receiverId: string;
     senderId: string;
     content: string;
@@ -15,3 +15,13 @@ export class Notification {
         this.date = date.toDate();
     }
 }
+
+export class Notification extends BaseNotification {
+    senderName: string;
+
+    constructor(senderName: string, ...baseNotification: ConstructorParameters<typeof BaseNotification>){
+        super(...baseNotification);
+        this.senderName = senderName;
+    }
+}
+

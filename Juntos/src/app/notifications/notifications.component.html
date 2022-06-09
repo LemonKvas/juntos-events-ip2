@@ -5,12 +5,14 @@
         <ion-label>
           <h2>{{notification.senderId}}</h2>
           <p>{{notification.content}}</p>
-          <ion-button slot="start">
-            <ion-icon  size="large" style="zoom:0.8" name="checkmark-outline"></ion-icon>
-          </ion-button>
-          <ion-button slot="end">
-            <ion-icon size="large" style="zoom:0.8" name="close-outline"></ion-icon>
-          </ion-button>
+          <ng-container *ngIf="notification.type == 3">
+            <ion-button slot="start">
+              <ion-icon (click)="acceptFriendRequest(notification.senderId)" size="large" style="zoom:0.8" name="checkmark-outline"></ion-icon>
+            </ion-button>
+            <ion-button slot="end">
+              <ion-icon size="large" style="zoom:0.8" name="close-outline"></ion-icon>
+            </ion-button>
+          </ng-container>
         </ion-label>
       </ion-item>
     </ng-container>
