@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
-import {LoggedInGuard} from "src/app/guards/logged-in.guard";
+import {LoggedInGuard} from 'src/app/guards/logged-in.guard';
 
 const routes: Routes = [
   {
@@ -28,6 +28,15 @@ const routes: Routes = [
     loadChildren: () => import('./event-list/event-list.module').then( m => m.EventListPageModule),
     canActivate: [LoggedInGuard]
   },
+  {
+    path: 'event-details',
+    loadChildren: () => import('./event-details/event-details.module').then( m => m.EventDetailsPageModule)
+  },
+  {
+    path: 'event-details/:id',
+    loadChildren: () => import('./event-details/event-details.module').then( m => m.EventDetailsPageModule)
+  },
+
 
 
 ];

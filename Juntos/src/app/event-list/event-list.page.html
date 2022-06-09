@@ -19,30 +19,35 @@
 <ion-content>
   <ion-grid>
     <ion-list lines="full" class="ion-align-items-center">
-      <ion-row class="ion-align-items-center" size="12" *ngFor="let event of events; let i = index">
+      <ion-row class="ion-justify-content-center" size="12" *ngFor="let event of events; let i = index">
         <ion-item>
           <ion-col size="4">
             <!-- get Photo through Photo Service by photoID or url -->
-            <ion-img src="{{event.photoURLs[0] | fireStorageImg: '/event-photos' | async }}"></ion-img>
+            <div class="img-div">
+              <ion-img src="{{event.photoURLs[0] | fireStorageImg: '/event-photos' | async }}"></ion-img>
+            </div>
           </ion-col>
           <ion-col size="6">
             <!-- (click) on event name or photo to go to the detail page of the event -->
-            <h1>{{event.name}}</h1>
-            <p>{{event.eventDate | date: 'dd.MM.yyyy'}} um {{event.eventDate | date: 'H:mm'}}</p>
-            <p>{{event.address['street']}} {{event.address['house']}}, <br>
-              {{event.address['zipCode']}} {{event.address['city']}}
-            </p>
-            <p *ngIf="getPrice(event)"><strong>{{event.price}}</strong></p>
+            <div text-wrap>
+              <h1 button (click)="eventDetailsState(event.eventId)">{{event.name}}</h1>
+              <p>{{event.eventDate | date: 'dd.MM.yyyy'}} um {{event.eventDate | date: 'H:mm'}}</p>
+              <p>{{event.address['street']}} {{event.address['house']}}, <br>
+                {{event.address['zipCode']}} {{event.address['city']}}
+              </p>
+              <p *ngIf="this.eventService.freeEvent(event)"><strong>{{event.price}}€</strong></p>
+              <p *ngIf="!this.eventService.freeEvent(event)"><strong>{{event.price}}</strong></p>
+            </div>
           </ion-col>
           <ion-col size="2">
             <ion-buttons>
-              <ion-button slot="end" id="favorEventButton">
-                <ion-icon slot="icon-only" name="heart-outline" size="medium"></ion-icon>
+              <ion-button slot="end" class="favorEventButton">
+                <ion-icon class="item-icon" slot="icon-only" name="heart-outline"></ion-icon>
               </ion-button>
             </ion-buttons>
             <ion-buttons>
-              <ion-button slot="end" id="shareEventButton" (click)="shareEvent()">
-                <ion-icon slot="icon-only" name="share-outline" size="medium"></ion-icon>
+              <ion-button slot="end" class="shareEventButton" (click)="shareEvent()">
+                <ion-icon class="item-icon" slot="icon-only" name="share-outline"></ion-icon>
               </ion-button>
             </ion-buttons>
           </ion-col>

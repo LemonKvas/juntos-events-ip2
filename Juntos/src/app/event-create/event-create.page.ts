@@ -1,12 +1,15 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import { Location } from "@angular/common";
+import { Location } from '@angular/common';
 import { Event } from 'src/app/models/classes/event.model';
-import {IonDatetime} from "@ionic/angular";
-import {EventService} from "src/app/services/event.service";
-import {FormControl, FormGroup} from "@angular/forms";
-import {AlertService} from "src/app/services/alert.service";
-import {PhotoService} from "src/app/services/photo.service";
+import {IonDatetime} from '@ionic/angular';
+import {EventService} from 'src/app/services/event.service';
+import {FormControl, FormGroup} from '@angular/forms';
+import {AlertService} from 'src/app/services/alert.service';
+import {PhotoService} from 'src/app/services/photo.service';
+import {UserDataService} from '../services/user-data.service';
+import User from '../models/classes/user';
+import {CreatedEvent} from '../models/interfaces/created-event';
 
 @Component({
   selector: 'app-event-create',
@@ -40,12 +43,17 @@ export class EventCreatePage implements OnInit {
   events: Event[];
   uploadStatus = false;
   photoUploads = [];
+  creator: User;
+  creatorId = '';
+  createdEvent: CreatedEvent;
   public createEventForm: FormGroup;
 
   constructor(private router: Router, private location: Location,
               private route: ActivatedRoute, private eventService: EventService,
-              public alertService: AlertService, public photoService: PhotoService) {
+              public alertService: AlertService, public photoService: PhotoService,
+              private userService: UserDataService) {
     this.today = new Date();
+    this.getCreatorData();
     this.event = new Event(
       this.eventName,
       this.photoURLs,
@@ -59,7 +67,7 @@ export class EventCreatePage implements OnInit {
       this.address,
       this.publishStatus,
       null,
-      null,
+      this.creatorId,
     );
     this.createEventForm = new FormGroup({
       eventName: new FormControl(),
@@ -79,10 +87,10 @@ export class EventCreatePage implements OnInit {
   }
   setInputValues(){
     this.address = {
-      'street': this.street,
-      'house': this.house,
-      'zipCode': this.zipCode,
-      'city': this.city,
+      street: this.street,
+      house: this.house,
+      zipCode: this.zipCode,
+      city: this.city,
     };
     this.event = new Event(
       this.eventName,
@@ -97,7 +105,7 @@ export class EventCreatePage implements OnInit {
       this.address,
       this.publishStatus,
       'eventId',
-      '',
+      this.creatorId,
     );
   }
   async addEvent(){
@@ -133,6 +141,8 @@ export class EventCreatePage implements OnInit {
     } else if(this.errors.size === 0){
       this.setInputValues();
       await this.eventService.addEvent(this.event);
+      this.createdEvent = await this.eventService.createdEventData(this.publishStatus);
+      await this.userService.addCreatedEvent(this.createdEvent);
       await this.clearEventForm();
     }
   }
@@ -144,8 +154,14 @@ export class EventCreatePage implements OnInit {
     } else {
       this.setInputValues();
       await this.eventService.addEvent(this.event);
+      this.createdEvent = await this.eventService.createdEventData(this.publishStatus);
+      await this.userService.addCreatedEvent(this.createdEvent);
       await this.clearEventForm();
     }
+  }
+  async getCreatorData(){
+    this.creator = await this.userService.getCurrentUser();
+    this.creatorId = this.creator.userId;
   }
   async clearEventForm(){
     this.createEventForm.reset();
