@@ -3,7 +3,11 @@
   <!-- Header -->
   <ion-header>
     <ion-toolbar>
-      <ion-title *ngIf="user.userName else firstNameProfileTitle">{{user.userName}}</ion-title>
+      <ion-buttons slot="start">
+        <ion-back-button>
+        </ion-back-button>
+      </ion-buttons>
+      <ion-title  *ngIf="user.userName else firstNameProfileTitle">{{user.userName}}</ion-title>
       <ion-buttons slot="end" *ngIf="ownProfile" (click)="openNotifications($event)">
         <ion-icon size="large" style="zoom:0.8" name="notifications-outline"></ion-icon>
       </ion-buttons>

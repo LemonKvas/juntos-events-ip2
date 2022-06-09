@@ -26,8 +26,4 @@ export class NotificationsComponent implements OnInit {
         .then(() => this.notificationService.removeNotification(notification.notificationId))
   }
 
-  declineFriendRequest(notificationId) {
-    this.notificationService.removeNotification(notificationId);
-  }
-
 }
