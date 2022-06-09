@@ -2,13 +2,13 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button (click)="close()">
-        <ion-icon name="close-outline"></ion-icon>
+        <ion-icon size="large" style="zoom:0.8" name="close-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>Profil bearbeiten</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="updateUser()">
-        <ion-icon name="create-outline"></ion-icon>
+        <ion-icon size="large" style="zoom:0.8" name="create-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -16,18 +16,21 @@
 
 <ion-content>
   <ion-grid>
-
     <ion-row class="ion-justify-content-center ion-align-items-center">
       <ion-col size="auto">
         <ion-avatar>
-          <img alt="User avatar" src={{photoUrl}}>
+          <img *ngIf="displayUrl.includes('.png') || displayUrl.includes('googleusercontent'); else noNeed" alt="User avatar" src="{{displayUrl}}">
+          <ng-template #noNeed>
+            <img alt="User avatar" src="{{displayUrl | fireStorageImg: '/avatars' | async}}">
+          </ng-template>
         </ion-avatar>
       </ion-col>
     </ion-row>
 
     <ion-row class="ion-justify-content-center">
-      <ion-col class="" size="auto">
-        <a (click)="uploadAvatar()">Profilbild ändern</a>
+      <ion-col class="fileUpload" size="auto">
+        <ion-input id="photoInput"  type="file" (change)="uploadAvatar($event)" accept=".png,.jpg" multiple="false"></ion-input>
+        <label class="myFakeUploadButton" for="photoInput">Profilbild ändern</label>
       </ion-col>
     </ion-row>
 
@@ -64,9 +67,10 @@
     <ion-row>
       <ion-col>
         <ion-item>
-          <ion-label position="stacked">Sprachen</ion-label>
-          <ion-input [(ngModel)]="languages"
-          ></ion-input>
+          <ion-label position="stacked">Sprachen*</ion-label>
+          <ion-select [(ngModel)]="languages" multiple="true">
+            <ion-select-option *ngFor="let allLanguage of allLanguages; let i = index">{{allLanguage.name}}</ion-select-option>
+          </ion-select>
         </ion-item>
       </ion-col>
     </ion-row>
