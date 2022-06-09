@@ -18,15 +18,25 @@ export class EventDetailsPage implements OnInit {
   eventId: string;
   participant: User;
   registeredEvent: RegisteredEvent;
+  creator: User;
+  segment: string;
   constructor(private router: Router, public eventService: EventService, private authService: AuthService,
-              private userService: UserDataService, public alertServie: AlertService) {
+              private userService: UserDataService, public alertService: AlertService) {
     this.event = this.router.getCurrentNavigation().extras.state;
+    this.getCreatorData();
   }
   async ngOnInit() {
+    this.segment = 'information';
+  }
+  async getCreatorData(){
+    this.creator = await this.userService.getUserById(this.event.eventId);
+  }
+  segmentChanged(ev: any){
+    console.log('Segment changed to ', ev);
   }
   async attendEvent(event: Event){
     if(this.authService.isloggedin() === false ){
-      await this.alertServie.plsSignInAlert();
+      await this.alertService.plsSignInAlert();
     } else {
       this.participant = await this.userService.getCurrentUser();
       if(this.event.price === 'Kostenlos'){
@@ -43,7 +53,7 @@ export class EventDetailsPage implements OnInit {
       this.event.participants.unshift(this.participant.userId);
       await this.eventService.addRegisteredUser(this.event);
       await this.userService.addRegisteredEvent(this.registeredEvent);
-      await this.alertServie.partakeEvent(event);
+      await this.alertService.partakeEvent(event);
     }
   }
 }

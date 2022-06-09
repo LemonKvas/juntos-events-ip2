@@ -56,7 +56,7 @@ export class EventListPage implements OnInit {
          bio: this.selectedEvent.bio,
          categories: this.selectedEvent.categories,
          participants: this.selectedEvent.participants,
-         maxParticipants: this.selectedEvent,
+         maxParticipants: this.selectedEvent.maxParticipants,
          address: this.selectedEvent.address,
          publishStatus: this.selectedEvent.publishStatus,
          eventId: this.selectedEvent.eventId,
