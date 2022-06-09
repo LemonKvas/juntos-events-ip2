@@ -74,6 +74,11 @@ ion-img {
 }
 #photoInput {
   font-size: 2vh;
+  position: absolute;
+  opacity: 0;
+}
+.fakeUploadBtn {
+  color: #FF8766;
 }
 #eventSaveAsDraftBtnCol, #eventPublishBtnCol {
   padding: 5px;
