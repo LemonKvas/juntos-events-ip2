@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import firebase from 'firebase/compat/app';
 import {CreatedEvent} from '../models/interfaces/created-event';
 import {arrayUnion} from '@angular/fire/firestore';
+import {getDoc} from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -38,8 +39,9 @@ export class EventService {
     await this.eventsCollections.doc(id).delete();
   }
   async getEventById(id: string){
-    const document = await this.eventsCollections.doc(id).get().toPromise();
-    return document.data();
+    const docRef = this.eventsCollections.doc(id).ref;
+    const docSnap = await getDoc(docRef);
+    return <Event>docSnap.data();
   }
   async createdEventData(publishStatus: boolean){
     return this.createdEvent = {

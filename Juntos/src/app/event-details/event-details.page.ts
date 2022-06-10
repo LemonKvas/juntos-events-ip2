@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {EventService} from '../services/event.service';
 import {Event} from '../models/classes/event.model';
 import User from '../models/classes/user';
@@ -19,13 +19,18 @@ export class EventDetailsPage implements OnInit {
   participant: User;
   registeredEvent: RegisteredEvent;
   creator: User;
+  participants: User[] = [];
   segment: string;
   constructor(private router: Router, public eventService: EventService, private authService: AuthService,
-              private userService: UserDataService, public alertService: AlertService) {
+              private userService: UserDataService, public alertService: AlertService,
+              private route: ActivatedRoute) {
     this.event = this.router.getCurrentNavigation().extras.state;
+    //this.eventId = this.route.snapshot.paramMap.get('id');
     this.getCreatorData();
+    this.getUserlist();
   }
   async ngOnInit() {
+    //this.event = await this.eventService.getEventById(this.eventId);
     this.segment = 'information';
   }
   async getCreatorData(){
@@ -33,6 +38,12 @@ export class EventDetailsPage implements OnInit {
   }
   segmentChanged(ev: any){
     console.log('Segment changed to ', ev);
+  }
+  async getUserlist(){
+    for(let i = 0; i < this.event.participants.length; i++){
+      const user = await this.userService.getUserById(this.event.participants[i]);
+      this.participants.unshift(user);
+    }
   }
   async attendEvent(event: Event){
     if(this.authService.isloggedin() === false ){
