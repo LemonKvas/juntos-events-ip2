@@ -12,7 +12,7 @@ import {AngularFireDatabaseModule} from '@angular/fire/compat/database';
 import {AngularFireStorageModule} from '@angular/fire/compat/storage';
 import {AngularFireModule} from '@angular/fire/compat';
 import { SharedModule } from './shared/shared.module';
-import {AuthService} from "src/app/services/auth.service";
+import {AuthService} from 'src/app/services/auth.service';
 
 
 
