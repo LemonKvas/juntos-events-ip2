@@ -41,7 +41,7 @@ export class EventService {
   async getEventById(id: string){
     const docRef = this.eventsCollections.doc(id).ref;
     const docSnap = await getDoc(docRef);
-    return <Event>docSnap.data();
+    return docSnap.data() as Event;
   }
   async createdEventData(publishStatus: boolean){
     return this.createdEvent = {
