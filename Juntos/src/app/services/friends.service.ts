@@ -2,14 +2,19 @@ import { Injectable } from '@angular/core';
 import {UserDataService} from "src/app/services/user-data.service";
 import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/compat/firestore";
 import {arrayRemove, arrayUnion} from "@angular/fire/firestore";
+import {ModalController} from "@ionic/angular";
+import {FriendlistPage} from "src/app/pages/friendlist/friendlist.page";
+import {AuthService} from "src/app/services/auth.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class FriendsService {
   private readonly userCollection: AngularFirestoreCollection;
+  friendlistModal;
 
-  constructor(private afs: AngularFirestore, private userDataService: UserDataService) {
+  constructor(private afs: AngularFirestore, private userDataService: UserDataService, public modalController: ModalController,
+              private authService: AuthService) {
     this.userCollection = this.afs.collection(`user`);
   }
 
@@ -23,6 +28,8 @@ export class FriendsService {
       return false;
     }
   }
+
+
 
 
   async followOrganizer(organizerIdToFollow) {
@@ -82,6 +89,28 @@ export class FriendsService {
     }
     catch (e) {
       return "something went wrong";
+    }
+  }
+
+  async openFriendlistModal(friendIds: any[]) {
+    const isLoggedIn = this.authService.isLoggedIn();
+    const modal = await this.modalController.create({
+      component: FriendlistPage,
+      cssClass: 'fullscreen',
+      componentProps: {
+        friendIds: friendIds,
+        isLoggedIn: isLoggedIn
+      }
+    });
+    this.friendlistModal = modal;
+    await modal.present();
+  }
+
+  dismissModal() {
+    if (this.friendlistModal) {
+      this.friendlistModal.dismiss().then(() => {
+        this.friendlistModal = null;
+      });
     }
   }
 

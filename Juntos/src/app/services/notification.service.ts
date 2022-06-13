@@ -5,7 +5,7 @@ import {Observable} from 'rxjs';
 import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/compat/firestore";
 import {arrayRemove, arrayUnion, documentId, getDocs, query, where} from "@angular/fire/firestore";
 import {PopoverController} from "@ionic/angular";
-import {NotificationsComponent} from "src/app/notifications/notifications.component";
+import {NotificationsComponent} from "src/app/components/notifications/notifications.component";
 import { AlertService } from './alert.service';
 import firebase from "firebase/compat";
 import CollectionReference = firebase.firestore.CollectionReference;
@@ -16,7 +16,6 @@ import CollectionReference = firebase.firestore.CollectionReference;
 export class NotificationService {
 
   //TODO: get names from senderIds and pass to array
-  public notificationWithExtraInformation: Notification[] = [];
   public notificationsSorted: BaseNotification[] = [];
   private notifications: BaseNotification[] = [];
   private notificationIds: string[] = [];
@@ -73,7 +72,6 @@ export class NotificationService {
   getNotification() {
     this.NotificationObservable.forEach(
         (notificationDocs: any[]) => {
-          console.log(notificationDocs['notificationId'], notificationDocs);
           this.notifications = notificationDocs;
           this.sortNotifications();
         }
@@ -110,7 +108,6 @@ export class NotificationService {
         }
         case 3: {
           //FriendRequest
-          console.log(currentUser['userId']);
           let doublicateCheck = await
               this.checkNotificationDoublication(notificationType, currentUser['userId'], receiverId);
           if(doublicateCheck){
@@ -173,10 +170,6 @@ export class NotificationService {
       showBackdrop: false,
       alignment: 'end'
     });
-     popover.onDidDismiss().then((result) => {
-       console.log(result.data);
-     });
-
      return await popover.present();
      /** Sync event from popover component */
   }

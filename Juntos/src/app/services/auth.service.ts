@@ -9,6 +9,7 @@ import FacebookAuthProvider = firebase.auth.FacebookAuthProvider;
 import {Router} from '@angular/router';
 import {AlertService} from 'src/app/services/alert.service';
 import {Subscription} from "rxjs";
+import { Location } from '@angular/common';
 
 
 @Injectable({
@@ -21,7 +22,8 @@ export class AuthService {
     private token;
     refreshUserDataSub: Subscription;
 
-    constructor(private afAuth: AngularFireAuth, private userDataService: UserDataService, private router: Router, public alertService: AlertService) {
+    constructor(private afAuth: AngularFireAuth, private userDataService: UserDataService, private router: Router, public alertService: AlertService,
+                private location: Location) {
         this.afAuth.authState.subscribe(async firebaseUser => {
                 this.user = undefined;
                 this.token = undefined;
@@ -48,9 +50,8 @@ export class AuthService {
     }
 
 
-    isloggedin() {
-        const user = JSON.parse(localStorage.getItem('user'));
-        return user !== undefined;
+    isLoggedIn() {
+        return this.user !== undefined;
     }
 
     hasRole(role){
@@ -176,7 +177,7 @@ export class AuthService {
 
     /** FOR APP MODULE INIT **/
     initalizeService(){
-        console.log("Authentication Serivce successfully initialized");
+        console.log("Authentification Serivce successfully initialized");
     }
 
 }
