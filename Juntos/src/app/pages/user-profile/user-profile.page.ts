@@ -149,7 +149,7 @@ export class UserProfilePage implements OnInit, OnDestroy {
                 console.log(result)
               })
           break;
-        case 3: 
+        case 3:
           //this.followFriendsIcon = 'person-remove';
           await this.friendService.unfollowOrganizer(this.profileUserId)
               .then((result) => {

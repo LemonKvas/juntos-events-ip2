@@ -40,7 +40,7 @@
           </ion-col>
           <ion-col >
             <!--TODO: See if URL fits, change navigate url-->
-            <ion-button (click)="router.navigate(['edit-user'])">
+            <ion-button (click)="router.navigate(['profile', currentUser])">
               <ion-icon size="large" style="zoom:0.8" *ngIf="currentPage  === '/profile'; else not_profile" slot="icon-only" name="person"></ion-icon>
               <ng-template #not_profile>
                 <ion-icon size="large" style="zoom:0.8" slot="icon-only" name="person-outline"></ion-icon>

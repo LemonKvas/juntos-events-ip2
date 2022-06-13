@@ -7,7 +7,6 @@
         <ion-back-button>
         </ion-back-button>
       </ion-buttons>
-      <ion-title  *ngIf="user.userName else firstNameProfileTitle">{{user.userName}}</ion-title>
       <ion-buttons *ngIf="friendIds else noFriends" slot="end">
         <ion-button (click)="openFriendlist()">{{friendIds.length}} Freunde</ion-button>
       </ion-buttons>
