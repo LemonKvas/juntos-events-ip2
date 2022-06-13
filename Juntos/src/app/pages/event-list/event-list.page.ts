@@ -64,5 +64,6 @@ export class EventListPage implements OnInit {
        }
      };
      await this.router.navigateByUrl(`event-details/${id}`, navigationExtras);
+     //await this.router.navigateByUrl(`event-details/${id}`);
   }
 }

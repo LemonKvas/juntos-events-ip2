@@ -24,9 +24,11 @@
         <ion-img src="{{event.photoURLs[0] | fireStorageImg: '/event-photos' | async }}"></ion-img>
       </div>
     </ion-row>
+
     <ion-row class="ion-justify-content-start">
       <h1>{{event.name}}</h1>
     </ion-row>
+
     <ion-row>
       <ion-col>
         <p>
@@ -41,6 +43,7 @@
         </p>
       </ion-col>
     </ion-row>
+
     <ion-row>
       <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
         <ion-segment-button value="information">
@@ -51,12 +54,14 @@
         </ion-segment-button>
       </ion-segment>
     </ion-row>
+
     <!-- Event Information Segment -->
     <div class="segment-divs" *ngIf="segment === 'information'">
       <ion-row class="ion-justify-content-start">
-        <h2>Beschreibung</h2> <br>
+        <h2>Beschreibung</h2>
         <p>{{event.bio}}</p>
       </ion-row>
+
       <ion-row class="ion-justify-content-start">
         <h2>Standort</h2> <br>
         <p>{{event.address['street']}} {{event.address['house']}}, {{event.address['zipCode']}} {{event.address['city']}}</p>
@@ -65,9 +70,35 @@
         <h2>Kommentare</h2>
       </ion-row>
     </div>
+
     <!-- Participants Segment -->
     <div class="segment-divs" *ngIf="segment === 'participants'">
-      <p>Event Teilnehmer</p>
+      <ion-list>
+        <ion-item class="ion-text-justify" *ngIf="event.participants.length === 0">
+          <p>Nehme als Erste(r) an dem Event teil!</p>
+        </ion-item>
+        <ion-item *ngFor="let participant of participants">
+          <ion-row class="ion-justify-content-center">
+            <ion-col size="5">
+              <div class="profile-div">
+                <ion-img class="profile-img" src="{{participant.photoUrl | fireStorageImg: '/avatars' | async }}"></ion-img>
+              </div>
+            </ion-col>
+            <ion-col size="4">
+              <p>
+                {{participant.firstName}} {{participant.lastName}}
+              </p>
+            </ion-col>
+            <ion-col size="3">
+              <ion-buttons class="chat-btn">
+                <ion-button slot="end">
+                  <ion-icon name="chatbubble-ellipses-outline" size="small"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+      </ion-list>
     </div>
   </ion-grid>
 </ion-content>
@@ -76,12 +107,12 @@
   <ion-toolbar>
     <ion-row class="ion-align-items-center">
       <ion-col class="ion-text-center" id="eventSaveAsDraftBtnCol" size-sm="6">
-        <p *ngIf="this.eventService.freeEvent(event)"><strong>{{event.price}}€</strong></p>
-        <p *ngIf="!this.eventService.freeEvent(event)"><strong>{{event.price}}</strong></p>
+        <h2 *ngIf="this.eventService.freeEvent(event)"><strong>{{event.price}}€/Ticket</strong></h2>
+        <h2 *ngIf="!this.eventService.freeEvent(event)"><strong>{{event.price}}</strong></h2>
       </ion-col>
       <ion-col class="ion-text-center" size-sm="6">
         <ion-button id="eventPartakeBtn" (click)="attendEvent(event)">
-          <h3>Teilnehmen</h3>
+          <p>Teilnehmen</p>
         </ion-button>
       </ion-col>
     </ion-row>
