@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/compat/firestore';
 import { Event } from 'src/app/models/classes/event.model';
 import {Observable} from 'rxjs';
-import {documentId} from "@angular/fire/firestore";
+import {documentId} from '@angular/fire/firestore';
 import firebase from 'firebase/compat/app';
 import {CreatedEvent} from '../models/interfaces/created-event';
 import {arrayUnion} from '@angular/fire/firestore';

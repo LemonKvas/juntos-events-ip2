@@ -6,4 +6,6 @@ export interface ChatGroup {
   name?: string;
   msg?: Message[];
   users?: User[];
+  date?: Date;
+  photo?: string;
 }
