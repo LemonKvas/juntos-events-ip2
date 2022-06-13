@@ -8,9 +8,18 @@
         </ion-back-button>
       </ion-buttons>
       <ion-title  *ngIf="user.userName else firstNameProfileTitle">{{user.userName}}</ion-title>
-      <ion-buttons slot="end">
+      <ion-buttons *ngIf="friendIds else noFriends" slot="end">
         <ion-button (click)="openFriendlist()">{{friendIds.length}} Freunde</ion-button>
+      </ion-buttons>
+      <ng-template #noFriends>
+        <ion-buttons  slot="end">
+          <ion-button>0 Freunde</ion-button>
+        </ion-buttons>
+      </ng-template>
+      <ion-buttons slot="end">
         <ion-icon *ngIf="ownProfile" size="large" style="zoom:0.8" name="notifications-outline" (click)="openNotifications($event)"></ion-icon>
+        </ion-buttons>
+      <ion-buttons slot="end">
         <ion-icon *ngIf="followFriendsIndicator !== undefined"size="large" style="zoom:0.8" [name]="followFriendsIcon"
                   (click)="determineFollowFriendsButtonFunction({followFriendsIndicator})"></ion-icon>
       </ion-buttons>
