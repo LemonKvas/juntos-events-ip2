@@ -7,8 +7,8 @@
 <ion-content>
   <div class="tabs ion-padding">
     <ion-row>
-      <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
-        <ion-segment-button value="chats">
+      <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)" style="width: 100%">
+        <ion-segment-button value="chats" style="width: 100%">
           <ion-label>Chats</ion-label>
         </ion-segment-button>
         <ion-segment-button value="friends">
@@ -35,7 +35,7 @@
           </ion-button>
         </ion-buttons>
       </ion-item>
-      <ion-item *ngFor="let chat of chats">
+      <ion-item class="chat-item" *ngFor="let chat of chats">
         <ion-avatar slot="start">
           <ion-img src="{{chat.photo[0] | fireStorageImg: '/avatars' | async }}"></ion-img>
         </ion-avatar>

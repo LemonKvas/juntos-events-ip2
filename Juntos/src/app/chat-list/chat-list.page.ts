@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ChatGroup} from '../models/interfaces/chat-group';
+import {ChatGroup} from '../models/classes/chat-group';
 
 @Component({
   selector: 'app-chat-list',
