@@ -1,0 +1,18 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>Freundesliste</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="friendsService.dismissModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen>
+  <ion-list *ngFor="let friend of friendIds; let i=index">
+    <ng-container *ngIf="i < limiter">
+      <app-friend [userId]="friend" [isLoggedIn]="isLoggedIn"></app-friend>
+    </ng-container>
+  </ion-list>
+  <ion-button (click)="addLimit()" *ngIf="limiter < friendIds.length">Mehr anzeigen
+  </ion-button>
+</ion-content>
+
