@@ -166,14 +166,17 @@ export class AuthService {
         }
     }
 
-    SignOut() {
+    signOut() {
         this.afAuth.signOut().then(() => {
-            this.refreshUserDataSub.unsubscribe();
+          this.refreshUserDataSub.unsubscribe();
             localStorage.removeItem('user');
             localStorage.removeItem('token');
+
+            this.router.navigate(['login']);
+        }).catch((e) => {
+          console.log(e);
         });
     }
-
 
     /** FOR APP MODULE INIT **/
     initalizeService(){

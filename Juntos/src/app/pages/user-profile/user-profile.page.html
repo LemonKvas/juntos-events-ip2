@@ -4,22 +4,25 @@
   <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-back-button>
-        </ion-back-button>
+        <!--        <ion-back-button></ion-back-button>-->
+        <ion-button (click)="openMenu()">
+          <ion-icon name="menu-outline"></ion-icon>
+        </ion-button>
       </ion-buttons>
       <ion-buttons *ngIf="friendIds else noFriends" slot="end">
         <ion-button (click)="openFriendlist()">{{friendIds.length}} Freunde</ion-button>
       </ion-buttons>
       <ng-template #noFriends>
-        <ion-buttons  slot="end">
+        <ion-buttons slot="end">
           <ion-button>0 Freunde</ion-button>
         </ion-buttons>
       </ng-template>
       <ion-buttons slot="end">
-        <ion-icon *ngIf="ownProfile" size="large" style="zoom:0.8" name="notifications-outline" (click)="openNotifications($event)"></ion-icon>
-        </ion-buttons>
+        <ion-icon *ngIf="ownProfile" size="large" style="zoom:0.8" name="notifications-outline"
+                  (click)="openNotifications($event)"></ion-icon>
+      </ion-buttons>
       <ion-buttons slot="end">
-        <ion-icon *ngIf="followFriendsIndicator !== undefined"size="large" style="zoom:0.8" [name]="followFriendsIcon"
+        <ion-icon *ngIf="followFriendsIndicator !== undefined" size="large" style="zoom:0.8" [name]="followFriendsIcon"
                   (click)="determineFollowFriendsButtonFunction({followFriendsIndicator})"></ion-icon>
       </ion-buttons>
     </ion-toolbar>
@@ -36,12 +39,13 @@
 
 
   <!-- Profil Inhalt -->
-  <ion-content >
+  <ion-content>
     <ion-grid>
       <ion-row class="ion-justify-content-center ion-align-items-center">
         <ion-col size="auto">
           <ion-avatar>
-            <img *ngIf="user.photoUrl.includes('.png') || user.photoUrl.includes('googleusercontent'); else noNeed" alt="User avatar" src="{{user.photoUrl}}">
+            <img *ngIf="user.photoUrl.includes('.png') || user.photoUrl.includes('googleusercontent'); else noNeed"
+                 alt="User avatar" src="{{user.photoUrl}}">
             <ng-template #noNeed>
               <img alt="User avatar" src="{{user.photoUrl | fireStorageImg: '/avatars' | async}}">
             </ng-template>
@@ -53,7 +57,7 @@
           <!-- Name unter Bild festlegen -->
           <h2 *ngIf="user.firstName else usernameCaption">{{user.firstName}}</h2>
           <ng-template #usernameCaption>
-            <h2 *ngIf="user.userName" >{{user.userName}}</h2>
+            <h2 *ngIf="user.userName">{{user.userName}}</h2>
           </ng-template>
           <!-- weiter mit User Bio -->
         </ion-col>
@@ -86,14 +90,14 @@
           </ion-col>
         </ion-row>
         <ng-container [ngSwitch]="eventAndBadgesIndicator">
-          <ng-container *ngSwitchCase="'events'" >
+          <ng-container *ngSwitchCase="'events'">
             <ion-list lines="full" class="ion-align-items-center">
               <ng-container *ngIf="events">
-              <ion-row class="ion-align-items-center" size="12" *ngFor="let event of events; let i = index">
-                <ion-col class="ion-justify-content-center" size="12">
-                  <app-event-item [event]="event"></app-event-item>
-                </ion-col>
-              </ion-row>
+                <ion-row class="ion-align-items-center" size="12" *ngFor="let event of events; let i = index">
+                  <ion-col class="ion-justify-content-center" size="12">
+                    <app-event-item [event]="event"></app-event-item>
+                  </ion-col>
+                </ion-row>
               </ng-container>
               <ng-template>
                 <ion-row class="ion-align-items-center" size="12">
@@ -104,7 +108,7 @@
               </ng-template>
             </ion-list>
           </ng-container>
-          <ng-container *ngSwitchCase="'badges'" >
+          <ng-container *ngSwitchCase="'badges'">
 
           </ng-container>
         </ng-container>
@@ -112,5 +116,35 @@
     </div>
   </ion-content>
 </ng-container>
+
+<app-footermenu></app-footermenu>
+
+<ion-menu side="start" menuId="first" contentId="main">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Profil</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content id="content">
+    <ion-list>
+      <ion-item button (click)="router.navigate(['edit-user']); menu.close()">
+        <ion-label>
+          <ion-icon name="person-outline"></ion-icon>
+          Profil bearbeiten
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="people-outline"></ion-icon>
+           Freunde
+      </ion-item>
+    </ion-list>
+
+<!--    test-->
+  <ion-button id="logoutBtn" (click)="logOut()" expand="full">Ausloggen</ion-button>
+
+  </ion-content>
+</ion-menu>
+
+<ion-router-outlet id="main"></ion-router-outlet>
 
 
