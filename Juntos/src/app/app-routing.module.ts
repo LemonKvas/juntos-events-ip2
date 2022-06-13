@@ -4,37 +4,50 @@ import {LoggedInGuard} from 'src/app/guards/logged-in.guard';
 
 const routes: Routes = [
   {
+    path: 'home',
+    loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule)
+  },
+  {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
   },
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
     path: 'edit-user',
-    loadChildren: () => import('./edit-user/edit-user.module').then( m => m.EditUserPageModule),
+    loadChildren: () => import('./pages/edit-user/edit-user.module').then(m => m.EditUserPageModule),
     canActivate: [LoggedInGuard]
   },
 
   {
     path: 'event-create',
-    loadChildren: () => import('./event-create/event-create.module').then( m => m.EventCreatePageModule),
+    loadChildren: () => import('./pages/event-create/event-create.module').then(m => m.EventCreatePageModule),
     canActivate: [LoggedInGuard]
   },
   {
     path: 'event-list',
-    loadChildren: () => import('./event-list/event-list.module').then( m => m.EventListPageModule),
+    loadChildren: () => import('./pages/event-list/event-list.module').then(m => m.EventListPageModule),
     canActivate: [LoggedInGuard]
   },
   {
+    path: 'profile/:userId',
+    loadChildren: () => import('./pages/user-profile/user-profile.module').then(m => m.UserProfilePageModule)
+  },
+  {
     path: 'event-details',
-    loadChildren: () => import('./event-details/event-details.module').then( m => m.EventDetailsPageModule)
+    loadChildren: () => import('./pages/event-details/event-details.module').then(m => m.EventDetailsPageModule)
   },
   {
     path: 'event-details/:id',
-    loadChildren: () => import('./event-details/event-details.module').then( m => m.EventDetailsPageModule)
+    loadChildren: () => import('./pages/event-details/event-details.module').then(m => m.EventDetailsPageModule)
+
+  },
+  {
+    path: 'friendlist',
+    loadChildren: () => import('./pages/friendlist/friendlist.module').then(m => m.FriendlistPageModule),
   },
 
 

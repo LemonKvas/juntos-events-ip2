@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree} from '@angular/router';
 import {Observable} from 'rxjs';
-import {AuthService} from "src/app/services/auth.service";
+import {AuthService} from 'src/app/services/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +14,11 @@ export class LoggedInGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return new Promise((resolve, reject) => {
-      if(!this.authService.isloggedin()){
+      if(!this.authService.isLoggedIn()){
         reject(false);
       }
       resolve(true);
-    })
+    });
 
   }
 
