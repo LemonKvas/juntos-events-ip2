@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import { Location } from '@angular/common';
 import {UserDataService} from 'src/app/services/user-data.service';
-import {NavigationExtras, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {EventService} from 'src/app/services/event.service';
 import { Event } from 'src/app/models/classes/event.model';
 import {Platform} from '@ionic/angular';
@@ -10,7 +10,6 @@ import { Subscription } from 'rxjs';
 import {FriendsService} from "src/app/services/friends.service";
 import friendButtonIndicator from "src/app/models/enums/friendButtonIndicator";
 import {NotificationService} from "src/app/services/notification.service";
-import {AlertService} from "src/app/services/alert.service";
 
 
 @Component({
@@ -30,7 +29,7 @@ export class UserProfilePage implements OnInit, OnDestroy {
   isDesktop: boolean;
   user;
   eventAndBadgesIndicator;
-  events: Event[] = [];
+  events: Event[];
   socialPointsCalculated;
   isFriends: boolean;
   followFriendsIndicator: friendButtonIndicator;
@@ -40,7 +39,7 @@ export class UserProfilePage implements OnInit, OnDestroy {
 
   constructor(private location: Location, private userDataService: UserDataService, private router: Router,
               private eventService: EventService, private platform: Platform, private friendService: FriendsService,
-              private notificationService: NotificationService, private alertService: AlertService) {
+              private notificationService: NotificationService) {
     this.followFriendsIndicator = undefined;
     this.isFriends = false;
     this.currentLocation = location;
@@ -48,12 +47,14 @@ export class UserProfilePage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.eventAndBadgesIndicator = 'events';
     this.isDesktop = !(this.platform.is('mobileweb') || this.platform.is('ios') || this.platform.is('android') ||
         this.platform.is('iphone'));
     this.loadUser()
         .then(() => {
           //TODO: calculate points korrekt kalkulieren wenn Badges implementiert wurden!
         });
+
   }
 
 
@@ -159,10 +160,6 @@ export class UserProfilePage implements OnInit, OnDestroy {
       }
     }
     catch (e) {
-      console.log(e);
-    }
-    finally {
-      //this.followFriendsIcon = outlinedIcon;
     }
   }
 
@@ -199,7 +196,7 @@ export class UserProfilePage implements OnInit, OnDestroy {
   }
 
   switchProfileEventAndBadges(event: any) {
-    this.eventAndBadgesIndicator = event.detail.value;
+    // this.eventAndBadgesIndicator = event.detail.value;
   }
 
 

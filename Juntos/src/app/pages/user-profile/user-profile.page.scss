@@ -12,7 +12,7 @@ ion-content {
   overflow-y: scroll;
   overflow-x: scroll;
   --offset-bottom: 0 !important;
-  background-color: #f2f2f2;
+  background-color: #ffffff;
 }
 
 ion-avatar{
@@ -26,6 +26,17 @@ ion-avatar{
     width: 15rem;
     height: 15rem;
   }
+}
+
+
+ion-segment-button {
+  --indicator-box-shadow: transparent!important;
+  --background:white;
+  --color: var( --ion-color-secondary);
+  --background-checked: var(--ion-color-primary)!important;
+  --color-checked: black;
+  --indicator-color : transparent!important;
+  font-family: Agrandir-Regular, serif !important;
 }
 
 

@@ -4,10 +4,6 @@ import {LoggedInGuard} from 'src/app/guards/logged-in.guard';
 
 const routes: Routes = [
   {
-    path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule)
-  },
-  {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
   },
@@ -19,18 +15,15 @@ const routes: Routes = [
   {
     path: 'edit-user',
     loadChildren: () => import('./pages/edit-user/edit-user.module').then(m => m.EditUserPageModule),
-    canActivate: [LoggedInGuard]
   },
 
   {
     path: 'event-create',
     loadChildren: () => import('./pages/event-create/event-create.module').then(m => m.EventCreatePageModule),
-    canActivate: [LoggedInGuard]
   },
   {
     path: 'event-list',
     loadChildren: () => import('./pages/event-list/event-list.module').then(m => m.EventListPageModule),
-    canActivate: [LoggedInGuard]
   },
   {
     path: 'profile/:userId',
@@ -48,6 +41,7 @@ const routes: Routes = [
   {
     path: 'friendlist',
     loadChildren: () => import('./pages/friendlist/friendlist.module').then(m => m.FriendlistPageModule),
+    canActivate: [LoggedInGuard]
   },
 
 

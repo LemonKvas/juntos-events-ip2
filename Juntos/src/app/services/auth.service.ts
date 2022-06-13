@@ -9,7 +9,6 @@ import FacebookAuthProvider = firebase.auth.FacebookAuthProvider;
 import {Router} from '@angular/router';
 import {AlertService} from 'src/app/services/alert.service';
 import {Subscription} from "rxjs";
-import { Location } from '@angular/common';
 
 
 @Injectable({
@@ -22,8 +21,7 @@ export class AuthService {
     private token;
     refreshUserDataSub: Subscription;
 
-    constructor(private afAuth: AngularFireAuth, private userDataService: UserDataService, private router: Router, public alertService: AlertService,
-                private location: Location) {
+    constructor(private afAuth: AngularFireAuth, private userDataService: UserDataService, private router: Router, public alertService: AlertService) {
         this.afAuth.authState.subscribe(async firebaseUser => {
                 this.user = undefined;
                 this.token = undefined;

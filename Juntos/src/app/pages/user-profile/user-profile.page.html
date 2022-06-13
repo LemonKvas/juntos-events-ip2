@@ -7,18 +7,17 @@
         <ion-back-button>
         </ion-back-button>
       </ion-buttons>
-      <ion-buttons *ngIf="friendIds else noFriends" slot="end">
-        <ion-button (click)="openFriendlist()">{{friendIds.length}} Freunde</ion-button>
+      <ion-buttons *ngIf="friendIds" slot="end">
+        <ion-icon size="large" style="zoom:0.95" (click)="openFriendlist()" name="people-outline"></ion-icon>
       </ion-buttons>
-      <ng-template #noFriends>
-        <ion-buttons  slot="end">
-          <ion-button>0 Freunde</ion-button>
-        </ion-buttons>
-      </ng-template>
       <ion-buttons slot="end">
-        <ion-icon *ngIf="ownProfile" size="large" style="zoom:0.8" name="notifications-outline" (click)="openNotifications($event)"></ion-icon>
-        </ion-buttons>
-      <ion-buttons slot="end">
+        <ng-container *ngIf="ownProfile">
+          <ion-icon size="large" style="zoom:0.8" name="notifications-outline" (click)="openNotifications($event)"></ion-icon>
+<!--          <ng-template #noNotis>-->
+<!--            <ion-icon size="large" style="zoom:0.8" name="notifications-outline" (click)="openNotifications($event)"></ion-icon>-->
+<!--          </ng-template>-->
+          <ion-icon size="large" style="zoom:0.8" name="settings-outline" routerLink="/edit-user" routerLinkActive="active"></ion-icon>
+        </ng-container>
         <ion-icon *ngIf="followFriendsIndicator !== undefined"size="large" style="zoom:0.8" [name]="followFriendsIcon"
                   (click)="determineFollowFriendsButtonFunction({followFriendsIndicator})"></ion-icon>
       </ion-buttons>
@@ -35,8 +34,12 @@
   </ng-template>
 
 
+
+
+
   <!-- Profil Inhalt -->
   <ion-content >
+
     <ion-grid>
       <ion-row class="ion-justify-content-center ion-align-items-center">
         <ion-col size="auto">
@@ -75,7 +78,7 @@
       <ion-grid>
         <ion-row class="ion-justify-content-center">
           <ion-col size="12">
-            <ion-segment (ionChange)="switchProfileEventAndBadges($event)" value="user">
+            <ion-segment (ionChange)="switchProfileEventAndBadges($event)" [(ngModel)]="eventAndBadgesIndicator">
               <ion-segment-button value="events">
                 <ion-label>Events</ion-label>
               </ion-segment-button>
@@ -88,23 +91,34 @@
         <ng-container [ngSwitch]="eventAndBadgesIndicator">
           <ng-container *ngSwitchCase="'events'" >
             <ion-list lines="full" class="ion-align-items-center">
-              <ng-container *ngIf="events">
+              <ng-container *ngIf="events else noEvents">
               <ion-row class="ion-align-items-center" size="12" *ngFor="let event of events; let i = index">
                 <ion-col class="ion-justify-content-center" size="12">
                   <app-event-item [event]="event"></app-event-item>
                 </ion-col>
               </ion-row>
               </ng-container>
-              <ng-template>
-                <ion-row class="ion-align-items-center" size="12">
-                  <ion-col>
-                    <h4>Bis jetzt hat {{user.username}} noch an keinem Event teilgenommen</h4>
+              <ng-template #noEvents>
+                <ion-row class="ion-align-items-center ion-justify-content-center" size="12">
+                  <ion-col style="text-align: center">
+                    <p *ngIf="ownProfile else youText">Du hast dich leider noch zu keinem Event angemeldet.. </p>
+                    <ng-template #youText>
+                      <p>{{user.userName}} hat sich leider noch zu keinem Event angemeldet..</p>
+                    </ng-template>
+                    <p>Finde jetzt Events die dir gefallen könnten:</p>
+                    <ion-button routerLink="/event-list" routerLinkActive="active">Alle Events</ion-button>
                   </ion-col>
                 </ion-row>
               </ng-template>
             </ion-list>
           </ng-container>
           <ng-container *ngSwitchCase="'badges'" >
+            <ion-row class="ion-align-items-center ion-justify-content-center" size="12">
+              <ion-col style="text-align: center">
+                <p>Sammle Badges beim Besuchen von Events!</p>
+                <p>Bald verfügbar!</p>
+              </ion-col>
+            </ion-row>
 
           </ng-container>
         </ng-container>
@@ -112,5 +126,9 @@
     </div>
   </ion-content>
 </ng-container>
+
+<app-footermenu>
+
+</app-footermenu>
 
 

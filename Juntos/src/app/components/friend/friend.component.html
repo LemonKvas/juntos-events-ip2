@@ -1,9 +1,9 @@
 <ng-container *ngIf="isLoaded">
-    <ion-item>
+    <ion-item [routerLink]="['/profile/' + userId]">
          <ion-avatar>
              <ion-img *ngIf="user.photoUrl.includes('.png') || user.photoUrl.includes('googleusercontent'); else noNeed" alt="User avatar" src="{{user.photoUrl}}"></ion-img>
              <ng-template #noNeed>
-                 <ion-img alt="User avatar" src="{{user.photoUrl | fireStorageImg: '/avatars' | async}}"></ion-img>>
+                 <ion-img alt="User avatar" src="{{user.photoUrl | fireStorageImg: '/avatars' | async}}"></ion-img>
              </ng-template>
          </ion-avatar>
           <ion-label>

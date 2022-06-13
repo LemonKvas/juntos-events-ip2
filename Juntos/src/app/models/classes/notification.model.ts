@@ -28,7 +28,7 @@ export class Notification extends BaseNotification {
         super(...baseNotification);
         this.senderName = senderName;
         // @ts-ignore
-        this.date = (this.date instanceof firebase["firestore.Timestamp"]) ? this.date.toDate() : this.date;
+        //this.date = (this.date typeof firebase["firestore.Timestamp"]) ? this.date.toDate() : this.date;
     }
 }
 

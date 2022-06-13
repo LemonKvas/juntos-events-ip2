@@ -7,7 +7,10 @@
           </ion-buttons>
           -->
         <ion-label>
-          <h2>{{notification.senderId}}</h2>
+          <h2 *ngIF="notification.senderName else placeholderTitle">{{notification.senderName}}</h2>
+          <ng-template #placeholderTitle>
+            <h2>Freundschaftsanfrage</h2>
+          </ng-template>
           <p>{{notification.content}}</p>
           <ng-container *ngIf="notification.type == 3">
             <ion-button slot="start" (click)="acceptFriendRequest(notification)">

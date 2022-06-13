@@ -24,11 +24,13 @@ export class NotificationService {
   private NotificationObservable: Observable<any>;
   private notificationCollecton: AngularFirestoreCollection<any>;
   private notificationCollectonRef: CollectionReference<any>;
+  public hasNotifications: boolean;
 
   constructor(private userDataService: UserDataService, private afs: AngularFirestore,
               public popoverController: PopoverController, private alertService: AlertService) {
     this.currentUserId = undefined;
     this.currentUserObservable = undefined;
+    this.hasNotifications = false;
     this.updateUserId();
     this.notificationCollecton = this.afs.collection('notifications');
     this.notificationCollectonRef = this.notificationCollecton.ref;
@@ -46,34 +48,40 @@ export class NotificationService {
   }
 
   async getNotificationInitializer(){
-    try{
-      if(this.currentUserId == null || this.currentUserObservable == null){
-        await this.updateUserId().catch(()=>{throw new Error("Could not get user data");})
+    try {
+      if (this.currentUserId == null || this.currentUserObservable == null) {
+        await this.updateUserId().catch(() => {
+          throw new Error("Could not get user data");
+        })
       }
       this.currentUserObservable.subscribe(async (userData) => {
         if (userData.notifications) {
           this.notificationIds = await userData.notifications;
-          if(this.notificationIds.length > 0) {
+          if (this.notificationIds.length > 0) {
             this.NotificationObservable = this.afs.collection(this.notificationCollectonRef, ref => ref.where(documentId(), 'in', this.notificationIds))
                 .valueChanges({idField: 'notificationId'});
             await this.getNotification();
 
           }
-        } else {
-          throw new Error("No notifications found");
+          //   } else {
+          //
+          //     //throw new Error("No notifications found");
+          // }
         }
       })
     }
     catch(e){
-      console.log(e);
     }
   }
 
   getNotification() {
     this.NotificationObservable.forEach(
         (notificationDocs: any[]) => {
-          this.notifications = notificationDocs;
-          this.sortNotifications();
+          if(notificationDocs){
+            this.notifications = notificationDocs;
+            this.sortNotifications();
+            this.hasNotifications = true;
+          }
         }
     )
   }
@@ -90,6 +98,7 @@ export class NotificationService {
       const currentUser = await this.userDataService.getCurrentUser();
       let notificationContent;
       let newNotification;
+      let alertText;
       switch (notificationType) {
         case 0: {
           //JuntosMessage
@@ -108,24 +117,28 @@ export class NotificationService {
         }
         case 3: {
           //FriendRequest
-          let doublicateCheck = await
-              this.checkNotificationDoublication(notificationType, currentUser['userId'], receiverId);
+          let doublicateCheck = await this.checkNotificationDoublication(notificationType, currentUser['userId'], receiverId);
           if(doublicateCheck){
             await this.alertService.basicAlert('ACHTUNG', 'du hast dieser Person bereits eine Freundschaftsanfrage geschickt.', ['OK']);
             return;
           }
+          alertText = 'du hast deine Freundschaftsanfrage erfolgereich versendet!';
           notificationContent = currentUser.userName + " hat dir eine Freunschaftsanfrage geschickt";
           break;
         }
       }
-      newNotification = new Notification(receiverId, this.currentUserId,
-          notificationContent, notificationType, new Date(), notificationId, currentUser.userName);
+      newNotification = new Notification(currentUser.userName, receiverId, this.currentUserId,
+          notificationContent, notificationType, new Date(), notificationId);
       const data = JSON.parse(JSON.stringify(newNotification));
       await this.notificationCollecton.doc(notificationId).set(data)
           .catch((err) => console.log(err));
       await this.afs.collection('user').doc(receiverId).update({
         notifications: arrayUnion(notificationId)
-      }).catch((err) => console.log(err));
+      })
+        .then((res)=>{
+          this.alertService.basicAlert('VERSCHICKT', alertText, ['OK'])
+        })
+        .catch((err) => console.log(err))
     }
     catch (e) {
       console.log(e);
@@ -134,20 +147,20 @@ export class NotificationService {
 
   async checkNotificationDoublication(type, senderId, receiverId){
     try {
-      let result = true;
-      const query = this.notificationCollectonRef.where('type', '==', type)
+      let result = false;
+      const query = await this.notificationCollectonRef.where('type', '==', type)
           .where('senderId', '==', senderId)
           .where('receiverId', '==', receiverId);
       const querySnapshot = await getDocs(query);
-      querySnapshot.forEach((doc) => {
+      await querySnapshot.forEach((doc) => {
         if(doc.exists()){
-          result = false;
+          result = true;
         }
       })
       return result;
     }
     catch (e) {
-      return false;
+      return true ;
     }
   }
 
