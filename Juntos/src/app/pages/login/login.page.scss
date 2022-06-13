@@ -32,7 +32,7 @@ ion-segment-button {
   text-transform: none !important;
   letter-spacing: normal !important;
   font-family: Agrandir-Regular, serif !important;
-  --background: var(--ion-color-secondary) !important;
-  --background-checked: var(--ion-color-success-contrast);
-  --color-checked: var(black);
+  --background: var(--ion-color-success-contrast);
+  --background-checked: var(--ion-color-primary) !important;
+  --color-checked: black;
 }

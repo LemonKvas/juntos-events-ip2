@@ -16,8 +16,8 @@ import CollectionReference = firebase.firestore.CollectionReference;
 export class NotificationService {
 
   //TODO: get names from senderIds and pass to array
-  public notificationsSorted: BaseNotification[] = [];
-  private notifications: BaseNotification[] = [];
+  public notificationsSorted: Notification[] = [];
+  private notifications: Notification[] = [];
   private notificationIds: string[] = [];
   private currentUserId: string;
   private currentUserObservable: Observable<any>;
@@ -118,8 +118,8 @@ export class NotificationService {
           break;
         }
       }
-      newNotification = new BaseNotification(receiverId, this.currentUserId,
-          notificationContent, notificationType, new Date());
+      newNotification = new Notification(receiverId, this.currentUserId,
+          notificationContent, notificationType, new Date(), notificationId, currentUser.userName);
       const data = JSON.parse(JSON.stringify(newNotification));
       await this.notificationCollecton.doc(notificationId).set(data)
           .catch((err) => console.log(err));
