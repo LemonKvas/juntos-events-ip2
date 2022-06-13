@@ -80,9 +80,9 @@
         <ion-item *ngFor="let participant of participants">
           <ion-row class="ion-justify-content-center">
             <ion-col size="5">
-              <div class="profile-div">
+              <ion-avatar class="profile-div">
                 <ion-img class="profile-img" src="{{participant.photoUrl | fireStorageImg: '/avatars' | async }}"></ion-img>
-              </div>
+              </ion-avatar>
             </ion-col>
             <ion-col size="4">
               <p>
