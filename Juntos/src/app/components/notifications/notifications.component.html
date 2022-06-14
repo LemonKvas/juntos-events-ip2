@@ -6,7 +6,7 @@
             <ion-icon  size="small" style="zoom:0.8; position:absolute;" name="close-outline"></ion-icon>
           </ion-buttons>
           -->
-        <ion-label>
+        <ion-label *ngIf="notification">
           <h2 *ngIF="notification.senderName else placeholderTitle">{{notification.senderName}}</h2>
           <ng-template #placeholderTitle>
             <h2>Freundschaftsanfrage</h2>
