@@ -181,7 +181,7 @@ export class NotificationService {
       animated: true,
       translucent: true,
       showBackdrop: false,
-      alignment: 'end'
+      alignment: 'start'
     });
      return await popover.present();
      /** Sync event from popover component */

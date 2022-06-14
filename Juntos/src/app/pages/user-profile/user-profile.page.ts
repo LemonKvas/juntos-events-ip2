@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import { Location } from '@angular/common';
 import {UserDataService} from 'src/app/services/user-data.service';
 import {Router} from '@angular/router';
@@ -40,10 +40,10 @@ export class UserProfilePage implements OnInit, OnDestroy {
   friendIds: any[] = [];
 
 
-  constructor(private location: Location, private userDataService: UserDataService, private router: Router,
+  constructor(private location: Location, private userDataService: UserDataService, public router: Router,
               private eventService: EventService, private platform: Platform, private friendService: FriendsService,
               private notificationService: NotificationService, private alertService: AlertService,
-              private menu: MenuController, private auth : AuthService) {
+              public menu: MenuController, private auth: AuthService) {
     this.followFriendsIndicator = undefined;
     this.isFriends = false;
     this.currentLocation = location;
@@ -62,60 +62,58 @@ export class UserProfilePage implements OnInit, OnDestroy {
   }
 
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.userSubscription.unsubscribe();
   }
 
-  async loadUser(){
+  async loadUser() {
     try {
       this.currentUserId = await this.userDataService.getCurrentUserID();
       this.ownProfile = this.location.isCurrentPathEqualTo('/profile/' + this.currentUserId);
       this.userSubscription = await this.userDataService.getUserById_Observable(this.profileUserId).subscribe(
-           async (userData) => {
-             if (userData) {
-               this.user = await userData as unknown as User;
-               this.socialPointsCalculated = `${0 + '.'}${this.user.socialPoints}`;
-               this.userLoaded = true;
-               this.getFriends();
-               this.getAttendedEvents();
-               //onStorageChange updates addfriendbutton text and frienship status
-               await this.checkFrienshipStatus();
-             } else {
-               throw new Error('Nutzer konnte nicht geladen werden');
-             }
-           }
+          async (userData) => {
+            if (userData) {
+              this.user = await userData as unknown as User;
+              this.socialPointsCalculated = `${0 + '.'}${this.user.socialPoints}`;
+              this.userLoaded = true;
+              this.getFriends();
+              this.getAttendedEvents();
+              //onStorageChange updates addfriendbutton text and frienship status
+              await this.checkFrienshipStatus();
+            } else {
+              throw new Error('Nutzer konnte nicht geladen werden');
+            }
+          }
       );
-    }
-    catch (e) {
+    } catch (e) {
       console.log(e);
       await this.router.navigate(['/login']);
     }
   }
 
-  getFriends(){
+  getFriends() {
     this.friendIds = this.user.friends;
   }
 
-  async checkFrienshipStatus(){
+  async checkFrienshipStatus() {
     try {
       if (this.currentUserId) {
         if (!this.ownProfile) {
-          this.currentUserSubscription = this.userDataService.getUserById_Observable(this.currentUserId).subscribe(async ()=>{
-          this.isFriends = await this.friendService.isUserFriendWith(this.profileUserId);
-          await this.determineFollowFriendsIndicator();
-        })
+          this.currentUserSubscription = this.userDataService.getUserById_Observable(this.currentUserId).subscribe(async () => {
+            this.isFriends = await this.friendService.isUserFriendWith(this.profileUserId);
+            await this.determineFollowFriendsIndicator();
+          })
         }
       }
-    }
-    catch (e) {
+    } catch (e) {
       console.log(e);
     }
   }
 
-  getAttendedEvents(){
-    if(this.user.registeredEvents){
-      const attendedEventIds = this.user.registeredEvents.reduce((attendedEventIds, event) =>{
-        if(event.ticket) {
+  getAttendedEvents() {
+    if (this.user.registeredEvents) {
+      const attendedEventIds = this.user.registeredEvents.reduce((attendedEventIds, event) => {
+        if (event.ticket) {
           attendedEventIds.push(event.eventId);
         }
         return attendedEventIds;
@@ -128,10 +126,10 @@ export class UserProfilePage implements OnInit, OnDestroy {
     }
   }
 
-  async determineFollowFriendsButtonFunction(indicator){
+  async determineFollowFriendsButtonFunction(indicator) {
     //let outlinedIcon = this.followFriendsIcon;
-    try{
-      switch(indicator.followFriendsIndicator) {
+    try {
+      switch (indicator.followFriendsIndicator) {
         case 0:
           //this.followFriendsIcon = 'person-add';
           await this.notificationService.createNotification(3, this.profileUserId).then(
@@ -143,7 +141,7 @@ export class UserProfilePage implements OnInit, OnDestroy {
         case 1:
           //this.followFriendsIcon = 'person-remove';
           await this.friendService.unfriendUser(this.profileUserId)
-              .then((result)=>{
+              .then((result) => {
                 console.log(result);
               })
           break;
@@ -162,27 +160,30 @@ export class UserProfilePage implements OnInit, OnDestroy {
               });
           break;
       }
-    }
-    catch (e) {
+    } catch (e) {
     }
   }
 
   openMenu() {
     console.log('open')
     this.menu.enable(true, 'first');
-    this.menu.open('first').then(r => {'it is opens'}).catch(e => {console.log(e)});
+    this.menu.open('first').then(r => {
+      'it is opens'
+    }).catch(e => {
+      console.log(e)
+    });
   }
 
-  openFriendlist(){
+  openFriendlist() {
     this.friendService.openFriendlistModal(this.friendIds);
   }
 
   /**
    * followFriendsIndicator: 0=befriend; 1=unfriend; 2=follow; 3=unfollow
    */
-  async determineFollowFriendsIndicator(){
+  async determineFollowFriendsIndicator() {
     let isNormalUser = await this.userDataService.getCurrentUserRole();
-    if(isNormalUser ===  0 || isNormalUser === 2 ) {
+    if (isNormalUser === 0 || isNormalUser === 2) {
       if (this.user.rights === 0 || this.user.rights === 2) {
         if (this.isFriends) {
           this.followFriendsIndicator = 1;
@@ -206,8 +207,10 @@ export class UserProfilePage implements OnInit, OnDestroy {
   }
 
   switchProfileEventAndBadges(event: any) {
-    // this.eventAndBadgesIndicator = event.detail.value;
-  }
+    console.log('Segment changed', event);
+    }
+
+
 
 
   openNotifications($event) {
