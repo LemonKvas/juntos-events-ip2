@@ -28,6 +28,12 @@ ion-avatar{
   }
 }
 
+#logoutBtn {
+  position: fixed;
+  left: 0;
+  bottom: 10px;
+  right: 0;
+}
 
 ion-segment-button {
   --indicator-box-shadow: transparent!important;

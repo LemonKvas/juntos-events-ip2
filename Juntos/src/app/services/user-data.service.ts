@@ -95,7 +95,7 @@ export class UserDataService {
     const userId = user.userId;
 
     db.collection('user').doc(userId).update(data).then((res) => {
-      this.router.navigate(['event-list']);
+
     }).catch((e) => {
       this.alertService.basicAlert('Bearbeiten des Profils fehlgeschlagen', 'Bitte versuchen Sie es später noch mal', ['OK']);
       console.log('error');

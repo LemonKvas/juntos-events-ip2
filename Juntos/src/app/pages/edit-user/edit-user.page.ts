@@ -15,6 +15,7 @@ import {PhotoService} from "src/app/services/photo.service";
 export class EditUserPage implements OnInit {
   private userData;
 
+  private userId;
   private firstName;
   private lastName;
   private userName;
@@ -219,6 +220,11 @@ export class EditUserPage implements OnInit {
     this.userData = this.userData.__zone_symbol__value;
     this.allLanguages;
 
+    if (this.userData.id) {
+      this.firstName = this.userData.firstName;
+    } else {
+      this.firstName = '';
+    }
     if (this.userData.firstName) {
       this.firstName = this.userData.firstName;
     } else {
@@ -259,9 +265,13 @@ export class EditUserPage implements OnInit {
 
 
   ngOnInit() {
-
+    this.getUserId()
     //TODO: maybe get userdata from firestore and subscribe
     //this.db.doc(`user/${id}`).valueChanges().subscribe(user => this.user = user);
+  }
+
+  async getUserId() {
+    this.userId = await this.userDataService.getCurrentUserID();
   }
 
 
@@ -315,7 +325,7 @@ export class EditUserPage implements OnInit {
       this.deleteAvatar(tmp);
     }
 
-    this.router.navigate(['event-list']);
+    this.router.navigate(['profile', this.userId]);
   }
 
   /**
@@ -337,6 +347,7 @@ export class EditUserPage implements OnInit {
       'description': this.description,
       'photoUrl': this.displayUrl,
     };
+    this.router.navigate(['profile', this.userId]);
     this.userDataService.updateCurrentUser(data);
   }
 }

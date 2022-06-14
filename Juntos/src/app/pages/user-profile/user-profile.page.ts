@@ -4,12 +4,15 @@ import {UserDataService} from 'src/app/services/user-data.service';
 import {Router} from '@angular/router';
 import {EventService} from 'src/app/services/event.service';
 import { Event } from 'src/app/models/classes/event.model';
-import {Platform} from '@ionic/angular';
+import {Platform, MenuController } from '@ionic/angular';
 import User from 'src/app/models/classes/user';
 import { Subscription } from 'rxjs';
 import {FriendsService} from "src/app/services/friends.service";
 import friendButtonIndicator from "src/app/models/enums/friendButtonIndicator";
 import {NotificationService} from "src/app/services/notification.service";
+import {AlertService} from "src/app/services/alert.service";
+import {AuthService} from "../../services/auth.service";
+
 
 
 @Component({
@@ -39,7 +42,8 @@ export class UserProfilePage implements OnInit, OnDestroy {
 
   constructor(private location: Location, private userDataService: UserDataService, private router: Router,
               private eventService: EventService, private platform: Platform, private friendService: FriendsService,
-              private notificationService: NotificationService) {
+              private notificationService: NotificationService, private alertService: AlertService,
+              private menu: MenuController, private auth : AuthService) {
     this.followFriendsIndicator = undefined;
     this.isFriends = false;
     this.currentLocation = location;
@@ -163,6 +167,12 @@ export class UserProfilePage implements OnInit, OnDestroy {
     }
   }
 
+  openMenu() {
+    console.log('open')
+    this.menu.enable(true, 'first');
+    this.menu.open('first').then(r => {'it is opens'}).catch(e => {console.log(e)});
+  }
+
   openFriendlist(){
     this.friendService.openFriendlistModal(this.friendIds);
   }
@@ -203,4 +213,10 @@ export class UserProfilePage implements OnInit, OnDestroy {
   openNotifications($event) {
     this.notificationService.presentPopover($event);
   }
+
+  logOut() {
+    this.auth.signOut()
+  }
 }
+
+
