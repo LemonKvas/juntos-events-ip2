@@ -14,6 +14,7 @@ export class FriendComponent implements OnInit {
 
   @Input() userId: string;
   @Input() isLoggedIn: boolean;
+  @Input() loggedInUserId: string;
   isLoaded: boolean;
   isFriends: boolean;
   user: User;
@@ -25,6 +26,11 @@ export class FriendComponent implements OnInit {
   ngOnInit() {
     this.getCurrentUser();
     this.isFriendsWith();
+    //User is still logged in, but this.isLoggedIn toggles friend add and remove icon
+    console.log(this.userId,this.loggedInUserId)
+    if(this.userId === this.loggedInUserId){
+      this.isLoggedIn = false;
+    }
   }
 
   async sendFriendRequest() {

@@ -29,10 +29,11 @@ ion-label{
 
 
 ion-segment-button {
-  text-transform: none !important;
-  letter-spacing: normal !important;
-  font-family: Agrandir-Regular, serif !important;
-  --background: var(--ion-color-success-contrast);
-  --background-checked: var(--ion-color-primary) !important;
+  --indicator-box-shadow: transparent!important;
+  --background:white;
+  --color: var( --ion-color-secondary);
+  --background-checked: var(--ion-color-primary)!important;
   --color-checked: black;
+  --indicator-color : transparent!important;
+  font-family: Agrandir-Regular, serif !important;
 }

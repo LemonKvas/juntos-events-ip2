@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable, Input} from '@angular/core';
 import {UserDataService} from "src/app/services/user-data.service";
 import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/compat/firestore";
 import {arrayRemove, arrayUnion} from "@angular/fire/firestore";
@@ -93,11 +93,13 @@ export class FriendsService {
   }
 
   async openFriendlistModal(friendIds: any[]) {
+    const currentUserId = await this.userDataService.getCurrentUserID();
     const isLoggedIn = this.authService.isLoggedIn();
     const modal = await this.modalController.create({
       component: FriendlistPage,
       cssClass: 'fullscreen',
       componentProps: {
+        loggedInUserId: currentUserId,
         friendIds: friendIds,
         isLoggedIn: isLoggedIn
       }
