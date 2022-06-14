@@ -1,13 +1,14 @@
 import {Injectable} from '@angular/core';
-import {AngularFireAuth} from "@angular/fire/compat/auth";
-import firebase from "firebase/compat/app";
-import {UserDataService} from "src/app/services/user-data.service";
-import User from "src/app/models/classes/user";
-import {GoogleAuth} from "@codetrix-studio/capacitor-google-auth";
+import {AngularFireAuth} from '@angular/fire/compat/auth';
+import firebase from 'firebase/compat/app';
+import {UserDataService} from 'src/app/services/user-data.service';
+import User from 'src/app/models/classes/user';
+import {GoogleAuth} from '@codetrix-studio/capacitor-google-auth';
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 import FacebookAuthProvider = firebase.auth.FacebookAuthProvider;
-import {Router} from "@angular/router";
-import {AlertService} from "src/app/services/alert.service";
+import {Router} from '@angular/router';
+import {AlertService} from 'src/app/services/alert.service';
+import {Subscription} from "rxjs";
 
 
 @Injectable({
@@ -16,26 +17,39 @@ import {AlertService} from "src/app/services/alert.service";
 
 export class AuthService {
 
-    user: User;
-    token;
+    private user: User;
+    private token;
+    refreshUserDataSub: Subscription;
 
     constructor(private afAuth: AngularFireAuth, private userDataService: UserDataService, private router: Router, public alertService: AlertService) {
         this.afAuth.authState.subscribe(async firebaseUser => {
                 this.user = undefined;
                 this.token = undefined;
                 if(firebaseUser && !firebaseUser.multiFactor["user"].isAnonymous){
-                    this.user = await this.userDataService.getUserById(firebaseUser.uid);
+                    this.refreshUserData(firebaseUser.uid);
                     this.token = firebaseUser.getIdTokenResult(false);
-                }
+                    localStorage.setItem('token', JSON.stringify(firebaseUser.getIdTokenResult(true)));
+                } else {
                 localStorage.setItem('user', JSON.stringify(this.user));
                 localStorage.setItem('token', JSON.stringify(firebaseUser.getIdTokenResult(true)));
+                this.refreshUserDataSub.unsubscribe();
+                }
             }
-        )
+        );
     }
 
-    isloggedin() {
-        const user = JSON.parse(localStorage.getItem('user'));
-        return user !== undefined;
+    refreshUserData(userId){
+        this.refreshUserDataSub = this.userDataService.getUserById_Observable(userId).subscribe((userData)=>{
+            if(userData){
+                this.user = userData as unknown as User;
+                localStorage.setItem('user', JSON.stringify(this.user));
+            }
+        });
+    }
+
+
+    isLoggedIn() {
+        return this.user !== undefined;
     }
 
     hasRole(role){
@@ -53,12 +67,11 @@ export class AuthService {
     AnonymousAuth(){
         this.afAuth.signInAnonymously()
             .then(userCredentials => {
-                console.log(userCredentials);
                 this.router.navigate(['event-list']);
             })
             .catch((error) => {
-                console.log(error.message)
-            })
+                console.log(error.message);
+            });
     }
 
     //Login with E-Mail and password
@@ -69,14 +82,13 @@ export class AuthService {
                     this.router.navigate(['event-list']);
                 })
                 .catch((error) => {
-                    console.log(error.message)
+                    console.log(error.message);
                   this.alertService.basicAlert('Email oder Passwort haben die Anforderungen nicht erfüllt', 'Bitte versuchen Sie es mit anderen Werten', ['OK']);
                 });
             return;
         }
-        console.log("Email oder Passwort haben die Anforderungen nicht erfüllt")
+        console.log('Email oder Passwort haben die Anforderungen nicht erfüllt');
         //TODO: alerts einfügen statt console logs
-      this.alertService.basicAlert('Email oder Passwort haben die Anforderungen nicht erfüllt', 'Bitte versuchen Sie es mit anderen Werten', ['OK']);
     }
 
     EmailRegister(userType, email, password){
@@ -86,7 +98,7 @@ export class AuthService {
                     this.CheckForNewUser(userCredential, userType);
                 })
                 .catch((error) => {
-                    if(String(error.code).includes('email-already-in-use')) this.EmailLogin(email, password);
+                    if(String(error.code).includes('email-already-in-use')) {this.EmailLogin(email, password);}
                     else {
                       //TODO
                       this.alertService.basicAlert('Email oder Passwort haben die Anforderungen nicht erfüllt', 'Bitte versuchen Sie es mit anderen Werten', ['OK']);
@@ -103,10 +115,10 @@ export class AuthService {
                     this.CheckForNewUser(userCredential, userType);
                 })
                 .catch((error) => {
-                    console.log("firebase error", error);
-                })
+                    console.log('firebase error', error);
+                });
         }).catch((error) =>{
-            console.log("google error", error);
+            console.log('google error', error);
         });
     }
 
@@ -125,14 +137,16 @@ export class AuthService {
         return this.AuthLogin(new FacebookAuthProvider(), userType);
     }
 
+
     // Auth logic to run auth providers
     AuthLogin(provider, userType) {
         provider.setCustomParameters({
-            'display': 'popup'
+            display: 'popup'
         });
         return this.afAuth
             .signInWithPopup(provider)
             .then((userCredential) => {
+              console.log(userCredential);
                 this.CheckForNewUser(userCredential, userType);
                 console.log('You have been successfully logged in!');
             })
@@ -150,11 +164,21 @@ export class AuthService {
         }
     }
 
-    SignOut() {
+    signOut() {
         this.afAuth.signOut().then(() => {
+          this.refreshUserDataSub.unsubscribe();
             localStorage.removeItem('user');
             localStorage.removeItem('token');
-        })
+
+            this.router.navigate(['login']);
+        }).catch((e) => {
+          console.log(e);
+        });
+    }
+
+    /** FOR APP MODULE INIT **/
+    initalizeService(){
+        console.log("Authentification Serivce successfully initialized");
     }
 
 }

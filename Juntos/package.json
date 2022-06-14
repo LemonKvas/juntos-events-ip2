@@ -10,7 +10,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "compodoc": "npx compodoc -p tsconfig.json"
+    "compodoc": "npx compodoc -p tsconfig.json",
+    "compodoc-serve" : "compodoc -p tsconfig.doc.json -s"
   },
   "private": true,
   "dependencies": {
@@ -61,6 +62,7 @@
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-jsdoc": "39.2.9",
     "eslint-plugin-prefer-arrow": "1.2.3",
+    "firebase-mock": "^2.3.2",
     "jasmine-core": "~4.1.0",
     "jasmine-spec-reporter": "~7.0.0",
     "karma": "~6.3.19",
