@@ -34,15 +34,11 @@ export class LoginChildComponent implements OnInit {
 
 
   EmailLogin(){
-    if(this.authService.checkEmailAndPasswort(this.email, this.password)){
-      this.authService.EmailLogin(this.email, this.password);
-    }
+    this.authService.EmailLogin(this.email, this.password);
   }
 
   EmailRegister(){
-    if(this.authService.checkEmailAndPasswort(this.email, this.password)){
-      this.authService.EmailRegister(this.userType, this.email, this.password);
-    }
+    this.authService.EmailRegister(this.userType, this.email, this.password);
   }
 
   async GoogleMobileLogin(){

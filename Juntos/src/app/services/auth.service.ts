@@ -21,6 +21,20 @@ export class AuthService {
     private token;
     refreshUserDataSub: Subscription;
 
+    /**
+     * Constructor des Auth Services "abonniert" den Authentifizierungsstatus von Firebase.
+     * Sobald sich ein Nutzer einloggt, wird diese "Subscribtion" aktiviert und der aktuelle Nutzer
+     * wird im lokalen Speicher gesichert.
+     * Falls der eingeloggte Nutzer sich nicht anonym eingeloggt hat, wird die Methode "refreshUserData"
+     * aktiviert, damit die Nutzerdaten bei Änderungen stets aktuell bleiben.
+     *
+     * @param afAuth
+     * @param userDataService
+     * @param router
+     * @param alertService
+     *
+     * @returns The processed target number
+     */
     constructor(private afAuth: AngularFireAuth, private userDataService: UserDataService, private router: Router, public alertService: AlertService) {
         this.afAuth.authState.subscribe(async firebaseUser => {
                 this.user = undefined;
@@ -38,6 +52,14 @@ export class AuthService {
         );
     }
 
+    /**
+     * Refresh User Data
+     * Falls sich die Daten des Nutzers in der Datenbank ändern, werden diese im lokalen Speicher aktualisiert.
+     *
+     * @example this.refreshUserData(grbIa6fmpL0uJu8WFuEL)
+     *
+     * @param userId: string
+     */
     refreshUserData(userId){
         this.refreshUserDataSub = this.userDataService.getUserById_Observable(userId).subscribe((userData)=>{
             if(userData){
@@ -47,23 +69,49 @@ export class AuthService {
         });
     }
 
-
+    /**
+     * True falls Nutzer eingeloggt ist, false falls nicht.
+     *
+     * @example if(this.isLoggedIn) ...
+     *
+     */
     isLoggedIn() {
         return this.user !== undefined;
     }
 
+    /**
+     * Vergleicht den Parameter Wert und die Recht des Nutzers.
+     * Gibt true zurück, wenn die Rechte des Nutzers kleiner oder gleich.
+     *
+     * @example const isUserAllowed = this.hasRole(2);
+     *
+     * @param role: string | number
+     */
     hasRole(role){
         //returns true if user role equivalent or smaller
         return Number(role) >= Number(JSON.parse(localStorage.getItem('user')).rights);
     }
 
-    checkEmailAndPasswort(email, password) {
+    /**
+     * Gibt true zurück falls die angegebenen Parameter weder undefined sind, die e-Mail mindestens 4 Zeichen lang ist,
+     * ein @ enthält und das Passwort mindestens 6 Zeichen lang ist. Andernfalls wird false zurück gegeben.
+     *
+     * @example if(this.checkEmailAndPassword(juntosATjuntos.de, sicheresPasswort)) ...
+     *
+     * @param email
+     * @param password
+     */
+    checkEmailAndPassword(email, password) {
         return email != undefined && password != undefined
             && email.trim().length > 3 && email.includes('@')
             && password.trim().length > 5;
     }
 
-    //anonymous login
+    /**
+     * Nutzt den Firebase Authentifizierungsservice um einen Nutzer anonym einzuloggen,
+     * daraufhin wird der Nutzer zur Url ./event-list weitergeleitet.
+     *
+     */
     AnonymousAuth(){
         this.afAuth.signInAnonymously()
             .then(userCredentials => {
@@ -74,9 +122,19 @@ export class AuthService {
             });
     }
 
-    //Login with E-Mail and password
+    /**
+     * Nutzt den Firebase Authentifizierungsservice um einen Nutzer mit Email und Passwort einzuloggen.
+     * Vorher wird mit hilfe von this.checkEmailAndPasswort(email, password) überprüft, ob die Anforderungen
+     * an Email und Passwort erfüllt sind.
+     * daraufhin wird der Nutzer zur Url ./event-list weitergeleitet.
+     *
+     * @example this.EmailLogin(testATtest.de, sicheresPasswort)
+     *
+     * @param email
+     * @param password
+     */
     EmailLogin(email, password) {
-        if (this.checkEmailAndPasswort) {
+        if (this.checkEmailAndPassword(email, password)) {
             this.afAuth.signInWithEmailAndPassword(email, password)
                 .then((userCredential) => {
                     this.router.navigate(['event-list']);
@@ -91,8 +149,21 @@ export class AuthService {
         //TODO: alerts einfügen statt console logs
     }
 
+    /**
+     * Nutzt den Firebase Authentifizierungsservice um einen Nutzer mit Email und Passwort zu registrieren.
+     * Vorher wird mit hilfe von this.checkEmailAndPasswort(email, password) überprüft, ob die Anforderungen
+     * an Email und Passwort erfüllt sind.
+     * Daraufhin wird mithilfe von this.checkForNewUser(userCredential, userType) ein neuer Nutzer in der Datenbank (falls nicht bereits vorhanden)
+     * angelegt.
+     *
+     * @example this.EmailRegister(testATtest.de, sicheresPasswort)
+     *
+     * @param userType
+     * @param email
+     * @param password
+     */
     EmailRegister(userType, email, password){
-        if (this.checkEmailAndPasswort){
+        if (this.checkEmailAndPassword){
             return this.afAuth.createUserWithEmailAndPassword(email, password)
                 .then((userCredential) => {
                     this.CheckForNewUser(userCredential, userType);
@@ -107,6 +178,16 @@ export class AuthService {
         }
     }
 
+    /**
+     * Nutzt das Plugin @codetrix-studio/capacitor-google-auth um einen Nutzer mithilfe der Google Authentifizierung auf
+     * Android Geräten einzuloggen, oder zu registrieren.
+     * Daraufhin wird mithilfe von this.checkForNewUser(userCredential, userType) ein neuer Nutzer in der Datenbank (falls nicht bereits vorhanden)
+     * angelegt.
+     *
+     * @example this.GoogleMobileAuth(2)
+     *
+     * @param userType
+     */
     async GoogleMobileAuth(userType) {
         await GoogleAuth.signIn().then(async (user) => {
             const credential = await firebase.auth.GoogleAuthProvider.credential(user.authentication.idToken);
@@ -122,11 +203,26 @@ export class AuthService {
         });
     }
 
-    // Sign in with Google
+
+
+    /**
+     * Ruft this.AuthLogin auf um das Popup für die Google Anmeldung zu initialisieren.
+     *
+     * @example this.GoogleAuth(2)
+     *
+     * @param userType
+     */
     GoogleAuth(userType) {
         return this.AuthLogin(new GoogleAuthProvider(), userType);
     }
 
+    /**
+     * Ruft this.AuthLogin auf um das Popup für die Facebook Anmeldung zu initialisieren.
+     *
+     * @example this.FacebookAuth(2)
+     *
+     * @param userType
+     */
     FacebookAuth(userType) {
         //TODO: MOBILE FUNKTIONIERT NUR MIT URLS
         //Dieses Tutorial benutzen:
@@ -138,6 +234,16 @@ export class AuthService {
     }
 
 
+    /**
+     * Öffnet mithilfe des Firebase Authetifizierungsservices ein Popup mit dem im Service angegeben Provider auf.
+     * Daraufhin wird mithilfe von this.checkForNewUser(userCredential, userType) ein neuer Nutzer in der Datenbank (falls nicht bereits vorhanden)
+     * angelegt.
+     *
+     * @example this.AuthLogin(new FacebookAuthProvider(), 2)
+     *
+     * @param provider
+     * @param userType
+     */
     // Auth logic to run auth providers
     AuthLogin(provider, userType) {
         provider.setCustomParameters({
@@ -155,6 +261,16 @@ export class AuthService {
             });
     }
 
+    /**
+     * Überprüft ob der Nutzer sich zum ersten Mal einloggt, falls ja wird ein neuer Eintrag in der Datenbank
+     * erzeugt und der Nutzer wird zur URL ./edit-user weitergeleitet, um das Nutzerprofil zu erstellen.
+     * Falls es sich um keinen neuen Nutzer handelt, wird dieser zur URL ./event-list weitergeleitet.
+     *
+     * @example this.CheckForNewUser(Daten des Typen firebase.auth.UserCredential, 1)
+     *
+     * @param userCredential
+     * @param userType
+     */
     async CheckForNewUser(userCredential, userType){
         if(userCredential.additionalUserInfo.isNewUser){
             await this.userDataService.createNewUserInFirestore(userCredential, userType);
@@ -164,19 +280,26 @@ export class AuthService {
         }
     }
 
+    /**
+     * Löst die Subscription für die Nutzerdaten und entfernt das Token, sowie den Nutzer aus dem lokalen Speicher.
+     * Daraufhin wird der Nutzer zur ./login Seite weitergeleitet.
+     *
+     *
+     */
     signOut() {
         this.afAuth.signOut().then(() => {
           this.refreshUserDataSub.unsubscribe();
             localStorage.removeItem('user');
             localStorage.removeItem('token');
-
             this.router.navigate(['login']);
         }).catch((e) => {
           console.log(e);
         });
     }
 
-    /** FOR APP MODULE INIT **/
+    /** FOR APP MODULE INIT
+     *  - dient dazu um den Authentifizierungsservice beim erstmaligen laden der Seite direkt zu initialisieren.
+     * */
     initalizeService(){
         console.log("Authentification Serivce successfully initialized");
     }
