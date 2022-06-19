@@ -7,7 +7,40 @@ on:
     branches: ["main", "develop", "cicd"]
 
 jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./Juntos
+
+    strategy:
+      matrix:
+        node-version: [ 12.x, 14.x, 16.x ]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+          cache-dependency-path: Juntos/package-lock.json
+
+      - name: save install of dependencies
+        run: npm ci
+
   reusable_workflow_job:
     uses: ./.github/workflows/unitTests.yml
-    name: My first step
+    name: UnitTests
 
