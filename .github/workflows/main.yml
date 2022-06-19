@@ -57,11 +57,15 @@ jobs:
 
       - name: firebase Deploy
         if: always()
-        uses: ./.github/workflows/firebaseHosting.yml@cicd
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_JUNTOS_IP2_SS22 }}'
+          projectId: juntos-ip2-ss22
 
       - name: Android APK
         if: always()
-        uses: ./.github/workflows/android.yml@master
+        uses: LemonKvas/juntos-events-ip2/.github/workflows/android.yml@master
 
 
 
