@@ -17,7 +17,8 @@ jobs:
     steps:
       - name: run tests
         run: |
-          cd ../Juntos
+          ls
+          cd ./Juntos
           npm run test
 
 
