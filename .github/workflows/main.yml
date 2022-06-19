@@ -52,7 +52,7 @@ jobs:
 
       - name: Continue with Firebase Hosting
         if: always()
-        uses: LemonKvas/juntos-events-ip2
+        uses: LemonKvas/juntos-events-ip2@v0
         with:
           token: ${{ secrets.REPO_GHA_PAT }}
           repository: ${{ github.repository }}
