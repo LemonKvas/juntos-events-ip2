@@ -1,8 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title></ion-title>
-    <ion-searchbar placeholder="Suchen">
-    </ion-searchbar>
+    <ion-searchbar placeholder="Suchen"> </ion-searchbar>
     <ion-buttons slot="end">
       <ion-button id="favoriteListButton">
         <ion-icon slot="icon-only" name="heart-outline"></ion-icon>
@@ -23,14 +22,16 @@
         <ion-item>
           <ion-col size="4">
             <!-- get Photo through Photo Service by photoID or url -->
-            <ion-img src="{{event.photoURLs[0] | fireStorageImg: '/event-photos' | async }}"></ion-img>
+            <ion-img
+              src="{{event.photoURLs[0] | fireStorageImg: '/event-photos' | async }}"></ion-img>
           </ion-col>
           <ion-col size="6">
             <!-- (click) on event name or photo to go to the detail page of the event -->
             <h1>{{event.name}}</h1>
             <p>{{event.eventDate | date: 'dd.MM.yyyy'}} um {{event.eventDate | date: 'H:mm'}}</p>
-            <p>{{event.address['street']}} {{event.address['house']}}, <br>
-               {{event.address['zipCode']}} {{event.address['city']}}
+            <p>
+              {{event.address['street']}} {{event.address['house']}}, <br />
+              {{event.address['zipCode']}} {{event.address['city']}}
             </p>
             <p *ngIf="getPrice(event)"><strong>{{event.price}}</strong></p>
           </ion-col>

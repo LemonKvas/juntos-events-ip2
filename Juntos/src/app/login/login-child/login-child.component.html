@@ -21,19 +21,29 @@
       <ion-button expand="block" (click)="EmailLogin()">Anmelden</ion-button>
     </ion-col>
   </ion-row>
-  <ion-row class="ion-justify-content-center" style="height: 3rem;margin-top: -0.3rem;">
+  <ion-row class="ion-justify-content-center" style="height: 3rem; margin-top: -0.3rem">
     <ion-col size="auto">
       <p>ODER</p>
     </ion-col>
   </ion-row>
   <ion-row class="ion-justify-content-center">
     <ion-col size="12">
-      <ion-button *ngIf="deviceIndicator === 0; else googleMobile" expand="block" (click)="GoogleLogin()">Mit Google anmelden</ion-button>
+      <ion-button
+        *ngIf="deviceIndicator === 0; else googleMobile"
+        expand="block"
+        (click)="GoogleLogin()"
+        >Mit Google anmelden</ion-button
+      >
     </ion-col>
   </ion-row>
   <ion-row class="ion-justify-content-center">
     <ion-col size="12">
-      <ion-button *ngIf="deviceIndicator === 0; else facebookMobile" expand="block" (click)="FacebookLogin()">Mit Facebook anmelden</ion-button>
+      <ion-button
+        *ngIf="deviceIndicator === 0; else facebookMobile"
+        expand="block"
+        (click)="FacebookLogin()"
+        >Mit Facebook anmelden</ion-button
+      >
     </ion-col>
   </ion-row>
   <!--TODO: Apple Login Button je nach Platoform-->

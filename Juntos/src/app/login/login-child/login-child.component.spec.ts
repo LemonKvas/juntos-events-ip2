@@ -1,11 +1,11 @@
-import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {IonicModule} from '@ionic/angular';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { IonicModule } from '@ionic/angular';
 
-import {LoginChildComponent} from './login-child.component';
-import {AuthService} from "src/app/services/auth.service";
-import {AngularFireAuth} from '@angular/fire/compat/auth';
-import {FIREBASE_OPTIONS} from "@angular/fire/compat";
-import {environment} from "src/environments/environment";
+import { LoginChildComponent } from './login-child.component';
+import { AuthService } from 'src/app/services/auth.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { environment } from 'src/environments/environment';
 
 export const authStub: any = {
   authState: {},
@@ -13,7 +13,7 @@ export const authStub: any = {
     signInWithEmailAndPassword() {
       return Promise.resolve();
     },
-    signInWithPopup(){
+    signInWithPopup() {
       return Promise.resolve();
     }
   }
@@ -26,12 +26,12 @@ describe('LoginChildComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoginChildComponent ],
+      declarations: [LoginChildComponent],
       imports: [IonicModule.forRoot()],
       providers: [
         AuthService,
-        {provide: AngularFireAuth, useValue: authStub},
-        {provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig}
+        { provide: AngularFireAuth, useValue: authStub },
+        { provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig }
       ]
     }).compileComponents();
 
@@ -39,14 +39,13 @@ describe('LoginChildComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     authService = TestBed.inject(AuthService);
-
   }));
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should click Registrieren button', ()=>{
+  it('should click Registrieren button', () => {
     spyOn(authService, 'EmailLogin');
 
     let button = fixture.debugElement.nativeElement.querySelector('button');
@@ -54,6 +53,6 @@ describe('LoginChildComponent', () => {
 
     fixture.whenStable().then(() => {
       expect(authService.EmailLogin).toHaveBeenCalled();
-    })
-  })
+    });
+  });
 });
