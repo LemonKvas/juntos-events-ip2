@@ -41,14 +41,6 @@ jobs:
         continue-on-error: true
         run: npm list
 
-      - name: Continue with Firebase Hosting
-        if: always()
-        uses: peter-evans/repository-dispatch@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          repository: LemonKvas/juntos-events-ip2
-          event-type: startFirebaseHosting
-
       - name: Install dependencies
         run: npm install
 
@@ -62,6 +54,16 @@ jobs:
       - name: Unit Tests
         if: always()
         run: npm run test
+
+      - name: firebase Deploy
+        if:  |
+          success() && 
+          '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_JUNTOS_IP2_SS22 }}'
+          projectId: juntos-ip2-ss22
 
 
 
