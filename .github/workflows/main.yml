@@ -63,9 +63,7 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_JUNTOS_IP2_SS22 }}'
           projectId: juntos-ip2-ss22
 
-      - name: Android APK
-        if: always()
-        uses: LemonKvas/juntos-events-ip2/.github/workflows/android.yml@master
+
 
 
 
