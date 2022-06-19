@@ -40,7 +40,9 @@ jobs:
       - name: save install of dependencies
         run: npm ci
 
-  reusable_workflow_job:
-    uses: ./.github/workflows/unitTests.yml
-    name: UnitTests
+      - name: run linter
+        run: npm run lint-and-fix
+
+      - name: run tests
+        run: npm run test
 
