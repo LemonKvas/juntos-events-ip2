@@ -55,7 +55,7 @@ jobs:
     needs: build
     name: Lint
     steps:
-      - run: npm run lint-and-fix
+      - run: npm install && npm run lint-and-fix
 
   deploy:
     name: Deploy
@@ -67,8 +67,8 @@ jobs:
       - name: Download Artifact
         uses: actions/download-artifact@master
         with:
-          name: www
-          path: www
+          name: Juntos/www
+          path: Juntos/www
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
