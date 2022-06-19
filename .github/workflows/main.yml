@@ -53,6 +53,8 @@ jobs:
       - name: Continue with Firebase Hosting
         if: always()
         uses: peter-evans/repository-dispatch@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           token: ${{ secrets.REPO_GHA_PAT }}
           repository: ${{ github.repository }}
