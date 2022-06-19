@@ -12,7 +12,7 @@ defaults:
 
 jobs:
 
-  installDependencies:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -32,16 +32,33 @@ jobs:
           cache: 'npm'
           cache-dependency-path: Juntos/package-lock.json
 
-#      - name: save install of dependencies
-#        run: npm install
+      - if: ${{ steps.cache-npm.outputs.cache-hit == 'false' }}
+        name: List the state of node modules
+        continue-on-error: true
+        run: npm list
 
-      - name: run linter
-        run: npm run lint-and-fix
 
+      - name: Install dependencies
+        run: npm install
 
-  tests:
+      - name: Build
+        run: npm build
+
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
     steps:
-      - name: run tests
-        run: npm run test
+      - uses: actions/checkout@v2
+      - run: npm install
+      - run: npm run lint-and-fix
+
+  tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm ci
+      - run: npm run test
+
+
 
