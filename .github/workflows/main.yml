@@ -6,14 +6,13 @@ on:
   pull_request:
     branches: ["main", "develop", "cicd"]
 
+defaults:
+  run:
+    working-directory: ./Juntos
+
 jobs:
   build:
-
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./Juntos
-
     strategy:
       matrix:
         node-version: [ 12.x, 14.x, 16.x ]
@@ -36,13 +35,21 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
           cache-dependency-path: Juntos/package-lock.json
-
+  installDependencies:
+    runs-on: ubuntu-latest
+    steps:
       - name: save install of dependencies
-        run: npm ci
+        run: npm install
 
-      - name: run linter
-        run: npm run lint-and-fix
+  linter:
+    runs-on: ubuntu-latest
+    steps:
+     - name: run linter
+       run: npm run lint-and-fix
 
+  tests:
+    runs-on: ubuntu-latest
+    steps:
       - name: run tests
         run: npm run test
 
