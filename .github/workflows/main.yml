@@ -55,8 +55,7 @@ jobs:
     needs: build
     name: Lint
     steps:
-      - uses: actions/checkout@v3
-        run: npm run lint-and-fix
+      - run: npm run lint-and-fix
 
   deploy:
     name: Deploy
