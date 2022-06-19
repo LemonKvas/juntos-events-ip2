@@ -57,7 +57,7 @@ jobs:
 
       - name: firebase Deploy
         if: always()
-        uses: ./.github/workflows/firebaseHosting.yml
+        uses: ./.github/workflows/firebaseHosting.yml@latest
 
 
 
