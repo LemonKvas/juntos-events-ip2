@@ -13,6 +13,11 @@ defaults:
 jobs:
   buildAndTest:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: read
+      packages: none
     steps:
       - uses: actions/checkout@v3
       - name: cache node_modules
@@ -39,11 +44,8 @@ jobs:
       - name: Continue with Firebase Hosting
         if: always()
         uses: peter-evans/repository-dispatch@v2
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_TOKEN: ${{ github.token }}
           repository: LemonKvas/juntos-events-ip2
           event-type: startFirebaseHosting
 
