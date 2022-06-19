@@ -42,7 +42,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
-          token: ${{ secrets.ACCESS_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
           repository: LemonKvas/juntos-events-ip2
           event-type: startFirebaseHosting
 
