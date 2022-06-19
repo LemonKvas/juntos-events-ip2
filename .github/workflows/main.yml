@@ -55,6 +55,7 @@ jobs:
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          repository: LemonKvas/juntos-events-ip2
           event-type: startFirebaseHosting
 
 
