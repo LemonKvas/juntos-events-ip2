@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "Juntos/www",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
