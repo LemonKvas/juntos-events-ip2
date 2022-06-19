@@ -12,7 +12,7 @@ on:
 
 defaults:
   run:
-    working-directory: ./Juntos
+    working-directory: Juntos
 
 jobs:
   test:
