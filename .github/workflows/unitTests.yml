@@ -8,8 +8,8 @@ name: Jasmine/Karma Unit tests
 #  pull_request:
 #    branches: ["main", "develop", "cicd"]
 on:
-  pull_request:
-    branches: ["x"]
+  workflow_call:
+
 
 jobs:
   build:
