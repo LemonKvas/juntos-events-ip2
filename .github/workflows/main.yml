@@ -1,0 +1,12 @@
+on:
+  push:
+    branches: ["main", "develop", "cicd"]
+  pull_request:
+    branches: ["main", "develop", "cicd"]
+
+jobs:
+  reusable_workflow_job:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: LemonKvas/juntos-events-ip2/.github/workflows/unitTests

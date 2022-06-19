@@ -1,12 +1,15 @@
 
 
 name: Jasmine/Karma Unit tests
-
+#
+#on:
+#  push:
+#    branches: ["main", "develop", "cicd"]
+#  pull_request:
+#    branches: ["main", "develop", "cicd"]
 on:
-  push:
-#branches: [ "main" ]
   pull_request:
-    branches: [ "main" ]
+    branches: ["x"]
 
 jobs:
   build:
