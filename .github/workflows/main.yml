@@ -13,11 +13,6 @@ defaults:
 jobs:
   buildAndTest:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-      issues: read
-      packages: none
     steps:
       - uses: actions/checkout@v3
       - name: cache node_modules
@@ -55,9 +50,12 @@ jobs:
         if: always()
         run: npm run test
 
-      - name: firebase Deploy
-        if: always()
-        uses: FirebaseExtended/action-hosting-deploy@v0
+  firebaseDeploy:
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_JUNTOS_IP2_SS22 }}'
