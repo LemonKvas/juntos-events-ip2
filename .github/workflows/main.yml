@@ -57,11 +57,11 @@ jobs:
 
       - name: firebase Deploy
         if: always()
-        uses: ./.github/workflows/firebaseHosting.yml@latest
+        uses: ./.github/workflows/firebaseHosting.yml@cicd
 
       - name: Android APK
         if: always()
-        uses: ./.github/workflows/android.yml@latest
+        uses: ./.github/workflows/android.yml@master
 
 
 
