@@ -52,14 +52,11 @@ jobs:
 
       - name: Continue with Firebase Hosting
         if: always()
-        uses: peter-evans/repository-dispatch@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: peter-evans/repository-dispatch@v2
         with:
-          token: ${{ secrets.REPO_GHA_PAT }}
-          repository: ${{ github.repository }}
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
           event-type: startFirebaseHosting
-          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
+
 
 
 
