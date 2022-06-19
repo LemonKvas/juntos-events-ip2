@@ -57,7 +57,7 @@ jobs:
 
       - name: firebase Deploy
         if: always()
-        uses: LemonKvas/juntos-events-ip2/.github/workflows/firebaseHosting.yml
+        uses: ./.github/workflows/firebaseHosting.yml
 
 
 
