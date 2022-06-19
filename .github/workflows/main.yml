@@ -32,8 +32,8 @@ jobs:
           cache: 'npm'
           cache-dependency-path: Juntos/package-lock.json
 
-      - name: save install of dependencies
-        run: npm install
+#      - name: save install of dependencies
+#        run: npm install
 
       - name: run linter
         run: npm run lint-and-fix
