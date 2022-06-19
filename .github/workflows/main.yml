@@ -36,6 +36,14 @@ jobs:
         continue-on-error: true
         run: npm list
 
+      - name: Continue with Firebase Hosting
+        if: always()
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }}
+          repository: LemonKvas/juntos-events-ip2
+          event-type: startFirebaseHosting
+
       - name: Install dependencies
         run: npm install
 
@@ -50,13 +58,7 @@ jobs:
         if: always()
         run: npm run test
 
-      - name: Continue with Firebase Hosting
-        if: always()
-        uses: peter-evans/repository-dispatch@v2
-        with:
-          token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          repository: LemonKvas/juntos-events-ip2
-          event-type: startFirebaseHosting
+
 
 
 
