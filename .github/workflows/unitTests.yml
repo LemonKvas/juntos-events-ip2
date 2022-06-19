@@ -15,8 +15,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     defaults:
-      run:
-        working-directory: ../Juntos
+      run: |
+        cd ../Juntos
     steps:
       - name: run tests
         run: npm run test
