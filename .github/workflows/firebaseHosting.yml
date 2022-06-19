@@ -1,8 +1,7 @@
 name: Deploy to Firebase
 
 on:
-  repository_dispatch:
-    types: [startFirebaseHosting]
+  workflow_call:
 
 jobs:
   build_and_deploy:
