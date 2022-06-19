@@ -43,10 +43,21 @@ jobs:
         run: npm run build
 
       - name: Lint
+        if: always()
         run: npm run lint-and-fix
 
       - name: Unit Tests
+        if: always()
         run: npm run test
+
+      - name: Continue with Firebase Hosting
+        if: always()
+        uses: LemonKvas/juntos-events-ip2@v1
+        with:
+          token: ${{ secrets.REPO_GHA_PAT }}
+          repository: ${{ github.repository }}
+          event-type: startFirebaseHosting
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
 
 
 
