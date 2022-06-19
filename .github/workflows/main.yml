@@ -37,28 +37,17 @@ jobs:
         continue-on-error: true
         run: npm list
 
-
       - name: Install dependencies
         run: npm install
 
       - name: Build
         run: npm build
 
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - run: npm install
-      - run: npm run lint-and-fix
+      - name: Lint
+        run: npm run lint-and-fix
 
-  tests:
-    name: Unit Tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - run: npm ci
-      - run: npm run test
+      - name: Unit Tests
+        run: npm run test
 
 
 
