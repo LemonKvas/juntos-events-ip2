@@ -10,16 +10,17 @@ name: Jasmine/Karma Unit tests
 on:
   workflow_call:
 
+defaults:
+  run:
+    working-directory: ./Juntos
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - name: run tests
-        run: |
-          ls
-          cd ./Juntos
-          npm run test
+        run: npm run test
+
 
 
 
