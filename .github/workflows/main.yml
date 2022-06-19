@@ -55,7 +55,16 @@ jobs:
     needs: build
     name: Lint
     steps:
-      - run: cd .. && npm run lint-and-fix
+      - uses: actions/checkout@v3
+      - run: npm install && npm run lint-and-fix
+
+  unit_tests:
+    runs-on: ubuntu-latest
+    needs: build
+    name: Unit Tests
+    steps:
+      - uses: actions/checkout@v3
+      - run: npm run test
 
   deploy:
     name: Deploy
