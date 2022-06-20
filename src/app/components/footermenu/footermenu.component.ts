@@ -8,10 +8,10 @@ import {UserDataService} from "../../services/user-data.service";
   styleUrls: ['./footermenu.component.scss'],
 })
 export class FootermenuComponent implements OnInit {
-  private currentPage : string;
-  private currentUser : string;
+  currentPage : string;
+  currentUser : string;
 
-  constructor(private router : Router, private userData : UserDataService) {
+  constructor(public router : Router, public userData : UserDataService) {
     this.currentPage = this.router.url;
   }
 
