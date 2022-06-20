@@ -1,0 +1,22 @@
+<ng-container *ngIf="isLoaded">
+    <ion-item [routerLink]="['/profile/' + userId]">
+         <ion-avatar>
+             <ion-img *ngIf="user.photoUrl.includes('.png') || user.photoUrl.includes('googleusercontent'); else noNeed" alt="User avatar" src="{{user.photoUrl}}"></ion-img>
+             <ng-template #noNeed>
+                 <ion-img alt="User avatar" src="{{user.photoUrl | fireStorageImg: '/avatars' | async}}"></ion-img>
+             </ng-template>
+         </ion-avatar>
+          <ion-label>
+            <h2>{{user.userName}}</h2>
+            <p>{{user.firstName}} {{user.lastName}}</p>
+          </ion-label>
+          <ion-buttons slot="end" *ngIf="isLoggedIn">
+              <ng-container *ngIf="isFriends else noFriends">
+                <ion-icon (click)="removeFriend()" size="large" style="zoom:0.8" [name]="addRemoveIcon"></ion-icon>
+              </ng-container>
+              <ng-template #noFriends>
+                  <ion-icon (click)="sendFriendRequest()" size="large" style="zoom:0.8" [name]="addRemoveIcon"></ion-icon>
+              </ng-template>
+          </ion-buttons>
+    </ion-item>
+</ng-container>

@@ -1,0 +1,44 @@
+
+<ion-content>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center ion-align-items-center">
+      <ion-col size="5" style="overflow:hidden;margin-top: 4vh;">
+<!--          <p>icon placeholder</p>-->
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col class="JuntosWrtingCol" size="6">
+        <p class="JuntosWritng">Juntos</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <div class="loginDiv">
+    <ion-grid>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12">
+            <ion-segment (ionChange)="switchUserLogin($event)" value="user">
+              <ion-segment-button value="user">
+                <ion-label>NutzerIn</ion-label>
+              </ion-segment-button>
+              <ion-segment-button value="organizer">
+                <ion-label>VeranstalterIn</ion-label>
+              </ion-segment-button>
+            </ion-segment>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12"  [ngSwitch]="loginIndicator">
+            <app-login-child *ngSwitchCase="'user'" [userType]="2"></app-login-child>
+            <app-login-child *ngSwitchCase="'organizer'" [userType]="1"></app-login-child>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-center" style="text-align: center">
+        <ion-col size="12">
+          <p (click)="AnonymousLogin()">Anonym einloggen</p>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+  </div>
+
+</ion-content>
