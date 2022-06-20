@@ -28,7 +28,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-          cache-dependency-path: Juntos/package-lock.json
+          cache-dependency-path: package-lock.json
 
       - if: ${{ steps.cache-npm.outputs.cache-hit == 'false' }}
         name: List the state of node modules
