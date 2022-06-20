@@ -89,7 +89,7 @@ jobs:
     #needs: build
     runs-on: ubuntu-latest
     steps:
-      - run: cd ./Juntos && npm ci && npm run build
+      - run: ls -la && ls
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
