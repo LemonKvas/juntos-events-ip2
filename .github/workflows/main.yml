@@ -85,6 +85,7 @@ jobs:
           projectId: juntos-ip2-ss22
           channelId: live
 
+
   deploy2:
     name: Deploy
     #needs: build
