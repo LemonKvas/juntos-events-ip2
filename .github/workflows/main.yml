@@ -77,7 +77,19 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - run: npm ci && npm run build
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_JUNTOS_IP2_SS22 }}'
+          projectId: juntos-ip2-ss22
+          channelId: live
+
+  deploy2:
+    name: Deploy
+    #needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - run: cd ./Juntos && npm ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
