@@ -15,11 +15,11 @@ import {PhotoService} from "../services/photo.service";
 export class EditUserPage implements OnInit {
   private userData;
 
-  private firstName;
-  private lastName;
-  private userName;
-  private languages;
-  private allLanguages = [
+  firstName;
+  lastName;
+  userName;
+  languages;
+  allLanguages = [
     {code: 'de', name: 'German'},
     {code: 'en', name: 'English'},
     {code: 'ab', name: 'Abkhazian'},
@@ -205,12 +205,12 @@ export class EditUserPage implements OnInit {
     {code: 'za', name: 'Zhuang, Chuang'},
     {code: 'zu', name: 'Zulu'}
   ];
-  private description;
-  private displayUrl;
-  private oldPhotoUrl;
-  private beforeUrl;
-  private uploadStatus = false;
-  private photoUploads = [];
+  description;
+  displayUrl;
+  oldPhotoUrl;
+  beforeUrl;
+  uploadStatus = false;
+  photoUploads = [];
 
 
   constructor(private userDataService: UserDataService, public alertService: AlertService, private router: Router, private photoService: PhotoService) {
