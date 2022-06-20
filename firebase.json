@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": ["Juntos","www"],
+    "public": "Juntos/www",
     "ignore": [
       "firebase.json",
       "**/.*",
