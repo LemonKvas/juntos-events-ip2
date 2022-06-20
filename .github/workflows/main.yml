@@ -12,9 +12,6 @@ jobs:
     strategy:
       matrix:
         node-version: [ 12.x, 14.x, 16.x ]
-    defaults:
-      run:
-        working-directory: ./Juntos
     steps:
       - uses: actions/checkout@v3
       - name: cache node_modules
@@ -24,7 +21,7 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-  
+
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
@@ -55,9 +52,6 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     name: Lint
-    defaults:
-      run:
-        working-directory: ./Juntos
     steps:
       - uses: actions/checkout@v3
       - run: npm install && npm run lint-and-fix
@@ -65,9 +59,6 @@ jobs:
   unit_tests:
     runs-on: ubuntu-latest
     name: Unit Tests
-    defaults:
-      run:
-        working-directory: ./Juntos
     steps:
       - uses: actions/checkout@v3
       - run: npm ci && npm run test
