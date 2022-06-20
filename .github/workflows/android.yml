@@ -52,24 +52,15 @@ jobs:
       - name: Copy Android
         run: ionic capacitor copy android
 
-      - name: Build Android Dev APK
+      - name: Build Android APK
         run: ionic capacitor build android
-
-      - name: Build Android Release APK
-        run: ionic capacitor build android --release --prod
 
       - name: Generate the Android App Bundle
         working-directory: ./android/
         run: ./gradlew bundle
 
-      - name: Upload dev APK
+      - name: Upload APK
         uses: actions/upload-artifact@v1
         with:
           name: app-dev
           path: apk/app-debug.apk
-
-      - name: Upload release bundle
-        uses: actions/upload-artifact@v1
-        with:
-          name: app-release
-          path: apk/app.aab
