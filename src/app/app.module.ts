@@ -14,6 +14,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import { SharedModule } from './shared/shared.module';
 import {AuthService} from "src/app/services/auth.service";
+import {MapComponent} from "./components/map/map.component";
 
 
 
@@ -39,6 +40,9 @@ import {AuthService} from "src/app/services/auth.service";
       useFactory: (ds: AuthService) => () => ds.initalizeService(),
       deps: [AuthService],
       multi: true
+    },
+    MapComponent, {
+    provide: MapComponent,
     },
   ],
   bootstrap: [AppComponent],

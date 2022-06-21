@@ -42,7 +42,7 @@ export class MapComponent implements AfterViewInit {
         zoom: 8,
       }
     });
-    this.addMarkers();
+    await this.addMarkers();
   }
 
   async addMarkers() {
@@ -77,5 +77,7 @@ export class MapComponent implements AfterViewInit {
     await this.map.setOnMarkerClickListener(async (marker) => {
       console.log(marker);
     })
+
+    await this.map.enableClustering();
   }
 }

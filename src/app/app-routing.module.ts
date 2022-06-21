@@ -9,7 +9,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'test',
     pathMatch: 'full'
   },
   {
@@ -43,6 +43,11 @@ const routes: Routes = [
     loadChildren: () => import('./pages/friendlist/friendlist.module').then(m => m.FriendlistPageModule),
     canActivate: [LoggedInGuard]
   },
+  {
+    path: 'test',
+    loadChildren: () => import('./test/test.module').then( m => m.TestPageModule)
+  },
+
 
 
 
