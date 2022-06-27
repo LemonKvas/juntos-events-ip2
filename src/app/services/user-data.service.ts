@@ -116,4 +116,12 @@ export class UserDataService {
     const userId = user.userId;
     await db.doc(userId).update({createdEvents: arrayUnion(event)});
   }
+
+
+  /**
+   * Gibt ein Observable mit allen Nutzerdaten zurück
+   */
+  getAllUser(){
+    return this.userCollection.valueChanges();
+  }
 }

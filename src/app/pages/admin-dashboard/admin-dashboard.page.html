@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>event list und user list icons hinzufügen</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [scrollY]="false">
+  <ion-searchbar  animated="true" placeholder="Suche nach IDs und Usernamen" (ionInput)="getUser($event)"></ion-searchbar>
+  <cdk-virtual-scroll-viewport itemSize="46" minBufferPx="800" maxBufferPx="1200" class="ion-content-scroll-host">
+    <ion-list>
+      <ion-item *cdkVirtualFor="let user of users">
+        <ion-avatar *ngIf="user.photoUrl">
+          <img *ngIf="user.photoUrl.includes('.png') || user.photoUrl.includes('googleusercontent'); else noNeed"
+               alt="User avatar" src="{{user.photoUrl}}">
+          <ng-template #noNeed>
+            <img alt="User avatar" src="{{user.photoUrl | fireStorageImg: '/avatars' | async}}">
+          </ng-template>
+        </ion-avatar>
+        <ion-icon slot="end" size="large" style="zoom:0.8" name="trash-outline"></ion-icon>
+        <ion-icon slot="end" size="large" style="zoom:0.8" name="create-outline"></ion-icon>
+        <ion-label>{{user.userName}}</ion-label>
+        <ion-label class="ion-text-wrap">
+          ID: {{user.userId}}
+          <ng-container *ngIf="user.firstName">
+            Vorname: {{user.firstName}}
+          </ng-container>
+          <ng-container *ngIf="user.lastName">
+            Nachname: {{user.lastName}}
+          </ng-container>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </cdk-virtual-scroll-viewport>
+</ion-content>

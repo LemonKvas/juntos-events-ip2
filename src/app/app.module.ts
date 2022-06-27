@@ -14,7 +14,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { AuthService } from 'src/app/services/auth.service';
-import { SwiperModule } from 'swiper/angular';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,6 +28,7 @@ import { SwiperModule } from 'swiper/angular';
     AngularFireStorageModule,
     AngularFireDatabaseModule,
     SharedModule,
+    ScrollingModule
   ],
   providers: [
     {
