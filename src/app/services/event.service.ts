@@ -76,4 +76,11 @@ export class EventService {
     const db = firebase.firestore().collection('events');
     await db.doc(event.eventId).update({participants: arrayUnion(...event.participants)});
   }
+
+  /**
+   * Gibt ein Observable zurück mit allen Events, deren Wert "promoted" auf true gesetzt ist
+   */
+  getPromotedEvents() {
+    return this.afs.collection('events', ref => ref.where('promoted', '==', true)).snapshotChanges();
+  }
 }
