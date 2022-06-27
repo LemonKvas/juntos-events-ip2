@@ -43,20 +43,16 @@ describe('AuthService', () => {
       user: null
     }));
 
-    service.EmailRegister(0).then(() => {
+    service.EmailRegister(0,"abc.de@x.de", "123456").then(() => {
       expect(emailSignInMethod).toHaveBeenCalled();
     });
   }));
 
   it('expect Email and Passwort to fit criteria', () => {
-    service.email = 'test@gmail.com';
-    service.password = '11111111111111111111111111111111111111111111111111111111';
     expect(service.checkEmailAndPasswort).toBeTruthy();
   });
 
   it('expect Email and Password to not fulfill criteria', () => {
-    service.email = 'test.com';
-    service.password = undefined;
     expect(service.checkEmailAndPasswort).toBeFalse();
   });
 
