@@ -1,8 +1,7 @@
-import {Component, HostListener, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, Output, OnInit, ViewEncapsulation} from '@angular/core';
 import {IonicSlides} from "@ionic/angular";
 import { EventService } from 'src/app/services/event.service';
 import SwiperCore, {Autoplay, EffectFade, Navigation, SwiperOptions} from 'swiper';
-import {filter, map} from "rxjs";
 
 SwiperCore.use([EffectFade, IonicSlides, Autoplay, Navigation]);
 
@@ -14,6 +13,7 @@ SwiperCore.use([EffectFade, IonicSlides, Autoplay, Navigation]);
 })
 export class CarouselComponent implements OnInit {
   slides?;
+  @Output() carouselNavigate = new EventEmitter<string>();
 
   constructor(private eventService: EventService) {
   }
@@ -74,7 +74,7 @@ export class CarouselComponent implements OnInit {
   }
 
 
-
-
-
+  navigate(eventId: any) {
+    this.carouselNavigate.emit(eventId);
+  }
 }

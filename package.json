@@ -17,7 +17,7 @@
     "e2e": "ng e2e",
     "build:ci": "npm run clean && npm run test && npm run build:prod",
     "compodoc": "npx compodoc -p tsconfig.json",
-    "prepare": "cd .. && husky install Juntos/.husky",
+    "prepare": "cd .. && husky install .husky",
     "compodoc-serve": "compodoc -p tsconfig.doc.json -s"
   },
   "private": true,
