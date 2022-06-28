@@ -7,6 +7,7 @@ import UserCredential = firebase.auth.UserCredential;
 import {Router} from '@angular/router';
 import {AlertService} from 'src/app/services/alert.service';
 import {arrayUnion} from '@angular/fire/firestore';
+import {ChatGroup} from '../models/classes/chat-group';
 
 
 @Injectable({
@@ -115,5 +116,27 @@ export class UserDataService {
     const user = await this.getCurrentUser();
     const userId = user.userId;
     await db.doc(userId).update({createdEvents: arrayUnion(event)});
+  }
+  async addChat(chat: ChatGroup, user: User){
+    const db = firebase.firestore().collection('user');
+    const currentUser = await this.getCurrentUser();
+    const chatData = JSON.parse(JSON.stringify(chat));
+    // await db.doc(user.userId).update({chats: arrayUnion(chatData)});
+    // await db.doc(currentUser.userId).update({chats: arrayUnion(chatData)});
+    await db.doc(currentUser.userId).collection('chats').doc(chat.id).set(chatData);
+    await db.doc(user.userId).collection('chats').doc(chat.id).set(chatData);
+  }
+  findChat(user: User, chat: ChatGroup){
+    return this.afs.collection('user').doc(user.userId)
+      .collection('chats', ref => ref.where('id', '==', chat.id)).snapshotChanges();
+  }
+  getUserChats(id: string){
+    console.log('User Chats ID: ', id);
+    return this.userCollection.doc(id).collection('chats').snapshotChanges();
+  }
+  async getCurrentUserChats(){
+    const currentUserId = await this.getCurrentUserID();
+    console.log('User Chats ID: ', currentUserId);
+    return this.userCollection.doc(currentUserId).collection('chats').snapshotChanges();
   }
 }

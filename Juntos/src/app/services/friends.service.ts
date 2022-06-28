@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {UserDataService} from "src/app/services/user-data.service";
-import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/compat/firestore";
-import {arrayRemove, arrayUnion} from "@angular/fire/firestore";
+import {UserDataService} from 'src/app/services/user-data.service';
+import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/compat/firestore';
+import {arrayRemove, arrayUnion} from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +31,7 @@ export class FriendsService {
       const currentUserID = await this.userDataService.getCurrentUserID();
       await this.userCollection.doc(currentUserID).update({
         friends: arrayUnion(organizerIdToFollow)
-      })
+      });
       return "followed successfully";
     }
     catch (e) {

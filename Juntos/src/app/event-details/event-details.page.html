@@ -67,7 +67,32 @@
     </div>
     <!-- Participants Segment -->
     <div class="segment-divs" *ngIf="segment === 'participants'">
-      <p>Event Teilnehmer</p>
+      <ion-list>
+        <ion-item class="ion-text-justify" *ngIf="event.participants.length === 0">
+          <p>Nehme als Erste(r) an dem Event teil!</p>
+        </ion-item>
+        <ion-item button *ngFor="let participant of participants" (click)="openChat(participant)">
+          <ion-row class="ion-justify-content-center">
+            <ion-col size="5">
+              <ion-avatar class="profile-div">
+                <ion-img class="profile-img" src="{{participant.photoUrl | fireStorageImg: '/avatars' | async }}"></ion-img>
+              </ion-avatar>
+            </ion-col>
+            <ion-col size="4">
+              <p>
+                {{participant.firstName}} {{participant.lastName}}
+              </p>
+            </ion-col>
+            <ion-col size="3">
+              <ion-buttons class="chat-btn">
+                <ion-button slot="end">
+                  <ion-icon name="chatbubble-ellipses-outline" size="small"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+      </ion-list>
     </div>
   </ion-grid>
 </ion-content>

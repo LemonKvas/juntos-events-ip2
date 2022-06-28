@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
+import {NavigationExtras, Router} from '@angular/router';
 import {EventService} from '../services/event.service';
 import {Event} from '../models/classes/event.model';
 import User from '../models/classes/user';
@@ -7,6 +7,7 @@ import {RegisteredEvent} from '../models/interfaces/registered-event';
 import {AuthService} from '../services/auth.service';
 import {UserDataService} from '../services/user-data.service';
 import {AlertService} from '../services/alert.service';
+import {ChatService} from '../services/chat.service';
 
 @Component({
   selector: 'app-event-details/',
@@ -17,13 +18,16 @@ export class EventDetailsPage implements OnInit {
   event: Event = new Event();
   eventId: string;
   participant: User;
+  participants: User[] = [];
   registeredEvent: RegisteredEvent;
   creator: User;
   segment: string;
   constructor(private router: Router, public eventService: EventService, private authService: AuthService,
-              private userService: UserDataService, public alertService: AlertService) {
+              private userService: UserDataService, public alertService: AlertService,
+              private chatService: ChatService) {
     this.event = this.router.getCurrentNavigation().extras.state;
     this.getCreatorData();
+    this.getUserlist();
   }
   async ngOnInit() {
     this.segment = 'information';
@@ -33,6 +37,13 @@ export class EventDetailsPage implements OnInit {
   }
   segmentChanged(ev: any){
     console.log('Segment changed to ', ev);
+  }
+  async getUserlist(){
+    // eslint-disable-next-line @typescript-eslint/prefer-for-of
+    for(let i = 0; i < this.event.participants.length; i++){
+      const user = await this.userService.getUserById(this.event.participants[i]);
+      this.participants.unshift(user);
+    }
   }
   async attendEvent(event: Event){
     if(this.authService.isloggedin() === false ){
@@ -55,5 +66,14 @@ export class EventDetailsPage implements OnInit {
       await this.userService.addRegisteredEvent(this.registeredEvent);
       await this.alertService.partakeEvent(event);
     }
+  }
+  async openChat(user: User){
+    const chatGroup = await this.chatService.createChat(user);
+    const navigationExtras: NavigationExtras = {
+      state: {
+        id: chatGroup.id
+      }
+    };
+    await this.router.navigateByUrl(`chat/${chatGroup.id}`, navigationExtras);
   }
 }

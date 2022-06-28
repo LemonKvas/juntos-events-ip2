@@ -4,4 +4,5 @@ export interface Message {
   message?: string;
   date?: Date;
   chatId?: string;
+  creatorName?: string;
 }

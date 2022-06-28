@@ -11,7 +11,7 @@
         <ion-segment-button value="chats" style="width: 100%">
           <ion-label>Chats</ion-label>
         </ion-segment-button>
-        <ion-segment-button value="friends">
+        <ion-segment-button value="friends" style="width: 100%">
           <ion-label>Freunde</ion-label>
         </ion-segment-button>
       </ion-segment>
@@ -21,7 +21,7 @@
   <!-- Chats Segment -->
   <div class="segment-divs" *ngIf="segment === 'chats'">
     <ion-row *ngFor="let chat of chats">
-      <ion-item button (click)="openChat()">
+      <ion-item button (click)="openChat(chat.id)">
         <ion-avatar slot="start">
           <ion-img></ion-img>
         </ion-avatar>
@@ -35,20 +35,19 @@
           </ion-button>
         </ion-buttons>
       </ion-item>
-<!--      <ion-item class="chat-item" *ngFor="let chat of chats">-->
-<!--        <ion-avatar slot="start">-->
-<!--          <ion-img src="{{chat.photo[0] | fireStorageImg: '/avatars' | async }}"></ion-img>-->
-<!--        </ion-avatar>-->
-<!--        <ion-label>-->
-<!--          &lt;!&ndash; Get username from chat.users &ndash;&gt;-->
-<!--          <h2>User Name</h2>-->
-<!--        </ion-label>-->
-<!--        <ion-buttons>-->
-<!--          <ion-button>-->
-<!--            <ion-icon name="trash-outline" size="small"></ion-icon>-->
-<!--          </ion-button>-->
-<!--        </ion-buttons>-->
-<!--      </ion-item>-->
+      <ion-item class="chat-item">
+        <ion-avatar slot="start">
+          <ion-img src="{{chat.photo[0] | fireStorageImg: '/avatars' | async }}"></ion-img>
+        </ion-avatar>
+        <ion-label>
+          <h2>{{chat.name}}</h2>
+        </ion-label>
+        <ion-buttons>
+          <ion-button>
+            <ion-icon name="trash-outline" size="small"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
     </ion-row>
   </div>
 

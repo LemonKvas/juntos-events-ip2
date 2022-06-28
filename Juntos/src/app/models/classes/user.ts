@@ -26,12 +26,14 @@ export class User {
   createdEvents?: CreatedEvent[];
   socialPoints: number;
   badges?: Badge[];
+  chats?: string[];
 
   constructor(userId: string, email: string, rights?: number,  emailVerified?: boolean, socialPoints?: number,
               firstName?: string, lastName?: string, birthDate?: string, languages?: string[], paymentUrl?: string,
               userName?: string, premium?: boolean, photoUrl?: string, bio?: string, friends?: string[],
               socialMedia?: string[], favoriteCreators?: string[], feedback?: Feedback[],
-              registeredEvents?: RegisteredEvent[], createdEvents?: CreatedEvent[], badges?: Badge[]
+              registeredEvents?: RegisteredEvent[], createdEvents?: CreatedEvent[], badges?: Badge[],
+              chats?: string[]
               ){
     this.userId = userId;
     this.email = email;
@@ -54,6 +56,7 @@ export class User {
     if(registeredEvents != undefined) this.registeredEvents = registeredEvents;
     if(createdEvents != undefined) this.createdEvents = createdEvents;
     if(badges != undefined) this.badges = badges;
+    if(chats != undefined) this.chats = chats;
   }
 
 }
