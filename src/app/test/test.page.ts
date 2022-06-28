@@ -1,29 +1,23 @@
-import {Component, OnInit, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {MapComponent} from "../components/map/map.component";
 import {GoogleMap, Marker} from "@capacitor/google-maps";
-import {environment} from "../../../environments/environment";
+import {environment} from "../../environments/environment";
 
 @Component({
-  selector: 'app-map',
-  templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss'],
+  selector: 'app-test',
+  templateUrl: './test.page.html',
+  styleUrls: ['./test.page.scss'],
 })
-export class MapComponent implements AfterViewInit {
-  @ViewChild('map', { static: true })mapRef: ElementRef;
+export class TestPage implements OnInit {
+  @ViewChild('map')
+  mapRef: ElementRef<HTMLElement>;
   map: GoogleMap;
-
-  constructor() {
-
-  }
+  constructor(public MyMap : MapComponent) { }
 
   ngOnInit() {
-
-  }
-
-  ionViewDidEnter() {
   }
 
   ngAfterViewInit() {
-    this.createMap();
   }
 
   async createMap() {
@@ -35,10 +29,10 @@ export class MapComponent implements AfterViewInit {
       forceCreate: true,
       config: {
         center: {
-          lat: 50.571851,
-          lng: 8.6630666,
+          lat: 33.6,
+          lng: -117.9,
         },
-        zoom: 12,
+        zoom: 8,
       }
     });
     await this.addMarkers();
@@ -48,24 +42,24 @@ export class MapComponent implements AfterViewInit {
     const markers: Marker[] = [
       {
         coordinate: {
-          lat: 50.551851,
-          lng: 8.6630666,
+          lat: 33.7,
+          lng: -117.8,
         },
         title: 'test1',
         snippet: 'The place',
       },
       {
         coordinate: {
-          lat: 50.561,
-          lng: 8.6630666,
+          lat: 33.5,
+          lng: -117.6,
         },
         title: 'test2',
         snippet: 'The place2',
       },
       {
         coordinate: {
-          lat: 50.5718,
-          lng: 8.630666,
+          lat: 33.4,
+          lng: -117.9,
         },
         title: 'test2',
         snippet: 'The place2',
@@ -79,4 +73,5 @@ export class MapComponent implements AfterViewInit {
 
     await this.map.enableClustering();
   }
+
 }
