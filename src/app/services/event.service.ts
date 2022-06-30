@@ -7,6 +7,7 @@ import firebase from 'firebase/compat/app';
 import {CreatedEvent} from '../models/interfaces/created-event';
 import {arrayUnion} from '@angular/fire/firestore';
 import {getDoc} from 'firebase/firestore';
+import {ref} from "@angular/fire/storage";
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +21,13 @@ export class EventService {
   constructor(private afs: AngularFirestore) {
     this.eventsCollections = this.afs.collection('events');
   }
+
   getAllEvents(){
     return this.afs.collection('events').snapshotChanges();
+  }
+  //TODO: get published, open events
+  getOpenEvents(){
+    return this.afs.collection('events', ref => ref.where('status', '==', 1)).snapshotChanges();
   }
   getPublishedEvents(){
     return this.afs.collection('events', ref => ref.where('publishStatus', '==', true)).snapshotChanges();

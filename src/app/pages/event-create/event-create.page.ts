@@ -45,6 +45,7 @@ export class EventCreatePage implements OnInit {
   photoUploads = [];
   creator: User;
   creatorId = '';
+  status = 0;
   createdEvent: CreatedEvent;
   public createEventForm: FormGroup;
 
@@ -106,6 +107,7 @@ export class EventCreatePage implements OnInit {
       this.publishStatus,
       'eventId',
       this.creatorId,
+      this.status
     );
   }
   async addEvent(){

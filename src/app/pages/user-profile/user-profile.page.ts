@@ -38,6 +38,10 @@ export class UserProfilePage implements OnInit, OnDestroy {
   followFriendsIndicator: friendButtonIndicator;
   followFriendsIcon: string;
   friendIds: any[] = [];
+  isModalOpen = false;
+  feedBackEvent : Event;
+  starRating: number;
+  feedback : string;
 
 
   constructor(private location: Location, private userDataService: UserDataService, public router: Router,
@@ -121,6 +125,7 @@ export class UserProfilePage implements OnInit, OnDestroy {
       this.eventService.getMultipleEventsByEventId(attendedEventIds).forEach(
           (eventDocs: any[]) => {
             this.events = eventDocs;
+            console.log(this.events);
           }
       );
     }
@@ -210,7 +215,19 @@ export class UserProfilePage implements OnInit, OnDestroy {
     console.log('Segment changed', event);
     }
 
+  setOpen(isOpen: boolean, event: Event) {
+    this.isModalOpen = isOpen;
+    this.feedBackEvent = event;
 
+    console.log('open')
+    console.log(this.feedBackEvent)
+
+  }
+
+  logRatingChange(rating) {
+    console.log("changed rating: ",rating);
+    this.starRating = rating;
+  }
 
 
   openNotifications($event) {
