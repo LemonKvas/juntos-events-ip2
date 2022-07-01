@@ -66,7 +66,10 @@ export class AdminDashboardPage implements AfterViewInit {
 
 
   /**
-   * @ignore
+   * DE:
+   * Nach dem die Ansicht initialisiert wurde, wird die Funktion initalUser() aufgerufen.
+   * EN:
+   * After the view has been initialized, the function initalUser() is called.
    */
   ngAfterViewInit() {
     this.initalUser();
@@ -83,6 +86,12 @@ export class AdminDashboardPage implements AfterViewInit {
   userEvents(userId) {
     this.eventService.userEventsModal(userId);
   }
+
+  /*Function needs to be implemented.
+  Löschen von Nutzern nur mit Cloud Functions möglich
+   * @param userId
+  deleteUser(userId: any) {}
+   */
 }
 
 

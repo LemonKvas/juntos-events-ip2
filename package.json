@@ -44,6 +44,8 @@
     "@ionic/pwa-elements": "^3.1.1",
     "capacitor": "^0.5.5",
     "firebase": "^9.6.11",
+    "firebase-admin": "^11.0.0",
+    "firebase-functions": "^3.22.0",
     "puppeteer": "^14.2.1",
     "rxjs": "~7.5.5",
     "swiper": "^6.8.4",

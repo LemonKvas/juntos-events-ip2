@@ -10,6 +10,7 @@ import {ModalController} from "@ionic/angular";
  * EN:
  * Component that is used as a modal to display the events of a user.
  * The component must be called with a userId as input.
+ *
  */
 @Component({
   selector: 'app-user-events-modal',
