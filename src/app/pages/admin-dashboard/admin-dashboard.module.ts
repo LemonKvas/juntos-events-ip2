@@ -8,6 +8,7 @@ import { AdminDashboardPageRoutingModule } from './admin-dashboard-routing.modul
 
 import { AdminDashboardPage } from './admin-dashboard.page';
 import {ScrollingModule} from "@angular/cdk/scrolling";
+import {SharedModule} from "src/app/shared/shared.module";
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import {ScrollingModule} from "@angular/cdk/scrolling";
     FormsModule,
     IonicModule,
     AdminDashboardPageRoutingModule,
-    ScrollingModule
+    ScrollingModule,
+    SharedModule,
   ],
   declarations: [AdminDashboardPage]
 })

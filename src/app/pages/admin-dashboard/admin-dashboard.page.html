@@ -1,13 +1,16 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
     <ion-title>event list und user list icons hinzufügen</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [scrollY]="false">
   <ion-searchbar  animated="true" placeholder="Suche nach IDs und Usernamen" (ionInput)="getUser($event)"></ion-searchbar>
-  <cdk-virtual-scroll-viewport itemSize="46" minBufferPx="800" maxBufferPx="1200" class="ion-content-scroll-host">
-    <ion-list>
+  <cdk-virtual-scroll-viewport itemSize="46" minBufferPx="300" maxBufferPx="3000" class="ion-content-scroll-host">
+    <ion-list *ngIf="users else loading">
       <ion-item *cdkVirtualFor="let user of users">
         <ion-avatar *ngIf="user.photoUrl">
           <img *ngIf="user.photoUrl.includes('.png') || user.photoUrl.includes('googleusercontent'); else noNeed"
@@ -16,6 +19,7 @@
             <img alt="User avatar" src="{{user.photoUrl | fireStorageImg: '/avatars' | async}}">
           </ng-template>
         </ion-avatar>
+        <ion-icon (click)="userEvents(user.userId)" slot="end" size="large" style="zoom:0.8" name="golf-outline"></ion-icon>
         <ion-icon slot="end" size="large" style="zoom:0.8" name="trash-outline"></ion-icon>
         <ion-icon slot="end" size="large" style="zoom:0.8" name="create-outline"></ion-icon>
         <ion-label>{{user.userName}}</ion-label>
@@ -31,4 +35,11 @@
       </ion-item>
     </ion-list>
   </cdk-virtual-scroll-viewport>
+
+  <ng-template #loading>
+    <ion-spinner style="margin: 50%; zoom: 0.8" name="bubbles"></ion-spinner>
+  </ng-template>
 </ion-content>
+
+<app-footermenu> </app-footermenu>
+

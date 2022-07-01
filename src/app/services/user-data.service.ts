@@ -16,7 +16,7 @@ export class UserDataService {
 
   private readonly userCollection!: AngularFirestoreCollection;
 
-  constructor(private afs: AngularFirestore, private router: Router, public alertService: AlertService) {
+  constructor(private afs: AngularFirestore, public alertService: AlertService) {
     this.userCollection = this.afs.collection(`user`);
   }
 
@@ -119,6 +119,10 @@ export class UserDataService {
 
 
   /**
+   * EN:
+   * Returns an observable with all user data
+   *
+   * DE:
    * Gibt ein Observable mit allen Nutzerdaten zurück
    */
   getAllUser(){
