@@ -10,13 +10,36 @@ import {NavigationExtras, Router} from '@angular/router';
   styleUrls: ['./event-list.page.scss'],
 })
 export class EventListPage implements OnInit {
+  /**
+   * Value of all published events
+   */
   events: Event[] = [];
+  /**
+   * Value of event selected by user
+   */
   selectedEvent: Event;
+
+  /**
+   * Injected all imported services
+   *
+   * @param eventService
+   * @param router
+   */
   constructor(public eventService: EventService, private router: Router) {
-  }
-  ngOnInit() {
+    /**
+     * Call function upon page loading
+     */
     this.getEvents();
   }
+  ngOnInit() {
+  }
+
+  /**
+   * All published Events will be fetched through getPublishedEvents() from
+   * eventService.
+   *
+   * Each document will be subscribed and pushed as Event into local array events[].
+   */
   getEvents(){
     this.eventService.getPublishedEvents().subscribe((res) => {
       this.events = res.map((e) => ({
@@ -25,6 +48,10 @@ export class EventListPage implements OnInit {
         }));
     });
   }
+
+  /**
+   * This method will allow user to share selected event with other people.
+   */
   async shareEvent(){
     const msgText = 'Hallo,\n';
     Share.canShare().then(canShare => {
@@ -40,10 +67,23 @@ export class EventListPage implements OnInit {
       }
     });
   }
+
+  /**
+   * This method will navigate user to event-create page to create a new event.
+   */
   createEvent(){
-    this.router.navigate(['event-create']);
+    this.router.navigate(['event-create']).catch((err) => console.log('Error: ', err));
   }
-  /* Navigate to Event Details */
+
+  /**
+   * This method will navigate user to the event details page by given id.
+   *
+   * @example
+   * Call it with an id as string
+   * eventDetailsState('87u490')
+   *
+   * @param id
+   */
   async eventDetailsState(id: string){
      this.selectedEvent = await this.eventService.getEventById(id);
      const navigationExtras: NavigationExtras = {
@@ -64,6 +104,5 @@ export class EventListPage implements OnInit {
        }
      };
      await this.router.navigateByUrl(`event-details/${id}`, navigationExtras);
-     //await this.router.navigateByUrl(`event-details/${id}`);
   }
 }

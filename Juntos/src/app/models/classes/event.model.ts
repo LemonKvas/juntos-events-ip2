@@ -1,3 +1,6 @@
+/**
+ * Class Event with all attributes
+ */
 export class Event{
   name?: string;
   photoURLs?: string[];

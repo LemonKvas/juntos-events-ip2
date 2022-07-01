@@ -12,8 +12,13 @@ import {getDoc} from 'firebase/firestore';
   providedIn: 'root'
 })
 export class EventService {
-  eventList: Event[] = [];
+  /**
+   * Value of new created event
+   */
   eventId = '';
+  /**
+   * Value of created event to push to user information
+   */
   createdEvent: CreatedEvent;
   private eventsCollections: AngularFirestoreCollection<Event>;
   private events: Observable<Event[]>;
@@ -47,6 +52,10 @@ export class EventService {
   /**
    * Add given event as a new document to the firebase collection 'events'.
    *
+   * @example
+   * Call it with an event object
+   * addEvent(event)
+   *
    * @param event
    */
   async addEvent(event: Event): Promise<void>{
@@ -61,6 +70,10 @@ export class EventService {
    * Remove event by the given ID.
    * Document is found by given ID and removed from the firebase collection 'events'.
    *
+   * @example
+   * Call it with id as string
+   * removeEvent('2biv021')
+   *
    * @param id
    */
   async removeEvent(id: string){
@@ -69,7 +82,11 @@ export class EventService {
 
   /**
    * Looking for matching events with the given array of event IDs in the firebase collection 'events'.
-   * This function helps to get all events information that an user is partaking in.
+   * This function helps to get all events' information that a user is partaking in.
+   *
+   * @example
+   * Call it with an array of strings
+   * getMultipleEventsByEventId(['bn829b', '39hfjwb'])
    *
    * @param eventIds
    * @returns Event[]
@@ -83,6 +100,10 @@ export class EventService {
   /**
    * Return an event by the given ID from the firebase collection 'events'.
    *
+   * @example
+   * Call it with id as string
+   * getEventById('9n043h2')
+   *
    * @param id
    * @returns EventData
    */
@@ -93,8 +114,15 @@ export class EventService {
   }
 
   /**
+   * Method create createdEvent data to push into user information.
+   * Data includes event id and its publishStatus.
+   *
+   * @example
+   * Call it with a boolean value
+   * createdEventData(true)
    *
    * @param publishStatus
+   * @returns createdEvent
    */
   async createdEventData(publishStatus: boolean){
     return this.createdEvent = {
@@ -106,6 +134,10 @@ export class EventService {
   /**
    * Changed event price by given ID.
    * If the field value is 0, null or undefined, this event is free, and it's value will be changed to 'kostenlos'.
+   *
+   * @example
+   * Call it with an even object
+   * getPrice(event)
    *
    * @param event
    * @returns eventPrice
@@ -122,6 +154,10 @@ export class EventService {
    * Check if event price is 0 or 'kostenlos' and if it's the case, it will return true or else false.
    * This function helps to display the event price on different pages or components.
    *
+   * @example
+   * Call it with an event object
+   * freeEvent(event)
+   *
    * @param event
    * @returns boolean
    */
@@ -137,6 +173,10 @@ export class EventService {
   /**
    * Add new participants array to an event in the firebase collection 'events'.
    * Only new participants from the array will be added so there will not be any duplicates.
+   *
+   * @example
+   * Call it with an even object
+   * addRegisteredUser(event)
    *
    * @param event
    */

@@ -46,29 +46,34 @@ export class EventCreatePage implements OnInit {
   creator: User;
   creatorId = '';
   createdEvent: CreatedEvent;
-  public createEventForm: FormGroup;
+  createEventForm: FormGroup;
 
+  /**
+   * Injected all imported services.
+   *
+   * @param router
+   * @param location
+   * @param route
+   * @param eventService
+   * @param alertService
+   * @param photoService
+   * @param userService
+   */
   constructor(private router: Router, private location: Location,
               private route: ActivatedRoute, private eventService: EventService,
               public alertService: AlertService, public photoService: PhotoService,
               private userService: UserDataService) {
+    /**
+     * Set value of variable 'today' to current date
+     */
     this.today = new Date();
-    this.getCreatorData();
-    this.event = new Event(
-      this.eventName,
-      this.photoURLs,
-      this.creationDate,
-      this.eventDate,
-      this.price,
-      this.eventBio,
-      this.categories,
-      this.participants,
-      this.maxParticipants,
-      this.address,
-      this.publishStatus,
-      null,
-      this.creatorId,
-    );
+    /**
+     * Call function to fetch creator data upon page loading
+     */
+    this.getCreatorData().catch((err) => console.log('Error: ', err));
+    /**
+     * Set variable createEvenForm with new FormGroup of input fields
+     */
     this.createEventForm = new FormGroup({
       eventName: new FormControl(),
       photoURLs: new FormControl(),
@@ -85,6 +90,10 @@ export class EventCreatePage implements OnInit {
   }
   ngOnInit() {
   }
+
+  /**
+   * This method will get all input values to set variable event value.
+   */
   setInputValues(){
     this.address = {
       street: this.street,
@@ -108,6 +117,19 @@ export class EventCreatePage implements OnInit {
       this.creatorId,
     );
   }
+
+  /**
+   * This method will add the new created event and publish it. All required input fields will be
+   * checked if they are empty and user will be informed.
+   *
+   * If there are no errors, data will be fetched through the method setInputValues().
+   * Event will be added to firebase through addEvent() from eventService.
+   *
+   * Created event data will be created through createdEvent() from eventService and will be added
+   * to user information through addCreatedEvent() from userService.
+   *
+   * Method clearEventForm() will empty all input field and set values to null or ''.
+   */
   async addEvent(){
     this.publishStatus = true;
     this.errors.clear();
@@ -146,6 +168,20 @@ export class EventCreatePage implements OnInit {
       await this.clearEventForm();
     }
   }
+
+  /**
+   * This method save event as draft. For drafts publishStatus will be set as false.
+   * If statement to check if required input field is empty and user will be informed
+   * if that's the case.
+   *
+   * If there are no errors, data will be fetched through the method setInputValues().
+   * Event will be added to firebase through addEvent() from eventService.
+   *
+   * Created event data will be created through createdEvent() from eventService and will be added
+   * to user information through addCreatedEvent() from userService.
+   *
+   * Method clearEventForm() will empty all input field and set values to null or ''.
+   */
   async saveEventAsDraft(){
     this.publishStatus = false;
     if(!this.eventName){
@@ -159,10 +195,20 @@ export class EventCreatePage implements OnInit {
       await this.clearEventForm();
     }
   }
+
+  /**
+   * This method fetched data from current / logged-in user through getCurrentUser() from
+   * userService.
+   */
   async getCreatorData(){
     this.creator = await this.userService.getCurrentUser();
     this.creatorId = this.creator.userId;
   }
+
+  /**
+   * Method to empty input fields and set values back to null or ''.
+   * Afterwards navigate user to the page 'event-list'
+   */
   async clearEventForm(){
     this.createEventForm.reset();
     this.eventDate = null;
@@ -170,13 +216,46 @@ export class EventCreatePage implements OnInit {
     this.publishStatus = false;
     await this.router.navigate(['event-list']);
   }
-  async remove(item){
-    await this.eventService.removeEvent(item.id);
+
+  /**
+   * This method will remove an event by given data.
+   * With the given data, the data id will be passed to the method removeEvent()
+   * from eventService to delete event from the firebase collection.
+   * Afterwards the user will be navigated back to previous page.
+   *
+   * @example
+   * Call it with an id as string
+   * remove('hr89f4')
+   *
+   * @param id
+   */
+  async remove(id: string){
+    await this.eventService.removeEvent(id);
     this.location.back();
   }
+
+  /**
+   * This method will inform user that there are unsaved changes before
+   * user will be navigated back to previous page.
+   */
   async back(){
     await this.alertService.unsaveAlert();
   }
+
+  /**
+   * This method will add given data to firebase storage through storePhoto() from
+   * photoService.
+   *
+   * UploadStatus will be set true if data is still loading and be set as false once
+   * photoService method returned a promise. The photoID from photoService will be
+   * pushed into the array photoURLs.
+   *
+   * @example
+   * Call it with an event
+   * uploadPhoto($event)
+   *
+   * @param event
+   */
   uploadPhoto(event){
     this.uploadStatus = true;
     this.photoService.storePhoto(event.target.files[0]).then((res: any) => {

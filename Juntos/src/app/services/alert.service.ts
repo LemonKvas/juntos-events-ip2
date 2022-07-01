@@ -14,6 +14,12 @@ export class AlertService {
    * This basic alert is for onetime purposes and will be displayed with
    * the given data 'header', 'message' and 'buttons'.
    *
+   * @example
+   * Call it with header, message and buttons
+   * basicAlert('Achtung', 'Möchtest du wirklich dies endgültig löschen?',
+   * [{text: 'Ja', handler: () => {call a function}},{text: 'Abbrechen', role: 'cancel'}])
+   * basicAlert('Weiterleitung', 'Du wirst auf die Startseite geleitet.', ['OK'])
+   *
    * @param header
    * @param message
    * @param buttons
@@ -29,7 +35,7 @@ export class AlertService {
 
   /**
    * This alert will be displayed if user is in an edit mode or filling out a form but
-   * decided to cancel the process. User will be asked if he/she wants to continue to
+   * decided to cancel the process. User will be asked if he / she wants to continue to
    * cancel process and will be reminded that unsaved changes will be discarded.
    */
   async unsaveAlert(){
@@ -94,6 +100,10 @@ export class AlertService {
   /**
    * This alert will be shown if user successfully registered for an event. With the given data 'event'
    * the name of it, which the user has just been added to, will be shown in the message.
+   *
+   * @example
+   * Call it with an event object
+   * partakeEvent(event)
    *
    * @param event
    */

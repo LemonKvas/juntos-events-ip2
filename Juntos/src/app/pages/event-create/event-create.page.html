@@ -108,11 +108,6 @@
           <ion-item>
             <ion-label position="stacked">Foto</ion-label>
             <ion-input id="photoInput" type="file" (change)="uploadPhoto($event)" accept=".png,.jpg" multiple="false"></ion-input>
-            <!--
-            <label class="fakeUploadBtn" *ngIf="!uploadStatus">Foto auswählen</label>
-            -->
-            <p *ngIf="uploadStatus">... wird hochgeladen</p>
-            <ion-img id="photoPreview" *ngFor="let photo of photoService.photos; index as position" [src]="photo"></ion-img>
           </ion-item>
         </ion-col>
       </ion-row>
