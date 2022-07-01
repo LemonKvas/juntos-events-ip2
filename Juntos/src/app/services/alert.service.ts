@@ -9,6 +9,15 @@ import { Event } from '../models/classes/event.model';
 export class AlertService {
   alert;
   constructor(private alertService: AlertController, private location: Location) { }
+
+  /**
+   * This basic alert is for onetime purposes and will be displayed with
+   * the given data 'header', 'message' and 'buttons'.
+   *
+   * @param header
+   * @param message
+   * @param buttons
+   */
   async basicAlert(header, message, buttons){
     this.alert = await this.alertService.create({
       header,
@@ -17,6 +26,12 @@ export class AlertService {
     });
     this.alert.present();
   }
+
+  /**
+   * This alert will be displayed if user is in an edit mode or filling out a form but
+   * decided to cancel the process. User will be asked if he/she wants to continue to
+   * cancel process and will be reminded that unsaved changes will be discarded.
+   */
   async unsaveAlert(){
     this.alert = await this.alertService.create({
       header: 'Sind Sie sicher?',
@@ -36,6 +51,11 @@ export class AlertService {
     });
     this.alert.present();
   }
+
+  /**
+   * This alert will be shown if user wants to proceed to save or add form data but there
+   * are still empty inputs, which are required.
+   */
   async emptyInputsAlert(){
     this.alert = await this.alertService.create({
       header: 'ACHTUNG',
@@ -44,6 +64,11 @@ export class AlertService {
     });
     this.alert.present();
   }
+
+  /**
+   * If user wants to save an event as a draft, he / she will be reminded that a name
+   * is required to proceed.
+   */
   async eventDraftAlert(){
     this.alert = await this.alertService.create({
       header: 'ACHTUNG',
@@ -52,6 +77,11 @@ export class AlertService {
     });
     this.alert.present();
   }
+
+  /**
+   * This alert will be shown if actions need an authentication and user is not logged in.
+   * User will be reminded that the current action needs him / her to be logged in to continue.
+   */
   async plsSignInAlert(){
     this.alert = await this.alertService.create({
       header: 'ACHTUNG',
@@ -60,6 +90,13 @@ export class AlertService {
     });
     this.alert.present();
   }
+
+  /**
+   * This alert will be shown if user successfully registered for an event. With the given data 'event'
+   * the name of it, which the user has just been added to, will be shown in the message.
+   *
+   * @param event
+   */
   async partakeEvent(event: Event){
     this.alert = await this.alertService.create({
       header: 'Zu Event angemeldet',

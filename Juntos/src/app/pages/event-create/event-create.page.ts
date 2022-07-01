@@ -191,7 +191,4 @@ export class EventCreatePage implements OnInit {
         console.log(error);
       });
   }
-  async addPhotoToGallery(){
-    await this.photoService.addNewToGallery();
-  }
 }

@@ -1,21 +1,26 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import {Camera, CameraResultType, CameraSource} from '@capacitor/camera';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PhotoService {
-  public photos: EventPhoto[] = [];
   photoURL: string;
   location = 'event-photos/';
   photoID: string;
   constructor(private afs: AngularFirestore, private afStorage: AngularFireStorage) {
   }
-  async getPhotoById(id: any){
-    return this.afStorage.ref(this.location + JSON.stringify(id));
-  }
+
+  /**
+   * A photo with the given data 'imgData' will be uploaded to the firebase storage.
+   * The default path location is 'event-photos', which will be replaced if there is another given path e.g. 'loc'.
+   * This function will return the url of the file as a Promise.
+   *
+   * @param imgData
+   * @param loc
+   * @returns url
+   */
   async storePhoto(imgData: any, loc?: string){
     try {
       if (loc) {
@@ -24,7 +29,7 @@ export class PhotoService {
       this.photoID = this.afs.createId();
       return new Promise((resolve, reject) => {
         const photoRef = this.afStorage.ref(this.location + this.photoID);
-        photoRef.put(imgData).then(function(){
+        photoRef.put(imgData).then(() =>{
           photoRef.getDownloadURL().subscribe((url: any) => {
             resolve(url);
           });
@@ -35,8 +40,15 @@ export class PhotoService {
     } catch (e) {
       console.log(e);
     }
-    this.photos = [];
   }
+
+  /**
+   * A file with the given ID will be deleted from the firebase storage.
+   * The path default is 'event-photos' but will be replaced if there is another given path e.g. 'loc'.
+   *
+   * @param id
+   * @param loc
+   */
   async deletePhoto(id: string, loc?: string) {
     try {
       if (loc) {
@@ -50,23 +62,4 @@ export class PhotoService {
       console.log(e);
     }
   }
-  async addNewToGallery() {
-    const capturedPhoto = await Camera.getPhoto({
-      resultType: CameraResultType.DataUrl,
-      allowEditing: false,
-      source: CameraSource.Camera,
-      quality: 100,
-    });
-    this.photos.unshift({
-      name: JSON.stringify(this.photoID),
-      webviewPath: capturedPhoto.webPath,
-      type: capturedPhoto.format,
-    });
-    await this.storePhoto(capturedPhoto);
-  }
-}
-export interface EventPhoto {
-  name: string;
-  webviewPath: string;
-  type: string;
 }
