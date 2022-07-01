@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { LoggedInGuard } from 'src/app/guards/logged-in.guard';
+import {RoleGuard} from "src/app/guards/role.guard";
 
 const routes: Routes = [
   {
@@ -48,7 +49,14 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/friendlist/friendlist.module').then((m) => m.FriendlistPageModule),
     canActivate: [LoggedInGuard]
+  },
+  {
+    path: 'admin-dashboard',
+    loadChildren: () => import('./pages/admin-dashboard/admin-dashboard.module').then( m => m.AdminDashboardPageModule),
+    canActivate: [RoleGuard],
+    data: {role: 0}
   }
+
 ];
 
 @NgModule({

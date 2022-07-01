@@ -6,6 +6,9 @@ import {FootermenuComponent} from "../components/footermenu/footermenu.component
 import {IonicModule} from "@ionic/angular";
 import {RouterModule} from "@angular/router";
 import {FriendComponent} from "src/app/components/friend/friend.component";
+import {UserEventsModalComponent} from "src/app/components/user-events-modal/user-events-modal.component";
+import { ScrollingModule } from '@angular/cdk/scrolling';
+
 
 
 /**
@@ -14,12 +17,13 @@ import {FriendComponent} from "src/app/components/friend/friend.component";
 
 @NgModule({
 
-  declarations: [FireStorageImgPipe, FootermenuComponent, NotificationsComponent, FriendComponent],
+  declarations: [FireStorageImgPipe, FootermenuComponent, NotificationsComponent, FriendComponent, UserEventsModalComponent],
     imports: [
         CommonModule,
         IonicModule,
-        RouterModule
+        RouterModule,
+        ScrollingModule
     ],
-  exports: [FireStorageImgPipe, FootermenuComponent, NotificationsComponent, FriendComponent]
+  exports: [FireStorageImgPipe, FootermenuComponent, NotificationsComponent, FriendComponent, UserEventsModalComponent]
 })
 export class SharedModule { }

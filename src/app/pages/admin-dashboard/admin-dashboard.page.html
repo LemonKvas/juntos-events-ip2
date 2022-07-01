@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Admin Dashboard</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [scrollY]="false">
+  <ion-searchbar  animated="true" placeholder="Suche nach IDs und Usernamen" (ionInput)="getUser($event)"></ion-searchbar>
+  <cdk-virtual-scroll-viewport itemSize="150" minBufferPx="500" maxBufferPx="1000" class="ion-content-scroll-host">
+    <ion-list *ngIf="users else loading">
+      <ion-item *cdkVirtualFor="let user of users">
+        <span [routerLink]="['/profile/'+ user.userId]">
+          <ion-avatar *ngIf="user.photoUrl">
+            <img *ngIf="user.photoUrl.includes('.png') || user.photoUrl.includes('googleusercontent'); else noNeed"
+                 alt="User avatar" src="{{user.photoUrl}}">
+            <ng-template #noNeed>
+              <img alt="User avatar" src="{{user.photoUrl | fireStorageImg: '/avatars' | async}}">
+            </ng-template>
+          </ion-avatar>
+         <ion-label>{{user.userName}}</ion-label>
+          <ion-label class="ion-text-wrap">
+            ID: {{user.userId}}
+            <ng-container *ngIf="user.firstName">
+              Vorname: {{user.firstName}}
+            </ng-container>
+            <ng-container *ngIf="user.lastName">
+              Nachname: {{user.lastName}}
+            </ng-container>
+          </ion-label>
+        </span>
+        <ion-icon (click)="userEvents(user.userId)" slot="end" size="large" style="zoom:0.8" name="golf-outline"></ion-icon>
+        <!-- Function to delete user missing
+        <ion-icon slot="end" size="large" style="zoom:0.8" name="trash-outline" (click)="deleteUser(user.userId)"></ion-icon>
+        -->
+      </ion-item>
+    </ion-list>
+  </cdk-virtual-scroll-viewport>
+
+  <ng-template #loading>
+    <ion-spinner style="margin: 50%; zoom: 0.8" name="bubbles"></ion-spinner>
+  </ng-template>
+</ion-content>
+
+<app-footermenu> </app-footermenu>
+
