@@ -5,7 +5,6 @@
         <ion-back-button></ion-back-button>
       </ion-button>
     </ion-buttons>
-    <ion-title class="ion-text-center">{{pageTitle}}</ion-title>
     <ion-buttons slot="end">
       <ion-button>
         <ion-icon name="people-outline"></ion-icon>
@@ -19,18 +18,28 @@
 
 <ion-content class="ion-padding">
   <ion-grid>
-    <ion-row *ngFor="let message of messages">
-      <ion-col size="9" [offset]="">
-        <ion-card>
+    <ion-col *ngFor="let message of messages">
+      <ion-row *ngIf="message.creator === this.currentUser.userId" class="ion-justify-content-end">
+        <ion-card class="currentUserMsg">
           <ion-card-header>
-            {{message.creatorName}}
+            <strong>{{message.creatorName}}</strong>
           </ion-card-header>
           <ion-card-content>
             {{message.message}}
           </ion-card-content>
         </ion-card>
-      </ion-col>
-    </ion-row>
+      </ion-row>
+      <ion-row *ngIf="message.creator !== this.currentUser.userId" class="ion-justify-content-start">
+        <ion-card class="chatUserMsg">
+          <ion-card-header>
+            <strong>{{message.creatorName}}</strong>
+          </ion-card-header>
+          <ion-card-content>
+            {{message.message}}
+          </ion-card-content>
+        </ion-card>
+      </ion-row>
+    </ion-col>
   </ion-grid>
 </ion-content>
 
@@ -39,13 +48,13 @@
     <ion-row class="ion-justify-content-center">
       <ion-col size="2">
         <ion-buttons>
-          <ion-button>
+          <ion-button disabled="true">
             <ion-icon name="document-outline" slot="icon-only" style="color: #ff8766"></ion-icon>
           </ion-button>
         </ion-buttons>
       </ion-col>
       <ion-col size="8">
-        <ion-textarea autoGrow="true" class="message-input" rows="1" maxlength="500" [(ngModel)]="newMsg"></ion-textarea>
+        <ion-textarea autoGrow="true" class="message-input" rows="1" maxlength="500" [(ngModel)]="newMsg" (keyup.enter)="sendMessage(newMsg)"></ion-textarea>
       </ion-col>
       <ion-col size="2">
         <ion-button expand="block" fill="clear" [disabled]="newMsg === ''" (click)="sendMessage(newMsg)">

@@ -74,6 +74,6 @@ export class EventDetailsPage implements OnInit {
         id: chatGroup.id
       }
     };
-    await this.router.navigateByUrl(`chat/${chatGroup.id}`, navigationExtras);
+    this.router.navigateByUrl(`chat/${chatGroup.id}`, navigationExtras).catch((err) => console.log('Error: ', err));
   }
 }

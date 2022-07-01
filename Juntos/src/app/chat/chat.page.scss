@@ -9,3 +9,19 @@ ion-content {
 ion-col {
   justify-items: center;
 }
+ion-card {
+  border-radius: 5px;
+  width: 70%;
+}
+.currentUserMsg {
+  background-color: rgb(126, 222, 193, .7);
+}
+.currentUserCol {
+  float: right;
+}
+.chatUserMsg {
+  background-color: rgb(232, 139, 114, .7);
+}
+.chatUserCol {
+  float: left;
+}

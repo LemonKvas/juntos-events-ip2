@@ -21,4 +21,11 @@ describe('ChatPage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should not contain any new message', () => {
+    expect(component.newMsg).toEqual('');
+  });
+  it('should contain no message', () => {
+    expect(component.newMsg).toEqual('');
+  });
 });

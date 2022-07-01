@@ -19,7 +19,7 @@ export class ChatService {
   private messages: Observable<Message[]>;
   constructor(private userService: UserDataService, private afs: AngularFirestore) {
     this.chatsCollections = this.afs.collection('chats');
-    this.getCurrentUser();
+    this.getCurrentUser().catch((err) => console.log('Error: ', err));
   }
   async getCurrentUser(){
     this.currentUser = await this.userService.getCurrentUser();
@@ -33,42 +33,9 @@ export class ChatService {
   getAllChats(){
     return this.afs.collection('chats').snapshotChanges();
   }
-  async getChatById(id: string){
-    const docRef = this.chatsCollections.doc(id).ref;
-    const docSnap = await getDoc(docRef);
-    return await docSnap.data() as ChatGroup;
-  }
-  async getCurrentUserChats(){
-    this.currentUser = await this.userService.getCurrentUser();
-    const allChats: ChatGroup[] =[];
-    const db = firebase.firestore();
-    console.log('Id: ', this.currentUser.userId);
-    // this.afs.collection('chats', ref => ref.where('users', 'array-contains', this.currentUser.userId)).snapshotChanges();
-    // return this.afs.collection('chats', ref => ref.where('users', 'array-contains', this.currentUser.userId)).snapshotChanges();
-    // await db.collection('chats')
-    //   .where('users', 'array-contains', this.currentUser.userId)
-    //   .get().then(snap => {
-    //     snap.forEach(doc => {
-    //       allChats.push(doc as ChatGroup);
-    //     });
-    //   });
-    // return allChats;
-    let userChats: ChatGroup[] = [];
-    await this.afs.collection('chats', ref => ref.where('users', 'array-contains', this.currentUser.userId)).snapshotChanges()
-      .subscribe((res) => {
-        console.log('res: ', res);
-        userChats = res.map((e) => ({
-          id: e.payload.doc.id,
-          ...e.payload.doc.data() as ChatGroup,
-        }));
-      });
-    console.log('res Chats: ', JSON.stringify(userChats));
-    return userChats;
-  }
   async getChatGroupByUsersId(id: string){
     const user1: ChatGroup[] = [];
     const user2: ChatGroup[] = [];
-    let result: ChatGroup[] = [];
     const db = firebase.firestore();
     // Looking for Chats containing chat user
     await db.collection('chats')
@@ -87,15 +54,12 @@ export class ChatService {
         });
       });
     // Looking for a match
-    result = user1.filter(u1 => user2.some(u2 => u1.id === u2.id));
+    const result = user1.filter(u1 => user2.some(u2 => u1.id === u2.id));
     if(result.length === 1){
       return this.groupChat = result[0];
     } else {
       return this.groupChat = null;
     }
-  }
-  getAllChatsFromUser(){
-    return this.afs.collection('chats', ref => ref.where('users', 'array-contains', this.currentUser.userId)).snapshotChanges();
   }
   async createChat(user: User){
     await this.getChatGroupByUsersId(user.userId);
@@ -120,8 +84,6 @@ export class ChatService {
     const chatUser = JSON.parse(JSON.stringify(user));
     await db.doc(chatId).update({users: arrayUnion(currentUser.userId)});
     await db.doc(chatId).update({users: arrayUnion(chatUser.userId)});
-    // db.doc(chatId).collection('users').doc(currentUser.userId).set(currentUser);
-    // db.doc(chatId).collection('users').doc(chatUser.userId).set(chatUser);
   }
   async addChatMessage(msg: Message){
     msg.id = this.afs.createId();

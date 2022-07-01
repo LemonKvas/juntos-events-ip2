@@ -12,7 +12,6 @@ import User from '../models/classes/user';
   styleUrls: ['./chat.page.scss'],
 })
 export class ChatPage implements OnInit {
-  pageTitle = 'Chat';
   newMsg = '';
   msg: Message;
   messages: Message[] = [];
@@ -20,21 +19,16 @@ export class ChatPage implements OnInit {
   chatGroupId = '';
   chatUser: User;
   currentUser: User;
-  currentUserId = '';
   allChats: ChatGroup[] = [];
   constructor(private chatService: ChatService, private userService: UserDataService,
               private route: ActivatedRoute, private router: Router) {
     this.chatGroupId = this.router.getCurrentNavigation().extras.state.id;
     this.getChatInfo(this.chatGroupId);
-    this.getCurrentUserData();
+    this.getChatUsers();
     this.getAllChats();
     this.getMessages();
   }
   ngOnInit() {
-  }
-  async getCurrentUserData(){
-    this.currentUser = await this.userService.getCurrentUser();
-    this.currentUserId = await this.userService.getCurrentUserID();
   }
   async getAllChats(){
     await this.chatService.getAllChats().subscribe((res) => {
@@ -46,21 +40,25 @@ export class ChatPage implements OnInit {
   }
   async getChatInfo(id: string){
     this.chatGroup = await this.chatService.getChatGroupById(id);
-    this.pageTitle = this.chatGroup.name;
   }
   async getChatUsers(){
-    await this.getChatInfo(this.chatGroupId);
-    this.currentUserId = await this.userService.getCurrentUserID();
+    this.currentUser = await this.userService.getCurrentUser();
+    // eslint-disable-next-line @typescript-eslint/prefer-for-of
+    for(let i = 0; i < this.chatGroup.users.length; ++i){
+      if(this.currentUser.userId !== this.chatGroup.users[i].userId){
+        return this.chatUser = this.chatGroup.users[i];
+      }
+    }
   }
   sendMessage(newMsg: string){
     this.msg = {
       chatId: this.chatGroupId,
-      creator: this.currentUserId,
+      creator: this.currentUser.userId,
       date: new Date(),
       id: '',
       message: newMsg,
     };
-    this.chatService.addChatMessage(this.msg);
+    this.chatService.addChatMessage(this.msg).catch((err) => console.log('Error: ', err));
     this.newMsg = '';
   }
   getMessages(){
