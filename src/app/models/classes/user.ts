@@ -4,6 +4,12 @@ import { Badge } from 'src/app/models/interfaces/badge';
 import userRoles from 'src/app/models/enums/userRoles';
 import { CreatedEvent } from '../interfaces/created-event';
 
+/**
+ * DE:
+ * Klasse um einen Nutzer zu repräsentieren.
+ * EN:
+ * Class to represent a user.
+ */
 export class User {
   userId: string;
   rights: userRoles;
@@ -27,6 +33,35 @@ export class User {
   socialPoints: number;
   badges?: Badge[];
 
+  /**
+   * DE:
+   * Setzt alle benötigten Parameter fest. Falls die optionalen Parameter nicht undefined sind,
+   * werden diese ebenfalls gespeichert.
+   * EN:
+   * Sets all required parameters. If the optional parameters are not undefined,
+   * they will be saved as well.
+   * @param userId
+   * @param email
+   * @param rights
+   * @param emailVerified
+   * @param socialPoints
+   * @param firstName
+   * @param lastName
+   * @param birthDate
+   * @param languages
+   * @param paymentUrl
+   * @param userName
+   * @param premium
+   * @param photoUrl
+   * @param bio
+   * @param friends
+   * @param socialMedia
+   * @param favoriteCreators
+   * @param feedback
+   * @param registeredEvents
+   * @param createdEvents
+   * @param badges
+   */
   constructor(
     userId: string,
     email: string,

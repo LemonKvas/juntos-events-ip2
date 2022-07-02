@@ -1,5 +1,11 @@
 import {CapacitorConfig} from '@capacitor/cli';
 
+/**
+ * DE:
+ * Capacitor Config Initialisierung.
+ * EN:
+ * Capacitor Config Initialization.
+ */
 const config: CapacitorConfig = {
   appId: 'com.juntos.events',
   appName: 'Juntos',
