@@ -1,8 +1,8 @@
-export enum friendButtonIndicator {
-    'befriend',
-    'unfriend',
-    'follow',
-    'unfollow'
+export enum FriendButtonIndicator {
+  'befriend',
+  'unfriend',
+  'follow',
+  'unfollow'
 }
 
-export default friendButtonIndicator;
+export default FriendButtonIndicator;

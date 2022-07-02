@@ -35,7 +35,7 @@
           <ion-col size="5">
             <!-- (click) on event name or photo to go to the detail page of the event -->
             <div (click)="eventDetailsState(event.eventId)">
-              <h1 >{{event.name}}</h1>
+              <h1>{{event.name}}</h1>
               <p>am {{event.eventDate | date: 'dd.MM.yyyy'}}</p>
               <p>um {{event.eventDate | date: 'H:mm'}} Uhr</p>
               <p class="event-address">

@@ -9,7 +9,7 @@ describe('FootermenuComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ FootermenuComponent ],
+      declarations: [FootermenuComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

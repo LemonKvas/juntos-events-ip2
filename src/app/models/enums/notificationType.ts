@@ -1,8 +1,8 @@
 export enum NotificationType {
-    JuntosMessage,
-    EventCreated,
-    EventJoined,
-    FriendRequest
+  juntosMessage,
+  eventCreated,
+  eventJoined,
+  friendRequest
 }
 
 export default NotificationType;

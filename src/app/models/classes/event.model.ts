@@ -1,4 +1,4 @@
-export class Event{
+export class Event {
   name?: string;
   photoURLs?: string[];
   creationDate?: Date;
@@ -13,10 +13,21 @@ export class Event{
   eventId?: string;
   creatorId?: string;
 
-
-  constructor(name?: string, photoURLs?: string[], creationDate?: Date, eventDate?: Date,
-              price?: string, bio?: string, categories?: string[], participants?: string[], maxParticipants?: number,
-              address?: object, publishStatus?: boolean, eventId?: string, creatorId?: string) {
+  constructor(
+    name?: string,
+    photoURLs?: string[],
+    creationDate?: Date,
+    eventDate?: Date,
+    price?: string,
+    bio?: string,
+    categories?: string[],
+    participants?: string[],
+    maxParticipants?: number,
+    address?: object,
+    publishStatus?: boolean,
+    eventId?: string,
+    creatorId?: string
+  ) {
     this.name = name;
     this.photoURLs = photoURLs;
     this.creationDate = creationDate;

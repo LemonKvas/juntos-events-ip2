@@ -21,8 +21,12 @@
         "prettier"
       ],
       "rules": {
-        "no-console": "warn",
-        "prettier/prettier": "error",
+        "no-console": ["warn"],
+        "no-underscore-dangle": ["warn"],
+        "prettier/prettier": ["error"],
+        "no-shadow": "off",
+        "@typescript-eslint/no-shadow": ["error"],
+
         "@angular-eslint/component-class-suffix": [
           "error",
           {
