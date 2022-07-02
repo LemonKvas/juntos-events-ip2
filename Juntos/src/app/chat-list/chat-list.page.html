@@ -21,25 +21,12 @@
   <!-- Chats Segment -->
   <div class="segment-divs" *ngIf="segment === 'chats'">
     <ion-row *ngFor="let chat of chats">
-      <ion-item button (click)="openChat(chat.id)">
-        <ion-avatar slot="start">
-          <ion-img></ion-img>
-        </ion-avatar>
-        <ion-label>
-          <!-- Get username from chat.users -->
-          <h2>Username</h2>
-        </ion-label>
-        <ion-buttons>
-          <ion-button>
-            <ion-icon name="trash-outline" size="small"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-      </ion-item>
-      <ion-item class="chat-item">
+      <ion-item button="true" (click)="openChat(chat.id)" class="chat-item">
         <ion-avatar slot="start">
           <ion-img src="{{chat.photo[0] | fireStorageImg: '/avatars' | async }}"></ion-img>
         </ion-avatar>
         <ion-label>
+          <!-- Get username from chat.users -->
           <h2>{{chat.name}}</h2>
         </ion-label>
         <ion-buttons>

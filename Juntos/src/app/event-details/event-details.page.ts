@@ -26,8 +26,8 @@ export class EventDetailsPage implements OnInit {
               private userService: UserDataService, public alertService: AlertService,
               private chatService: ChatService) {
     this.event = this.router.getCurrentNavigation().extras.state;
-    this.getCreatorData();
-    this.getUserlist();
+    this.getCreatorData().catch((err) => console.log('Error: ', err));
+    this.getUserlist().catch((err) => console.log('Error: ', err));
   }
   async ngOnInit() {
     this.segment = 'information';

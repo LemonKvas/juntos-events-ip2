@@ -54,21 +54,6 @@ export class EventCreatePage implements OnInit {
               private userService: UserDataService) {
     this.today = new Date();
     this.getCreatorData();
-    this.event = new Event(
-      this.eventName,
-      this.photoURLs,
-      this.creationDate,
-      this.eventDate,
-      this.price,
-      this.eventBio,
-      this.categories,
-      this.participants,
-      this.maxParticipants,
-      this.address,
-      this.publishStatus,
-      null,
-      this.creatorId,
-    );
     this.createEventForm = new FormGroup({
       eventName: new FormControl(),
       photoURLs: new FormControl(),

@@ -19,17 +19,19 @@
 <ion-content>
   <ion-grid>
     <ion-list lines="full" class="ion-align-items-center">
-      <ion-row class="ion-justify-content-center" size="12" *ngFor="let event of events; let i = index">
+      <ion-row class="ion-justify-content-center" *ngFor="let event of events; let i = index">
         <ion-item>
           <ion-col size="4">
             <!-- get Photo through Photo Service by photoID or url -->
             <div class="img-div">
-              <ion-img src="{{event.photoURLs[0] | fireStorageImg: '/event-photos' | async }}"></ion-img>
+              <ion-img button src="{{event.photoURLs[0] | fireStorageImg: '/event-photos' | async }}"
+                       (click)="eventDetailsState(event.eventId)">
+              </ion-img>
             </div>
           </ion-col>
           <ion-col size="6">
             <!-- (click) on event name or photo to go to the detail page of the event -->
-            <div text-wrap>
+            <div>
               <h1 button (click)="eventDetailsState(event.eventId)">{{event.name}}</h1>
               <p>{{event.eventDate | date: 'dd.MM.yyyy'}} um {{event.eventDate | date: 'H:mm'}}</p>
               <p>{{event.address['street']}} {{event.address['house']}}, <br>
