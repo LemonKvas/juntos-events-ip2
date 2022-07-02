@@ -3,8 +3,20 @@ import { IonicSlides } from '@ionic/angular';
 import { EventService } from 'src/app/services/event.service';
 import SwiperCore, { Autoplay, EffectFade, Navigation, SwiperOptions } from 'swiper';
 
+/**
+ * DE:
+ * Initialisiert die Module für das Karussell.
+ * EN:
+ * Initializes the modules for the carousel.
+ */
 SwiperCore.use([EffectFade, IonicSlides, Autoplay, Navigation]);
 
+/**
+ * DE:
+ * Komponente um ein Karussell mit allen promoteten Events anzuzeigen.
+ * EN:
+ * Component to display a carousel with all promoted events.
+ */
 @Component({
   selector: 'app-carousel',
   templateUrl: './carousel.component.html',
@@ -12,11 +24,20 @@ SwiperCore.use([EffectFade, IonicSlides, Autoplay, Navigation]);
   encapsulation: ViewEncapsulation.None
 })
 export class CarouselComponent implements OnInit {
+  /**
+   * DE:
+   * Output um die EventID an die Eltern Komponente zurückzugeben.
+   * EN:
+   * Output to return the EventID to the parent component.
+   */
   @Output() carouselNavigate = new EventEmitter<string>();
   slides?;
 
   /**
+   * DE:
    * Konfigurationen für das Karussell.
+   * EN:
+   * Configurations for the carousel.
    */
   config: SwiperOptions = {
     /* eslint-disable */
@@ -59,6 +80,9 @@ export class CarouselComponent implements OnInit {
     }
   };
 
+  /**
+   * @param eventService
+   */
   constructor(private eventService: EventService) {}
 
   /**
@@ -76,7 +100,10 @@ export class CarouselComponent implements OnInit {
   }
 
   /**
-   * Gibt die Event Id an die Eltern Komponente zurück um auf das jeweilige Event zugreifen zu können
+   * DE:
+   * Gibt die Event Id an die Eltern Komponente zurück um auf das jeweilige Event zugreifen zu können.
+   * EN:
+   * Returns the event id to the parent component to access the respective event.
    * @param eventId
    */
   navigate(eventId: any) {
