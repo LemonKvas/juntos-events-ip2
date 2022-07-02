@@ -175,7 +175,6 @@ export class AuthService {
       this.afAuth
         .signInWithEmailAndPassword(email, password)
         .then((x) => {
-          console.log(email, password,x);
           this.router.navigate(['event-list']);
         })
         .catch(() => {

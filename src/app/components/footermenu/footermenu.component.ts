@@ -12,7 +12,11 @@ export class FootermenuComponent implements OnInit {
   currentPage: string;
   currentUser: string;
 
-  constructor(public router: Router, public userData: UserDataService, private alertService: AlertService) {
+  constructor(
+    public router: Router,
+    public userData: UserDataService,
+    private alertService: AlertService
+  ) {
     this.currentPage = this.router.url;
   }
 
@@ -39,12 +43,12 @@ export class FootermenuComponent implements OnInit {
    * an alert will be displayed informing the user that he/she has to log in first.
    */
   async navigateToUserProfile() {
-    if(this.currentUser) {
-      await this.router.navigate(['profile', this.currentUser])
+    if (this.currentUser) {
+      await this.router.navigate(['profile', this.currentUser]);
     } else {
       this.currentUser = await this.userData.getCurrentUserID();
-      if(this.currentUser) {
-        await this.router.navigate(['profile', this.currentUser])
+      if (this.currentUser) {
+        await this.router.navigate(['profile', this.currentUser]);
       } else {
         await this.alertService.plsSignInAlert();
       }

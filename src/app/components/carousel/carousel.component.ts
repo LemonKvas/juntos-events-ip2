@@ -61,7 +61,6 @@ export class CarouselComponent implements OnInit {
 
   constructor(private eventService: EventService) {}
 
-
   /**
    * DE:
    * Rufe mit Hilfe des Event Services ein Observable für alle promoteten Events auf
@@ -72,7 +71,7 @@ export class CarouselComponent implements OnInit {
    */
   ngOnInit() {
     this.eventService.getPromotedEvents().subscribe((evs) => {
-      this.slides = evs.filter((ev) => ev["publishStatus"] == true);
+      this.slides = evs.filter((ev) => ev['publishStatus'] == true);
     });
   }
 

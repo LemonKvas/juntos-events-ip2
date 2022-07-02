@@ -3,12 +3,7 @@ import { UserDataService } from 'src/app/services/user-data.service';
 import { Notification } from 'src/app/models/classes/notification.model';
 import { Observable } from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import {
-  arrayRemove,
-  arrayUnion,
-  documentId,
-  getDocs,
-} from '@angular/fire/firestore';
+import { arrayRemove, arrayUnion, documentId, getDocs } from '@angular/fire/firestore';
 import { PopoverController } from '@ionic/angular';
 import { NotificationsComponent } from 'src/app/components/notifications/notifications.component';
 import { AlertService } from './alert.service';
