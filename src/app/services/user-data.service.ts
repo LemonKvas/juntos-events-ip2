@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/compat/firestore';
+import { Injectable } from '@angular/core';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import firebase from 'firebase/compat/app';
 import User from '../models/classes/user';
-import {getDoc} from 'firebase/firestore';
+import { getDoc } from 'firebase/firestore';
 import UserCredential = firebase.auth.UserCredential;
-import {AlertService} from 'src/app/services/alert.service';
-import {arrayUnion} from '@angular/fire/firestore';
+import { AlertService } from 'src/app/services/alert.service';
+import { arrayUnion } from '@angular/fire/firestore';
 
 /**
  * EN:
@@ -18,7 +18,6 @@ import {arrayUnion} from '@angular/fire/firestore';
   providedIn: 'root'
 })
 export class UserDataService {
-
   private readonly userCollection!: AngularFirestoreCollection;
 
   constructor(private afs: AngularFirestore, public alertService: AlertService) {
@@ -47,7 +46,7 @@ export class UserDataService {
   async getUserById(userId: string) {
     const docRef = this.userCollection.doc(userId).ref;
     const docSnap = await getDoc(docRef);
-    return <User>docSnap.data();
+    return docSnap.data() as User;
   }
 
   /**
@@ -69,7 +68,7 @@ export class UserDataService {
    * @returns UserData
    *
    */
-  getUserById_Observable(userId: string) {
+  getUserByIdAsObservable(userId: string) {
     return this.userCollection.doc(userId).valueChanges();
   }
 
@@ -105,7 +104,6 @@ export class UserDataService {
     }
   }
 
-
   /**
    * DE:
    * Gibt die Nutzerrechte, welche im lokalen Speicher gesichert sind in Form eines Promise zurück.
@@ -116,12 +114,11 @@ export class UserDataService {
     try {
       const userData = await this.getCurrentUser();
       return userData.rights;
-    } catch(e) {
+    } catch (e) {
       console.log(e.message);
       return undefined;
     }
   }
-
 
   /**
    * DE:
@@ -140,23 +137,34 @@ export class UserDataService {
    */
   async createNewUserInFirestore(userCredential: UserCredential | any, userType: string | number) {
     let user: User;
-    if (userCredential.additionalUserInfo.providerId == 'google.com') {
-      user = new User(String(userCredential.user.uid), userCredential.additionalUserInfo.profile.email || 'Please contact Juntos', Number(userType),
-          userCredential.additionalUserInfo.profile.verified_email || false, undefined,
-          userCredential.additionalUserInfo.profile.given_name || undefined,
-          userCredential.additionalUserInfo.profile.family_name || undefined,
-          undefined, undefined, undefined,
-          userCredential.additionalUserInfo.profile.name || undefined,
-          undefined,
-          userCredential.additionalUserInfo.profile.picture || undefined
+    if (userCredential.additionalUserInfo.providerId === 'google.com') {
+      user = new User(
+        String(userCredential.user.uid),
+        userCredential.additionalUserInfo.profile.email || 'Please contact Juntos',
+        Number(userType),
+        userCredential.additionalUserInfo.profile.verified_email || false,
+        undefined,
+        userCredential.additionalUserInfo.profile.given_name || undefined,
+        userCredential.additionalUserInfo.profile.family_name || undefined,
+        undefined,
+        undefined,
+        undefined,
+        userCredential.additionalUserInfo.profile.name || undefined,
+        undefined,
+        userCredential.additionalUserInfo.profile.picture || undefined
       );
     } else {
-      user = new User(String(userCredential.user.uid), userCredential.user._delegate.email || 'Please contact Juntos', Number(userType));
+      user = new User(
+        String(userCredential.user.uid),
+        userCredential.user._delegate.email || 'Please contact Juntos',
+        Number(userType)
+      );
     }
     const data = JSON.parse(JSON.stringify(user));
-    await this.userCollection.doc(userCredential.user.uid).set(data)
-        .catch((err) => console.log(err));
-
+    await this.userCollection
+      .doc(userCredential.user.uid)
+      .set(data)
+      .catch((err) => console.log(err));
   }
 
   /**
@@ -173,14 +181,18 @@ export class UserDataService {
     const user = await this.getCurrentUser();
     const userId = user.userId;
 
-    db.collection('user').doc(userId).update(data).then(() => {
-
-    }).catch((e) => {
-      this.alertService.basicAlert('Bearbeiten des Profils fehlgeschlagen', 'Bitte versuchen Sie es später noch mal', ['OK']);
-      console.log('error');
-      console.log(e);
-    });
-
+    db.collection('user')
+      .doc(userId)
+      .update(data)
+      .catch((e) => {
+        this.alertService.basicAlert(
+          'Bearbeiten des Profils fehlgeschlagen',
+          'Bitte versuchen Sie es später noch mal',
+          ['OK']
+        );
+        console.log('error');
+        console.log(e);
+      });
   }
 
   /**
@@ -193,10 +205,10 @@ export class UserDataService {
    *
    * @param event
    */
-  async addRegisteredEvent(event: any){
+  async addRegisteredEvent(event: any) {
     const user = await this.getCurrentUser();
     const userId = user.userId;
-    await this.userCollection.doc(userId).update({registeredEvents: arrayUnion(event)});
+    await this.userCollection.doc(userId).update({ registeredEvents: arrayUnion(event) });
   }
 
   /**
@@ -208,12 +220,11 @@ export class UserDataService {
    *
    * @param event
    */
-  async addCreatedEvent(event: any){
+  async addCreatedEvent(event: any) {
     const user = await this.getCurrentUser();
     const userId = user.userId;
-    await this.userCollection.doc(userId).update({createdEvents: arrayUnion(event)});
+    await this.userCollection.doc(userId).update({ createdEvents: arrayUnion(event) });
   }
-
 
   /**
    * DE:
@@ -222,7 +233,7 @@ export class UserDataService {
    * EN:
    * Returns an observable with all user data
    */
-  getAllUser(){
+  getAllUser() {
     return this.userCollection.valueChanges();
   }
 }

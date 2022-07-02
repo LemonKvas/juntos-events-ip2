@@ -9,7 +9,7 @@ describe('AdminDashboardPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminDashboardPage ],
+      declarations: [AdminDashboardPage],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

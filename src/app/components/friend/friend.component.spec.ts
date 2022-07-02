@@ -9,7 +9,7 @@ describe('FriendComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ FriendComponent ],
+      declarations: [FriendComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

@@ -9,7 +9,7 @@ describe('UserEventsModalComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserEventsModalComponent ],
+      declarations: [UserEventsModalComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
