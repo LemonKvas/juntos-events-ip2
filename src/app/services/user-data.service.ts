@@ -4,7 +4,6 @@ import firebase from 'firebase/compat/app';
 import User from '../models/classes/user';
 import {getDoc} from 'firebase/firestore';
 import UserCredential = firebase.auth.UserCredential;
-import {Router} from '@angular/router';
 import {AlertService} from 'src/app/services/alert.service';
 import {arrayUnion} from '@angular/fire/firestore';
 import {ChatGroup} from '../models/classes/chat-group';
@@ -133,10 +132,10 @@ export class UserDataService {
     const db = firebase.firestore().collection('user');
     const currentUser = await this.getCurrentUser();
     const chatData = JSON.parse(JSON.stringify(chat));
-    // await db.doc(user.userId).update({chats: arrayUnion(chatData)});
-    // await db.doc(currentUser.userId).update({chats: arrayUnion(chatData)});
     await db.doc(currentUser.userId).collection('chats').doc(chat.id).set(chatData);
+    await db.doc(currentUser.userId).collection('chatPartners').doc(user.userId).set(user);
     await db.doc(user.userId).collection('chats').doc(chat.id).set(chatData);
+    await db.doc(user.userId).collection('chatPartners').doc(currentUser.userId).set(currentUser);
   }
   findChat(user: User, chat: ChatGroup){
     return this.afs.collection('user').doc(user.userId)

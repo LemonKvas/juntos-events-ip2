@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {ChatGroup} from 'src/app/models/classes/chat-group';
 import {ChatService} from 'src/app/services/chat.service';
 import {UserDataService} from 'src/app/services/user-data.service';
-import {NavigationExtras, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import User from '../../models/classes/user';
+import {AlertService} from '../../services/alert.service';
 
 @Component({
   selector: 'app-chat-list',
@@ -17,13 +18,12 @@ export class ChatListPage implements OnInit {
   friendsList: string[];
   chatUsers: Map<string, string> = new Map<string, string>();
   constructor(private chatService: ChatService, private userService: UserDataService,
-              private router: Router) {
+              private router: Router, private alertService: AlertService) {
   }
 
   async ngOnInit() {
     await this.getCurrentUserData();
     await this.getChats(this.currentUser.userId);
-    //await this.getChatUserList();
   }
   segmentChanged(event: any){
     console.log('Segment changed to ', event);
@@ -41,54 +41,15 @@ export class ChatListPage implements OnInit {
   /**
    * This method will fetch all document through getCurrentUserAllChats() from
    * chatService with given id and set value of local variable 'chats'.
-   *
-   * @example
-   * Call it with an id as string
-   * getChats('9zhr43q')
-   *
-   * @param id
    */
-  async getChats(id: string){
-    this.chatService.getCurrentUserAllChats(id).subscribe((res) => {
+  async getChats(userId: string){
+    this.chatService.getCurrentUserAllChats(userId).subscribe((res) => {
       this.chats = res.map((e) => ({
         id: e.payload.doc.id,
         ...e.payload.doc.data() as ChatGroup
       }));
     });
-    for(let entry of this.chats){
-      let userList: User[];
-      this.chatService.getUsersOfCurrentChat(entry.id).subscribe((res) => {
-        userList = res.map((e) => ({
-          id: e.payload.doc.id,
-          ...e.payload.doc.data() as User
-        }));
-      });
-      for(let user of userList){
-        if(user.userId !== this.currentUser.userId){
-          const userFullName = user.firstName + ' ' + user.lastName;
-          this.chatUsers.set(entry.id, userFullName);
-        }
-      }
-    }
   }
-  // async getChatUserList(){
-  //   for(let entry of this.chats){
-  //     let userList: User[];
-  //     this.chatService.getUsersOfCurrentChat(entry.id).subscribe((res) => {
-  //       userList = res.map((e) => ({
-  //         id: e.payload.doc.id,
-  //         ...e.payload.doc.data() as User
-  //       }));
-  //     });
-  //     for(let user of userList){
-  //       if(user.userId !== this.currentUser.userId){
-  //         const userFullName = user.firstName + ' ' + user.lastName;
-  //         this.chatUsers.set(entry.id, userFullName);
-  //       }
-  //     }
-  //   }
-  //   console.log('Chat users: ', this.chatUsers);
-  // }
 
   /**
    * This method will navigate user to the page 'chat' with given id to open
@@ -102,5 +63,34 @@ export class ChatListPage implements OnInit {
    */
   async openChat(chatId: string){
     await this.router.navigate(['chat', chatId]);
+  }
+
+  /**
+   * This function will delete chat with given chat id by calling deleteChat() from
+   * chatService.
+   *
+   * @example
+   * Call it with an id as string
+   * deleteChat('z48hwg1t')
+   *
+   * @param chatId
+   */
+  async deleteChat(chatId: string){
+    await this.alertService.basicAlert(
+      '',
+      'Sind Sie sicher, dass Sie diesen Chat löschen wollen?',
+        [
+          {
+            text: 'Ja',
+            handler: () => {
+              this.chatService.deleteChat(chatId);
+            }
+          },
+          {
+            text: 'Abbrechen',
+            role: 'cancel',
+          }
+        ],
+    );
   }
 }

@@ -21,19 +21,35 @@
   <!-- Chats Segment -->
   <div class="segment-divs" *ngIf="segment === 'chats'">
     <ion-row *ngFor="let chat of chats">
-      <ion-item button="true" (click)="openChat(chat.id)" class="chat-item">
-        <ion-avatar slot="start">
-          <ion-img src="{{chat.photo | fireStorageImg: '/avatars' | async }}"></ion-img>
-        </ion-avatar>
-        <ion-label>
-          <!-- Get username from chat.users -->
-          <h2>{{chatUsers.get(chat.id)}}</h2>
-        </ion-label>
-        <ion-buttons>
-          <ion-button>
-            <ion-icon name="trash-outline" size="small"></ion-icon>
-          </ion-button>
-        </ion-buttons>
+      <ion-item *ngIf="chats.length === 0">
+        <ion-row class="ion-text-center">
+          <p>Du hast keine offenen Chats.</p>
+        </ion-row>
+      </ion-item>
+      <ion-item button="true" class="chat-item" *ngIf="chats.length !== 0">
+        <ion-col size="3" (click)="openChat(chat.id)">
+          <ion-row class="ion-justify-content-start">
+            <ion-avatar>
+              <!-- Get photo of chat user  -->
+              <ion-img src="{{chat.photo | fireStorageImg: '/avatars' | async }}"></ion-img>
+            </ion-avatar>
+          </ion-row>
+        </ion-col>
+        <ion-col size="6" (click)="openChat(chat.id)">
+          <ion-row class="ion-text-start">
+            <!-- Get name of chat user -->
+            <p>Username</p>
+          </ion-row>
+        </ion-col>
+        <ion-col size="3">
+          <ion-row class="ion-justify-content-end">
+            <ion-buttons>
+              <ion-button (click)="deleteChat(chat.id)">
+                <ion-icon name="trash-outline" size="small"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-row>
+        </ion-col>
       </ion-item>
     </ion-row>
   </div>

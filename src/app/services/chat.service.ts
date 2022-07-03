@@ -192,6 +192,7 @@ export class ChatService {
       .collection('chats', ref => ref.orderBy('date', 'asc')).snapshotChanges();
   }
 
+  getChatPartners(){}
   /**
    * This function return the subcollection 'users' from the firebase collection 'chats' with the
    * given chat id.
@@ -204,9 +205,9 @@ export class ChatService {
    * @return users[]
    */
   getUsersOfCurrentChat(id: string){
-    return this.afs.collection('chats').doc(id)
-      .collection('users').snapshotChanges();
+    return this.afs.collection('chats').doc(id).collection('users').snapshotChanges();
   }
+
   /**
    * This function will delete a document from the firestore collection 'chats' by the given id.
    *
@@ -217,6 +218,6 @@ export class ChatService {
    * @param id
    */
   async deleteChat(id: string){
-    await this.chatsCollections.doc(id).delete();
+    await this.afs.collection('user').doc(this.currentUser.userId).collection('chats').doc(id).delete();
   }
 }
