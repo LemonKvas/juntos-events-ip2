@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>title</ion-title>
+    <ion-buttons slot="end">
+      <ion-icon size="large" style="zoom:0.8" (click)="dismissModal()" name="close-outline"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+  <ion-content>
+    <cdk-virtual-scroll-viewport itemSize="46" minBufferPx="100" maxBufferPx="300" class="ion-content-scroll-host">
+      <ion-list *ngIf="events else loading">
+        <ion-item *cdkVirtualFor="let event of events">
+          <ion-avatar *ngIf="event.photoURLs">
+              <ion-img alt="{{event.name}} image" src="{{event.photoURLs[0] | fireStorageImg: '/event-photos' | async}}"></ion-img>
+          </ion-avatar>
+          <ion-icon slot="end" size="large" style="zoom:0.8" name="trash-outline" (click)="deleteEvent(event)"></ion-icon>
+          <ion-label>{{event.name}}</ion-label>
+          <ion-label class="ion-text-wrap">
+            ID: {{event.eventId}}
+            Datum: {{event.eventDate | date: 'd.MM.yy, h:mm'}}
+            Status: <span *ngIf="event.promoted">wird promoted</span> <span *ngIf="event.promoted && event.publishStatus">|</span> <span *ngIf="event.publishStatus else notPublished">wurde veröffentlicht</span>
+            <ng-template #notPublished>nicht veröffentlicht</ng-template>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </cdk-virtual-scroll-viewport>
+  </ion-content>
+
+<ng-template #loading>
+  <ion-spinner style="margin: 50%; zoom: 0.8" name="bubbles"></ion-spinner>
+</ng-template>
+<!-- Modal End -->
