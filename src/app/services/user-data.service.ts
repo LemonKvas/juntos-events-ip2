@@ -11,7 +11,6 @@ import { arrayUnion } from '@angular/fire/firestore';
  * EN:
  * Service to manage user data in local storage and firestore
  * DE:
- *
  */
 
 @Injectable({

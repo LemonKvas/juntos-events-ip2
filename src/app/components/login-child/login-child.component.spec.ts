@@ -6,9 +6,13 @@ import { AuthService } from 'src/app/services/auth.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';
+import {Router} from "@angular/router";
+import {of} from "rxjs";
 
 export const authStub: any = {
-  authState: {},
+  authState: of({
+    uid: 'id1'
+  }),
   auth: {
     signInWithEmailAndPassword: () => Promise.resolve(),
     signInWithPopup: () => Promise.resolve()
@@ -27,7 +31,8 @@ describe('LoginChildComponent', () => {
       providers: [
         AuthService,
         { provide: AngularFireAuth, useValue: authStub },
-        { provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig }
+        { provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig },
+        { provide: Router, useClass: class { navigate = jasmine.createSpy("navigate");}}
       ]
     }).compileComponents();
 

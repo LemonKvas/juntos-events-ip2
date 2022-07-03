@@ -18,7 +18,7 @@ export class EventItemComponent {
    * @ignore
    */
   constructor() {
-    this.onResize(undefined);
+    this.onResize();
   }
   /**
    * @ignore
