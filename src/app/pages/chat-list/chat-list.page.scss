@@ -1,31 +1,55 @@
 ion-title {
   font-family: "Yeseva One", cursive;
 }
-ion-content {
-  .tabs {
-    margin-top: 20px;
-    font-family: 'Signika Negative', sans-serif;
-    ion-segment {
-      --background: none;
-      ion-segment-button {
-        font-size: 1rem;
-        --border-width: 0;
-        --padding-start: 8px !important;
-        --padding-bottom: 3px !important;
-        --padding-end: 8px !important;
-        --padding-top: 3px !important;
-        --background-checked: #ff8766;
-        --indicator-color: transparent !important;
-        --color-checked: #ffffff;
-        font-weight: bold;
-        border-radius: 15px;
+//Mobile Version
+@media screen and (max-width: 600px) {
+  ion-content {
+    .tabs {
+      margin-top: 20px;
+      font-family: 'Signika Negative', sans-serif;
+      ion-segment {
+        --background: none;
+        ion-segment-button {
+          font-size: 1rem;
+          --border-width: 0;
+          --padding-start: 8px !important;
+          --padding-bottom: 3px !important;
+          --padding-end: 8px !important;
+          --padding-top: 3px !important;
+          --background-checked: #ff8766;
+          --indicator-color: transparent !important;
+          --color-checked: #ffffff;
+          font-weight: bold;
+          border-radius: 15px;
+        }
       }
     }
+    ion-row {
+      justify-content: center;
+      margin-bottom: 15px;
+    }
+    ion-item {
+      width: 80%;
+    }
   }
+}
+//Desktop Version
+@media screen and (min-width: 610px) {
   ion-row {
     justify-content: center;
+    margin-bottom: 15px;
   }
   ion-item {
-    width: 80%;
+    width: 50%;
+  }
+}
+//Desktop Version
+@media screen and (min-width: 610px) {
+  ion-row {
+    justify-content: center;
+    margin-bottom: 15px;
+  }
+  ion-item {
+    width: 70%;
   }
 }

@@ -23,7 +23,7 @@ export class ChatService {
   }
 
   /**
-   * This method will set value of the variable currentUser by calling getCurrentUser()
+   * This function will set value of the variable currentUser by calling getCurrentUser()
    * from userService.
    */
   async getCurrentUser(){
@@ -31,10 +31,10 @@ export class ChatService {
   };
 
   /**
-   * This method will return chat data from firestore collection 'chats' by given id.
+   * This function will return chat data from firestore collection 'chats' by given chat id.
    *
    * @example
-   * Call it with an id as string
+   * Call it with a chat id as a string
    * getChatGroupById('j894g5')
    *
    * @param id
@@ -47,10 +47,10 @@ export class ChatService {
     return docSnap.data() as ChatGroup;
   }
   /**
-   * This method returns chat information between two users by the given user id.
+   * This function returns chat information between two users by the given user id.
    * Collection 'chats' will be filtered by the users[] containing the given id
    * and the current user id. Both arrays will be compared and a matched chat
-   * group will be returned.
+   * group data will be returned.
    *
    * @example
    * Call it with a user id as string
@@ -98,7 +98,7 @@ export class ChatService {
    * Afterwards addChat() from userService will be called to add chat data into
    * both user data.
    *
-   * This method will return data of the new created chat or of existing chat.
+   * This method will return data of the new created chat or of an existing chat.
    *
    * @example
    * Call it with a user object
@@ -125,10 +125,10 @@ export class ChatService {
   }
 
   /**
-   * This method will update the users[] of chat by given id with the given user id and current user id.
+   * This function will update the users[] of chat by given id with the given user id and current user id.
    *
    * @example
-   * Call it with an id as string and a user object
+   * Call it with an chat id as a string and a user object
    * addUserToChat('9z4h32', user)
    *
    * @param chatId
@@ -145,7 +145,7 @@ export class ChatService {
   }
 
   /**
-   * This method will add given data of type 'Message' to the firebase collection 'chats'.
+   * This function will add given data of type 'Message' to the firebase collection 'chats'.
    *
    * @example
    * Call it with an object of type 'Message'
@@ -162,62 +162,37 @@ export class ChatService {
   }
 
   /**
-   * This method will return all documents from the subcollection 'messages' by the given id of the parent
+   * This function will return all documents from the sub-collection 'messages' by the given id of the parent
    * collection 'chats' and ordered the data ascending by field value 'date'.
    *
    * @example
-   * Call it with an id as string
+   * Call it with a chat id as a string
    * getMessages('h89t43')
    *
-   * @param id
+   * @param chatId
    * @return messages[]
    */
-  getMessages(id: string){
-    return this.afs.collection('chats').doc(id).collection('messages', ref => ref.orderBy('date', 'asc')).snapshotChanges();
+  getMessages(chatId: string){
+    return this.afs.collection('chats').doc(chatId).collection('messages', ref => ref.orderBy('date', 'asc')).snapshotChanges();
   }
 
   /**
-   * This function will return all documents from the subcollection 'chats' by the given id of the parent
-   * collection 'user' and ordered the data ascending by field value 'date'.
+   * This function will delete a document from the firestore collection 'chats' by the given chat id
+   * and also delete both users from each other sub-collection 'chatPartners'.
    *
    * @example
-   * Call it with an id as string
-   * getCurrentUserAllChats('72grt4')
+   * Call it with a chat id and a user id, both as a string
+   * deleteChat('u89b2q','7gh4j92')
    *
-   * @param id
-   * @return chats[]
+   * @param chatId
+   * @param userId
    */
-  getCurrentUserAllChats(id: string){
-    return this.afs.collection('user').doc(id)
-      .collection('chats', ref => ref.orderBy('date', 'asc')).snapshotChanges();
-  }
-
-  getChatPartners(){}
-  /**
-   * This function return the subcollection 'users' from the firebase collection 'chats' with the
-   * given chat id.
-   *
-   * @example
-   * Call it with an id as string
-   * getUsersOfCurrentChat('8z2g4er')
-   *
-   * @param id
-   * @return users[]
-   */
-  getUsersOfCurrentChat(id: string){
-    return this.afs.collection('chats').doc(id).collection('users').snapshotChanges();
-  }
-
-  /**
-   * This function will delete a document from the firestore collection 'chats' by the given id.
-   *
-   * @example
-   * Call it with an id as string
-   * deleteChat('u89b2q')
-   *
-   * @param id
-   */
-  async deleteChat(id: string){
-    await this.afs.collection('user').doc(this.currentUser.userId).collection('chats').doc(id).delete();
+  async deleteChat(chatId: string, userId: string){
+    // Delete chat from chats collection
+    await this.chatsCollections.doc(chatId).delete();
+    // Delete chat from current user collection
+    await this.afs.collection('user').doc(this.currentUser.userId).collection('chatPartners').doc(userId).delete();
+    // Delete chat from chat partner
+    await this.afs.collection('user').doc(userId).collection('chatPartners').doc(this.currentUser.userId).delete();
   }
 }

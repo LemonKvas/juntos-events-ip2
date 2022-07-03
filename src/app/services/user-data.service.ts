@@ -104,6 +104,10 @@ export class UserDataService {
 
   }
 
+  /**
+   *
+   * @param event
+   */
   async addRegisteredEvent(event: any){
     const db = firebase.firestore().collection('user');
     const user = await this.getCurrentUser();
@@ -137,17 +141,7 @@ export class UserDataService {
     await db.doc(user.userId).collection('chats').doc(chat.id).set(chatData);
     await db.doc(user.userId).collection('chatPartners').doc(currentUser.userId).set(currentUser);
   }
-  findChat(user: User, chat: ChatGroup){
-    return this.afs.collection('user').doc(user.userId)
-      .collection('chats', ref => ref.where('id', '==', chat.id)).snapshotChanges();
-  }
-  getUserChats(id: string){
-    console.log('User Chats ID: ', id);
-    return this.userCollection.doc(id).collection('chats').snapshotChanges();
-  }
-  async getCurrentUserChats(){
-    const currentUserId = await this.getCurrentUserID();
-    console.log('User Chats ID: ', currentUserId);
-    return this.userCollection.doc(currentUserId).collection('chats').snapshotChanges();
+  getChatPartners(userId: string){
+    return this.userCollection.doc(userId).collection('chatPartners').snapshotChanges();
   }
 }
