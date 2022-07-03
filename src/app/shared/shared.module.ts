@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { FriendComponent } from 'src/app/components/friend/friend.component';
 import { UserEventsModalComponent } from 'src/app/components/user-events-modal/user-events-modal.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { EventItemComponent } from '../components/event-item/event-item.component';
 
 /**
  * Import of this Module is needed to provide declared Pipes and Components
@@ -19,7 +20,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     FootermenuComponent,
     NotificationsComponent,
     FriendComponent,
-    UserEventsModalComponent
+    UserEventsModalComponent,
+    EventItemComponent
   ],
   imports: [CommonModule, IonicModule, RouterModule, ScrollingModule],
   exports: [
@@ -27,7 +29,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     FootermenuComponent,
     NotificationsComponent,
     FriendComponent,
-    UserEventsModalComponent
+    UserEventsModalComponent,
+    EventItemComponent
   ]
 })
 export class SharedModule {}

@@ -33,8 +33,8 @@ export class EventListPage implements OnInit {
           text: msgText,
           dialogTitle: 'Event teilen'
         })
-            .then((v) => console.log('ok: ', v))
-            .catch((err) => console.log(err));
+          .then((v) => console.log('ok: ', v))
+          .catch((err) => console.log(err));
       } else {
         console.log('Error: Sharing not available!');
       }
