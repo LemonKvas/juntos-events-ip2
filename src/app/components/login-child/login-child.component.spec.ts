@@ -6,8 +6,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';
-import {Router} from "@angular/router";
-import {of} from "rxjs";
+import { Router } from '@angular/router';
+import { of } from 'rxjs';
 
 export const authStub: any = {
   authState: of({
@@ -32,7 +32,12 @@ describe('LoginChildComponent', () => {
         AuthService,
         { provide: AngularFireAuth, useValue: authStub },
         { provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig },
-        { provide: Router, useClass: class { navigate = jasmine.createSpy("navigate");}}
+        {
+          provide: Router,
+          useClass: class {
+            navigate = jasmine.createSpy('navigate');
+          }
+        }
       ]
     }).compileComponents();
 

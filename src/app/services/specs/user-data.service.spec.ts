@@ -4,8 +4,8 @@ import { UserDataService } from 'src/app/services/user-data.service';
 import User from 'src/app/models/classes/user';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { environment } from 'src/environments/environment';
-import {AngularFireModule, FIREBASE_OPTIONS} from '@angular/fire/compat';
-import {AngularFireDatabaseModule} from "@angular/fire/compat/database";
+import { AngularFireModule, FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 
 describe('UserDataService', () => {
   let service: UserDataService;
@@ -13,7 +13,6 @@ describe('UserDataService', () => {
   let getDoc: any;
 
   const returnResult = new User('tedstId', 'super@test.de');
-
 
   const userCollectionSpy = jasmine.createSpyObj('user', {
     doc: returnResult
@@ -32,7 +31,10 @@ describe('UserDataService', () => {
         { provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig },
         { provide: getDoc, useValue: mockGetDoc() }
       ],
-      imports: [AngularFireModule.initializeApp(environment.firebaseConfig), AngularFireDatabaseModule]
+      imports: [
+        AngularFireModule.initializeApp(environment.firebaseConfig),
+        AngularFireDatabaseModule
+      ]
     });
     service = TestBed.inject(UserDataService);
     fireStore = TestBed.inject(AngularFirestore);
