@@ -6021,8 +6021,8 @@ var NullProtoObjectViaIFrame = function () {
   return iframeDocument.F;
 };
 
-// Check for document.domain and active x support
-// No need to use active x approach when document.domain is not set
+// Check for document.domain and active carousel support
+// No need to use active carousel approach when document.domain is not set
 // see https://github.com/es-shims/es5-shim/issues/150
 // variation of https://github.com/kitcambridge/es5-shim/commit/4f738ac066346
 // avoid IE GC bug

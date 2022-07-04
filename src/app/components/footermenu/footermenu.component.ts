@@ -27,7 +27,6 @@ export class FootermenuComponent implements OnInit {
 
   async getUser() {
     this.currentUser = await this.userData.getCurrentUserID();
-    console.log(this.currentUser);
   }
 
   /**

@@ -275,7 +275,6 @@ export class EditUserPage implements OnInit {
 
   /**
    * Let the user upload an avatar, and updates the avatar
-   *
    * @param event
    */
   uploadAvatar(event) {
@@ -305,8 +304,7 @@ export class EditUserPage implements OnInit {
 
   /**
    * Deletes the photo in firestore storage with the given url
-   *
-   * @param url
+   * @param {string} url
    */
   deleteAvatar(url: string) {
     this.photoService.deletePhoto(url, 'avatars/');

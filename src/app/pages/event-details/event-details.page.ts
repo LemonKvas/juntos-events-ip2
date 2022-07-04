@@ -28,9 +28,13 @@ export class EventDetailsPage implements OnInit {
     private userService: UserDataService,
     public alertService: AlertService,
     private route: ActivatedRoute
+    //public geoService: GeoService
   ) {
     this.event = this.router.getCurrentNavigation().extras.state;
     this.getCreatorData();
+    //this.geoService.marker = undefined;
+    //this.geoService.camera = undefined;
+    //this.setMapParams();
     this.getUserlist();
   }
   async ngOnInit() {
@@ -71,4 +75,13 @@ export class EventDetailsPage implements OnInit {
       await this.alertService.partakeEvent(event);
     }
   }
+
+  /*
+  private setMapParams() {
+    //TODO: fix loading of map
+    if(this.event.long && this.event.lat){
+      this.geoService.setMarkerAndCameraForSingleEvent(this.event);
+    }
+  }
+   */
 }

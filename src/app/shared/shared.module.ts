@@ -9,19 +9,22 @@ import { FriendComponent } from 'src/app/components/friend/friend.component';
 import { UserEventsModalComponent } from 'src/app/components/user-events-modal/user-events-modal.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { EventItemComponent } from '../components/event-item/event-item.component';
+import { MapComponent } from 'src/app/components/map/map.component';
 
 /**
  * Import of this Module is needed to provide declared Pipes and Components
  */
 
 @NgModule({
+
   declarations: [
     FireStorageImgPipe,
     FootermenuComponent,
     NotificationsComponent,
     FriendComponent,
     UserEventsModalComponent,
-    EventItemComponent
+    EventItemComponent,
+      MapComponent
   ],
   imports: [CommonModule, IonicModule, RouterModule, ScrollingModule],
   exports: [
@@ -29,6 +32,7 @@ import { EventItemComponent } from '../components/event-item/event-item.componen
     FootermenuComponent,
     NotificationsComponent,
     FriendComponent,
+    MapComponent,
     UserEventsModalComponent,
     EventItemComponent
   ]

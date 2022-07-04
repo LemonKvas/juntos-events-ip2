@@ -51,6 +51,11 @@ const routes: Routes = [
     canActivate: [LoggedInGuard]
   },
   {
+    path: 'impressumUndDatenschutz',
+    loadChildren: () =>
+      import('./pages/impressum/impressum.module').then((m) => m.ImpressumPageModule)
+  },
+  {
     path: 'admin-dashboard',
     loadChildren: () =>
       import('./pages/admin-dashboard/admin-dashboard.module').then(

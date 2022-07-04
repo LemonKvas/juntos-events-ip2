@@ -3,6 +3,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/comp
 import { Event } from 'src/app/models/classes/event.model';
 import { Observable } from 'rxjs';
 import { arrayRemove, documentId } from '@angular/fire/firestore';
+
 import firebase from 'firebase/compat/app';
 import { CreatedEvent } from '../models/interfaces/created-event';
 import { arrayUnion } from '@angular/fire/firestore';
@@ -10,6 +11,8 @@ import { getDoc } from 'firebase/firestore';
 import { ModalController } from '@ionic/angular';
 import { UserEventsModalComponent } from 'src/app/components/user-events-modal/user-events-modal.component';
 import { UserDataService } from 'src/app/services/user-data.service';
+import { GeoService } from 'src/app/services/geo.service';
+import { NavigationExtras, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -24,11 +27,12 @@ export class EventService {
   constructor(
     private afs: AngularFirestore,
     public modalController: ModalController,
-    private userDataService: UserDataService
+    private userDataService: UserDataService,
+    private router: Router,
+    private geoService: GeoService
   ) {
     this.eventsCollections = this.afs.collection('events');
   }
-
   getAllEvents() {
     return this.afs.collection('events').snapshotChanges();
   }
@@ -46,10 +50,16 @@ export class EventService {
     event.eventId = this.afs.createId();
     this.eventId = event.eventId;
     const data = JSON.parse(JSON.stringify(event));
-    await this.eventsCollections
-      .doc(event.eventId)
-      .set(data)
-      .catch((err) => console.log(err));
+    await this.geoService.getLongLat(event.address).then(async (longlatOb) => {
+      await longlatOb.subscribe((longlat) => {
+        data.lat = longlat['latt'];
+        data.long = longlat['longt'];
+        this.eventsCollections
+          .doc(event.eventId)
+          .set(data)
+          .catch((err) => console.log(err));
+      });
+    });
   }
   async removeEvent(id: string) {
     await firebase.firestore().collection('events').doc(id).delete();
@@ -91,6 +101,32 @@ export class EventService {
   async addRegisteredUser(event: Event) {
     const db = firebase.firestore().collection('events');
     await db.doc(event.eventId).update({ participants: arrayUnion(...event.participants) });
+  }
+
+  async navigateToEvent(id) {
+    const event = await this.getEventById(id);
+    const navigationExtras: NavigationExtras = {
+      state: {
+        name: event.name,
+        photoURLs: event.photoURLs,
+        creationDate: event.creationDate,
+        eventDate: event.eventDate,
+        price: event.price,
+        bio: event.bio,
+        categories: event.categories,
+        participants: event.participants,
+        maxParticipants: event.maxParticipants,
+        address: event.address,
+        publishStatus: event.publishStatus,
+        eventId: event.eventId,
+        creatorId: event.creatorId
+      }
+    };
+    if (event.long && event.lat) {
+      navigationExtras.state.long = event.long;
+      navigationExtras.state.lat = event.lat;
+    }
+    await this.router.navigateByUrl(`event-details/${id}`, navigationExtras);
   }
 
   /**
