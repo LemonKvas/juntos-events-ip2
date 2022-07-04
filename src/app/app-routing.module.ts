@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { LoggedInGuard } from 'src/app/guards/logged-in.guard';
+import { RoleGuard } from 'src/app/guards/role.guard';
 
 const routes: Routes = [
   {
@@ -50,13 +51,18 @@ const routes: Routes = [
     canActivate: [LoggedInGuard]
   },
   {
-    path: 'test',
-    loadChildren: () => import('./pages/test/test.module').then((m) => m.TestPageModule)
-  },
-  {
     path: 'impressumUndDatenschutz',
     loadChildren: () =>
       import('./pages/impressum/impressum.module').then((m) => m.ImpressumPageModule)
+  },
+  {
+    path: 'admin-dashboard',
+    loadChildren: () =>
+      import('./pages/admin-dashboard/admin-dashboard.module').then(
+        (m) => m.AdminDashboardPageModule
+      ),
+    canActivate: [RoleGuard],
+    data: { role: 0 }
   }
 ];
 

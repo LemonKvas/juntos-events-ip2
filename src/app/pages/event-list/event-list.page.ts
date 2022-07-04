@@ -57,6 +57,7 @@ export class EventListPage implements OnInit {
   /* Navigate to Event Details */
   async eventDetailsState(id: string) {
     this.selectedEvent = await this.eventService.getEventById(id);
+    console.log(this.selectedEvent);
     const navigationExtras: NavigationExtras = {
       state: {
         name: this.selectedEvent.name,

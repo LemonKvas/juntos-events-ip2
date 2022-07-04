@@ -18,7 +18,7 @@
             <h2>Freundschaftsanfrage</h2>
           </ng-template>
           <p>{{ notification.content }}</p>
-          <ng-container *ngIf="notification.type == 3">
+          <ng-container *ngIf="notification.type === 3">
             <ion-button slot="start" (click)="acceptFriendRequest(notification)">
               <ion-icon size="large" style="zoom: 0.8" name="checkmark-outline"></ion-icon>
             </ion-button>

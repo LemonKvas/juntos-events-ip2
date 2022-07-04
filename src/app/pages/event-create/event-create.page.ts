@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Event } from 'src/app/models/classes/event.model';
@@ -16,7 +16,7 @@ import { CreatedEvent } from 'src/app/models/interfaces/created-event';
   templateUrl: './event-create.page.html',
   styleUrls: ['./event-create.page.scss']
 })
-export class EventCreatePage implements OnInit {
+export class EventCreatePage {
   @Input() event: Event;
   @ViewChild('eventName')
   @ViewChild(IonDatetime, { static: true })
@@ -89,7 +89,6 @@ export class EventCreatePage implements OnInit {
       selectedCategories: new FormControl()
     });
   }
-  ngOnInit() {}
   setInputValues() {
     this.address = {
       street: this.street,

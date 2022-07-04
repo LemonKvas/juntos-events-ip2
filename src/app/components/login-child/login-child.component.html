@@ -15,10 +15,10 @@
   </ion-row>
   <ion-row class="ion-justify-content-evenly">
     <ion-col size="6">
-      <ion-button expand="block" (click)="EmailRegister()">Registrieren</ion-button>
+      <ion-button expand="block" (click)="emailRegister()">Registrieren</ion-button>
     </ion-col>
     <ion-col size="6">
-      <ion-button expand="block" (click)="EmailLogin()">Anmelden</ion-button>
+      <ion-button expand="block" (click)="emailLogin()">Anmelden</ion-button>
     </ion-col>
   </ion-row>
   <ion-row class="ion-justify-content-center" style="height: 3rem; margin-top: -0.3rem">
@@ -31,7 +31,7 @@
       <ion-button
         *ngIf="deviceIndicator === 0; else googleMobile"
         expand="block"
-        (click)="GoogleLogin()"
+        (click)="googleLogin()"
         >Mit Google anmelden</ion-button
       >
     </ion-col>
@@ -42,7 +42,7 @@
         disabled="true"
         *ngIf="deviceIndicator === 0; else facebookMobile"
         expand="block"
-        (click)="FacebookLogin()"
+        (click)="facebookLogin()"
         >Mit Facebook anmelden</ion-button
       >
     </ion-col>
@@ -51,7 +51,7 @@
 </ion-grid>
 
 <ng-template #googleMobile>
-  <ion-button expand="block" (click)="GoogleMobileLogin()">Mit Google anmelden</ion-button>
+  <ion-button expand="block" (click)="googleMobileLogin()">Mit Google anmelden</ion-button>
 </ng-template>
 
 <ng-template #facebookMobile></ng-template>

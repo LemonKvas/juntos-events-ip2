@@ -13,8 +13,6 @@ import { PhotoService } from 'src/app/services/photo.service';
   styleUrls: ['./edit-user.page.scss']
 })
 export class EditUserPage implements OnInit {
-  private userData;
-
   userId;
   firstName;
   lastName;
@@ -212,6 +210,7 @@ export class EditUserPage implements OnInit {
   beforeUrl;
   uploadStatus = false;
   photoUploads = [];
+  private userData;
 
   constructor(
     private userDataService: UserDataService,
@@ -221,8 +220,6 @@ export class EditUserPage implements OnInit {
   ) {
     this.userData = this.userDataService.getCurrentUser();
     this.userData = this.userData.__zone_symbol__value;
-    this.allLanguages;
-
     if (this.userData.id) {
       this.firstName = this.userData.firstName;
     } else {
@@ -281,7 +278,7 @@ export class EditUserPage implements OnInit {
    * @param event
    */
   uploadAvatar(event) {
-    if (this.oldPhotoUrl != this.displayUrl) {
+    if (this.oldPhotoUrl !== this.displayUrl) {
       this.beforeUrl = this.displayUrl;
     }
     this.uploadStatus = true;
@@ -326,7 +323,7 @@ export class EditUserPage implements OnInit {
       return;
     }
     // delete photo which is not in use
-    if (this.oldPhotoUrl != this.displayUrl) {
+    if (this.oldPhotoUrl !== this.displayUrl) {
       const tmp = this.displayUrl;
       this.displayUrl = this.oldPhotoUrl;
       this.deleteAvatar(tmp);
@@ -347,10 +344,10 @@ export class EditUserPage implements OnInit {
       );
       return;
     }
-    if (this.oldPhotoUrl != this.displayUrl) {
+    if (this.oldPhotoUrl !== this.displayUrl) {
       this.deleteAvatar(this.oldPhotoUrl);
     }
-    let data = {
+    const data = {
       firstName: this.firstName,
       lastName: this.lastName,
       userName: this.userName,

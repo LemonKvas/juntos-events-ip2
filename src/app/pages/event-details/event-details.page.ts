@@ -27,7 +27,8 @@ export class EventDetailsPage implements OnInit {
     private authService: AuthService,
     private userService: UserDataService,
     public alertService: AlertService,
-    private route: ActivatedRoute //public geoService: GeoService
+    private route: ActivatedRoute
+    //public geoService: GeoService
   ) {
     this.event = this.router.getCurrentNavigation().extras.state;
     this.getCreatorData();

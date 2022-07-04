@@ -6,16 +6,16 @@ import { AuthService } from 'src/app/services/auth.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
+import { of } from 'rxjs';
 
 export const authStub: any = {
-  authState: {},
+  authState: of({
+    uid: 'id1'
+  }),
   auth: {
-    signInWithEmailAndPassword() {
-      return Promise.resolve();
-    },
-    signInWithPopup() {
-      return Promise.resolve();
-    }
+    signInWithEmailAndPassword: () => Promise.resolve(),
+    signInWithPopup: () => Promise.resolve()
   }
 };
 
@@ -31,7 +31,13 @@ describe('LoginChildComponent', () => {
       providers: [
         AuthService,
         { provide: AngularFireAuth, useValue: authStub },
-        { provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig }
+        { provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig },
+        {
+          provide: Router,
+          useClass: class {
+            navigate = jasmine.createSpy('navigate');
+          }
+        }
       ]
     }).compileComponents();
 
@@ -46,13 +52,13 @@ describe('LoginChildComponent', () => {
   });
 
   it('should click Registrieren button', () => {
-    spyOn(authService, 'EmailLogin');
+    spyOn(authService, 'EmailLogin' as never);
 
     const button = fixture.debugElement.nativeElement.querySelector('button');
     button.click();
 
     fixture.whenStable().then(() => {
-      expect(authService.EmailLogin).toHaveBeenCalled();
+      expect(authService.emailLogin).toHaveBeenCalled();
     });
   });
 });

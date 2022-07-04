@@ -14,7 +14,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { AuthService } from 'src/app/services/auth.service';
-import { SwiperModule } from 'swiper/angular';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { HttpClientModule } from '@angular/common/http';
 import { GeoService } from 'src/app/services/geo.service';
 
@@ -31,7 +31,8 @@ import { GeoService } from 'src/app/services/geo.service';
     AngularFireStorageModule,
     AngularFireDatabaseModule,
     SharedModule,
-    HttpClientModule
+    HttpClientModule,
+    ScrollingModule
   ],
   providers: [
     {
