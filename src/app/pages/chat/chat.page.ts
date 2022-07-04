@@ -110,7 +110,7 @@ export class ChatPage implements OnInit, AfterViewInit {
       creatorName: this.currentUser.firstName,
       photo: photo
     };
-    this.newMsg = '';
+    this.photo = '';
     // Add chat message to sub-collection 'messages' of collection 'chats'
     await this.chatService.addChatMessage(this.msg).catch((err) => console.log('Error: ', err));
     // Add both users as each others chat partner
