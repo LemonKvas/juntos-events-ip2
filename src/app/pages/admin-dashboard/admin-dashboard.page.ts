@@ -1,5 +1,5 @@
-import {AfterViewInit, Component} from '@angular/core';
-import {UserDataService} from "src/app/services/user-data.service";
+import { AfterViewInit, Component } from '@angular/core';
+import { UserDataService } from 'src/app/services/user-data.service';
 import { EventService } from 'src/app/services/event.service';
 
 /**
@@ -13,16 +13,16 @@ import { EventService } from 'src/app/services/event.service';
 @Component({
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.page.html',
-  styleUrls: ['./admin-dashboard.page.scss'],
+  styleUrls: ['./admin-dashboard.page.scss']
 })
 export class AdminDashboardPage implements AfterViewInit {
   receivedUsers;
   users?;
 
-
   /**
    * Ruft eine Observable mit allen Nutzern aus der Datenbank auf und speichert diese in den Variablen
    * receivedUsers und users.
+   *
    * @param userDataService
    * @param eventService
    */
@@ -30,7 +30,7 @@ export class AdminDashboardPage implements AfterViewInit {
     this.userDataService.getAllUser().subscribe((userDocs) => {
       this.receivedUsers = userDocs;
       this.users = userDocs;
-    })
+    });
   }
 
   /**
@@ -57,13 +57,13 @@ export class AdminDashboardPage implements AfterViewInit {
   getUser(ev) {
     this.initalUser();
     const searchInput = ev.target.value;
-    if (searchInput && searchInput.trim() != "") {
-      this.users = this.users.filter(user => {
-        return user.userId.concat(user.userName).toLowerCase().indexOf(searchInput.toLowerCase()) > -1;
-      });
+    if (searchInput && searchInput.trim() !== '') {
+      this.users = this.users.filter(
+        (user) =>
+          user.userId.concat(user.userName).toLowerCase().indexOf(searchInput.toLowerCase()) > -1
+      );
     }
   }
-
 
   /**
    * DE:
@@ -81,6 +81,7 @@ export class AdminDashboardPage implements AfterViewInit {
    *
    * EN:
    * Calls the userEventsModal method in the event service.
+   *
    * @param userId
    */
   userEvents(userId) {
@@ -93,5 +94,3 @@ export class AdminDashboardPage implements AfterViewInit {
   deleteUser(userId: any) {}
    */
 }
-
-

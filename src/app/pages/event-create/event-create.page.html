@@ -7,7 +7,6 @@
         <ion-icon name="close-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-
   </ion-toolbar>
 </ion-header>
 
@@ -20,8 +19,10 @@
             <ion-label position="stacked">Event Name*</ion-label>
             <ion-input class="ion-text-start" [(ngModel)]="eventName"></ion-input>
           </ion-item>
-          <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
-             *ngIf="errors.get('eventName')">
+          <p
+            class="ion-text-end ion-padding-end"
+            style="color: var(--ion-color-danger)"
+            *ngIf="errors.get('eventName')">
             {{errors.get('eventName')}}
           </p>
         </ion-col>
@@ -29,14 +30,20 @@
           <ion-item button="true" id="open-date-input">
             <ion-label position="stacked">Datum & Uhrzeit*</ion-label>
             <ion-input>{{ eventDate | date:'EEE, dd-MM-yyyy H:mm' }}</ion-input>
-            <ion-popover id="eventDatePopover" trigger="open-date-input" show-backdrop="false" size="cover">
+            <ion-popover
+              id="eventDatePopover"
+              trigger="open-date-input"
+              show-backdrop="false"
+              size="cover">
               <ng-template id="eventDateIonDatetime">
                 <ion-datetime [(ngModel)]="eventDate"></ion-datetime>
               </ng-template>
             </ion-popover>
           </ion-item>
-          <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
-             *ngIf="errors.get('eventDate')">
+          <p
+            class="ion-text-end ion-padding-end"
+            style="color: var(--ion-color-danger)"
+            *ngIf="errors.get('eventDate')">
             {{errors.get('eventDate')}}
           </p>
         </ion-col>
@@ -51,8 +58,10 @@
             <ion-input type="number" placeholder="PLZ" [(ngModel)]="zipCode"></ion-input>
             <ion-input type="text" placeholder="Ort" [(ngModel)]="city"></ion-input>
           </ion-item>
-          <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
-             *ngIf="errors.get('eventAddress')">
+          <p
+            class="ion-text-end ion-padding-end"
+            style="color: var(--ion-color-danger)"
+            *ngIf="errors.get('eventAddress')">
             {{errors.get('eventAddress')}}
           </p>
         </ion-col>
@@ -61,8 +70,10 @@
             <ion-label position="stacked">Beschreibung*</ion-label>
             <ion-textarea [(ngModel)]="eventBio" placeholder="Das Event ist..."></ion-textarea>
           </ion-item>
-          <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
-             *ngIf="errors.get('eventBio')">
+          <p
+            class="ion-text-end ion-padding-end"
+            style="color: var(--ion-color-danger)"
+            *ngIf="errors.get('eventBio')">
             {{errors.get('eventBio')}}
           </p>
         </ion-col>
@@ -74,18 +85,26 @@
             <ion-label position="stacked">Preis*</ion-label>
             <ion-input placeholder="Gebe 0 für kostenlos ein." [(ngModel)]="price"></ion-input>
           </ion-item>
-          <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
-             *ngIf="errors.get('price')">
+          <p
+            class="ion-text-end ion-padding-end"
+            style="color: var(--ion-color-danger)"
+            *ngIf="errors.get('price')">
             {{errors.get('price')}}
           </p>
         </ion-col>
         <ion-col id="eventMaxParticipantsCol" size="12" size-sm="6">
           <ion-item>
             <ion-label position="stacked">Max. Teilnehmeranzahl*</ion-label>
-            <ion-input placeholder="z.B. 20" type="number" min="0" [(ngModel)]="maxParticipants"></ion-input>
+            <ion-input
+              placeholder="z.B. 20"
+              type="number"
+              min="0"
+              [(ngModel)]="maxParticipants"></ion-input>
           </ion-item>
-          <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
-             *ngIf="errors.get('maxParticipants')">
+          <p
+            class="ion-text-end ion-padding-end"
+            style="color: var(--ion-color-danger)"
+            *ngIf="errors.get('maxParticipants')">
             {{errors.get('maxParticipants')}}
           </p>
         </ion-col>
@@ -96,18 +115,32 @@
           <ion-item>
             <ion-label position="stacked">Kategorien*</ion-label>
             <ion-select [(ngModel)]="selectedCategories" multiple="true">
-              <ion-select-option *ngFor="let categorie of categories; let i = index">{{categorie}}</ion-select-option>
+              <ion-select-option *ngFor="let categorie of categories; let i = index"
+                >{{categorie}}</ion-select-option
+              >
             </ion-select>
           </ion-item>
-          <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
-             *ngIf="errors.get('categories')">
+          <p
+            class="ion-text-end ion-padding-end"
+            style="color: var(--ion-color-danger)"
+            *ngIf="errors.get('categories')">
             {{errors.get('categories')}}
           </p>
         </ion-col>
         <ion-col id="eventPhotoCol" size="12" size-sm="6">
           <ion-item>
             <ion-label position="stacked">Foto</ion-label>
-            <ion-input id="photoInput" type="file" (change)="uploadPhoto($event)" accept=".png,.jpg" multiple="false"></ion-input>
+            <ion-input
+              id="photoInput"
+              type="file"
+              (change)="uploadPhoto($event)"
+              accept=".png,.jpg"
+              multiple="false"></ion-input>
+            <p *ngIf="uploadStatus">... wird hochgeladen</p>
+            <ion-img
+              id="photoPreview"
+              *ngFor="let photo of photoService.photos; index as position"
+              [src]="photo"></ion-img>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -117,14 +150,10 @@
 <ion-footer>
   <ion-row class="ion-align-items-center" id="eventSaveAndDraft" fixed>
     <ion-col class="ion-text-center" id="eventSaveAsDraftBtnCol" size-sm="6">
-      <p button id="eventDraftBtn" (click)="saveEventAsDraft()">
-        Entwurf speichern
-      </p>
+      <p button id="eventDraftBtn" (click)="saveEventAsDraft()">Entwurf speichern</p>
     </ion-col>
     <ion-col class="ion-text-center" id="eventPublishBtnCol" size-sm="6">
-      <ion-button id="eventPublishBtn" (click)="addEvent()">
-        Veröffentlichen
-      </ion-button>
+      <ion-button id="eventPublishBtn" (click)="addEvent()"> Veröffentlichen </ion-button>
     </ion-col>
   </ion-row>
 </ion-footer>

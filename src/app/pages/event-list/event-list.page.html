@@ -15,17 +15,37 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content
+  scrollX="true"
+  scrollY="true"
+  style="
+    margin: 17rem;
+    position: fixed;
+    display: inline;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    white-space: nowrap;
+  "
+  >
   <ion-grid>
     <ion-row>
       <ion-col>
         <app-carousel (carouselNavigate)="eventDetailsState($event)"></app-carousel>
       </ion-col>
     </ion-row>
-    <ion-list lines="full" class="ion-align-items-center">
-      <ion-row class="ion-justify-content-center" size="12" *ngFor="let event of events">
-        <ion-item>
-          <ion-col size="4">
+    <ion-row>
+      <ion-col>
+        <ng-container>
+          <app-map [marker]="geoService.marker" [camera]="geoService.camera"></app-map>
+        </ng-container>
+      </ion-col>
+    </ion-row>
+    <ion-list lines="full" class="ion-align-items-center" style="padding-bottom: 30px">
+      <ion-row class="ion-justify-content-center" size="12">
+        <ion-item class="ion-justify-content-start" *ngFor="let event of events">
+          <ion-col class="img-col" size="4">
             <!-- get Photo through Photo Service by photoID or url -->
             <div class="img-div">
               <ion-img button src="{{event.photoURLs[0] | fireStorageImg: '/event-photos' | async }}"
@@ -60,6 +80,15 @@
         </ion-item>
       </ion-row>
     </ion-list>
+    <ion-row text-center class="ion-text-center ion-justify-content-center">
+      <ion-buttons>
+        <a
+          ><p [routerLink]="['/impressumUndDatenschutz']" style="padding-bottom: 70px">
+            Impressum & Datenschutz
+          </p></a
+        >
+      </ion-buttons>
+    </ion-row>
   </ion-grid>
 
   <ion-fab vertical="center" horizontal="end" slot="fixed">

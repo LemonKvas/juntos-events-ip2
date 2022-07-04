@@ -1,10 +1,10 @@
 "use strict";
-(self["webpackChunkapp"] = self["webpackChunkapp"] || []).push([["src_app_edit-user_edit-user_module_ts"],{
+(self["webpackChunkapp"] = self["webpackChunkapp"] || []).push([["src_app_pages_edit-user_edit-user_module_ts"],{
 
-/***/ 1080:
-/*!*******************************************************!*\
-  !*** ./src/app/edit-user/edit-user-routing.module.ts ***!
-  \*******************************************************/
+/***/ 1729:
+/*!*************************************************************!*\
+  !*** ./src/app/pages/edit-user/edit-user-routing.module.ts ***!
+  \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -14,7 +14,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ 4929);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 3184);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ 2816);
-/* harmony import */ var _edit_user_page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./edit-user.page */ 6881);
+/* harmony import */ var src_app_pages_edit_user_edit_user_page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/app/pages/edit-user/edit-user.page */ 1967);
 
 
 
@@ -22,7 +22,7 @@ __webpack_require__.r(__webpack_exports__);
 const routes = [
     {
         path: '',
-        component: _edit_user_page__WEBPACK_IMPORTED_MODULE_0__.EditUserPage
+        component: src_app_pages_edit_user_edit_user_page__WEBPACK_IMPORTED_MODULE_0__.EditUserPage
     }
 ];
 let EditUserPageRoutingModule = class EditUserPageRoutingModule {
@@ -38,10 +38,10 @@ EditUserPageRoutingModule = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([
 
 /***/ }),
 
-/***/ 9873:
-/*!***********************************************!*\
-  !*** ./src/app/edit-user/edit-user.module.ts ***!
-  \***********************************************/
+/***/ 798:
+/*!*****************************************************!*\
+  !*** ./src/app/pages/edit-user/edit-user.module.ts ***!
+  \*****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -53,9 +53,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common */ 6362);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/forms */ 587);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic/angular */ 3819);
-/* harmony import */ var _edit_user_routing_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./edit-user-routing.module */ 1080);
-/* harmony import */ var _edit_user_page__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./edit-user.page */ 6881);
-/* harmony import */ var _shared_shared_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../shared/shared.module */ 4466);
+/* harmony import */ var src_app_pages_edit_user_edit_user_routing_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/app/pages/edit-user/edit-user-routing.module */ 1729);
+/* harmony import */ var src_app_pages_edit_user_edit_user_page__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/pages/edit-user/edit-user.page */ 1967);
+/* harmony import */ var src_app_shared_shared_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/shared/shared.module */ 4466);
 
 
 
@@ -72,10 +72,10 @@ EditUserPageModule = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
             _angular_common__WEBPACK_IMPORTED_MODULE_5__.CommonModule,
             _angular_forms__WEBPACK_IMPORTED_MODULE_6__.FormsModule,
             _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.IonicModule,
-            _edit_user_routing_module__WEBPACK_IMPORTED_MODULE_0__.EditUserPageRoutingModule,
-            _shared_shared_module__WEBPACK_IMPORTED_MODULE_2__.SharedModule
+            src_app_pages_edit_user_edit_user_routing_module__WEBPACK_IMPORTED_MODULE_0__.EditUserPageRoutingModule,
+            src_app_shared_shared_module__WEBPACK_IMPORTED_MODULE_2__.SharedModule
         ],
-        declarations: [_edit_user_page__WEBPACK_IMPORTED_MODULE_1__.EditUserPage]
+        declarations: [src_app_pages_edit_user_edit_user_page__WEBPACK_IMPORTED_MODULE_1__.EditUserPage]
     })
 ], EditUserPageModule);
 
@@ -83,24 +83,24 @@ EditUserPageModule = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
 
 /***/ }),
 
-/***/ 6881:
-/*!*********************************************!*\
-  !*** ./src/app/edit-user/edit-user.page.ts ***!
-  \*********************************************/
+/***/ 1967:
+/*!***************************************************!*\
+  !*** ./src/app/pages/edit-user/edit-user.page.ts ***!
+  \***************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "EditUserPage": () => (/* binding */ EditUserPage)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 4929);
-/* harmony import */ var _edit_user_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./edit-user.page.html?ngResource */ 1903);
-/* harmony import */ var _edit_user_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./edit-user.page.scss?ngResource */ 9893);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var _edit_user_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./edit-user.page.html?ngResource */ 7062);
+/* harmony import */ var _edit_user_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./edit-user.page.scss?ngResource */ 8573);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 3184);
-/* harmony import */ var _services_user_data_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/user-data.service */ 5944);
+/* harmony import */ var src_app_services_user_data_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/user-data.service */ 5944);
 /* harmony import */ var src_app_services_alert_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/services/alert.service */ 5970);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ 2816);
-/* harmony import */ var _services_photo_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/photo.service */ 1957);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/router */ 2816);
+/* harmony import */ var src_app_services_photo_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/photo.service */ 1957);
 
 
 
@@ -309,6 +309,12 @@ let EditUserPage = class EditUserPage {
         this.userData = this.userDataService.getCurrentUser();
         this.userData = this.userData.__zone_symbol__value;
         this.allLanguages;
+        if (this.userData.id) {
+            this.firstName = this.userData.firstName;
+        }
+        else {
+            this.firstName = '';
+        }
         if (this.userData.firstName) {
             this.firstName = this.userData.firstName;
         }
@@ -348,8 +354,14 @@ let EditUserPage = class EditUserPage {
         this.oldPhotoUrl = this.displayUrl;
     }
     ngOnInit() {
+        this.getUserId();
         //TODO: maybe get userdata from firestore and subscribe
         //this.db.doc(`user/${id}`).valueChanges().subscribe(user => this.user = user);
+    }
+    getUserId() {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, function* () {
+            this.userId = yield this.userDataService.getCurrentUserID();
+        });
     }
     /**
      * Let the user upload an avatar, and updates the avatar
@@ -396,7 +408,7 @@ let EditUserPage = class EditUserPage {
             this.displayUrl = this.oldPhotoUrl;
             this.deleteAvatar(tmp);
         }
-        this.router.navigate(['event-list']);
+        this.router.navigate(['profile', this.userId]);
     }
     /**
      * Updates the user data in firestore
@@ -417,16 +429,17 @@ let EditUserPage = class EditUserPage {
             'description': this.description,
             'photoUrl': this.displayUrl,
         };
+        this.router.navigate(['profile', this.userId]);
         this.userDataService.updateCurrentUser(data);
     }
 };
 EditUserPage.ctorParameters = () => [
-    { type: _services_user_data_service__WEBPACK_IMPORTED_MODULE_2__.UserDataService },
+    { type: src_app_services_user_data_service__WEBPACK_IMPORTED_MODULE_2__.UserDataService },
     { type: src_app_services_alert_service__WEBPACK_IMPORTED_MODULE_3__.AlertService },
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_5__.Router },
-    { type: _services_photo_service__WEBPACK_IMPORTED_MODULE_4__.PhotoService }
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_6__.Router },
+    { type: src_app_services_photo_service__WEBPACK_IMPORTED_MODULE_4__.PhotoService }
 ];
-EditUserPage = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
+EditUserPage = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
     (0,_angular_core__WEBPACK_IMPORTED_MODULE_7__.Component)({
         selector: 'app-edit-user',
         template: _edit_user_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
@@ -438,20 +451,20 @@ EditUserPage = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
 
 /***/ }),
 
-/***/ 9893:
-/*!**********************************************************!*\
-  !*** ./src/app/edit-user/edit-user.page.scss?ngResource ***!
-  \**********************************************************/
+/***/ 8573:
+/*!****************************************************************!*\
+  !*** ./src/app/pages/edit-user/edit-user.page.scss?ngResource ***!
+  \****************************************************************/
 /***/ ((module) => {
 
-module.exports = "#photoInput {\n  position: absolute;\n  opacity: 0;\n}\n\n.myFakeUploadButton {\n  color: #FF8766;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImVkaXQtdXNlci5wYWdlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxrQkFBQTtFQUNBLFVBQUE7QUFDRjs7QUFFQTtFQUNFLGNBQUE7QUFDRiIsImZpbGUiOiJlZGl0LXVzZXIucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiI3Bob3RvSW5wdXQge1xyXG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICBvcGFjaXR5OiAwO1xyXG59XHJcblxyXG4ubXlGYWtlVXBsb2FkQnV0dG9uIHtcclxuICBjb2xvcjogI0ZGODc2NjtcclxufVxyXG4iXX0= */";
+module.exports = "#photoInput {\n  position: absolute;\n  opacity: 0;\n}\n\n.myFakeUploadButton {\n  color: #FF8766;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImVkaXQtdXNlci5wYWdlLnNjc3MiLCIuLlxcLi5cXC4uXFwuLlxcLi5cXC4uXFwuLlxcSW50ZWdyYXRpb25zcHJvamVrdCUyMDJcXGp1bnRvcy1ldmVudHMtaXAyXFxKdW50b3NcXHNyY1xcYXBwXFxwYWdlc1xcZWRpdC11c2VyXFxlZGl0LXVzZXIucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0Usa0JBQUE7RUFDQSxVQUFBO0FDQ0Y7O0FER0E7RUFDRSxjQUFBO0FDQUYiLCJmaWxlIjoiZWRpdC11c2VyLnBhZ2Uuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIiNwaG90b0lucHV0IHtcclxuICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgb3BhY2l0eTogMDtcclxuXHJcbn1cclxuXHJcbi5teUZha2VVcGxvYWRCdXR0b24ge1xyXG4gIGNvbG9yOiAjRkY4NzY2O1xyXG59XHJcbiIsIiNwaG90b0lucHV0IHtcbiAgcG9zaXRpb246IGFic29sdXRlO1xuICBvcGFjaXR5OiAwO1xufVxuXG4ubXlGYWtlVXBsb2FkQnV0dG9uIHtcbiAgY29sb3I6ICNGRjg3NjY7XG59Il19 */";
 
 /***/ }),
 
-/***/ 1903:
-/*!**********************************************************!*\
-  !*** ./src/app/edit-user/edit-user.page.html?ngResource ***!
-  \**********************************************************/
+/***/ 7062:
+/*!****************************************************************!*\
+  !*** ./src/app/pages/edit-user/edit-user.page.html?ngResource ***!
+  \****************************************************************/
 /***/ ((module) => {
 
 module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"start\">\r\n      <ion-button (click)=\"close()\">\r\n        <ion-icon size=\"large\" style=\"zoom:0.8\" name=\"close-outline\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n    <ion-title>Profil bearbeiten</ion-title>\r\n    <ion-buttons slot=\"end\">\r\n      <ion-button (click)=\"updateUser()\">\r\n        <ion-icon size=\"large\" style=\"zoom:0.8\" name=\"create-outline\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content>\r\n  <ion-grid>\r\n    <ion-row class=\"ion-justify-content-center ion-align-items-center\">\r\n      <ion-col size=\"auto\">\r\n        <ion-avatar>\r\n          <img *ngIf=\"displayUrl.includes('.png') || displayUrl.includes('googleusercontent'); else noNeed\" alt=\"User avatar\" src=\"{{displayUrl}}\">\r\n          <ng-template #noNeed>\r\n            <img alt=\"User avatar\" src=\"{{displayUrl | fireStorageImg: '/avatars' | async}}\">\r\n          </ng-template>\r\n        </ion-avatar>\r\n      </ion-col>\r\n    </ion-row>\r\n\r\n    <ion-row class=\"ion-justify-content-center\">\r\n      <ion-col class=\"fileUpload\" size=\"auto\">\r\n        <ion-input id=\"photoInput\"  type=\"file\" (change)=\"uploadAvatar($event)\" accept=\".png,.jpg\" multiple=\"false\"></ion-input>\r\n        <label class=\"myFakeUploadButton\" for=\"photoInput\">Profilbild ändern</label>\r\n      </ion-col>\r\n    </ion-row>\r\n\r\n    <ion-row>\r\n      <ion-col>\r\n        <ion-item>\r\n          <ion-label position=\"stacked\">Vorname</ion-label>\r\n          <ion-input [(ngModel)]=\"firstName\">\r\n          </ion-input>\r\n        </ion-item>\r\n      </ion-col>\r\n    </ion-row>\r\n\r\n    <ion-row>\r\n      <ion-col>\r\n        <ion-item>\r\n          <ion-label position=\"stacked\">Nachname</ion-label>\r\n          <ion-input [(ngModel)]=\"lastName\"\r\n          ></ion-input>\r\n        </ion-item>\r\n      </ion-col>\r\n    </ion-row>\r\n\r\n    <ion-row>\r\n      <ion-col>\r\n        <ion-item>\r\n          <ion-label position=\"stacked\">Benutzername</ion-label>\r\n          <ion-input [(ngModel)]=\"userName\"\r\n          ></ion-input>\r\n        </ion-item>\r\n      </ion-col>\r\n    </ion-row>\r\n\r\n    <ion-row>\r\n      <ion-col>\r\n        <ion-item>\r\n          <ion-label position=\"stacked\">Sprachen*</ion-label>\r\n          <ion-select [(ngModel)]=\"languages\" multiple=\"true\">\r\n            <ion-select-option *ngFor=\"let allLanguage of allLanguages; let i = index\">{{allLanguage.name}}</ion-select-option>\r\n          </ion-select>\r\n        </ion-item>\r\n      </ion-col>\r\n    </ion-row>\r\n\r\n    <ion-row>\r\n      <ion-col>\r\n        <ion-item>\r\n          <ion-label position=\"stacked\">Beschreibung</ion-label>\r\n          <ion-textarea [(ngModel)]=\"description\"\r\n          ></ion-textarea>\r\n        </ion-item>\r\n      </ion-col>\r\n    </ion-row>\r\n\r\n  </ion-grid>\r\n</ion-content>\r\n";
@@ -459,4 +472,4 @@ module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"sta
 /***/ })
 
 }]);
-//# sourceMappingURL=src_app_edit-user_edit-user_module_ts.js.map
+//# sourceMappingURL=src_app_pages_edit-user_edit-user_module_ts.js.map

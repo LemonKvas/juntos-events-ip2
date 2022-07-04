@@ -1,15 +1,18 @@
 import { Injectable } from '@angular/core';
-import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/compat/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { Event } from 'src/app/models/classes/event.model';
-import {Observable} from 'rxjs';
-import {arrayRemove, documentId} from "@angular/fire/firestore";
+import { Observable } from 'rxjs';
+import { arrayRemove, documentId } from '@angular/fire/firestore';
+
 import firebase from 'firebase/compat/app';
-import {CreatedEvent} from '../models/interfaces/created-event';
-import {arrayUnion} from '@angular/fire/firestore';
-import {getDoc} from 'firebase/firestore';
-import {ModalController} from "@ionic/angular";
-import {UserEventsModalComponent} from "src/app/components/user-events-modal/user-events-modal.component";
-import {UserDataService} from "src/app/services/user-data.service";
+import { CreatedEvent } from '../models/interfaces/created-event';
+import { arrayUnion } from '@angular/fire/firestore';
+import { getDoc } from 'firebase/firestore';
+import { ModalController } from '@ionic/angular';
+import { UserEventsModalComponent } from 'src/app/components/user-events-modal/user-events-modal.component';
+import { UserDataService } from 'src/app/services/user-data.service';
+import { GeoService } from 'src/app/services/geo.service';
+import { NavigationExtras, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -21,73 +24,116 @@ export class EventService {
   modalUserEvents?;
   private readonly eventsCollections: AngularFirestoreCollection<Event>;
   private events: Observable<Event[]>;
-  constructor(private afs: AngularFirestore, public modalController: ModalController,
-              private userDataService: UserDataService) {
+  constructor(
+    private afs: AngularFirestore,
+    public modalController: ModalController,
+    private userDataService: UserDataService,
+    private router: Router,
+    private geoService: GeoService
+  ) {
     this.eventsCollections = this.afs.collection('events');
   }
-
-  getAllEvents(){
+  getAllEvents() {
     return this.afs.collection('events').snapshotChanges();
   }
-  getPublishedEvents(){
-    return this.afs.collection('events', ref => ref.where('publishStatus', '==', true)).snapshotChanges();
+  getPublishedEvents() {
+    return this.afs
+      .collection('events', (ref) => ref.where('publishStatus', '==', true))
+      .snapshotChanges();
   }
-  getEventDrafts(){
-    return this.afs.collection('events', ref => ref.where('publishStatus', '==', false)).snapshotChanges();
+  getEventDrafts() {
+    return this.afs
+      .collection('events', (ref) => ref.where('publishStatus', '==', false))
+      .snapshotChanges();
   }
-  async addEvent(event: Event): Promise<void>{
+  async addEvent(event: Event): Promise<void> {
     event.eventId = this.afs.createId();
     this.eventId = event.eventId;
     const data = JSON.parse(JSON.stringify(event));
-    await this.eventsCollections.doc(event.eventId).set(data)
-     .catch((err) => console.log(err));
+    await this.geoService.getLongLat(event.address).then(async (longlatOb) => {
+      await longlatOb.subscribe((longlat) => {
+        data.lat = longlat['latt'];
+        data.long = longlat['longt'];
+        this.eventsCollections
+          .doc(event.eventId)
+          .set(data)
+          .catch((err) => console.log(err));
+      });
+    });
   }
-  async removeEvent(id: string){
+  async removeEvent(id: string) {
     await firebase.firestore().collection('events').doc(id).delete();
   }
 
-  getMultipleEventsByEventId(eventIds: []){
-    const userEventCollection = this.afs.collection('events',
-        ref => ref.where(documentId(), 'in', eventIds));
+  getMultipleEventsByEventId(eventIds: []) {
+    const userEventCollection = this.afs.collection('events', (ref) =>
+      ref.where(documentId(), 'in', eventIds)
+    );
     return userEventCollection.valueChanges();
   }
 
-  async getEventById(id: string){
+  async getEventById(id: string) {
     const docRef = this.eventsCollections.doc(id).ref;
     const docSnap = await getDoc(docRef);
     return docSnap.data() as Event;
   }
-  async createdEventData(publishStatus: boolean){
-    return this.createdEvent = {
+  async createdEventData(publishStatus: boolean) {
+    return (this.createdEvent = {
       eventId: this.eventId,
-      publishStatus,
-    };
+      publishStatus
+    });
   }
-  getPrice(event: Event): string{
-    if(event.price === '0' || event.price === undefined || event.price === null) {
+  getPrice(event: Event): string {
+    if (event.price === '0' || event.price === undefined || event.price === null) {
       event.price = 'Kostenlos';
       return event.price;
     }
     return event.price;
   }
-  freeEvent(event: Event): boolean{
-    if(event.price === '0' || event.price === 'Kostenlos'){
+  freeEvent(event: Event): boolean {
+    if (event.price === '0' || event.price === 'Kostenlos') {
       this.getPrice(event);
       return false;
     } else {
       return true;
     }
   }
-  async addRegisteredUser(event: Event){
+  async addRegisteredUser(event: Event) {
     const db = firebase.firestore().collection('events');
-    await db.doc(event.eventId).update({participants: arrayUnion(...event.participants)});
+    await db.doc(event.eventId).update({ participants: arrayUnion(...event.participants) });
+  }
+
+  async navigateToEvent(id) {
+    const event = await this.getEventById(id);
+    const navigationExtras: NavigationExtras = {
+      state: {
+        name: event.name,
+        photoURLs: event.photoURLs,
+        creationDate: event.creationDate,
+        eventDate: event.eventDate,
+        price: event.price,
+        bio: event.bio,
+        categories: event.categories,
+        participants: event.participants,
+        maxParticipants: event.maxParticipants,
+        address: event.address,
+        publishStatus: event.publishStatus,
+        eventId: event.eventId,
+        creatorId: event.creatorId
+      }
+    };
+    if (event.long && event.lat) {
+      navigationExtras.state.long = event.long;
+      navigationExtras.state.lat = event.lat;
+    }
+    await this.router.navigateByUrl(`event-details/${id}`, navigationExtras);
   }
 
   /**
    * Gibt ein Observable zurück mit allen Events, deren Wert "promoted" auf true gesetzt ist
    */
   getPromotedEvents() {
-    return this.afs.collection('events', ref => ref.where('promoted', '==', true)).valueChanges();
+    return this.afs.collection('events', (ref) => ref.where('promoted', '==', true)).valueChanges();
   }
 
   /**
@@ -95,8 +141,10 @@ export class EventService {
    *
    * @param userId
    */
-  getUserEvents(userId){
-    return this.afs.collection('events', ref => ref.where('creatorId', '==', userId)).valueChanges();
+  getUserEvents(userId) {
+    return this.afs
+      .collection('events', (ref) => ref.where('creatorId', '==', userId))
+      .valueChanges();
   }
 
   /**
@@ -114,7 +162,7 @@ export class EventService {
     const userEvModal = await this.modalController.create({
       component: UserEventsModalComponent,
       componentProps: {
-        userId: userId
+        userId
       }
     });
     await userEvModal.present();
@@ -136,18 +184,20 @@ export class EventService {
    *
    * @param event
    */
-  async deleteEvent(event){
+  async deleteEvent(event) {
     try {
-      let creatorId = event.creatorId;
+      const creatorId = event.creatorId;
       if (event.participants) {
-        let participants = event.participants;
-        if (participants != undefined && participants.length > 0) {
+        const participants = event.participants;
+        if (participants !== undefined && participants.length > 0) {
           await this.cancelEventForParticipants(participants, event.eventId);
         }
       }
-      if (creatorId) { await this.removeEventFromCreator(creatorId, event.eventId) }
+      if (creatorId) {
+        await this.removeEventFromCreator(creatorId, event.eventId);
+      }
       await this.removeEvent(event.eventId);
-    } catch (e){
+    } catch (e) {
       console.log(e);
     }
   }
@@ -170,26 +220,24 @@ export class EventService {
    * @param participants<Array>
    * @param eventId<String>
    */
-  cancelEventForParticipants(participants, eventId){
+  cancelEventForParticipants(participants, eventId) {
     participants.forEach(async (participantId: string) => {
       let participant;
-      await this.userDataService.getUserById(participantId).then((user)=>{
+      await this.userDataService.getUserById(participantId).then((user) => {
         participant = user;
       });
-      const participantEvents = participant["registeredEvents"];
+      const participantEvents = participant.registeredEvents;
 
       // filter the participant events array
-      const newParticipantEvents = participantEvents.filter(
-          event => event.eventId !== eventId
-      )
+      const newParticipantEvents = participantEvents.filter((event) => event.eventId !== eventId);
 
       console.log(newParticipantEvents);
 
       // update the doc with the filtered events
-     await firebase.firestore().collection('user').doc(participant).update({
+      await firebase.firestore().collection('user').doc(participant).update({
         registeredEvents: newParticipantEvents
-      })
-    })
+      });
+    });
   }
 
   /**
@@ -209,22 +257,19 @@ export class EventService {
    * @param eventId
    */
 
-  async removeEventFromCreator(creatorId, eventId){
+  async removeEventFromCreator(creatorId, eventId) {
     let creator;
-    await this.userDataService.getUserById(creatorId).then((user)=>{
+    await this.userDataService.getUserById(creatorId).then((user) => {
       creator = user;
     });
-    const creatorEvents = creator["createdEvents"];
+    const creatorEvents = creator.createdEvents;
 
-    // filter the creator events array
-    const newCreatorEvents = creatorEvents.filter(
-        event => event.eventId !== eventId
-    )
+    // filter the creatoe events array
+    const newCreatorEvents = creatorEvents.filter((event) => event.eventId !== eventId);
 
     // update the doc with the filtered events
     await firebase.firestore().collection('user').doc(creatorId).update({
       createdEvents: newCreatorEvents
-    })
+    });
   }
-
 }

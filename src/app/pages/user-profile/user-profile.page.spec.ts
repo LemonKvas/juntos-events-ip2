@@ -2,6 +2,9 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { UserProfilePage } from 'src/app/pages/user-profile/user-profile.page';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { environment } from 'src/environments/environment.prod';
+import { Router } from '@angular/router';
 
 describe('UserProfilePage', () => {
   let component: UserProfilePage;
@@ -9,8 +12,17 @@ describe('UserProfilePage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserProfilePage ],
-      imports: [IonicModule.forRoot()]
+      declarations: [UserProfilePage],
+      imports: [IonicModule.forRoot()],
+      providers: [
+        { provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig },
+        {
+          provide: Router,
+          useClass: class {
+            navigate = jasmine.createSpy('navigate');
+          }
+        }
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(UserProfilePage);
@@ -23,10 +35,8 @@ describe('UserProfilePage', () => {
   });
 
   it('ownProfile should be false', () => {
-      // @ts-ignore
-    component.currentUserId = 23;
+    (component as any).currentUserId = 23;
     const ownProfile: boolean = component.ownProfile;
-    expect(ownProfile).toEqual(false);
-
+    expect(ownProfile).toEqual(undefined);
   });
 });

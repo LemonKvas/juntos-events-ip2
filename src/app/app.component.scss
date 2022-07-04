@@ -1,6 +1,6 @@
 ion-content {
   // overwrite inline styles
-  --offset-bottom: auto!important;
+  --offset-bottom: auto !important;
   --overflow: hidden;
   overflow: auto;
   text-transform: none !important;
@@ -11,10 +11,8 @@ ion-content {
   }
 }
 
-
-ion-button, ion-label {
+ion-button,
+ion-label {
   text-transform: none !important;
   letter-spacing: normal !important;
 }
-
-

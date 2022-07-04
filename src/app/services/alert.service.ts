@@ -8,16 +8,16 @@ import { Event } from '../models/classes/event.model';
 })
 export class AlertService {
   alert;
-  constructor(private alertService: AlertController, private location: Location) { }
-  async basicAlert(header, message, buttons){
+  constructor(private alertService: AlertController, private location: Location) {}
+  async basicAlert(header, message, buttons) {
     this.alert = await this.alertService.create({
       header,
       message,
-      buttons,
+      buttons
     });
     this.alert.present();
   }
-  async unsaveAlert(){
+  async unsaveAlert() {
     this.alert = await this.alertService.create({
       message: 'Ihre Änderungen werden nicht gespeichert. Möchten Sie trotzdem fortfahren?',
       buttons: [
@@ -29,34 +29,34 @@ export class AlertService {
         },
         {
           text: 'Abbrechen',
-          role: 'cancel',
+          role: 'cancel'
         }
-      ],
+      ]
     });
     this.alert.present();
   }
-  async emptyInputsAlert(){
+  async emptyInputsAlert() {
     this.alert = await this.alertService.create({
       message: 'Bitte füllen Sie alle mit * gekennzeichneten Felder aus.',
       buttons: ['OK']
     });
     this.alert.present();
   }
-  async eventDraftAlert(){
+  async eventDraftAlert() {
     this.alert = await this.alertService.create({
       message: 'Geben Sie dem Event Entwurf bitte einen Namen.',
       buttons: ['OK']
     });
     this.alert.present();
   }
-  async plsSignInAlert(){
+  async plsSignInAlert() {
     this.alert = await this.alertService.create({
       message: 'Bitte melden Sie sich an, um fortzufahren.',
       buttons: ['OK']
     });
     this.alert.present();
   }
-  async partakeEvent(event: Event){
+  async partakeEvent(event: Event) {
     this.alert = await this.alertService.create({
       message: 'Sie haben sich soeben erfolgreich zu '+ '<strong>' + event.name + '</strong>' + ' angemeldet!',
       buttons: ['OK']

@@ -8,6 +8,14 @@ ion-img {
   position: center;
   object-fit: cover;
 }
+
+ion-content {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  --offset-bottom: 0 !important;
+  background-color: #ffffff;
+}
+
 ion-item {
   width: 80%;
 }
@@ -16,7 +24,7 @@ ion-item {
   h1 {
     font-size: 30px;
     font-weight: bold;
-    font-family: "Yeseva One", cursive;
+    font-family: 'Yeseva One', cursive;
   }
   h2 {
     font-size: 25px;
@@ -49,7 +57,7 @@ ion-item {
   h1 {
     font-size: 30px;
     font-weight: bold;
-    font-family: "Yeseva One", cursive;
+    font-family: 'Yeseva One', cursive;
   }
   h2 {
     font-size: 20px;

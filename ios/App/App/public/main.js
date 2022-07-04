@@ -21,44 +21,42 @@ __webpack_require__.r(__webpack_exports__);
 
 const routes = [
     {
-        path: 'home',
-        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_home_home_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./home/home.module */ 3467)).then(m => m.HomePageModule)
-    },
-    {
         path: 'login',
-        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_login_login_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./login/login.module */ 107)).then(m => m.LoginPageModule)
+        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_login_login_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/login/login.module */ 1053)).then(m => m.LoginPageModule)
     },
     {
         path: '',
-        redirectTo: 'home',
+        redirectTo: 'login',
         pathMatch: 'full'
     },
     {
         path: 'edit-user',
-        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_edit-user_edit-user_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./edit-user/edit-user.module */ 9873)).then(m => m.EditUserPageModule),
-        canActivate: [src_app_guards_logged_in_guard__WEBPACK_IMPORTED_MODULE_0__.LoggedInGuard]
+        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_edit-user_edit-user_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./pages/edit-user/edit-user.module */ 798)).then(m => m.EditUserPageModule),
     },
     {
         path: 'event-create',
-        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_event-create_event-create_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./event-create/event-create.module */ 6211)).then(m => m.EventCreatePageModule),
-        canActivate: [src_app_guards_logged_in_guard__WEBPACK_IMPORTED_MODULE_0__.LoggedInGuard]
+        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_event-create_event-create_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./pages/event-create/event-create.module */ 4339)).then(m => m.EventCreatePageModule),
     },
     {
         path: 'event-list',
-        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_event-list_event-list_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./event-list/event-list.module */ 5419)).then(m => m.EventListPageModule),
-        canActivate: [src_app_guards_logged_in_guard__WEBPACK_IMPORTED_MODULE_0__.LoggedInGuard]
+        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_event-list_event-list_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./pages/event-list/event-list.module */ 6208)).then(m => m.EventListPageModule),
     },
     {
         path: 'profile/:userId',
-        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_user-profile_user-profile_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./user-profile/user-profile.module */ 7582)).then(m => m.UserProfilePageModule)
+        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_user-profile_user-profile_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./pages/user-profile/user-profile.module */ 1749)).then(m => m.UserProfilePageModule)
     },
     {
         path: 'event-details',
-        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_event-details_event-details_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./event-details/event-details.module */ 1230)).then(m => m.EventDetailsPageModule)
+        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_event-details_event-details_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./pages/event-details/event-details.module */ 9393)).then(m => m.EventDetailsPageModule)
     },
     {
         path: 'event-details/:id',
-        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_event-details_event-details_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./event-details/event-details.module */ 1230)).then(m => m.EventDetailsPageModule)
+        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_event-details_event-details_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./pages/event-details/event-details.module */ 9393)).then(m => m.EventDetailsPageModule)
+    },
+    {
+        path: 'friendlist',
+        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_friendlist_friendlist_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/friendlist/friendlist.module */ 6147)).then(m => m.FriendlistPageModule),
+        canActivate: [src_app_guards_logged_in_guard__WEBPACK_IMPORTED_MODULE_0__.LoggedInGuard]
     },
 ];
 let AppRoutingModule = class AppRoutingModule {
@@ -134,13 +132,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/platform-browser */ 318);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/router */ 2816);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ionic/angular */ 3819);
-/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./app.component */ 5041);
-/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app-routing.module */ 158);
-/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../environments/environment */ 2340);
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../environments/environment */ 2340);
 /* harmony import */ var _angular_fire_compat_auth__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/fire/compat/auth */ 5873);
 /* harmony import */ var _angular_fire_compat_database__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/fire/compat/database */ 2575);
 /* harmony import */ var _angular_fire_compat_storage__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/fire/compat/storage */ 5574);
 /* harmony import */ var _angular_fire_compat__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/fire/compat */ 1879);
+/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app-routing.module */ 158);
+/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./app.component */ 5041);
 /* harmony import */ var _shared_shared_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./shared/shared.module */ 4466);
 /* harmony import */ var src_app_services_auth_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/auth.service */ 7556);
 
@@ -162,12 +160,12 @@ let AppModule = class AppModule {
 };
 AppModule = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
     (0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.NgModule)({
-        declarations: [_app_component__WEBPACK_IMPORTED_MODULE_0__.AppComponent],
+        declarations: [_app_component__WEBPACK_IMPORTED_MODULE_2__.AppComponent],
         entryComponents: [],
         imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_7__.BrowserModule,
             _ionic_angular__WEBPACK_IMPORTED_MODULE_8__.IonicModule.forRoot(),
             _app_routing_module__WEBPACK_IMPORTED_MODULE_1__.AppRoutingModule,
-            _angular_fire_compat__WEBPACK_IMPORTED_MODULE_9__.AngularFireModule.initializeApp(_environments_environment__WEBPACK_IMPORTED_MODULE_2__.environment.firebaseConfig),
+            _angular_fire_compat__WEBPACK_IMPORTED_MODULE_9__.AngularFireModule.initializeApp(_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.firebaseConfig),
             _angular_fire_compat_auth__WEBPACK_IMPORTED_MODULE_10__.AngularFireAuthModule,
             _angular_fire_compat_storage__WEBPACK_IMPORTED_MODULE_11__.AngularFireStorageModule,
             _angular_fire_compat_database__WEBPACK_IMPORTED_MODULE_12__.AngularFireDatabaseModule,
@@ -184,7 +182,7 @@ AppModule = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
                 multi: true
             },
         ],
-        bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_0__.AppComponent],
+        bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_2__.AppComponent],
     })
 ], AppModule);
 
@@ -206,32 +204,231 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 4929);
 /* harmony import */ var _footermenu_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./footermenu.component.html?ngResource */ 7593);
 /* harmony import */ var _footermenu_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./footermenu.component.scss?ngResource */ 1468);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 3184);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ 2816);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ 2816);
+/* harmony import */ var _services_user_data_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/user-data.service */ 5944);
+
 
 
 
 
 
 let FootermenuComponent = class FootermenuComponent {
-    constructor(router) {
+    constructor(router, userData) {
         this.router = router;
+        this.userData = userData;
         this.currentPage = this.router.url;
     }
     ngOnInit() {
         console.log('this.router.url', this.router.url);
+        this.getUser();
+    }
+    getUser() {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__awaiter)(this, void 0, void 0, function* () {
+            this.currentUser = yield this.userData.getCurrentUserID();
+        });
     }
 };
 FootermenuComponent.ctorParameters = () => [
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__.Router }
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_4__.Router },
+    { type: _services_user_data_service__WEBPACK_IMPORTED_MODULE_2__.UserDataService }
 ];
 FootermenuComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Component)({
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.Component)({
         selector: 'app-footermenu',
         template: _footermenu_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
         styles: [_footermenu_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
     })
 ], FootermenuComponent);
+
+
+
+/***/ }),
+
+/***/ 4646:
+/*!*******************************************************!*\
+  !*** ./src/app/components/friend/friend.component.ts ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "FriendComponent": () => (/* binding */ FriendComponent)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var _friend_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./friend.component.html?ngResource */ 7574);
+/* harmony import */ var _friend_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./friend.component.scss?ngResource */ 177);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var src_app_services_friends_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/friends.service */ 7974);
+/* harmony import */ var src_app_services_user_data_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/services/user-data.service */ 5944);
+/* harmony import */ var src_app_services_notification_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/notification.service */ 2013);
+
+
+
+
+
+
+
+let FriendComponent = class FriendComponent {
+    constructor(friendsService, userDataService, notificationService) {
+        this.friendsService = friendsService;
+        this.userDataService = userDataService;
+        this.notificationService = notificationService;
+    }
+    ngOnInit() {
+        this.getCurrentUser();
+        this.isFriendsWith();
+        //User is still logged in, but this.isLoggedIn toggles friend add and remove icon
+        console.log(this.userId, this.loggedInUserId);
+        if (this.userId === this.loggedInUserId) {
+            this.isLoggedIn = false;
+        }
+    }
+    sendFriendRequest() {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, function* () {
+            try {
+                if (this.user["rights"] === 0 || this.user["rights"] === 2) {
+                    yield this.notificationService.createNotification(3, this.userId);
+                }
+                else if (this.user["rights"] === 1) {
+                    yield this.friendsService.followOrganizer(this.userId);
+                }
+                this.isFriendsWith();
+            }
+            catch (_a) {
+            }
+        });
+    }
+    removeFriend() {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, function* () {
+            try {
+                if (this.user["rights"] === 0 || this.user["rights"] === 2) {
+                    yield this.friendsService.unfriendUser(this.userId);
+                }
+                else if (this.user["rights"] === 1) {
+                    yield this.friendsService.unfollowOrganizer(this.userId);
+                }
+                this.isFriendsWith();
+            }
+            catch (_a) {
+            }
+        });
+    }
+    getCurrentUser() {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, function* () {
+            try {
+                this.user = yield this.userDataService.getUserById(this.userId).then((user) => {
+                    if (user.firstName === null) {
+                        user.firstName = '';
+                    }
+                    if (user.lastName === null) {
+                        user.lastName = '';
+                    }
+                    console.log(user);
+                    if (user.photoUrl === null) {
+                        user.photoUrl = '';
+                    }
+                    return user;
+                });
+                console.log(this.user);
+                this.isLoaded = true;
+            }
+            catch (_a) {
+            }
+        });
+    }
+    isFriendsWith() {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, function* () {
+            try {
+                if (this.isLoggedIn) {
+                    let friendshipStatus = yield this.friendsService.isUserFriendWith(this.userId);
+                    this.isFriends = friendshipStatus;
+                    this.addRemoveIcon = friendshipStatus ? "person-remove-outline" : "person-add-outline";
+                    return;
+                }
+                this.isFriends = undefined;
+            }
+            catch (_a) {
+                this.isFriends = undefined;
+            }
+        });
+    }
+};
+FriendComponent.ctorParameters = () => [
+    { type: src_app_services_friends_service__WEBPACK_IMPORTED_MODULE_2__.FriendsService },
+    { type: src_app_services_user_data_service__WEBPACK_IMPORTED_MODULE_3__.UserDataService },
+    { type: src_app_services_notification_service__WEBPACK_IMPORTED_MODULE_4__.NotificationService }
+];
+FriendComponent.propDecorators = {
+    userId: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input }],
+    isLoggedIn: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input }],
+    loggedInUserId: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input }]
+};
+FriendComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.Component)({
+        selector: 'app-friend',
+        template: _friend_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
+        styles: [_friend_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
+    })
+], FriendComponent);
+
+
+
+/***/ }),
+
+/***/ 6548:
+/*!*********************************************************************!*\
+  !*** ./src/app/components/notifications/notifications.component.ts ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "NotificationsComponent": () => (/* binding */ NotificationsComponent)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var _notifications_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./notifications.component.html?ngResource */ 7905);
+/* harmony import */ var _notifications_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./notifications.component.scss?ngResource */ 1848);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var src_app_services_notification_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/notification.service */ 2013);
+/* harmony import */ var src_app_services_friends_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/services/friends.service */ 7974);
+
+
+
+
+
+
+let NotificationsComponent = class NotificationsComponent {
+    constructor(notificationService, friendsService) {
+        this.notificationService = notificationService;
+        this.friendsService = friendsService;
+    }
+    ngOnInit() {
+        this.getNotification();
+    }
+    getNotification() {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__awaiter)(this, void 0, void 0, function* () {
+            yield this.notificationService.getNotificationInitializer();
+        });
+    }
+    acceptFriendRequest(notification) {
+        this.friendsService.befriendUser(notification.senderId)
+            .then(() => this.notificationService.removeNotification(notification.notificationId));
+    }
+};
+NotificationsComponent.ctorParameters = () => [
+    { type: src_app_services_notification_service__WEBPACK_IMPORTED_MODULE_2__.NotificationService },
+    { type: src_app_services_friends_service__WEBPACK_IMPORTED_MODULE_3__.FriendsService }
+];
+NotificationsComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.Component)({
+        selector: 'app-notifications',
+        template: _notifications_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
+        styles: [_notifications_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
+    })
+], NotificationsComponent);
 
 
 
@@ -259,12 +456,13 @@ let LoggedInGuard = class LoggedInGuard {
         this.authService = authService;
     }
     canActivate(route, state) {
-        return new Promise((resolve, reject) => {
-            if (!this.authService.isloggedin()) {
+        return new Promise((resolve, reject) => (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            const isLoggedIn = yield this.authService.isLoggedIn();
+            if (!isLoggedIn) {
                 reject(false);
             }
             resolve(true);
-        });
+        }));
     }
 };
 LoggedInGuard.ctorParameters = () => [
@@ -293,18 +491,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "Notification": () => (/* binding */ Notification)
 /* harmony export */ });
 class BaseNotification {
-    constructor(receiverId, senderId, content, type, date) {
+    constructor(receiverId, senderId, content, type, date, notificationId) {
         this.receiverId = receiverId;
         this.senderId = senderId;
         this.content = content;
         this.type = type;
-        this.date = date.toDate();
+        this.date = date;
+        if (notificationId)
+            this.notificationId = notificationId;
     }
 }
 class Notification extends BaseNotification {
     constructor(senderName, ...baseNotification) {
         super(...baseNotification);
         this.senderName = senderName;
+        // @ts-ignore
+        //this.date = (this.date typeof firebase["firestore.Timestamp"]) ? this.date.toDate() : this.date;
     }
 }
 
@@ -425,63 +627,58 @@ FireStorageImgPipe = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([
 
 /***/ }),
 
-/***/ 5392:
-/*!**********************************************************!*\
-  !*** ./src/app/notifications/notifications.component.ts ***!
-  \**********************************************************/
+/***/ 9005:
+/*!*****************************************************!*\
+  !*** ./src/app/pages/friendlist/friendlist.page.ts ***!
+  \*****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "NotificationsComponent": () => (/* binding */ NotificationsComponent)
+/* harmony export */   "FriendlistPage": () => (/* binding */ FriendlistPage)
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 4929);
-/* harmony import */ var _notifications_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./notifications.component.html?ngResource */ 3163);
-/* harmony import */ var _notifications_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./notifications.component.scss?ngResource */ 6357);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 3184);
-/* harmony import */ var src_app_services_notification_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/notification.service */ 2013);
-/* harmony import */ var src_app_services_friends_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/services/friends.service */ 7974);
+/* harmony import */ var _friendlist_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./friendlist.page.html?ngResource */ 8603);
+/* harmony import */ var _friendlist_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./friendlist.page.scss?ngResource */ 9648);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var src_app_services_friends_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/friends.service */ 7974);
 
 
 
 
 
-
-let NotificationsComponent = class NotificationsComponent {
-    constructor(notificationService, friendsService) {
-        this.notificationService = notificationService;
+let FriendlistPage = class FriendlistPage {
+    constructor(friendsService) {
         this.friendsService = friendsService;
-        this.notifications = [];
+        this.limiter = 7;
+        this.title = 'Freunde';
     }
     ngOnInit() {
-        this.getNotification();
+        if (this.friendIds && this.friendIds.length > 0) {
+            this.title = this.friendIds.length === 1 ? this.friendIds.length.toString() + ' Freund'
+                : this.friendIds.length.toString() + ' Freunde';
+        }
     }
-    getNotification() {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__awaiter)(this, void 0, void 0, function* () {
-            yield this.notificationService.getNotificationInitializer();
-            this.notifications = this.notificationService.notifications;
-        });
-    }
-    acceptFriendRequest(senderId) {
-        this.friendsService.befriendUser(senderId)
-            .then(response => console.log(response));
-    }
-    declineFriendRequest() {
-        this.notificationService.removeNotification();
+    addLimit() {
+        this.limiter += 5;
     }
 };
-NotificationsComponent.ctorParameters = () => [
-    { type: src_app_services_notification_service__WEBPACK_IMPORTED_MODULE_2__.NotificationService },
-    { type: src_app_services_friends_service__WEBPACK_IMPORTED_MODULE_3__.FriendsService }
+FriendlistPage.ctorParameters = () => [
+    { type: src_app_services_friends_service__WEBPACK_IMPORTED_MODULE_2__.FriendsService }
 ];
-NotificationsComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.Component)({
-        selector: 'app-notifications',
-        template: _notifications_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
-        styles: [_notifications_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
+FriendlistPage.propDecorators = {
+    friendIds: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Input }],
+    isLoggedIn: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Input }],
+    loggedInUserId: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Input }]
+};
+FriendlistPage = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Component)({
+        selector: 'app-friendlist',
+        template: _friendlist_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
+        styles: [_friendlist_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
     })
-], NotificationsComponent);
+], FriendlistPage);
 
 
 
@@ -655,9 +852,8 @@ let AuthService = class AuthService {
             }
         });
     }
-    isloggedin() {
-        const user = JSON.parse(localStorage.getItem('user'));
-        return user !== undefined;
+    isLoggedIn() {
+        return this.user !== undefined;
     }
     hasRole(role) {
         //returns true if user role equivalent or smaller
@@ -767,16 +963,19 @@ let AuthService = class AuthService {
             }
         });
     }
-    SignOut() {
+    signOut() {
         this.afAuth.signOut().then(() => {
             this.refreshUserDataSub.unsubscribe();
             localStorage.removeItem('user');
             localStorage.removeItem('token');
+            this.router.navigate(['login']);
+        }).catch((e) => {
+            console.log(e);
         });
     }
     /** FOR APP MODULE INIT **/
     initalizeService() {
-        console.log("Authentication Serivce successfully initialized");
+        console.log("Authentification Serivce successfully initialized");
     }
 };
 AuthService.ctorParameters = () => [
@@ -806,27 +1005,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "FriendsService": () => (/* binding */ FriendsService)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ 4929);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 3184);
 /* harmony import */ var src_app_services_user_data_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/app/services/user-data.service */ 5944);
-/* harmony import */ var _angular_fire_compat_firestore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/fire/compat/firestore */ 2393);
-/* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/fire/firestore */ 6466);
+/* harmony import */ var _angular_fire_compat_firestore__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/fire/compat/firestore */ 2393);
+/* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/fire/firestore */ 6466);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic/angular */ 3819);
+/* harmony import */ var src_app_pages_friendlist_friendlist_page__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/pages/friendlist/friendlist.page */ 9005);
+/* harmony import */ var src_app_services_auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/auth.service */ 7556);
+
+
+
 
 
 
 
 
 let FriendsService = class FriendsService {
-    constructor(afs, userDataService) {
+    constructor(afs, userDataService, modalController, authService) {
         this.afs = afs;
         this.userDataService = userDataService;
+        this.modalController = modalController;
+        this.authService = authService;
         this.userCollection = this.afs.collection(`user`);
     }
     isUserFriendWith(potentialFriendId) {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__awaiter)(this, void 0, void 0, function* () {
             try {
                 return yield this.userDataService.getCurrentUser().then((userData) => {
-                    console.log(userData);
                     return userData.friends.includes(potentialFriendId);
                 });
             }
@@ -836,11 +1042,11 @@ let FriendsService = class FriendsService {
         });
     }
     followOrganizer(organizerIdToFollow) {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__awaiter)(this, void 0, void 0, function* () {
             try {
                 const currentUserID = yield this.userDataService.getCurrentUserID();
                 yield this.userCollection.doc(currentUserID).update({
-                    friends: (0,_angular_fire_firestore__WEBPACK_IMPORTED_MODULE_2__.arrayUnion)(organizerIdToFollow)
+                    friends: (0,_angular_fire_firestore__WEBPACK_IMPORTED_MODULE_4__.arrayUnion)(organizerIdToFollow)
                 });
                 return "followed successfully";
             }
@@ -850,11 +1056,11 @@ let FriendsService = class FriendsService {
         });
     }
     unfollowOrganizer(organizerIdToUnfollow) {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__awaiter)(this, void 0, void 0, function* () {
             try {
                 const currentUserId = yield this.userDataService.getCurrentUserID();
                 yield this.userCollection.doc(currentUserId).update({
-                    friends: (0,_angular_fire_firestore__WEBPACK_IMPORTED_MODULE_2__.arrayRemove)(organizerIdToUnfollow)
+                    friends: (0,_angular_fire_firestore__WEBPACK_IMPORTED_MODULE_4__.arrayRemove)(organizerIdToUnfollow)
                 });
                 return "successfully removed";
             }
@@ -864,14 +1070,14 @@ let FriendsService = class FriendsService {
         });
     }
     unfriendUser(userIdToUnfriend) {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__awaiter)(this, void 0, void 0, function* () {
             try {
                 const currentUserId = yield this.userDataService.getCurrentUserID();
                 yield this.userCollection.doc(currentUserId).update({
-                    friends: (0,_angular_fire_firestore__WEBPACK_IMPORTED_MODULE_2__.arrayRemove)(userIdToUnfriend)
+                    friends: (0,_angular_fire_firestore__WEBPACK_IMPORTED_MODULE_4__.arrayRemove)(userIdToUnfriend)
                 });
                 yield this.userCollection.doc(userIdToUnfriend).update({
-                    friends: (0,_angular_fire_firestore__WEBPACK_IMPORTED_MODULE_2__.arrayRemove)(currentUserId)
+                    friends: (0,_angular_fire_firestore__WEBPACK_IMPORTED_MODULE_4__.arrayRemove)(currentUserId)
                 });
                 return "successfully removed";
             }
@@ -881,14 +1087,14 @@ let FriendsService = class FriendsService {
         });
     }
     befriendUser(userIdToBefriend) {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__awaiter)(this, void 0, void 0, function* () {
             try {
                 const currentUserId = yield this.userDataService.getCurrentUserID();
                 yield this.userCollection.doc(currentUserId).update({
-                    friends: (0,_angular_fire_firestore__WEBPACK_IMPORTED_MODULE_2__.arrayUnion)(userIdToBefriend)
+                    friends: (0,_angular_fire_firestore__WEBPACK_IMPORTED_MODULE_4__.arrayUnion)(userIdToBefriend)
                 });
                 yield this.userCollection.doc(userIdToBefriend).update({
-                    friends: (0,_angular_fire_firestore__WEBPACK_IMPORTED_MODULE_2__.arrayUnion)(currentUserId)
+                    friends: (0,_angular_fire_firestore__WEBPACK_IMPORTED_MODULE_4__.arrayUnion)(currentUserId)
                 });
                 return "successfully added";
             }
@@ -897,13 +1103,39 @@ let FriendsService = class FriendsService {
             }
         });
     }
+    openFriendlistModal(friendIds) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__awaiter)(this, void 0, void 0, function* () {
+            const currentUserId = yield this.userDataService.getCurrentUserID();
+            const isLoggedIn = this.authService.isLoggedIn();
+            const modal = yield this.modalController.create({
+                component: src_app_pages_friendlist_friendlist_page__WEBPACK_IMPORTED_MODULE_1__.FriendlistPage,
+                cssClass: 'fullscreen',
+                componentProps: {
+                    loggedInUserId: currentUserId,
+                    friendIds: friendIds,
+                    isLoggedIn: isLoggedIn
+                }
+            });
+            this.friendlistModal = modal;
+            yield modal.present();
+        });
+    }
+    dismissModal() {
+        if (this.friendlistModal) {
+            this.friendlistModal.dismiss().then(() => {
+                this.friendlistModal = null;
+            });
+        }
+    }
 };
 FriendsService.ctorParameters = () => [
-    { type: _angular_fire_compat_firestore__WEBPACK_IMPORTED_MODULE_3__.AngularFirestore },
-    { type: src_app_services_user_data_service__WEBPACK_IMPORTED_MODULE_0__.UserDataService }
+    { type: _angular_fire_compat_firestore__WEBPACK_IMPORTED_MODULE_5__.AngularFirestore },
+    { type: src_app_services_user_data_service__WEBPACK_IMPORTED_MODULE_0__.UserDataService },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.ModalController },
+    { type: src_app_services_auth_service__WEBPACK_IMPORTED_MODULE_2__.AuthService }
 ];
-FriendsService = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Injectable)({
+FriendsService = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_7__.Injectable)({
         providedIn: 'root'
     })
 ], FriendsService);
@@ -923,14 +1155,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "NotificationService": () => (/* binding */ NotificationService)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 4929);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 3184);
 /* harmony import */ var src_app_services_user_data_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/app/services/user-data.service */ 5944);
 /* harmony import */ var src_app_models_classes_notification_model__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/models/classes/notification.model */ 3314);
-/* harmony import */ var _angular_fire_compat_firestore__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/fire/compat/firestore */ 2393);
-/* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/fire/firestore */ 6466);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic/angular */ 3819);
-/* harmony import */ var src_app_notifications_notifications_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/notifications/notifications.component */ 5392);
+/* harmony import */ var _angular_fire_compat_firestore__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/fire/compat/firestore */ 2393);
+/* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/fire/firestore */ 6466);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic/angular */ 3819);
+/* harmony import */ var src_app_components_notifications_notifications_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/components/notifications/notifications.component */ 6548);
+/* harmony import */ var _alert_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./alert.service */ 5970);
+
 
 
 
@@ -940,21 +1174,24 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let NotificationService = class NotificationService {
-    constructor(userDataService, afs, popoverController) {
+    constructor(userDataService, afs, popoverController, alertService) {
         this.userDataService = userDataService;
         this.afs = afs;
         this.popoverController = popoverController;
+        this.alertService = alertService;
         //TODO: get names from senderIds and pass to array
-        this.notificationWithExtraInformation = [];
+        this.notificationsSorted = [];
         this.notifications = [];
         this.notificationIds = [];
         this.currentUserId = undefined;
         this.currentUserObservable = undefined;
+        this.hasNotifications = false;
         this.updateUserId();
         this.notificationCollecton = this.afs.collection('notifications');
+        this.notificationCollectonRef = this.notificationCollecton.ref;
     }
     updateUserId() {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__awaiter)(this, void 0, void 0, function* () {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__awaiter)(this, void 0, void 0, function* () {
             try {
                 this.currentUserId = yield this.userDataService.getCurrentUserID();
                 this.currentUserObservable = yield this.userDataService.getUserById_Observable(this.currentUserId);
@@ -966,86 +1203,136 @@ let NotificationService = class NotificationService {
         });
     }
     getNotificationInitializer() {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__awaiter)(this, void 0, void 0, function* () {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__awaiter)(this, void 0, void 0, function* () {
             try {
                 if (this.currentUserId == null || this.currentUserObservable == null) {
-                    yield this.updateUserId().catch(() => { throw new Error("Could not get user data"); });
+                    yield this.updateUserId().catch(() => {
+                        throw new Error("Could not get user data");
+                    });
                 }
-                this.currentUserObservable.subscribe((userData) => (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__awaiter)(this, void 0, void 0, function* () {
+                this.currentUserObservable.subscribe((userData) => (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__awaiter)(this, void 0, void 0, function* () {
                     if (userData.notifications) {
                         this.notificationIds = yield userData.notifications;
                         if (this.notificationIds.length > 0) {
-                            //TODO: ADD ORDER BY DATE IN QUERY
-                            this.NotificationObservable = this.afs.collection('notifications', ref => ref.where((0,_angular_fire_firestore__WEBPACK_IMPORTED_MODULE_4__.documentId)(), 'in', this.notificationIds)).valueChanges({ idField: 'notificationId' });
+                            this.NotificationObservable = this.afs.collection(this.notificationCollectonRef, ref => ref.where((0,_angular_fire_firestore__WEBPACK_IMPORTED_MODULE_5__.documentId)(), 'in', this.notificationIds))
+                                .valueChanges({ idField: 'notificationId' });
                             yield this.getNotification();
                         }
-                    }
-                    else {
-                        throw new Error("No notifications found");
+                        //   } else {
+                        //
+                        //     //throw new Error("No notifications found");
+                        // }
                     }
                 }));
+            }
+            catch (e) {
+            }
+        });
+    }
+    getNotification() {
+        this.NotificationObservable.forEach((notificationDocs) => {
+            if (notificationDocs) {
+                this.notifications = notificationDocs;
+                this.sortNotifications();
+                this.hasNotifications = true;
+            }
+        });
+    }
+    sortNotifications() {
+        this.notificationsSorted = this.notifications.sort((notification1, notification2) => {
+            return notification1.date < notification2.date ? 1 : -1;
+        });
+    }
+    createNotification(notificationType, receiverId, content, eventOrUserName) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__awaiter)(this, void 0, void 0, function* () {
+            try {
+                const notificationId = this.afs.createId();
+                const currentUser = yield this.userDataService.getCurrentUser();
+                let notificationContent;
+                let newNotification;
+                let alertText;
+                switch (notificationType) {
+                    case 0: {
+                        //JuntosMessage
+                        notificationContent = content;
+                        break;
+                    }
+                    case 1: {
+                        //EventCreated
+                        notificationContent = "";
+                        break;
+                    }
+                    case 2: {
+                        //EventJoined
+                        notificationContent = "";
+                        break;
+                    }
+                    case 3: {
+                        //FriendRequest
+                        let doublicateCheck = yield this.checkNotificationDoublication(notificationType, currentUser['userId'], receiverId);
+                        if (doublicateCheck) {
+                            yield this.alertService.basicAlert('ACHTUNG', 'du hast dieser Person bereits eine Freundschaftsanfrage geschickt.', ['OK']);
+                            return;
+                        }
+                        alertText = 'du hast deine Freundschaftsanfrage erfolgereich versendet!';
+                        notificationContent = currentUser.userName + " hat dir eine Freunschaftsanfrage geschickt";
+                        break;
+                    }
+                }
+                newNotification = new src_app_models_classes_notification_model__WEBPACK_IMPORTED_MODULE_1__.Notification(currentUser.userName, receiverId, this.currentUserId, notificationContent, notificationType, new Date(), notificationId);
+                const data = JSON.parse(JSON.stringify(newNotification));
+                yield this.notificationCollecton.doc(notificationId).set(data)
+                    .catch((err) => console.log(err));
+                yield this.afs.collection('user').doc(receiverId).update({
+                    notifications: (0,_angular_fire_firestore__WEBPACK_IMPORTED_MODULE_5__.arrayUnion)(notificationId)
+                })
+                    .then((res) => {
+                    this.alertService.basicAlert('VERSCHICKT', alertText, ['OK']);
+                })
+                    .catch((err) => console.log(err));
             }
             catch (e) {
                 console.log(e);
             }
         });
     }
-    getNotification() {
-        this.NotificationObservable.forEach((notificationDocs) => {
-            console.log(notificationDocs["id"], notificationDocs);
-            this.notifications = notificationDocs;
-        });
-    }
-    createNotification(notificationType, receiverId, content, eventOrUserName) {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__awaiter)(this, void 0, void 0, function* () {
-            const notificationId = this.afs.createId();
-            const currentUser = yield this.userDataService.getCurrentUser();
-            let notificationContent;
-            let newNotification;
-            switch (notificationType) {
-                case 0: {
-                    //JuntosMessage
-                    notificationContent = content;
-                    break;
-                }
-                case 1: {
-                    //EventCreated
-                    notificationContent = "";
-                    break;
-                }
-                case 2: {
-                    //EventJoined
-                    notificationContent = "";
-                    break;
-                }
-                case 3: {
-                    //FriendRequest
-                    notificationContent = currentUser.userName + " hat dir eine Freunschaftsanfrage geschickt";
-                    break;
-                }
+    checkNotificationDoublication(type, senderId, receiverId) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__awaiter)(this, void 0, void 0, function* () {
+            try {
+                let result = false;
+                const query = yield this.notificationCollectonRef.where('type', '==', type)
+                    .where('senderId', '==', senderId)
+                    .where('receiverId', '==', receiverId);
+                const querySnapshot = yield (0,_angular_fire_firestore__WEBPACK_IMPORTED_MODULE_5__.getDocs)(query);
+                yield querySnapshot.forEach((doc) => {
+                    if (doc.exists()) {
+                        result = true;
+                    }
+                });
+                return result;
             }
-            newNotification = new src_app_models_classes_notification_model__WEBPACK_IMPORTED_MODULE_1__.BaseNotification(receiverId, this.currentUserId, notificationContent, notificationType, new Date());
-            const data = JSON.parse(JSON.stringify(newNotification));
-            yield this.notificationCollecton.doc(notificationId).set(data)
-                .catch((err) => console.log(err));
+            catch (e) {
+                return true;
+            }
         });
     }
-    removeNotification() {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__awaiter)(this, void 0, void 0, function* () {
+    removeNotification(notificationId) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__awaiter)(this, void 0, void 0, function* () {
+            yield this.notificationCollecton.doc(notificationId).delete();
+            yield this.afs.collection('user').doc(this.currentUserId).update({
+                notifications: (0,_angular_fire_firestore__WEBPACK_IMPORTED_MODULE_5__.arrayRemove)(notificationId)
+            });
         });
     }
     presentPopover(ev) {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__awaiter)(this, void 0, void 0, function* () {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__awaiter)(this, void 0, void 0, function* () {
             const popover = yield this.popoverController.create({
-                component: src_app_notifications_notifications_component__WEBPACK_IMPORTED_MODULE_2__.NotificationsComponent,
+                component: src_app_components_notifications_notifications_component__WEBPACK_IMPORTED_MODULE_2__.NotificationsComponent,
                 event: ev,
                 animated: true,
                 translucent: true,
                 showBackdrop: false,
-                alignment: 'end'
-            });
-            popover.onDidDismiss().then((result) => {
-                console.log(result.data);
+                alignment: 'start'
             });
             return yield popover.present();
             /** Sync event from popover component */
@@ -1054,11 +1341,12 @@ let NotificationService = class NotificationService {
 };
 NotificationService.ctorParameters = () => [
     { type: src_app_services_user_data_service__WEBPACK_IMPORTED_MODULE_0__.UserDataService },
-    { type: _angular_fire_compat_firestore__WEBPACK_IMPORTED_MODULE_5__.AngularFirestore },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.PopoverController }
+    { type: _angular_fire_compat_firestore__WEBPACK_IMPORTED_MODULE_6__.AngularFirestore },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.PopoverController },
+    { type: _alert_service__WEBPACK_IMPORTED_MODULE_3__.AlertService }
 ];
-NotificationService = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_7__.Injectable)({
+NotificationService = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_8__.Injectable)({
         providedIn: 'root'
     })
 ], NotificationService);
@@ -1171,7 +1459,6 @@ let UserDataService = class UserDataService {
             const user = yield this.getCurrentUser();
             const userId = user.userId;
             db.collection('user').doc(userId).update(data).then((res) => {
-                this.router.navigate(['event-list']);
             }).catch((e) => {
                 this.alertService.basicAlert('Bearbeiten des Profils fehlgeschlagen', 'Bitte versuchen Sie es später noch mal', ['OK']);
                 console.log('error');
@@ -1222,13 +1509,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "SharedModule": () => (/* binding */ SharedModule)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 4929);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 3184);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common */ 6362);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common */ 6362);
 /* harmony import */ var src_app_models_pipes_fire_storage_img_pipe__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/app/models/pipes/fire-storage-img.pipe */ 2417);
-/* harmony import */ var src_app_notifications_notifications_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/notifications/notifications.component */ 5392);
+/* harmony import */ var src_app_components_notifications_notifications_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/components/notifications/notifications.component */ 6548);
 /* harmony import */ var _components_footermenu_footermenu_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/footermenu/footermenu.component */ 8935);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic/angular */ 3819);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic/angular */ 3819);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/router */ 2816);
+/* harmony import */ var src_app_components_friend_friend_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/components/friend/friend.component */ 4646);
+
+
 
 
 
@@ -1237,18 +1528,19 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /**
- * Import of this Module is needed to provide declared and exported Pipes and Components
+ * Import of this Module is needed to provide declared Pipes and Components
  */
 let SharedModule = class SharedModule {
 };
-SharedModule = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.NgModule)({
-        declarations: [src_app_models_pipes_fire_storage_img_pipe__WEBPACK_IMPORTED_MODULE_0__.FireStorageImgPipe, _components_footermenu_footermenu_component__WEBPACK_IMPORTED_MODULE_2__.FootermenuComponent, src_app_notifications_notifications_component__WEBPACK_IMPORTED_MODULE_1__.NotificationsComponent],
+SharedModule = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.NgModule)({
+        declarations: [src_app_models_pipes_fire_storage_img_pipe__WEBPACK_IMPORTED_MODULE_0__.FireStorageImgPipe, _components_footermenu_footermenu_component__WEBPACK_IMPORTED_MODULE_2__.FootermenuComponent, src_app_components_notifications_notifications_component__WEBPACK_IMPORTED_MODULE_1__.NotificationsComponent, src_app_components_friend_friend_component__WEBPACK_IMPORTED_MODULE_3__.FriendComponent],
         imports: [
-            _angular_common__WEBPACK_IMPORTED_MODULE_5__.CommonModule,
-            _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.IonicModule
+            _angular_common__WEBPACK_IMPORTED_MODULE_6__.CommonModule,
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.IonicModule,
+            _angular_router__WEBPACK_IMPORTED_MODULE_8__.RouterModule
         ],
-        exports: [src_app_models_pipes_fire_storage_img_pipe__WEBPACK_IMPORTED_MODULE_0__.FireStorageImgPipe, _components_footermenu_footermenu_component__WEBPACK_IMPORTED_MODULE_2__.FootermenuComponent, src_app_notifications_notifications_component__WEBPACK_IMPORTED_MODULE_1__.NotificationsComponent]
+        exports: [src_app_models_pipes_fire_storage_img_pipe__WEBPACK_IMPORTED_MODULE_0__.FireStorageImgPipe, _components_footermenu_footermenu_component__WEBPACK_IMPORTED_MODULE_2__.FootermenuComponent, src_app_components_notifications_notifications_component__WEBPACK_IMPORTED_MODULE_1__.NotificationsComponent, src_app_components_friend_friend_component__WEBPACK_IMPORTED_MODULE_3__.FriendComponent]
     })
 ], SharedModule);
 
@@ -1538,7 +1830,7 @@ var map = {
 		"node_modules_ionic_core_dist_esm_ion-text_entry_js"
 	],
 	"./ion-textarea.entry.js": [
-		3500,
+		6357,
 		"common",
 		"node_modules_ionic_core_dist_esm_ion-textarea_entry_js"
 	],
@@ -1632,7 +1924,7 @@ module.exports = webpackAsyncContext;
 /***/ ((module) => {
 
 "use strict";
-module.exports = "ion-content {\n  --offset-bottom: auto!important;\n  --overflow: hidden;\n  overflow: auto;\n  text-transform: none !important;\n  letter-spacing: normal !important;\n  font-family: Agrandir-Regular, serif !important;\n}\nion-content::-webkit-scrollbar {\n  display: none;\n}\nion-button, ion-label {\n  text-transform: none !important;\n  letter-spacing: normal !important;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUVFLCtCQUFBO0VBQ0Esa0JBQUE7RUFDQSxjQUFBO0VBQ0EsK0JBQUE7RUFDQSxpQ0FBQTtFQUNBLCtDQUFBO0FBQUY7QUFDRTtFQUNFLGFBQUE7QUFDSjtBQUlBO0VBQ0UsK0JBQUE7RUFDQSxpQ0FBQTtBQURGIiwiZmlsZSI6ImFwcC5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbImlvbi1jb250ZW50IHtcclxuICAvLyBvdmVyd3JpdGUgaW5saW5lIHN0eWxlc1xyXG4gIC0tb2Zmc2V0LWJvdHRvbTogYXV0byFpbXBvcnRhbnQ7XHJcbiAgLS1vdmVyZmxvdzogaGlkZGVuO1xyXG4gIG92ZXJmbG93OiBhdXRvO1xyXG4gIHRleHQtdHJhbnNmb3JtOiBub25lICFpbXBvcnRhbnQ7XHJcbiAgbGV0dGVyLXNwYWNpbmc6IG5vcm1hbCAhaW1wb3J0YW50O1xyXG4gIGZvbnQtZmFtaWx5OiBBZ3JhbmRpci1SZWd1bGFyLCBzZXJpZiAhaW1wb3J0YW50O1xyXG4gICY6Oi13ZWJraXQtc2Nyb2xsYmFyIHtcclxuICAgIGRpc3BsYXk6IG5vbmU7XHJcbiAgfVxyXG59XHJcblxyXG5cclxuaW9uLWJ1dHRvbiwgaW9uLWxhYmVsIHtcclxuICB0ZXh0LXRyYW5zZm9ybTogbm9uZSAhaW1wb3J0YW50O1xyXG4gIGxldHRlci1zcGFjaW5nOiBub3JtYWwgIWltcG9ydGFudDtcclxufVxyXG4iXX0= */";
+module.exports = "ion-content {\n  --offset-bottom: auto!important;\n  --overflow: hidden;\n  overflow: auto;\n  text-transform: none !important;\n  letter-spacing: normal !important;\n  font-family: Agrandir-Regular, serif !important;\n}\nion-content::-webkit-scrollbar {\n  display: none;\n}\nion-button, ion-label {\n  text-transform: none !important;\n  letter-spacing: normal !important;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC5jb21wb25lbnQuc2NzcyIsIi4uXFwuLlxcLi5cXC4uXFwuLlxcSW50ZWdyYXRpb25zcHJvamVrdCUyMDJcXGp1bnRvcy1ldmVudHMtaXAyXFxKdW50b3NcXHNyY1xcYXBwXFxhcHAuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFFRSwrQkFBQTtFQUNBLGtCQUFBO0VBQ0EsY0FBQTtFQUNBLCtCQUFBO0VBQ0EsaUNBQUE7RUFDQSwrQ0FBQTtBQ0FGO0FEQ0U7RUFDRSxhQUFBO0FDQ0o7QURJQTtFQUNFLCtCQUFBO0VBQ0EsaUNBQUE7QUNERiIsImZpbGUiOiJhcHAuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJpb24tY29udGVudCB7XHJcbiAgLy8gb3ZlcndyaXRlIGlubGluZSBzdHlsZXNcclxuICAtLW9mZnNldC1ib3R0b206IGF1dG8haW1wb3J0YW50O1xyXG4gIC0tb3ZlcmZsb3c6IGhpZGRlbjtcclxuICBvdmVyZmxvdzogYXV0bztcclxuICB0ZXh0LXRyYW5zZm9ybTogbm9uZSAhaW1wb3J0YW50O1xyXG4gIGxldHRlci1zcGFjaW5nOiBub3JtYWwgIWltcG9ydGFudDtcclxuICBmb250LWZhbWlseTogQWdyYW5kaXItUmVndWxhciwgc2VyaWYgIWltcG9ydGFudDtcclxuICAmOjotd2Via2l0LXNjcm9sbGJhciB7XHJcbiAgICBkaXNwbGF5OiBub25lO1xyXG4gIH1cclxufVxyXG5cclxuXHJcbmlvbi1idXR0b24sIGlvbi1sYWJlbCB7XHJcbiAgdGV4dC10cmFuc2Zvcm06IG5vbmUgIWltcG9ydGFudDtcclxuICBsZXR0ZXItc3BhY2luZzogbm9ybWFsICFpbXBvcnRhbnQ7XHJcbn1cclxuXHJcblxyXG4iLCJpb24tY29udGVudCB7XG4gIC0tb2Zmc2V0LWJvdHRvbTogYXV0byFpbXBvcnRhbnQ7XG4gIC0tb3ZlcmZsb3c6IGhpZGRlbjtcbiAgb3ZlcmZsb3c6IGF1dG87XG4gIHRleHQtdHJhbnNmb3JtOiBub25lICFpbXBvcnRhbnQ7XG4gIGxldHRlci1zcGFjaW5nOiBub3JtYWwgIWltcG9ydGFudDtcbiAgZm9udC1mYW1pbHk6IEFncmFuZGlyLVJlZ3VsYXIsIHNlcmlmICFpbXBvcnRhbnQ7XG59XG5pb24tY29udGVudDo6LXdlYmtpdC1zY3JvbGxiYXIge1xuICBkaXNwbGF5OiBub25lO1xufVxuXG5pb24tYnV0dG9uLCBpb24tbGFiZWwge1xuICB0ZXh0LXRyYW5zZm9ybTogbm9uZSAhaW1wb3J0YW50O1xuICBsZXR0ZXItc3BhY2luZzogbm9ybWFsICFpbXBvcnRhbnQ7XG59Il19 */";
 
 /***/ }),
 
@@ -1647,14 +1939,36 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 
 /***/ }),
 
-/***/ 6357:
-/*!***********************************************************************!*\
-  !*** ./src/app/notifications/notifications.component.scss?ngResource ***!
-  \***********************************************************************/
+/***/ 177:
+/*!********************************************************************!*\
+  !*** ./src/app/components/friend/friend.component.scss?ngResource ***!
+  \********************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJmcmllbmQuY29tcG9uZW50LnNjc3MifQ== */";
+
+/***/ }),
+
+/***/ 1848:
+/*!**********************************************************************************!*\
+  !*** ./src/app/components/notifications/notifications.component.scss?ngResource ***!
+  \**********************************************************************************/
 /***/ ((module) => {
 
 "use strict";
 module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJub3RpZmljYXRpb25zLmNvbXBvbmVudC5zY3NzIn0= */";
+
+/***/ }),
+
+/***/ 9648:
+/*!******************************************************************!*\
+  !*** ./src/app/pages/friendlist/friendlist.page.scss?ngResource ***!
+  \******************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = "ion-modal.fullscreen {\n  --width: 100%;\n  --height: 100%;\n  --border-radius: 0;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImZyaWVuZGxpc3QucGFnZS5zY3NzIiwiLi5cXC4uXFwuLlxcLi5cXC4uXFwuLlxcLi5cXEludGVncmF0aW9uc3Byb2pla3QlMjAyXFxqdW50b3MtZXZlbnRzLWlwMlxcSnVudG9zXFxzcmNcXGFwcFxccGFnZXNcXGZyaWVuZGxpc3RcXGZyaWVuZGxpc3QucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsYUFBQTtFQUNBLGNBQUE7RUFDQSxrQkFBQTtBQ0NGIiwiZmlsZSI6ImZyaWVuZGxpc3QucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaW9uLW1vZGFsLmZ1bGxzY3JlZW4ge1xyXG4gIC0td2lkdGg6IDEwMCU7XHJcbiAgLS1oZWlnaHQ6IDEwMCU7XHJcbiAgLS1ib3JkZXItcmFkaXVzOiAwO1xyXG59XHJcbiIsImlvbi1tb2RhbC5mdWxsc2NyZWVuIHtcbiAgLS13aWR0aDogMTAwJTtcbiAgLS1oZWlnaHQ6IDEwMCU7XG4gIC0tYm9yZGVyLXJhZGl1czogMDtcbn0iXX0= */";
 
 /***/ }),
 
@@ -1676,18 +1990,40 @@ module.exports = "<ion-app>\r\n  <ion-router-outlet></ion-router-outlet>\r\n</io
 /***/ ((module) => {
 
 "use strict";
-module.exports = "<ion-footer>\n  <ion-toolbar>\n    <ion-grid>\n      <ion-row class=\"ion-justify-content-around\">\n        <ion-buttons>\n          <ion-col>\n            <ion-button (click)=\"router.navigate(['event-list'])\">\n              <ion-icon size=\"large\" style=\"zoom:0.8\" *ngIf=\"currentPage === '/event-list'; else not_home\" slot=\"icon-only\" name=\"home\"></ion-icon>\n              <ng-template #not_home>\n                <ion-icon size=\"large\" style=\"zoom:0.8\" slot=\"icon-only\" name=\"home-outline\"></ion-icon>\n              </ng-template>\n            </ion-button>\n          </ion-col>\n          <ion-col >\n            <ion-button>\n                <!--TODO: See if URL fits-->\n              <ion-icon size=\"large\" style=\"zoom:0.8\" *ngIf=\"currentPage === '/search-event'; else not_search\" slot=\"icon-only\" name=\"search\"></ion-icon>\n              <ng-template #not_search>\n                <ion-icon size=\"large\" style=\"zoom:0.8\" slot=\"icon-only\" name=\"search-outline\"></ion-icon>\n              </ng-template>\n            </ion-button>\n          </ion-col>\n          <ion-col >\n            <ion-button>\n              <!--TODO: See if URL fits-->\n              <ion-icon size=\"large\" style=\"zoom:0.8\" *ngIf=\"currentPage === '/qr-code'; else not_qr_code\" slot=\"icon-only\" name=\"qr-code\"></ion-icon>\n              <ng-template #not_qr_code>\n                <ion-icon size=\"large\" style=\"zoom:0.8\" slot=\"icon-only\" name=\"qr-code-outline\"></ion-icon>\n              </ng-template>\n            </ion-button>\n          </ion-col>\n          <ion-col >\n            <ion-button>\n              <!--TODO: See if URL fits-->\n              <ion-icon size=\"large\" style=\"zoom:0.8\" *ngIf=\"currentPage === '/chat'; else not_chat\" slot=\"icon-only\" name=\"chatbubble-ellipses\"></ion-icon>\n              <ng-template #not_chat>\n                <ion-icon size=\"large\" style=\"zoom:0.8\" slot=\"icon-only\" name=\"chatbubble-ellipses-outline\"></ion-icon>\n              </ng-template>\n            </ion-button>\n          </ion-col>\n          <ion-col >\n            <!--TODO: See if URL fits, change navigate url-->\n            <ion-button (click)=\"router.navigate(['edit-user'])\">\n              <ion-icon size=\"large\" style=\"zoom:0.8\" *ngIf=\"currentPage  === '/profile'; else not_profile\" slot=\"icon-only\" name=\"person\"></ion-icon>\n              <ng-template #not_profile>\n                <ion-icon size=\"large\" style=\"zoom:0.8\" slot=\"icon-only\" name=\"person-outline\"></ion-icon>\n              </ng-template>\n            </ion-button>\n          </ion-col>\n        </ion-buttons>\n      </ion-row>\n    </ion-grid>\n  </ion-toolbar>\n</ion-footer>\n";
+module.exports = "<ion-footer>\r\n  <ion-toolbar>\r\n    <ion-grid>\r\n      <ion-row class=\"ion-justify-content-around\">\r\n        <ion-buttons>\r\n          <ion-col>\r\n            <ion-button (click)=\"router.navigate(['event-list'])\">\r\n              <ion-icon size=\"large\" style=\"zoom:0.8\" *ngIf=\"currentPage === '/event-list'; else not_home\"\r\n                        slot=\"icon-only\" name=\"home\"></ion-icon>\r\n              <ng-template #not_home>\r\n                <ion-icon size=\"large\" style=\"zoom:0.8\" slot=\"icon-only\" name=\"home-outline\"></ion-icon>\r\n              </ng-template>\r\n            </ion-button>\r\n          </ion-col>\r\n          <ion-col>\r\n            <ion-button>\r\n              <!--TODO: See if URL fits-->\r\n              <ion-icon size=\"large\" style=\"zoom:0.8\" *ngIf=\"currentPage === '/search-event'; else not_search\"\r\n                        slot=\"icon-only\" name=\"search\"></ion-icon>\r\n              <ng-template #not_search>\r\n                <ion-icon size=\"large\" style=\"zoom:0.8\" slot=\"icon-only\" name=\"search-outline\"></ion-icon>\r\n              </ng-template>\r\n            </ion-button>\r\n          </ion-col>\r\n          <ion-col>\r\n            <ion-button>\r\n              <!--TODO: See if URL fits-->\r\n              <ion-icon size=\"large\" style=\"zoom:0.8\" *ngIf=\"currentPage === '/qr-code'; else not_qr_code\"\r\n                        slot=\"icon-only\" name=\"qr-code\"></ion-icon>\r\n              <ng-template #not_qr_code>\r\n                <ion-icon size=\"large\" style=\"zoom:0.8\" slot=\"icon-only\" name=\"qr-code-outline\"></ion-icon>\r\n              </ng-template>\r\n            </ion-button>\r\n          </ion-col>\r\n          <ion-col>\r\n            <ion-button>\r\n              <!--TODO: See if URL fits-->\r\n              <ion-icon size=\"large\" style=\"zoom:0.8\" *ngIf=\"currentPage === '/chat'; else not_chat\" slot=\"icon-only\"\r\n                        name=\"chatbubble-ellipses\"></ion-icon>\r\n              <ng-template #not_chat>\r\n                <ion-icon size=\"large\" style=\"zoom:0.8\" slot=\"icon-only\" name=\"chatbubble-ellipses-outline\"></ion-icon>\r\n              </ng-template>\r\n            </ion-button>\r\n          </ion-col>\r\n          <ion-col>\r\n            <ion-button (click)=\"router.navigate(['profile', currentUser])\">\r\n              <ion-icon size=\"large\" style=\"zoom:0.8\" *ngIf=\"currentPage.includes('/profile'); else not_profile\"\r\n                        slot=\"icon-only\" name=\"person\"></ion-icon>\r\n              <ng-template #not_profile>\r\n                <ion-icon size=\"large\" style=\"zoom:0.8\" slot=\"icon-only\" name=\"person-outline\"></ion-icon>\r\n              </ng-template>\r\n            </ion-button>\r\n          </ion-col>\r\n        </ion-buttons>\r\n      </ion-row>\r\n    </ion-grid>\r\n  </ion-toolbar>\r\n</ion-footer>\r\n";
 
 /***/ }),
 
-/***/ 3163:
-/*!***********************************************************************!*\
-  !*** ./src/app/notifications/notifications.component.html?ngResource ***!
-  \***********************************************************************/
+/***/ 7574:
+/*!********************************************************************!*\
+  !*** ./src/app/components/friend/friend.component.html?ngResource ***!
+  \********************************************************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = "<ion-content>\r\n  <ion-list>\r\n    <ng-container *ngFor=\"let notification of notifications\">\r\n      <ion-item [button]=\"false\" [detail]=\"false\">\r\n        <ion-label>\r\n          <h2>{{notification.senderId}}</h2>\r\n          <p>{{notification.content}}</p>\r\n          <ng-container *ngIf=\"notification.type == 3\">\r\n            <ion-button slot=\"start\">\r\n              <ion-icon (click)=\"acceptFriendRequest(notification.senderId)\" size=\"large\" style=\"zoom:0.8\" name=\"checkmark-outline\"></ion-icon>\r\n            </ion-button>\r\n            <ion-button slot=\"end\">\r\n              <ion-icon size=\"large\" style=\"zoom:0.8\" name=\"close-outline\"></ion-icon>\r\n            </ion-button>\r\n          </ng-container>\r\n        </ion-label>\r\n      </ion-item>\r\n    </ng-container>\r\n  </ion-list>\r\n</ion-content>\r\n\r\n";
+module.exports = "<ng-container *ngIf=\"isLoaded\">\r\n    <ion-item [routerLink]=\"['/profile/' + userId]\">\r\n         <ion-avatar>\r\n             <ion-img *ngIf=\"user.photoUrl.includes('.png') || user.photoUrl.includes('googleusercontent'); else noNeed\" alt=\"User avatar\" src=\"{{user.photoUrl}}\"></ion-img>\r\n             <ng-template #noNeed>\r\n                 <ion-img alt=\"User avatar\" src=\"{{user.photoUrl | fireStorageImg: '/avatars' | async}}\"></ion-img>\r\n             </ng-template>\r\n         </ion-avatar>\r\n          <ion-label>\r\n            <h2>{{user.userName}}</h2>\r\n            <p>{{user.firstName}} {{user.lastName}}</p>\r\n          </ion-label>\r\n          <ion-buttons slot=\"end\" *ngIf=\"isLoggedIn\">\r\n              <ng-container *ngIf=\"isFriends else noFriends\">\r\n                <ion-icon (click)=\"removeFriend()\" size=\"large\" style=\"zoom:0.8\" [name]=\"addRemoveIcon\"></ion-icon>\r\n              </ng-container>\r\n              <ng-template #noFriends>\r\n                  <ion-icon (click)=\"sendFriendRequest()\" size=\"large\" style=\"zoom:0.8\" [name]=\"addRemoveIcon\"></ion-icon>\r\n              </ng-template>\r\n          </ion-buttons>\r\n    </ion-item>\r\n</ng-container>\r\n";
+
+/***/ }),
+
+/***/ 7905:
+/*!**********************************************************************************!*\
+  !*** ./src/app/components/notifications/notifications.component.html?ngResource ***!
+  \**********************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = "<ion-content>\r\n  <ion-list>\r\n    <ng-container *ngFor=\"let notification of notificationService.notificationsSorted\">\r\n      <ion-item lines=\"full\" [button]=\"true\" [detail]=\"false\" [routerLink]=\"['/profile/' + notification.senderId]\">\r\n          <!--<ion-buttons slot=\"end\" (click)=\"notificationService.removeNotification(notification.notificationId)\">\r\n            <ion-icon  size=\"small\" style=\"zoom:0.8; position:absolute;\" name=\"close-outline\"></ion-icon>\r\n          </ion-buttons>\r\n          -->\r\n        <ion-label *ngIf=\"notification\">\r\n          <h2 *ngIF=\"notification.senderName else placeholderTitle\">{{notification.senderName}}</h2>\r\n          <ng-template #placeholderTitle>\r\n            <h2>Freundschaftsanfrage</h2>\r\n          </ng-template>\r\n          <p>{{notification.content}}</p>\r\n          <ng-container *ngIf=\"notification.type == 3\">\r\n            <ion-button slot=\"start\" (click)=\"acceptFriendRequest(notification)\">\r\n              <ion-icon  size=\"large\" style=\"zoom:0.8\" name=\"checkmark-outline\"></ion-icon>\r\n            </ion-button>\r\n            <ion-button slot=\"end\" (click)=\"notificationService.removeNotification(notification.notificationId)\">\r\n              <ion-icon size=\"large\" style=\"zoom:0.8\" name=\"close-outline\"></ion-icon>\r\n            </ion-button>\r\n          </ng-container>\r\n        </ion-label>\r\n      </ion-item>\r\n    </ng-container>\r\n  </ion-list>\r\n</ion-content>\r\n\r\n";
+
+/***/ }),
+
+/***/ 8603:
+/*!******************************************************************!*\
+  !*** ./src/app/pages/friendlist/friendlist.page.html?ngResource ***!
+  \******************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = "<ion-header translucent>\r\n  <ion-toolbar>\r\n    <ion-title>{{title}}</ion-title>\r\n    <ion-buttons slot=\"end\">\r\n      <ion-icon size=\"large\" style=\"zoom:0.8\" (click)=\"friendsService.dismissModal()\" name=\"close-outline\"></ion-icon>\r\n    </ion-buttons>\r\n  </ion-toolbar>\r\n</ion-header>\r\n<ion-content fullscreen>\r\n  <ion-list *ngFor=\"let friend of friendIds; let i=index\">\r\n    <ng-container *ngIf=\"i < limiter\">\r\n      <app-friend [userId]=\"friend\" [isLoggedIn]=\"isLoggedIn\"></app-friend>\r\n    </ng-container>\r\n  </ion-list>\r\n  <ion-button (click)=\"addLimit()\" *ngIf=\"limiter < friendIds.length\">Mehr anzeigen\r\n  </ion-button>\r\n</ion-content>\r\n\r\n";
 
 /***/ })
 

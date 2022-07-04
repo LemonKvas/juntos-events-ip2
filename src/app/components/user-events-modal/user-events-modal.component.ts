@@ -1,7 +1,7 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { EventService } from 'src/app/services/event.service';
-import {ModalController} from "@ionic/angular";
+import { ModalController } from '@ionic/angular';
 
 /**
  * DE:
@@ -15,34 +15,20 @@ import {ModalController} from "@ionic/angular";
 @Component({
   selector: 'app-user-events-modal',
   templateUrl: './user-events-modal.component.html',
-  styleUrls: ['./user-events-modal.component.scss'],
+  styleUrls: ['./user-events-modal.component.scss']
 })
-export class UserEventsModalComponent implements OnDestroy, OnInit{
-  events;
+export class UserEventsModalComponent implements OnDestroy, OnInit {
   @Input() userId;
+  events;
   eventSub: Subscription;
 
   /**
    * Constructor
+   *
    * @param eventService
    * @param modal
    */
   constructor(private eventService: EventService, private modal: ModalController) {}
-
-  /**
-   * DE:
-   * Ruft ein Observable auf, welches alle Events eines Nutzers zurückgibt. Diese Events
-   * werden in der Variable events gespeichert.
-   * EN:
-   * Calls an observable that returns all events of a user. These events
-   * are stored in the events variable.
-   * @protected
-   */
-  protected loadData(){
-    this.eventSub = this.eventService.getUserEvents(this.userId).subscribe((userEvs)=>{
-      this.events = userEvs;
-    })
-  }
 
   /**
    * DE:
@@ -53,7 +39,6 @@ export class UserEventsModalComponent implements OnDestroy, OnInit{
   ngOnInit() {
     this.loadData();
   }
-
   /**
    * DE:
    * Löst die Subscription für alle Events, sobald die Komponente zerstört wird.
@@ -70,7 +55,7 @@ export class UserEventsModalComponent implements OnDestroy, OnInit{
    * EN:
    * Closes the open component.
    */
-  dismissModal(){
+  dismissModal() {
     this.modal.dismiss('cancel');
   }
 
@@ -84,5 +69,21 @@ export class UserEventsModalComponent implements OnDestroy, OnInit{
    */
   public deleteEvent(event: any) {
     this.eventService.deleteEvent(event);
+  }
+
+  /**
+   * DE:
+   * Ruft ein Observable auf, welches alle Events eines Nutzers zurückgibt. Diese Events
+   * werden in der Variable events gespeichert.
+   * EN:
+   * Calls an observable that returns all events of a user. These events
+   * are stored in the events variable.
+   *
+   * @protected
+   */
+  protected loadData() {
+    this.eventSub = this.eventService.getUserEvents(this.userId).subscribe((userEvs) => {
+      this.events = userEvs;
+    });
   }
 }

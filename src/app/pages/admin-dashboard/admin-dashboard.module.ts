@@ -7,8 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { AdminDashboardPageRoutingModule } from './admin-dashboard-routing.module';
 
 import { AdminDashboardPage } from './admin-dashboard.page';
-import {ScrollingModule} from "@angular/cdk/scrolling";
-import {SharedModule} from "src/app/shared/shared.module";
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
@@ -17,7 +17,7 @@ import {SharedModule} from "src/app/shared/shared.module";
     IonicModule,
     AdminDashboardPageRoutingModule,
     ScrollingModule,
-    SharedModule,
+    SharedModule
   ],
   declarations: [AdminDashboardPage]
 })

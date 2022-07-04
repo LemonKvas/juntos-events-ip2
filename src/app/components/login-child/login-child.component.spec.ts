@@ -1,21 +1,21 @@
-import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {IonicModule} from '@ionic/angular';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { IonicModule } from '@ionic/angular';
 
-import {LoginChildComponent} from 'src/app/components/login-child/login-child.component';
-import {AuthService} from 'src/app/services/auth.service';
-import {AngularFireAuth} from '@angular/fire/compat/auth';
-import {FIREBASE_OPTIONS} from '@angular/fire/compat';
-import {environment} from 'src/environments/environment';
+import { LoginChildComponent } from 'src/app/components/login-child/login-child.component';
+import { AuthService } from 'src/app/services/auth.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
+import { of } from 'rxjs';
 
 export const authStub: any = {
-  authState: {},
+  authState: of({
+    uid: 'id1'
+  }),
   auth: {
-    signInWithEmailAndPassword() {
-      return Promise.resolve();
-    },
-    signInWithPopup(){
-      return Promise.resolve();
-    }
+    signInWithEmailAndPassword: () => Promise.resolve(),
+    signInWithPopup: () => Promise.resolve()
   }
 };
 
@@ -26,12 +26,18 @@ describe('LoginChildComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoginChildComponent ],
+      declarations: [LoginChildComponent],
       imports: [IonicModule.forRoot()],
       providers: [
         AuthService,
-        {provide: AngularFireAuth, useValue: authStub},
-        {provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig}
+        { provide: AngularFireAuth, useValue: authStub },
+        { provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig },
+        {
+          provide: Router,
+          useClass: class {
+            navigate = jasmine.createSpy('navigate');
+          }
+        }
       ]
     }).compileComponents();
 
@@ -39,21 +45,20 @@ describe('LoginChildComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     authService = TestBed.inject(AuthService);
-
   }));
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should click Registrieren button', ()=>{
-    spyOn(authService, 'EmailLogin');
+  it('should click Registrieren button', () => {
+    spyOn(authService, 'EmailLogin' as never);
 
     const button = fixture.debugElement.nativeElement.querySelector('button');
     button.click();
 
     fixture.whenStable().then(() => {
-      expect(authService.EmailLogin).toHaveBeenCalled();
+      expect(authService.emailLogin).toHaveBeenCalled();
     });
   });
 });

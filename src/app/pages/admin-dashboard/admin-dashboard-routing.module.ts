@@ -10,8 +10,11 @@ const routes: Routes = [
   }
 ];
 
+/**
+ * @ignore
+ */
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class AdminDashboardPageRoutingModule {}

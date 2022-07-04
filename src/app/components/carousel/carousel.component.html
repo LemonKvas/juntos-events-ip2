@@ -1,10 +1,13 @@
 <swiper class="mySwiper" [config]="config">
-    <ng-template *ngFor="let slide of slides" swiperSlide >
-        <img (click)="navigate(slide.eventId)" alt="{{slide.name}} image"  src="{{slide.photoURLs[0] | fireStorageImg: '/event-photos' | async }}"/>
-        <div class="textBg">
-            <h3 class="title">{{slide.name}}</h3>
-            <br/>
-            <h6 class="info">{{slide.eventDate | date: 'd.MM.yy, h:mm'}}</h6>
-        </div>
-    </ng-template>
+  <ng-template *ngFor="let slide of slides" swiperSlide>
+    <img
+      (click)="navigate(slide.eventId)"
+      alt="{{ slide.name }} image"
+      src="{{ slide.photoURLs[0] | fireStorageImg: '/event-photos' | async }}" />
+    <div class="textBg">
+      <h3 class="title">{{ slide.name }}</h3>
+      <br />
+      <h6 class="info">{{ slide.eventDate | date: 'd.MM.yy, h:mm' }}</h6>
+    </div>
+  </ng-template>
 </swiper>
