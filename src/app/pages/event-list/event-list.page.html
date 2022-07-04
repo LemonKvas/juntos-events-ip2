@@ -15,7 +15,20 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content
+  scrollX="true"
+  scrollY="true"
+  style="
+    margin: 17rem;
+    position: fixed;
+    display: inline;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    white-space: nowrap;
+  "
+  >>
   <ion-grid>
     <ion-row>
       <ion-col>
@@ -25,11 +38,11 @@
     <ion-row>
       <ion-col>
         <ng-container>
-          <app-map></app-map>
+          <app-map [marker]="geoService.marker" [camera]="geoService.camera"></app-map>
         </ng-container>
       </ion-col>
     </ion-row>
-    <ion-list lines="full" class="ion-align-items-center">
+    <ion-list lines="full" class="ion-align-items-center" style="padding-bottom: 30px">
       <ion-row class="ion-justify-content-center" size="12">
         <ion-item class="ion-justify-content-start" *ngFor="let event of events">
           <ion-col class="img-col" size="5">
@@ -68,6 +81,15 @@
         </ion-item>
       </ion-row>
     </ion-list>
+    <ion-row text-center class="ion-text-center ion-justify-content-center">
+      <ion-buttons>
+        <a
+          ><p [routerLink]="['/impressumUndDatenschutz']" style="padding-bottom: 70px">
+            Impressum & Datenschutz
+          </p></a
+        >
+      </ion-buttons>
+    </ion-row>
   </ion-grid>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">

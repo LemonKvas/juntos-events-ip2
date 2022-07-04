@@ -55,7 +55,8 @@ const routes: Routes = [
   },
   {
     path: 'impressumUndDatenschutz',
-    loadChildren: () => import('./pages/impressum/impressum.module').then( m => m.ImpressumPageModule)
+    loadChildren: () =>
+      import('./pages/impressum/impressum.module').then((m) => m.ImpressumPageModule)
   }
 ];
 

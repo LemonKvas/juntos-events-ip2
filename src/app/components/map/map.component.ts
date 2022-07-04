@@ -1,9 +1,18 @@
-import {Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild} from '@angular/core';
-import {GoogleMap, Marker} from '@capacitor/google-maps';
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
+import { GoogleMap, Marker } from '@capacitor/google-maps';
 import { environment } from 'src/environments/environment';
 import { Geolocation } from '@capacitor/geolocation';
 import { GeoService } from 'src/app/services/geo.service';
-import {EventService} from "src/app/services/event.service";
+import { EventService } from 'src/app/services/event.service';
 
 /**
  * DE:
@@ -44,7 +53,7 @@ export class MapComponent implements OnChanges {
    * EN:
    * Input for the camera settings, or the displayed location of the map.
    */
-  @Input() camera: { latitude: number, longitude: number} = {latitude: 50.62, longitude: 8.69};
+  @Input() camera: { latitude: number; longitude: number } = { latitude: 50.62, longitude: 8.69 };
   map!: GoogleMap;
   mapClosed: boolean;
   btnText: string;
@@ -69,17 +78,27 @@ export class MapComponent implements OnChanges {
    * EN:
    * When changing markers or camera settings from the inputs, the map should also be refreshed.
    */
-  async ngOnChanges(changes:SimpleChanges) {
-    if(this.map){await this.map.destroy();}
+  async ngOnChanges(changes: SimpleChanges) {
+    if (this.map) {
+      await this.map.destroy();
+    }
 
     //TODO: Karte nicht neu erstellen sondern Kamera und Marker der Karte ändern
-    if (changes["marker"].currentValue != undefined) {this.marker = changes["marker"].currentValue;}
-    else if (changes["marker"].previousValue != undefined) {this.marker = changes["marker"].previousValue;}
+    if (changes['marker'].currentValue != undefined) {
+      this.marker = changes['marker'].currentValue;
+    } else if (changes['marker'].previousValue != undefined) {
+      this.marker = changes['marker'].previousValue;
+    }
 
-    if (changes["camera"].currentValue != undefined) {this.camera = changes["camera"].currentValue;}
-    else if (changes["camera"].previousValue != undefined) {this.marker = changes["camera"].previousValue;}
+    if (changes['camera'].currentValue != undefined) {
+      this.camera = changes['camera'].currentValue;
+    } else if (changes['camera'].previousValue != undefined) {
+      this.marker = changes['camera'].previousValue;
+    }
 
-    if (!this.mapClosed) {await this.createMap();}
+    if (!this.mapClosed) {
+      await this.createMap();
+    }
   }
 
   /**
@@ -121,7 +140,7 @@ export class MapComponent implements OnChanges {
    * Sets mapClosed false and the btnText to close map. The map is then created. As soon as this is finished
    * the reference of the map is stored in map and the method initializeMapFunctions() is called.
    */
-  async createMap(){
+  async createMap() {
     this.mapClosed = false;
     this.btnText = 'Karte schließen';
     await this.awaitCamAndMarkerInit(0);
@@ -149,16 +168,16 @@ export class MapComponent implements OnChanges {
    * waits 5x 5000ms for the initialization of the variable camera
    * @param counter
    */
-  async awaitCamAndMarkerInit(counter){
-    if(this.camera === undefined){
+  async awaitCamAndMarkerInit(counter) {
+    if (this.camera === undefined) {
       setTimeout(() => {
         counter++;
         if (counter > 5) {
           //TODO: standart Wert für Kamera setzen
-          throw 'Fehler beim laden der Kamera'
+          throw 'Fehler beim laden der Kamera';
         }
         this.awaitCamAndMarkerInit(counter);
-      }, 5000)
+      }, 5000);
     }
     return;
   }
@@ -175,7 +194,7 @@ export class MapComponent implements OnChanges {
     if (this.camera != undefined && this.marker.length > 0) {
       this.map.addMarkers(this.marker);
       this.map.setOnMarkerClickListener(async (marker) => {
-        if(this.marker[marker.markerId].eventId != undefined){
+        if (this.marker[marker.markerId].eventId != undefined) {
           await this.eventService.navigateToEvent(this.marker[marker.markerId].eventId);
         }
       });
@@ -183,6 +202,4 @@ export class MapComponent implements OnChanges {
       //}
     }
   }
-
-
 }

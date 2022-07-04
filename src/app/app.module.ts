@@ -16,7 +16,7 @@ import { SharedModule } from './shared/shared.module';
 import { AuthService } from 'src/app/services/auth.service';
 import { SwiperModule } from 'swiper/angular';
 import { HttpClientModule } from '@angular/common/http';
-import {GeoService} from "src/app/services/geo.service";
+import { GeoService } from 'src/app/services/geo.service';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

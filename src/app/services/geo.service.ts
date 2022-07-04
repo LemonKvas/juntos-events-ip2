@@ -14,7 +14,6 @@ import { Event } from 'src/app/models/classes/event.model';
 @Injectable({
   providedIn: 'root'
 })
-
 export class GeoService {
   /**
    * DE:
@@ -72,19 +71,20 @@ export class GeoService {
    * camera is assigned the same values so that the camera of the map can be centered on the marker.
    * @param event
    */
-  setMarkerAndCameraForSingleEvent(event: Event){
+  setMarkerAndCameraForSingleEvent(event: Event) {
     this.marker = [
-        {
-      coordinate: {
-        lng: Number(event.long),
-        lat: Number(event.lat)
-      },
-      title: event.name,
-    }];
+      {
+        coordinate: {
+          lng: Number(event.long),
+          lat: Number(event.lat)
+        },
+        title: event.name
+      }
+    ];
     this.camera = {
       latitude: Number(event.long),
       longitude: Number(event.lat)
-    }
+    };
   }
 
   /**
@@ -98,14 +98,14 @@ export class GeoService {
     this.marker = events
       .filter((event) => !!event.long && !!event.lat)
       .map((e) => {
-        console.log("setMarkerarry", e.eventId);
+        console.log('setMarkerarry', e.eventId);
         return {
           coordinate: {
             lng: Number(e.long),
             lat: Number(e.lat)
           },
           title: e.name,
-          eventId: e.eventId,
+          eventId: e.eventId
         };
       });
   }
@@ -158,9 +158,9 @@ export class GeoService {
       };
       this.camera = {
         latitude: Number(data.coords.latitude),
-        longitude: Number(data.coords.longitude),
-      }
-     this.setMarkerForUserCords();
+        longitude: Number(data.coords.longitude)
+      };
+      this.setMarkerForUserCords();
     });
   }
 
@@ -172,9 +172,9 @@ export class GeoService {
    * Stores a marker of the stored position of the user in the array marker. The marker gets a personal
    * icon.
    */
-  setMarkerForUserCords(){
-    const index = this.marker.map(e => e.title).indexOf('Meine Position');
-    if(index >= 0){
+  setMarkerForUserCords() {
+    const index = this.marker.map((e) => e.title).indexOf('Meine Position');
+    if (index >= 0) {
       this.marker[index] = {
         coordinate: {
           lng: Number(this.userCords.longitude),
@@ -182,17 +182,16 @@ export class GeoService {
         },
         title: 'Meine Position',
         iconUrl: '../../assets/icon/person-svgrepo-com.svg'
-      }
-    }
-    else {
+      };
+    } else {
       this.marker.push({
         coordinate: {
           lng: Number(this.userCords.longitude),
           lat: Number(this.userCords.latitude)
         },
         title: 'Meine Position',
-        iconUrl: '../../assets/icon/person-svgrepo-com.svg',
-      })
+        iconUrl: '../../assets/icon/person-svgrepo-com.svg'
+      });
     }
   }
 
@@ -202,7 +201,7 @@ export class GeoService {
    * EN:
    * Used to initialize the geoservice in modules.
    */
-  initGeoService(){
-    console.log("geo service initialized");
+  initGeoService() {
+    console.log('geo service initialized');
   }
 }

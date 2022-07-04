@@ -74,7 +74,7 @@ export class EventListPage implements OnInit {
         creatorId: this.selectedEvent.creatorId
       }
     };
-    if(this.selectedEvent.long && this.selectedEvent.lat){
+    if (this.selectedEvent.long && this.selectedEvent.lat) {
       navigationExtras.state.long = this.selectedEvent.long;
       navigationExtras.state.lat = this.selectedEvent.lat;
     }

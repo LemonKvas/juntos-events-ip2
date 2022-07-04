@@ -8,7 +8,7 @@ import { CreatedEvent } from '../models/interfaces/created-event';
 import { arrayUnion } from '@angular/fire/firestore';
 import { getDoc } from 'firebase/firestore';
 import { GeoService } from 'src/app/services/geo.service';
-import {NavigationExtras, Router} from "@angular/router";
+import { NavigationExtras, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,11 @@ export class EventService {
   createdEvent: CreatedEvent;
   private eventsCollections: AngularFirestoreCollection<Event>;
   private events: Observable<Event[]>;
-  constructor(private afs: AngularFirestore, private geoService: GeoService, private router: Router) {
+  constructor(
+    private afs: AngularFirestore,
+    private geoService: GeoService,
+    private router: Router
+  ) {
     this.eventsCollections = this.afs.collection('events');
   }
   getAllEvents() {
@@ -92,7 +96,7 @@ export class EventService {
     await db.doc(event.eventId).update({ participants: arrayUnion(...event.participants) });
   }
 
-  async navigateToEvent(id){
+  async navigateToEvent(id) {
     const event = await this.getEventById(id);
     const navigationExtras: NavigationExtras = {
       state: {
@@ -111,13 +115,12 @@ export class EventService {
         creatorId: event.creatorId
       }
     };
-    if(event.long && event.lat){
+    if (event.long && event.lat) {
       navigationExtras.state.long = event.long;
       navigationExtras.state.lat = event.lat;
     }
     await this.router.navigateByUrl(`event-details/${id}`, navigationExtras);
   }
-
 
   /**
    * Gibt ein Observable zurück mit allen Events, deren Wert "promoted" auf true gesetzt ist
