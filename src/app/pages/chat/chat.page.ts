@@ -5,6 +5,7 @@ import {Message} from 'src/app/models/interfaces/message';
 import {ChatGroup} from 'src/app/models/classes/chat-group';
 import {ActivatedRoute} from '@angular/router';
 import User from 'src/app/models/classes/user';
+import {AlertService} from '../../services/alert.service';
 
 @Component({
   selector: 'app-chat',
@@ -21,25 +22,37 @@ export class ChatPage implements OnInit {
   chatUser: User;
   currentUser: User;
   constructor(private chatService: ChatService, private userService: UserDataService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute, private alertService: AlertService) {
     this.chatGroupId = this.route.snapshot.params.cId;
     this.chatUserId = this.route.snapshot.params.uId;
   }
   async ngOnInit() {
     await this.getChatInfo(this.chatGroupId);
-    this.currentUser = await this.userService.getCurrentUser();
-    this.chatUser = await this.userService.getUserById(this.chatUserId);
+    await this.getChatUsersData();
     this.getMessages();
   }
 
   /**
    * This function will get chat information with the given id by calling
-   * getChatGroupById() from chatservice to set value of local variable 'chatGroup'.
+   * getChatGroupById() from chatService to set value of local variable 'chatGroup'.
+   *
+   * @example
+   * Call it with a chat id as a string
+   * getChatInfo('h29zt8h4')
    *
    * @param id
    */
   async getChatInfo(id: string){
     this.chatGroup = await this.chatService.getChatGroupById(id);
+  }
+
+  /**
+   * This function will get both chat users data and set values of local variable
+   * 'currentUser' and 'chatUser'.
+   */
+  async getChatUsersData(){
+    this.currentUser = await this.userService.getCurrentUser();
+    this.chatUser = await this.userService.getUserById(this.chatUserId);
   }
 
   /**
@@ -53,7 +66,7 @@ export class ChatPage implements OnInit {
    *
    * @param newMsg
    */
-  sendMessage(newMsg: string){
+  async sendMessage(newMsg: string){
     this.msg = {
       chatId: this.chatGroupId,
       creator: this.currentUser.userId,
@@ -61,8 +74,8 @@ export class ChatPage implements OnInit {
       id: '',
       message: newMsg,
     };
-    this.chatService.addChatMessage(this.msg).catch((err) => console.log('Error: ', err));
-    this.userService.addChatPartner(this.chatUserId).catch((err) => console.log('Error: ', err));
+    await this.chatService.addChatMessage(this.msg).catch((err) => console.log('Error: ', err));
+    await this.userService.addChatPartner(this.chatGroupId, this.chatUser).catch((err) => console.log('Error: ', err));
     this.newMsg = '';
   }
 
@@ -77,5 +90,34 @@ export class ChatPage implements OnInit {
         ...e.payload.doc.data() as Message
       }));
     });
+  }
+
+  /**
+   * This function will open a modal to ask user if he / she wants to proceed and delete selected
+   * message with given data. If this is the case, deleteMessage() from chatService will be called.
+   *
+   * @example
+   * Call it with an object of type 'Message'
+   * deleteMessage(message: Message)
+   *
+   * @param msg
+   */
+  async deleteMessage(msg: Message){
+    await this.alertService.basicAlert(
+      '',
+      'Wollen Sie diese Nachricht löschen?',
+      [
+        {
+          text: 'Ja',
+          handler: () => {
+            this.chatService.deleteMessage(msg);
+          }
+        },
+        {
+          text: 'Abbrechen',
+          role: 'cancel',
+        }
+      ],
+    );
   }
 }

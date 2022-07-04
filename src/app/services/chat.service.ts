@@ -43,7 +43,6 @@ export class ChatService {
   async getChatGroupById(id: string){
     const docRef = await this.chatsCollections.doc(id).ref;
     const docSnap = await getDoc(docRef);
-    console.log('Fetch data: ', docSnap.data());
     return docSnap.data() as ChatGroup;
   }
   /**
@@ -173,12 +172,14 @@ export class ChatService {
    * @return messages[]
    */
   getMessages(chatId: string){
-    return this.afs.collection('chats').doc(chatId).collection('messages', ref => ref.orderBy('date', 'asc')).snapshotChanges();
+    return this.afs.collection('chats').doc(chatId)
+      .collection('messages', ref => ref.orderBy('date', 'asc')).snapshotChanges();
   }
 
   /**
-   * This function will delete a document from the firestore collection 'chats' by the given chat id
-   * and also delete both users from each other sub-collection 'chatPartners'.
+   * This function will delete chat partner with given id from the sub-collection 'chatPartners' of
+   * the current / logged-in user and delete the current / logged-in user from the sub-collection 'users'.
+   * If sub-collection 'users' is empty, chat document will be deleted from collection 'chats'.
    *
    * @example
    * Call it with a chat id and a user id, both as a string
@@ -187,6 +188,34 @@ export class ChatService {
    * @param userId
    */
   async deleteChat(userId: string){
+    const chatData = await this.getChatGroupByUsersId(userId);
+    // Get size / length of sub-collection 'users' from the collection 'chats'
+    let usersSize;
+    await this.chatsCollections.doc(chatData.id).collection('users').get().subscribe((res) => {
+      usersSize = res.size;
+    });
+    // Delete chat partner from current / logged-in user sub-collection 'chatPartners'
     await this.afs.collection('user').doc(this.currentUser.userId).collection('chatPartners').doc(userId).delete();
+    if(usersSize <= 1){
+      // Delete chat from collection 'chats'
+      await this.chatsCollections.doc(chatData.id).delete();
+    } else {
+      // Delete current / logged-in user from chats sub-collection 'users'
+      await this.chatsCollections.doc(chatData.id).collection('users').doc(this.currentUser.userId).delete();
+    }
+  }
+
+  /**
+   * This function will delete message from sub-collection 'messages' of collection 'chats' with
+   * given data.
+   *
+   * @example
+   * Call it with an object of type 'Message'
+   * deleteMessage(message: Message)
+   *
+   * @param msg
+   */
+  async deleteMessage(msg: Message){
+    await this.chatsCollections.doc(msg.chatId).collection('messages').doc(msg.id).delete();
   }
 }

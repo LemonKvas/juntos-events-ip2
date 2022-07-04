@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {EventService} from 'src/app/services/event.service';
 import {Event} from 'src/app/models/classes/event.model';
 import User from 'src/app/models/classes/user';
@@ -25,7 +25,7 @@ export class EventDetailsPage implements OnInit {
   segment: string;
   constructor(private router: Router, public eventService: EventService, private authService: AuthService,
               private userService: UserDataService, public alertService: AlertService,
-              private chatService: ChatService, private route: ActivatedRoute) {
+              private chatService: ChatService) {
     this.event = this.router.getCurrentNavigation().extras.state;
   }
   async ngOnInit() {
@@ -70,6 +70,6 @@ export class EventDetailsPage implements OnInit {
   }
   async openChat(user: User){
     const chatGroup = await this.chatService.createChat(user);
-    await this.router.navigate(['chat', chatGroup.id]);
+    await this.router.navigate(['chat', chatGroup.id, user.userId]);
   }
 }

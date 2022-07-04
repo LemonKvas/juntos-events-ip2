@@ -6,6 +6,8 @@ import {getDoc} from 'firebase/firestore';
 import UserCredential = firebase.auth.UserCredential;
 import {AlertService} from 'src/app/services/alert.service';
 import {arrayUnion} from '@angular/fire/firestore';
+import {RegisteredEvent} from '../models/interfaces/registered-event';
+import {CreatedEvent} from '../models/interfaces/created-event';
 
 
 @Injectable({
@@ -104,16 +106,33 @@ export class UserDataService {
   }
 
   /**
+   * This function will add given data into current / logged-in user data into 'registeredEvents'
+   * to save users 'eventId' and purchased ticket as an object of type 'RegisteredEvent'.
+   *
+   * @example
+   * Call it with an RegisteredEvent object.
+   * addRegisteredEvent(event: RegisteredEvent)
    *
    * @param event
    */
-  async addRegisteredEvent(event: any){
+  async addRegisteredEvent(event: RegisteredEvent){
     const db = firebase.firestore().collection('user');
     const user = await this.getCurrentUser();
     const userId = user.userId;
     await db.doc(userId).update({registeredEvents: arrayUnion(event)});
   }
-  async addCreatedEvent(event: any){
+
+  /**
+   * This function will add given data in current / logged-in user data into 'createdEvents'
+   * to save users created event as an object of type 'CreatedEvent'.
+   *
+   * @example
+   * Call it with an object of type 'CreatedEvent'.
+   * addCreatedEvent(event: createdEvent)
+   *
+   * @param event
+   */
+  async addCreatedEvent(event: CreatedEvent){
     const db = firebase.firestore().collection('user');
     const user = await this.getCurrentUser();
     const userId = user.userId;
@@ -145,22 +164,30 @@ export class UserDataService {
   async addChat(user: User){
     const db = firebase.firestore().collection('user');
     const currentUser = await this.getCurrentUser();
+    // Add both users to each other sub-collection 'chatPartners'
     await db.doc(currentUser.userId).collection('chatPartners').doc(user.userId).set(user);
     await db.doc(user.userId).collection('chatPartners').doc(currentUser.userId).set(currentUser);
   }
 
   /**
-   * This function add current / logged-in user data to chat user by given user id.
+   * This function add current / logged-in user data to chat user by given user id and add chat user to
+   * current / logged-in user data.
    *
    * @example
    * Call it with a user id as a string
    * addChatPartner('8rkf29')
    *
-   * @param userId
+   * @param chatId
+   * @param user
    */
-  async addChatPartner(userId: string){
+  async addChatPartner(chatId: string, user: User){
     const currentUser = await this.getCurrentUser();
-    await this.userCollection.doc(userId).collection('chatPartners').doc(currentUser.userId).set(currentUser);
+    // Add user(s) back into each other sub-collection 'chatPartners'
+    await this.userCollection.doc(currentUser.userId).collection('chatPartners').doc(user.userId).set(user);
+    await this.userCollection.doc(user.userId).collection('chatPartners').doc(currentUser.userId).set(currentUser);
+    // Add user(s) back into sub-collection 'users' of collection 'chats'
+    await this.afs.collection('chats').doc(chatId).collection('users').doc(user.userId).set(user);
+    await this.afs.collection('chats').doc(chatId).collection('users').doc(currentUser.userId).set(currentUser);
   }
 
   /**
