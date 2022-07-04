@@ -19,7 +19,6 @@ export class AlertService {
   }
   async unsaveAlert() {
     this.alert = await this.alertService.create({
-      header: 'Sind Sie sicher?',
       message: 'Ihre Änderungen werden nicht gespeichert. Möchten Sie trotzdem fortfahren?',
       buttons: [
         {
@@ -38,7 +37,6 @@ export class AlertService {
   }
   async emptyInputsAlert() {
     this.alert = await this.alertService.create({
-      header: 'ACHTUNG',
       message: 'Bitte füllen Sie alle mit * gekennzeichneten Felder aus.',
       buttons: ['OK']
     });
@@ -46,7 +44,6 @@ export class AlertService {
   }
   async eventDraftAlert() {
     this.alert = await this.alertService.create({
-      header: 'ACHTUNG',
       message: 'Geben Sie dem Event Entwurf bitte einen Namen.',
       buttons: ['OK']
     });
@@ -54,7 +51,6 @@ export class AlertService {
   }
   async plsSignInAlert() {
     this.alert = await this.alertService.create({
-      header: 'ACHTUNG',
       message: 'Bitte melden Sie sich an, um fortzufahren.',
       buttons: ['OK']
     });
@@ -62,13 +58,7 @@ export class AlertService {
   }
   async partakeEvent(event: Event) {
     this.alert = await this.alertService.create({
-      header: 'Zu Event angemeldet',
-      message:
-        'Sie haben sich soeben erfolgreich zu ' +
-        '<strong>' +
-        event.name +
-        '</strong>' +
-        ' angemeldet!',
+      message: 'Sie haben sich soeben erfolgreich zu '+ '<strong>' + event.name + '</strong>' + ' angemeldet!',
       buttons: ['OK']
     });
     this.alert.present();

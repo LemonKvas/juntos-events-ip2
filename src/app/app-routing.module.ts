@@ -63,6 +63,19 @@ const routes: Routes = [
       ),
     canActivate: [RoleGuard],
     data: { role: 0 }
+  },
+  {
+    path: 'chat/:cId',
+    loadChildren: () => import('src/app/pages/chat/chat.module').then((m) => m.ChatPageModule)
+  },
+  {
+    path: 'chat/:cId/:uId',
+    loadChildren: () => import('src/app/pages/chat/chat.module').then((m) => m.ChatPageModule)
+  },
+  {
+    path: 'chat-list/:id',
+    loadChildren: () =>
+      import('src/app/pages/chat-list/chat-list.module').then((m) => m.ChatListPageModule)
   }
 ];
 

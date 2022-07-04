@@ -57,7 +57,6 @@ export class EventListPage implements OnInit {
   /* Navigate to Event Details */
   async eventDetailsState(id: string) {
     this.selectedEvent = await this.eventService.getEventById(id);
-    console.log(this.selectedEvent);
     const navigationExtras: NavigationExtras = {
       state: {
         name: this.selectedEvent.name,
@@ -81,6 +80,6 @@ export class EventListPage implements OnInit {
     }
     console.log(navigationExtras);
     await this.router.navigateByUrl(`event-details/${id}`, navigationExtras);
-    //await this.router.navigateByUrl(`event-details/${id}`);
+    // await this.router.navigate(['event-details', this.selectedEvent.eventId]);
   }
 }

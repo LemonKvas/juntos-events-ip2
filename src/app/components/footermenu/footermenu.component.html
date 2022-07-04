@@ -57,12 +57,12 @@
             </ion-button>
           </ion-col>
           <ion-col>
-            <ion-button>
+            <ion-button (click)="router.navigate(['chat-list', currentUser])">
               <!--TODO: See if URL fits-->
               <ion-icon
                 size="large"
                 style="zoom: 0.8"
-                *ngIf="currentPage === '/chat'; else not_chat"
+                *ngIf="currentPage === '/chat-list'; else not_chat"
                 slot="icon-only"
                 name="chatbubble-ellipses"></ion-icon>
               <ng-template #not_chat>

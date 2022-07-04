@@ -33,19 +33,32 @@ export class EventService {
   ) {
     this.eventsCollections = this.afs.collection('events');
   }
+
+  /**
+   * This function will return an observable with all events.
+   */
   getAllEvents() {
     return this.afs.collection('events').snapshotChanges();
   }
+
+  /**
+   * This function will return an observable with all published events.
+   */
   getPublishedEvents() {
     return this.afs
       .collection('events', (ref) => ref.where('publishStatus', '==', true))
       .snapshotChanges();
   }
+
+  /**
+   * This function will return an observable with all event drafts
+   */
   getEventDrafts() {
     return this.afs
       .collection('events', (ref) => ref.where('publishStatus', '==', false))
       .snapshotChanges();
   }
+
   async addEvent(event: Event): Promise<void> {
     event.eventId = this.afs.createId();
     this.eventId = event.eventId;

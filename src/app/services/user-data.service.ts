@@ -6,6 +6,8 @@ import { getDoc } from 'firebase/firestore';
 import UserCredential = firebase.auth.UserCredential;
 import { AlertService } from 'src/app/services/alert.service';
 import { arrayUnion } from '@angular/fire/firestore';
+import { RegisteredEvent } from '../models/interfaces/registered-event';
+import { CreatedEvent } from '../models/interfaces/created-event';
 
 /**
  * EN:
@@ -234,5 +236,58 @@ export class UserDataService {
    */
   getAllUser() {
     return this.userCollection.valueChanges();
+  }
+
+  /**
+   * This function will add each chat user to each other sub-collection 'chatPartners' with
+   * the given user object.
+   *
+   * @example
+   * Call it with a user object.
+   * addChat(user: User)
+   *
+   * @param user
+   */
+  async addChat(user: User){
+    const db = firebase.firestore().collection('user');
+    const currentUser = await this.getCurrentUser();
+    // Add both users to each other sub-collection 'chatPartners'
+    await db.doc(currentUser.userId).collection('chatPartners').doc(user.userId).set(user);
+    await db.doc(user.userId).collection('chatPartners').doc(currentUser.userId).set(currentUser);
+  }
+
+  /**
+   * This function add current / logged-in user data to chat user by given user id and add chat user to
+   * current / logged-in user data.
+   *
+   * @example
+   * Call it with a user id as a string
+   * addChatPartner('8rkf29')
+   *
+   * @param chatId
+   * @param user
+   */
+  async addChatPartner(chatId: string, user: User){
+    const currentUser = await this.getCurrentUser();
+    // Add user(s) back into each other sub-collection 'chatPartners'
+    await this.userCollection.doc(currentUser.userId).collection('chatPartners').doc(user.userId).set(user);
+    await this.userCollection.doc(user.userId).collection('chatPartners').doc(currentUser.userId).set(currentUser);
+    // Add user(s) back into sub-collection 'users' of collection 'chats'
+    await this.afs.collection('chats').doc(chatId).collection('users').doc(user.userId).set(user);
+    await this.afs.collection('chats').doc(chatId).collection('users').doc(currentUser.userId).set(currentUser);
+  }
+
+  /**
+   * This function will return an observable with all chat partners data of the user with
+   * the given id.
+   *
+   * @example
+   * Call it with a user id as a string
+   * getChatPartners('n84th3')
+   *
+   * @param userId
+   */
+  getChatPartners(userId: string){
+    return this.userCollection.doc(userId).collection('chatPartners').snapshotChanges();
   }
 }

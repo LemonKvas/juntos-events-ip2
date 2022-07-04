@@ -7,6 +7,7 @@ import { RegisteredEvent } from 'src/app/models/interfaces/registered-event';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserDataService } from 'src/app/services/user-data.service';
 import { AlertService } from 'src/app/services/alert.service';
+import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
   selector: 'app-event-details/',
@@ -17,9 +18,10 @@ export class EventDetailsPage implements OnInit {
   event: Event = new Event();
   eventId: string;
   participant: User;
+  participants: User[] = [];
   registeredEvent: RegisteredEvent;
   creator: User;
-  participants: User[] = [];
+  currentUserId: string;
   segment: string;
   constructor(
     private router: Router,
@@ -27,18 +29,17 @@ export class EventDetailsPage implements OnInit {
     private authService: AuthService,
     private userService: UserDataService,
     public alertService: AlertService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private chatService: ChatService,
     //public geoService: GeoService
   ) {
     this.event = this.router.getCurrentNavigation().extras.state;
-    this.getCreatorData();
-    //this.geoService.marker = undefined;
-    //this.geoService.camera = undefined;
-    //this.setMapParams();
-    this.getUserlist();
   }
   async ngOnInit() {
     this.segment = 'information';
+    this.currentUserId = await this.userService.getCurrentUserID();
+    await this.getCreatorData();
+    await this.getUserlist();
   }
   async getCreatorData() {
     this.creator = await this.userService.getUserById(this.event.eventId);
@@ -46,10 +47,9 @@ export class EventDetailsPage implements OnInit {
   segmentChanged(ev: any) {
     console.log('Segment changed to ', ev);
   }
-  async getUserlist() {
-    // eslint-disable-next-line @typescript-eslint/prefer-for-of
-    for (let i = 0; i < this.event.participants.length; i++) {
-      const user = await this.userService.getUserById(this.event.participants[i]);
+  async getUserlist(){
+    for(let participant of this.event.participants){
+      const user = await this.userService.getUserById(participant);
       this.participants.unshift(user);
     }
   }
@@ -75,13 +75,8 @@ export class EventDetailsPage implements OnInit {
       await this.alertService.partakeEvent(event);
     }
   }
-
-  /*
-  private setMapParams() {
-    //TODO: fix loading of map
-    if(this.event.long && this.event.lat){
-      this.geoService.setMarkerAndCameraForSingleEvent(this.event);
-    }
+  async openChat(user: User){
+    const chatGroup = await this.chatService.createChat(user);
+    await this.router.navigate(['chat', chatGroup.id, user.userId]);
   }
-   */
 }

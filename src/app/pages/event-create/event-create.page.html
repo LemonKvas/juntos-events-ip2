@@ -29,7 +29,7 @@
         <ion-col id="eventDateCol" size="12" size-sm="6">
           <ion-item button="true" id="open-date-input">
             <ion-label position="stacked">Datum & Uhrzeit*</ion-label>
-            <ion-input>{{ eventDate | date:'EEE, dd-MM-yyyy H:mmZ' }}</ion-input>
+            <ion-input>{{ eventDate | date:'EEE, dd-MM-yyyy H:mm' }}</ion-input>
             <ion-popover
               id="eventDatePopover"
               trigger="open-date-input"
@@ -136,9 +136,6 @@
               (change)="uploadPhoto($event)"
               accept=".png,.jpg"
               multiple="false"></ion-input>
-            <!--
-            <label class="fakeUploadBtn" *ngIf="!uploadStatus">Foto auswählen</label>
-            -->
             <p *ngIf="uploadStatus">... wird hochgeladen</p>
             <ion-img
               id="photoPreview"
