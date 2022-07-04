@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthService} from 'src/app/services/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+  styleUrls: ['./login.page.scss']
 })
 export class LoginPage implements OnInit {
   loginIndicator: string;
@@ -13,14 +13,11 @@ export class LoginPage implements OnInit {
     this.loginIndicator = 'user';
   }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   switchUserLogin(event: any) {
     this.loginIndicator = event.detail.value;
   }
-
 
   AnonymousLogin() {
     this.authService.AnonymousAuth();

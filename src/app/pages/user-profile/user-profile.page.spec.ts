@@ -9,7 +9,7 @@ describe('UserProfilePage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserProfilePage ],
+      declarations: [UserProfilePage],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
@@ -23,10 +23,9 @@ describe('UserProfilePage', () => {
   });
 
   it('ownProfile should be false', () => {
-      // @ts-ignore
+    // @ts-ignore
     component.currentUserId = 23;
     const ownProfile: boolean = component.ownProfile;
     expect(ownProfile).toEqual(false);
-
   });
 });

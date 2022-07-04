@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from "@angular/router";
-import {UserDataService} from "../../services/user-data.service";
+import { Router } from '@angular/router';
+import { UserDataService } from '../../services/user-data.service';
 
 @Component({
   selector: 'app-footermenu',
   templateUrl: './footermenu.component.html',
-  styleUrls: ['./footermenu.component.scss'],
+  styleUrls: ['./footermenu.component.scss']
 })
 export class FootermenuComponent implements OnInit {
-  currentPage : string;
-  currentUser : string;
+  currentPage: string;
+  currentUser: string;
 
-  constructor(public router : Router, public userData : UserDataService) {
+  constructor(public router: Router, public userData: UserDataService) {
     this.currentPage = this.router.url;
   }
 
@@ -23,5 +23,4 @@ export class FootermenuComponent implements OnInit {
   async getUser() {
     this.currentUser = await this.userData.getCurrentUserID();
   }
-
 }

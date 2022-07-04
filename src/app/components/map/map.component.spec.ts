@@ -9,7 +9,7 @@ describe('MapComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ MapComponent ],
+      declarations: [MapComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

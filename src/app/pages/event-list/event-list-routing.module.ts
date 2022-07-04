@@ -11,8 +11,8 @@ const routes: Routes = [
   {
     path: 'event-details/:id',
     loadChildren: () =>
-        import('../event-details/event-details.module').then((m) => m.EventDetailsPageModule)
-  },
+      import('../event-details/event-details.module').then((m) => m.EventDetailsPageModule)
+  }
 ];
 
 @NgModule({

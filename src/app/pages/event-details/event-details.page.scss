@@ -8,12 +8,20 @@ ion-img {
   position: center;
   object-fit: cover;
 }
+
+ion-content{
+  overflow-y: scroll;
+  overflow-x: hidden;
+  --offset-bottom: 0 !important;
+  background-color: #FFFFFF;
+}
+
 //Mobile Version
 @media screen and (max-width: 600px) {
   h1 {
     font-size: 20px;
     font-weight: bold;
-    font-family: "Yeseva One", cursive;
+    font-family: 'Yeseva One', cursive;
   }
   h2 {
     font-size: 15px;
@@ -45,7 +53,7 @@ ion-img {
   h1 {
     font-size: 30px;
     font-weight: bold;
-    font-family: "Yeseva One", cursive;
+    font-family: 'Yeseva One', cursive;
   }
   h2 {
     font-size: 20px;
@@ -81,4 +89,3 @@ ion-img {
   //  justify-content: center;
   //}
 }
-

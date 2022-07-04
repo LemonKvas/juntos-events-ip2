@@ -2,7 +2,11 @@
   <ion-toolbar>
     <ion-title>{{title}}</ion-title>
     <ion-buttons slot="end">
-      <ion-icon size="large" style="zoom:0.8" (click)="friendsService.dismissModal()" name="close-outline"></ion-icon>
+      <ion-icon
+        size="large"
+        style="zoom: 0.8"
+        (click)="friendsService.dismissModal()"
+        name="close-outline"></ion-icon>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -12,7 +16,5 @@
       <app-friend [userId]="friend" [isLoggedIn]="isLoggedIn"></app-friend>
     </ng-container>
   </ion-list>
-  <ion-button (click)="addLimit()" *ngIf="limiter < friendIds.length">Mehr anzeigen
-  </ion-button>
+  <ion-button (click)="addLimit()" *ngIf="limiter < friendIds.length">Mehr anzeigen </ion-button>
 </ion-content>
-

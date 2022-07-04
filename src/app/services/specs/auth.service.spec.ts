@@ -1,9 +1,8 @@
-import {fakeAsync, TestBed} from '@angular/core/testing';
+import { fakeAsync, TestBed } from '@angular/core/testing';
 
-import {AuthService} from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 
-import {AngularFireAuth} from '@angular/fire/compat/auth';
-
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -11,10 +10,7 @@ describe('AuthService', () => {
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
-      providers: [
-        AngularFireAuth,
-
-      ]
+      providers: [AngularFireAuth]
     });
     service = TestBed.inject(AuthService);
     fireAuthService = TestBed.inject(AngularFireAuth);
@@ -24,26 +20,30 @@ describe('AuthService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should execute google login with success', fakeAsync(()=>{
+  it('should execute google login with success', fakeAsync(() => {
     const googleSignInMethod = spyOn(fireAuthService, 'signInWithPopup');
-    googleSignInMethod.and.returnValue(Promise.resolve({
-      credential: null,
-      user: null
-    }));
+    googleSignInMethod.and.returnValue(
+      Promise.resolve({
+        credential: null,
+        user: null
+      })
+    );
 
     service.GoogleAuth(0).then(() => {
       expect(googleSignInMethod).toHaveBeenCalled();
     });
   }));
 
-  it('should execute email login with success', fakeAsync(()=>{
+  it('should execute email login with success', fakeAsync(() => {
     const emailSignInMethod = spyOn(fireAuthService, 'signInWithEmailAndPassword');
-    emailSignInMethod.and.returnValue(Promise.resolve({
-      credential: null,
-      user: null
-    }));
+    emailSignInMethod.and.returnValue(
+      Promise.resolve({
+        credential: null,
+        user: null
+      })
+    );
 
-    service.EmailRegister(0,"abc.de@x.de", "123456").then(() => {
+    service.EmailRegister(0, 'abc.de@x.de', '123456').then(() => {
       expect(emailSignInMethod).toHaveBeenCalled();
     });
   }));
@@ -55,5 +55,4 @@ describe('AuthService', () => {
   it('expect Email and Password to not fulfill criteria', () => {
     expect(service.checkEmailAndPasswort).toBeFalse();
   });
-
 });

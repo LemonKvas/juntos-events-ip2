@@ -5,49 +5,89 @@
         <ion-buttons>
           <ion-col>
             <ion-button (click)="router.navigate(['event-list'])">
-              <ion-icon size="large" style="zoom:0.8" *ngIf="currentPage === '/event-list'; else not_home"
-                        slot="icon-only" name="home"></ion-icon>
+              <ion-icon
+                size="large"
+                style="zoom: 0.8"
+                *ngIf="currentPage === '/event-list'; else not_home"
+                slot="icon-only"
+                name="home"></ion-icon>
               <ng-template #not_home>
-                <ion-icon size="large" style="zoom:0.8" slot="icon-only" name="home-outline"></ion-icon>
+                <ion-icon
+                  size="large"
+                  style="zoom: 0.8"
+                  slot="icon-only"
+                  name="home-outline"></ion-icon>
               </ng-template>
             </ion-button>
           </ion-col>
           <ion-col>
             <ion-button>
               <!--TODO: See if URL fits-->
-              <ion-icon size="large" style="zoom:0.8" *ngIf="currentPage === '/search-event'; else not_search"
-                        slot="icon-only" name="search"></ion-icon>
+              <ion-icon
+                size="large"
+                style="zoom: 0.8"
+                *ngIf="currentPage === '/search-event'; else not_search"
+                slot="icon-only"
+                name="search"></ion-icon>
               <ng-template #not_search>
-                <ion-icon size="large" style="zoom:0.8" slot="icon-only" name="search-outline"></ion-icon>
+                <ion-icon
+                  size="large"
+                  style="zoom: 0.8"
+                  slot="icon-only"
+                  name="search-outline"></ion-icon>
               </ng-template>
             </ion-button>
           </ion-col>
           <ion-col>
             <ion-button>
               <!--TODO: See if URL fits-->
-              <ion-icon size="large" style="zoom:0.8" *ngIf="currentPage === '/qr-code'; else not_qr_code"
-                        slot="icon-only" name="qr-code"></ion-icon>
+              <ion-icon
+                size="large"
+                style="zoom: 0.8"
+                *ngIf="currentPage === '/qr-code'; else not_qr_code"
+                slot="icon-only"
+                name="qr-code"></ion-icon>
               <ng-template #not_qr_code>
-                <ion-icon size="large" style="zoom:0.8" slot="icon-only" name="qr-code-outline"></ion-icon>
+                <ion-icon
+                  size="large"
+                  style="zoom: 0.8"
+                  slot="icon-only"
+                  name="qr-code-outline"></ion-icon>
               </ng-template>
             </ion-button>
           </ion-col>
           <ion-col>
             <ion-button>
               <!--TODO: See if URL fits-->
-              <ion-icon size="large" style="zoom:0.8" *ngIf="currentPage === '/chat'; else not_chat" slot="icon-only"
-                        name="chatbubble-ellipses"></ion-icon>
+              <ion-icon
+                size="large"
+                style="zoom: 0.8"
+                *ngIf="currentPage === '/chat'; else not_chat"
+                slot="icon-only"
+                name="chatbubble-ellipses"></ion-icon>
               <ng-template #not_chat>
-                <ion-icon size="large" style="zoom:0.8" slot="icon-only" name="chatbubble-ellipses-outline"></ion-icon>
+                <ion-icon
+                  size="large"
+                  style="zoom: 0.8"
+                  slot="icon-only"
+                  name="chatbubble-ellipses-outline"></ion-icon>
               </ng-template>
             </ion-button>
           </ion-col>
           <ion-col>
             <ion-button (click)="router.navigate(['profile', currentUser])">
-              <ion-icon size="large" style="zoom:0.8" *ngIf="currentPage.includes('/profile'); else not_profile"
-                        slot="icon-only" name="person"></ion-icon>
+              <ion-icon
+                size="large"
+                style="zoom: 0.8"
+                *ngIf="currentPage.includes('/profile'); else not_profile"
+                slot="icon-only"
+                name="person"></ion-icon>
               <ng-template #not_profile>
-                <ion-icon size="large" style="zoom:0.8" slot="icon-only" name="person-outline"></ion-icon>
+                <ion-icon
+                  size="large"
+                  style="zoom: 0.8"
+                  slot="icon-only"
+                  name="person-outline"></ion-icon>
               </ng-template>
             </ion-button>
           </ion-col>

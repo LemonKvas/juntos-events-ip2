@@ -7,10 +7,9 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then((m) => m.LoginPageModule)
   },
-    //TODO: change back to test
   {
     path: '',
-    redirectTo: 'test',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
@@ -52,9 +51,12 @@ const routes: Routes = [
   },
   {
     path: 'test',
-    loadChildren: () => import('./pages/test/test.module').then( m => m.TestPageModule)
+    loadChildren: () => import('./pages/test/test.module').then((m) => m.TestPageModule)
+  },
+  {
+    path: 'impressumUndDatenschutz',
+    loadChildren: () => import('./pages/impressum/impressum.module').then( m => m.ImpressumPageModule)
   }
-
 ];
 
 @NgModule({
