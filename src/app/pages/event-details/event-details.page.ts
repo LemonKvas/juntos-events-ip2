@@ -30,8 +30,7 @@ export class EventDetailsPage implements OnInit {
     private userService: UserDataService,
     public alertService: AlertService,
     private route: ActivatedRoute,
-    private chatService: ChatService,
-    //public geoService: GeoService
+    private chatService: ChatService //public geoService: GeoService
   ) {
     this.event = this.router.getCurrentNavigation().extras.state;
   }
@@ -47,8 +46,8 @@ export class EventDetailsPage implements OnInit {
   segmentChanged(ev: any) {
     console.log('Segment changed to ', ev);
   }
-  async getUserlist(){
-    for(let participant of this.event.participants){
+  async getUserlist() {
+    for (let participant of this.event.participants) {
       const user = await this.userService.getUserById(participant);
       this.participants.unshift(user);
     }
@@ -75,7 +74,7 @@ export class EventDetailsPage implements OnInit {
       await this.alertService.partakeEvent(event);
     }
   }
-  async openChat(user: User){
+  async openChat(user: User) {
     const chatGroup = await this.chatService.createChat(user);
     await this.router.navigate(['chat', chatGroup.id, user.userId]);
   }

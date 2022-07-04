@@ -27,8 +27,7 @@
     bottom: 0;
     left: 0;
     white-space: nowrap;
-  "
-  >
+  ">
   <ion-grid>
     <ion-row>
       <ion-col>
@@ -48,8 +47,10 @@
           <ion-col class="img-col" size="4">
             <!-- get Photo through Photo Service by photoID or url -->
             <div class="img-div">
-              <ion-img button src="{{event.photoURLs[0] | fireStorageImg: '/event-photos' | async }}"
-                       (click)="eventDetailsState(event.eventId)">
+              <ion-img
+                button
+                src="{{event.photoURLs[0] | fireStorageImg: '/event-photos' | async }}"
+                (click)="eventDetailsState(event.eventId)">
               </ion-img>
             </div>
           </ion-col>
@@ -58,7 +59,8 @@
             <div button (click)="eventDetailsState(event.eventId)">
               <h1>{{event.name}}</h1>
               <p>{{event.eventDate | date: 'dd.MM.yyyy'}} um {{event.eventDate | date: 'H:mm'}}</p>
-              <p>{{event.address['street']}} {{event.address['house']}}, <br>
+              <p>
+                {{event.address['street']}} {{event.address['house']}}, <br />
                 {{event.address['zipCode']}} {{event.address['city']}}
               </p>
               <p *ngIf="this.eventService.freeEvent(event)"><strong>{{event.price}}€</strong></p>
