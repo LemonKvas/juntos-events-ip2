@@ -15,14 +15,13 @@ import { MapComponent } from 'src/app/components/map/map.component';
  */
 
 @NgModule({
-
   declarations: [
     FireStorageImgPipe,
     FootermenuComponent,
     NotificationsComponent,
     FriendComponent,
     UserEventsModalComponent,
-      MapComponent
+    MapComponent
   ],
   imports: [CommonModule, IonicModule, RouterModule, ScrollingModule],
   exports: [
@@ -31,7 +30,7 @@ import { MapComponent } from 'src/app/components/map/map.component';
     NotificationsComponent,
     FriendComponent,
     MapComponent,
-    UserEventsModalComponent,
+    UserEventsModalComponent
   ]
 })
 export class SharedModule {}

@@ -1,8 +1,8 @@
 import { Component, HostListener, Input } from '@angular/core';
 import { Event } from 'src/app/models/classes/event.model';
 import { Share } from '@capacitor/share';
-import {NavigationExtras, Router} from "@angular/router";
-import {EventService} from '../../services/event.service';
+import { NavigationExtras, Router } from '@angular/router';
+import { EventService } from '../../services/event.service';
 
 /**
  * @deprecated

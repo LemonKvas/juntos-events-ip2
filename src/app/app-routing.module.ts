@@ -66,17 +66,17 @@ const routes: Routes = [
   },
   {
     path: 'chat/:cId',
-    loadChildren: () => import('src/app/pages/chat/chat.module').then(m => m.ChatPageModule)
+    loadChildren: () => import('src/app/pages/chat/chat.module').then((m) => m.ChatPageModule)
   },
   {
     path: 'chat/:cId/:uId',
-    loadChildren: () => import('src/app/pages/chat/chat.module').then(m => m.ChatPageModule)
+    loadChildren: () => import('src/app/pages/chat/chat.module').then((m) => m.ChatPageModule)
   },
   {
     path: 'chat-list/:id',
-    loadChildren: () => import('src/app/pages/chat-list/chat-list.module').then(m => m.ChatListPageModule)
-  },
-
+    loadChildren: () =>
+      import('src/app/pages/chat-list/chat-list.module').then((m) => m.ChatListPageModule)
+  }
 ];
 
 @NgModule({
