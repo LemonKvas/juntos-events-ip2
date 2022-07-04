@@ -7,6 +7,7 @@ import firebase from 'firebase/compat/app';
 import {CreatedEvent} from '../models/interfaces/created-event';
 import {arrayUnion} from '@angular/fire/firestore';
 import {getDoc} from 'firebase/firestore';
+import {GeoService} from "src/app/services/geo.service";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class EventService {
   createdEvent: CreatedEvent;
   private eventsCollections: AngularFirestoreCollection<Event>;
   private events: Observable<Event[]>;
-  constructor(private afs: AngularFirestore) {
+  constructor(private afs: AngularFirestore, private geoService: GeoService) {
     this.eventsCollections = this.afs.collection('events');
   }
   getAllEvents(){
@@ -33,8 +34,13 @@ export class EventService {
     event.eventId = this.afs.createId();
     this.eventId = event.eventId;
     const data = JSON.parse(JSON.stringify(event));
-    await this.eventsCollections.doc(event.eventId).set(data)
-     .catch((err) => console.log(err));
+    await this.geoService.getLongLat(event.address).then(async(longlatOb)=>{
+      await longlatOb.subscribe((longlat)=>{
+        data.lat = longlat["latt"];
+        data.long = longlat["longt"];
+        this.eventsCollections.doc(event.eventId).set(data).catch((err) => console.log(err));
+      })
+    })
   }
   async removeEvent(id: string){
     await this.eventsCollections.doc(id).delete();

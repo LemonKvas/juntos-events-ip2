@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { APP_INITIALIZER } from '@angular/core';
@@ -15,8 +15,10 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { AuthService } from 'src/app/services/auth.service';
 import { SwiperModule } from 'swiper/angular';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
@@ -28,6 +30,7 @@ import { SwiperModule } from 'swiper/angular';
     AngularFireStorageModule,
     AngularFireDatabaseModule,
     SharedModule,
+    HttpClientModule
   ],
   providers: [
     {

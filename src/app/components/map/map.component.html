@@ -1,0 +1,7 @@
+<ng-container *ngIf="geoService.userCoordinates && geoService.marker">
+    <div [hidden]="mapClosed" id="map" #map></div>
+    <ion-button expand="block" (click)="createMap()">{{btnText}}</ion-button>
+</ng-container>
+
+
+

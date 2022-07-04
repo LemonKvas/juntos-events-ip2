@@ -3,6 +3,8 @@ import { Event } from 'src/app/models/classes/event.model';
 import { EventService } from 'src/app/services/event.service';
 import { Share } from '@capacitor/share';
 import { NavigationExtras, Router } from '@angular/router';
+import {GeoService} from "src/app/services/geo.service";
+import {Observable, of} from "rxjs";
 
 @Component({
   selector: 'app-event-list',
@@ -12,9 +14,13 @@ import { NavigationExtras, Router } from '@angular/router';
 export class EventListPage implements OnInit {
   events: Event[] = [];
   selectedEvent: Event;
-  constructor(public eventService: EventService, private router: Router) {}
+  longLats;
+
+  constructor(public eventService: EventService, private router: Router, private geoService: GeoService) {
+    this.longLats = undefined;
+  }
   ngOnInit() {
-    this.getEvents();
+    this.getEvents()
   }
   getEvents() {
     this.eventService.getPublishedEvents().subscribe((res) => {
@@ -22,6 +28,7 @@ export class EventListPage implements OnInit {
         eventId: e.payload.doc.id,
         ...(e.payload.doc.data() as Event)
       }));
+      this.geoService.setMarkerArray(this.events);
     });
   }
   async shareEvent() {
