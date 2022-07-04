@@ -25,6 +25,19 @@ ion-col {
 @media screen and (max-width: 600px) {
   ion-card {
     border-radius: 5px;
+    width: 60%;
+  }
+  p {
+    font-size: 15px;
+  }
+}
+//Desktop Version
+@media screen and (min-width: 610px) {
+  ion-card {
+    border-radius: 5px;
     width: 40%;
+  }
+  p {
+    font-size: 15px;
   }
 }

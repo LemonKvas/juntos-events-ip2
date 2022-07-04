@@ -63,7 +63,7 @@ export class ChatListPage implements OnInit {
    */
   async openChat(userId: string){
     const chatId = await this.chatService.getChatGroupByUsersId(userId);
-    await this.router.navigate(['chat', chatId.id]);
+    await this.router.navigate(['chat', chatId.id, userId]);
   }
 
   /**
@@ -77,7 +77,6 @@ export class ChatListPage implements OnInit {
    * @param userId
    */
   async deleteChat(userId: string){
-    const chatId = await this.chatService.getChatGroupByUsersId(userId);
     await this.alertService.basicAlert(
       '',
       'Sind Sie sicher, dass Sie diesen Chat löschen wollen?',
@@ -85,7 +84,7 @@ export class ChatListPage implements OnInit {
           {
             text: 'Ja',
             handler: () => {
-              this.chatService.deleteChat(chatId.id, userId);
+              this.chatService.deleteChat(userId);
             }
           },
           {

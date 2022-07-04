@@ -20,24 +20,42 @@
   <ion-grid>
     <ion-col *ngFor="let message of messages">
       <ion-row *ngIf="message.creator === this.currentUser.userId" class="ion-justify-content-end">
-        <ion-card class="currentUserMsg">
-          <ion-card-header>
-            <strong>{{message.creatorName}}</strong>
-          </ion-card-header>
-          <ion-card-content>
-            {{message.message}}
-          </ion-card-content>
-        </ion-card>
+        <ion-col>
+          <ion-row class="ion-justify-content-end">
+            <ion-card class="currentUserMsg">
+              <ion-card-content>
+                <ion-row class="ion-justify-content-start">
+                  <p><strong>{{message.creatorName}}</strong></p>
+                </ion-row>
+                <ion-row class="ion-justify-content-start">
+                  <p>{{message.message}}</p>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
+          </ion-row>
+          <ion-row class="ion-justify-content-end">
+            <p style="margin-right: 20px; font-size: 12px">{{message.date | date: 'dd.MM.yyyy HH:mm'}}</p>
+          </ion-row>
+        </ion-col>
       </ion-row>
       <ion-row *ngIf="message.creator !== this.currentUser.userId" class="ion-justify-content-start">
-        <ion-card class="chatUserMsg">
-          <ion-card-header>
-            <strong>{{message.creatorName}}</strong>
-          </ion-card-header>
-          <ion-card-content>
-            {{message.message}}
-          </ion-card-content>
-        </ion-card>
+        <ion-col>
+          <ion-row class="ion-justify-content-start">
+            <ion-card class="chatUserMsg">
+              <ion-card-content>
+                <ion-row class="ion-justify-content-start">
+                  <p><strong>{{message.creatorName}}</strong></p>
+                </ion-row>
+                <ion-row class="ion-justify-content-start">
+                  <p>{{message.message}}</p>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
+          </ion-row>
+          <ion-row class="ion-justify-content-start">
+            <p style="margin-left: 20px; font-size: 12px">{{message.date | date: 'dd.MM.yyyy HH:mm'}}</p>
+          </ion-row>
+        </ion-col>
       </ion-row>
     </ion-col>
   </ion-grid>

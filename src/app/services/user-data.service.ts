@@ -6,7 +6,6 @@ import {getDoc} from 'firebase/firestore';
 import UserCredential = firebase.auth.UserCredential;
 import {AlertService} from 'src/app/services/alert.service';
 import {arrayUnion} from '@angular/fire/firestore';
-import {ChatGroup} from '../models/classes/chat-group';
 
 
 @Injectable({
@@ -132,15 +131,48 @@ export class UserDataService {
   getAllUser(){
     return this.userCollection.valueChanges();
   }
-  async addChat(chat: ChatGroup, user: User){
+
+  /**
+   * This function will add each chat user to each other sub-collection 'chatPartners' with
+   * the given user object.
+   *
+   * @example
+   * Call it with a user object.
+   * addChat(user: User)
+   *
+   * @param user
+   */
+  async addChat(user: User){
     const db = firebase.firestore().collection('user');
     const currentUser = await this.getCurrentUser();
-    const chatData = JSON.parse(JSON.stringify(chat));
-    await db.doc(currentUser.userId).collection('chats').doc(chat.id).set(chatData);
     await db.doc(currentUser.userId).collection('chatPartners').doc(user.userId).set(user);
-    await db.doc(user.userId).collection('chats').doc(chat.id).set(chatData);
     await db.doc(user.userId).collection('chatPartners').doc(currentUser.userId).set(currentUser);
   }
+
+  /**
+   * This function add current / logged-in user data to chat user by given user id.
+   *
+   * @example
+   * Call it with a user id as a string
+   * addChatPartner('8rkf29')
+   *
+   * @param userId
+   */
+  async addChatPartner(userId: string){
+    const currentUser = await this.getCurrentUser();
+    await this.userCollection.doc(userId).collection('chatPartners').doc(currentUser.userId).set(currentUser);
+  }
+
+  /**
+   * This function will return an observable with all chat partners data of the user with
+   * the given id.
+   *
+   * @example
+   * Call it with a user id as a string
+   * getChatPartners('n84th3')
+   *
+   * @param userId
+   */
   getChatPartners(userId: string){
     return this.userCollection.doc(userId).collection('chatPartners').snapshotChanges();
   }

@@ -119,7 +119,7 @@ export class ChatService {
       await this.chatsCollections.doc(this.groupChat.id).set(data)
         .catch((err) => console.log('Error: ', err));
       await this.addUserToChat(this.groupChat.id, user);
-      await this.userService.addChat(this.groupChat, user);
+      await this.userService.addChat(user);
     }
     return this.groupChat;
   }
@@ -184,15 +184,9 @@ export class ChatService {
    * Call it with a chat id and a user id, both as a string
    * deleteChat('u89b2q','7gh4j92')
    *
-   * @param chatId
    * @param userId
    */
-  async deleteChat(chatId: string, userId: string){
-    // Delete chat from chats collection
-    await this.chatsCollections.doc(chatId).delete();
-    // Delete chat from current user collection
+  async deleteChat(userId: string){
     await this.afs.collection('user').doc(this.currentUser.userId).collection('chatPartners').doc(userId).delete();
-    // Delete chat from chat partner
-    await this.afs.collection('user').doc(userId).collection('chatPartners').doc(this.currentUser.userId).delete();
   }
 }

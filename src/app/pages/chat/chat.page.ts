@@ -17,32 +17,43 @@ export class ChatPage implements OnInit {
   messages: Message[] = [];
   chatGroup: ChatGroup;
   chatGroupId = '';
+  chatUserId: string;
   chatUser: User;
   currentUser: User;
   constructor(private chatService: ChatService, private userService: UserDataService,
               private route: ActivatedRoute) {
-    this.chatGroupId = this.route.snapshot.params.id;
+    this.chatGroupId = this.route.snapshot.params.cId;
+    this.chatUserId = this.route.snapshot.params.uId;
   }
   async ngOnInit() {
     await this.getChatInfo(this.chatGroupId);
-    await this.getChatUsers();
+    this.currentUser = await this.userService.getCurrentUser();
+    this.chatUser = await this.userService.getUserById(this.chatUserId);
     this.getMessages();
   }
+
+  /**
+   * This function will get chat information with the given id by calling
+   * getChatGroupById() from chatservice to set value of local variable 'chatGroup'.
+   *
+   * @param id
+   */
   async getChatInfo(id: string){
     this.chatGroup = await this.chatService.getChatGroupById(id);
   }
-  async getChatUsers(){
-    this.currentUser = await this.userService.getCurrentUser();
 
-    // eslint-disable-next-line @typescript-eslint/prefer-for-of
-    for(let i = 0; i < this.chatGroup.users.length; ++i){
-      if(this.currentUser.userId !== this.chatGroup.users[i].userId){
-        return this.chatUser = this.chatGroup.users[i];
-      }
-    }
-  }
+  /**
+   * This function will send a given string as a message to the firebase sub-collection
+   * 'messages' of current chat and add current user as a chat partner to the other
+   * chat user in case he / she deleted the chat.
+   *
+   * @example
+   * Call it with a string
+   * sendMessage('Hello World!')
+   *
+   * @param newMsg
+   */
   sendMessage(newMsg: string){
-    console.log('Chat ID: ', this.chatGroupId);
     this.msg = {
       chatId: this.chatGroupId,
       creator: this.currentUser.userId,
@@ -51,8 +62,14 @@ export class ChatPage implements OnInit {
       message: newMsg,
     };
     this.chatService.addChatMessage(this.msg).catch((err) => console.log('Error: ', err));
+    this.userService.addChatPartner(this.chatUserId).catch((err) => console.log('Error: ', err));
     this.newMsg = '';
   }
+
+  /**
+   * This function will fetch all messages of current chat by calling getMessages() from
+   * chatService and set value of local variable 'messages'.
+   */
   getMessages(){
     this.chatService.getMessages(this.chatGroupId).subscribe((res) => {
       this.messages = res.map((e) => ({
