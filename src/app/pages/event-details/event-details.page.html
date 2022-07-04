@@ -102,8 +102,8 @@
         <ion-item class="ion-text-justify" *ngIf="event.participants.length === 0">
           <p>Nehme als Erste(r) an dem Event teil!</p>
         </ion-item>
-        <ion-row class="ion-justify-content-center">
-          <ion-item *ngFor="let participant of participants">
+        <ion-row class="ion-justify-content-center" *ngFor="let participant of participants">
+          <ion-item>
             <ion-col size="4" [routerLink]="['/profile/' + participant.userId]" button>
               <ion-row>
                 <ion-avatar class="profile-div">
