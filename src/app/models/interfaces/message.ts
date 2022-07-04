@@ -5,4 +5,5 @@ export interface Message {
   date?: Date;
   chatId?: string;
   creatorName?: string;
+  photo?: string;
 }

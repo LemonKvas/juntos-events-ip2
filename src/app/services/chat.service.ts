@@ -107,7 +107,9 @@ export class ChatService {
    * @returns chatData
    */
   async createChat(user: User){
+    // Looking for existing chat
     await this.getChatGroupByUsersId(user.userId);
+    // If no existing chat was found, create a new chat
     if(this.groupChat === null){
       this.groupChat = new ChatGroup(
         this.afs.createId(),
@@ -115,11 +117,18 @@ export class ChatService {
         user.photoUrl
       );
       const data = JSON.parse(JSON.stringify(this.groupChat));
+      // Add new created chat to collection 'chats'
       await this.chatsCollections.doc(this.groupChat.id).set(data)
         .catch((err) => console.log('Error: ', err));
+      // Add both users to sub-collection 'users' of new created chat
       await this.addUserToChat(this.groupChat.id, user);
+      // Add both users as chat partners into each other sub-collection 'chatPartners'
       await this.userService.addChat(user);
     }
+    // For existing chat, but maybe deleted both users will be added as each other chat partners again
+    // (chat is still available if one user is still left in sub-collection 'users' of chat)
+    await this.userService.addChatPartner(this.groupChat.id, user);
+    // return chat information
     return this.groupChat;
   }
 
@@ -137,8 +146,10 @@ export class ChatService {
     const db = firebase.firestore().collection('chats');
     const currentUser = JSON.parse(JSON.stringify(this.currentUser));
     const chatUser = JSON.parse(JSON.stringify(user));
+    // Add both users to sub-collection 'users' of collection 'chats'
     await this.chatsCollections.doc(chatId).collection('users').doc(currentUser.userId).set(currentUser);
     await this.chatsCollections.doc(chatId).collection('users').doc(chatUser.userId).set(chatUser);
+    // Add users to users array of chat
     await db.doc(chatId).update({users: arrayUnion(currentUser.userId)});
     await db.doc(chatId).update({users: arrayUnion(chatUser.userId)});
   }
@@ -155,8 +166,8 @@ export class ChatService {
   async addChatMessage(msg: Message){
     msg.id = this.afs.createId();
     msg.creator = this.currentUser.userId;
-    msg.creatorName = this.currentUser.firstName;
     const data = JSON.parse(JSON.stringify(msg));
+    // Add message as new document to sub-collection 'messages' of chat
     await this.chatsCollections.doc(msg.chatId).collection('messages').doc(msg.id).set(data);
   }
 

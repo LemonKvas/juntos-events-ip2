@@ -1,18 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ChatService} from 'src/app/services/chat.service';
 import {UserDataService} from 'src/app/services/user-data.service';
 import {Message} from 'src/app/models/interfaces/message';
 import {ChatGroup} from 'src/app/models/classes/chat-group';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import User from 'src/app/models/classes/user';
 import {AlertService} from '../../services/alert.service';
+import {PhotoService} from '../../services/photo.service';
+import {IonContent} from "@ionic/angular";
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.page.html',
   styleUrls: ['./chat.page.scss'],
 })
-export class ChatPage implements OnInit {
+export class ChatPage implements OnInit{
+  @ViewChild(IonContent) content: IonContent;
   newMsg = '';
   msg: Message;
   messages: Message[] = [];
@@ -21,15 +24,18 @@ export class ChatPage implements OnInit {
   chatUserId: string;
   chatUser: User;
   currentUser: User;
+  photo: string;
   constructor(private chatService: ChatService, private userService: UserDataService,
-              private route: ActivatedRoute, private alertService: AlertService) {
+              private route: ActivatedRoute, private alertService: AlertService,
+              private router: Router, private photoService: PhotoService) {
     this.chatGroupId = this.route.snapshot.params.cId;
     this.chatUserId = this.route.snapshot.params.uId;
   }
   async ngOnInit() {
     await this.getChatInfo(this.chatGroupId);
     await this.getChatUsersData();
-    this.getMessages();
+    await this.getMessages();
+    this.scrollToBottom();
   }
 
   /**
@@ -73,25 +79,80 @@ export class ChatPage implements OnInit {
       date: new Date(),
       id: '',
       message: newMsg,
+      creatorName: this.currentUser.firstName,
+      photo: '',
     };
-    await this.chatService.addChatMessage(this.msg).catch((err) => console.log('Error: ', err));
-    await this.userService.addChatPartner(this.chatGroupId, this.chatUser).catch((err) => console.log('Error: ', err));
     this.newMsg = '';
+    // Add chat message to sub-collection 'messages' of collection 'chats'
+    await this.chatService.addChatMessage(this.msg).catch((err) => console.log('Error: ', err));
+    // Add both users as each others chat partner
+    await this.userService.addChatPartner(this.chatGroupId, this.chatUser).catch((err) => console.log('Error: ', err));
+    this.scrollToBottom();
   }
 
+  /**
+   * This function will send a given string as a message to the firebase sub-collection 'messages' of current chat and
+   * add current user as a chat partner to the other
+   * chat user in case he / she deleted the chat.
+   *
+   * @example
+   * Call it with a photo as a string
+   * sendMessage('https://firebase.photo.com')
+   *
+   * @param photo
+   */
+  async sendPhoto(photo: string){
+    this.msg = {
+      chatId: this.chatGroupId,
+      creator: this.currentUser.userId,
+      date: new Date(),
+      id: '',
+      message: '',
+      creatorName: this.currentUser.firstName,
+      photo: photo
+    };
+    this.newMsg = '';
+    // Add chat message to sub-collection 'messages' of collection 'chats'
+    await this.chatService.addChatMessage(this.msg).catch((err) => console.log('Error: ', err));
+    // Add both users as each others chat partner
+    await this.userService.addChatPartner(this.chatGroupId, this.chatUser).catch((err) => console.log('Error: ', err));
+  }
   /**
    * This function will fetch all messages of current chat by calling getMessages() from
    * chatService and set value of local variable 'messages'.
    */
-  getMessages(){
+  async getMessages(){
     this.chatService.getMessages(this.chatGroupId).subscribe((res) => {
       this.messages = res.map((e) => ({
         id: e.payload.doc.id,
         ...e.payload.doc.data() as Message
       }));
     });
+    this.scrollToBottom();
   }
 
+  /**
+   * This function will be called by an event and upload selected file to firebase
+   * storage. Local function sendPhoto() will be called to send file as a message.
+   *
+   * @example
+   * Call it with a DOM event object
+   * uploadPhoto($event)
+   *
+   * @param event
+   */
+  uploadPhoto(event){
+    this.photo = event.target.files[0];
+    this.photoService.storePhoto(this.photo, 'chats/').then((res: any) => {
+      if(res){
+        this.photo = res;
+      }
+      this.sendPhoto(this.photo).catch((err) => console.log('Error: ', err));
+    },
+      (error: any) => {
+        console.log('Error: ', error);
+      });
+  }
   /**
    * This function will open a modal to ask user if he / she wants to proceed and delete selected
    * message with given data. If this is the case, deleteMessage() from chatService will be called.
@@ -119,5 +180,37 @@ export class ChatPage implements OnInit {
         }
       ],
     );
+  }
+  /**
+   * This function will delete chat with given chat id by calling deleteChat() from
+   * chatService.
+   *
+   * @example
+   * Call it with a user id as a string
+   * deleteChat('z48hwg1t')
+   *
+   * @param userId
+   */
+  async deleteChat(userId: string){
+    await this.alertService.basicAlert(
+      '',
+      'Sind Sie sicher, dass Sie diesen Chat löschen wollen?',
+      [
+        {
+          text: 'Ja',
+          handler: () => {
+            this.chatService.deleteChat(userId);
+            this.router.navigate(['chat-list', this.currentUser.userId]);
+          }
+        },
+        {
+          text: 'Abbrechen',
+          role: 'cancel',
+        }
+      ],
+    );
+  }
+  scrollToBottom(){
+    this.content.scrollToBottom(1500).catch((err) => console.log('Error: ', err));
   }
 }

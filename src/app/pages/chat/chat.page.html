@@ -9,14 +9,14 @@
       <ion-button>
         <ion-icon name="people-outline"></ion-icon>
       </ion-button>
-      <ion-button>
-        <ion-icon name="options-outline"></ion-icon>
+      <ion-button (click)="deleteChat(chatUser.userId)">
+        <ion-icon name="trash-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content class="ion-padding" id="content">
   <ion-grid>
     <ion-col *ngFor="let message of messages">
       <ion-row *ngIf="message.creator === this.currentUser.userId" class="ion-justify-content-end">
@@ -28,8 +28,11 @@
                   <ion-row class="ion-justify-content-start">
                     <p><strong>{{message.creatorName}}</strong></p>
                   </ion-row>
-                  <ion-row class="ion-justify-content-start">
+                  <ion-row class="ion-justify-content-start" *ngIf="message.message !== '' || message.message !== null">
                     <p>{{message.message}}</p>
+                  </ion-row>
+                  <ion-row class="ion-justify-content-center" *ngIf="message.message === '' || message.message === null">
+                    <ion-img src="{{message.photo}}" alt="photo-message"></ion-img>
                   </ion-row>
                   <ion-row class="ion-justify-content-end" style="margin-top: 10px">
                     <p style="margin-right: 20px; font-size: 12px">{{message.date | date: 'dd.MM.yyyy HH:mm'}}</p>
@@ -49,8 +52,11 @@
                   <ion-row class="ion-justify-content-start">
                     <p><strong>{{message.creatorName}}</strong></p>
                   </ion-row>
-                  <ion-row class="ion-justify-content-start">
+                  <ion-row class="ion-justify-content-start" *ngIf="message.message !== '' || message.message !== null">
                     <p>{{message.message}}</p>
+                  </ion-row>
+                  <ion-row *ngIf="message.message === '' || message.message === null">
+                    <ion-img src="{{message.photo}}"></ion-img>
                   </ion-row>
                   <ion-row class="ion-justify-content-end" style="margin-top: 10px">
                     <p style="margin-right: 20px; font-size: 12px">{{message.date | date: 'dd.MM.yyyy HH:mm'}}</p>
@@ -72,6 +78,7 @@
         </ng-template>
       </ion-popover>
     </ion-col>
+    <span id="scrollBottom"></span>
   </ion-grid>
 </ion-content>
 
@@ -80,13 +87,20 @@
     <ion-row class="ion-justify-content-center">
       <ion-col size="2" style="background-color: rgb(232, 139, 114, .2)">
         <ion-buttons>
-          <ion-button disabled="true">
-            <ion-icon name="document-outline" slot="icon-only" style="color: #ff8766"></ion-icon>
+          <ion-button>
+            <ion-input [(ngModel)]="photo" class="myFakeUploadInput" type="file" accept=".jpg" multiple="false"
+                        (change)="uploadPhoto($event)">
+            </ion-input>
+            <label>
+              <ion-icon name="document-outline" slot="icon-only" style="color: #ff8766"></ion-icon>
+            </label>
           </ion-button>
         </ion-buttons>
       </ion-col>
       <ion-col size="8" style="background-color: rgb(232, 139, 114, .2)">
-        <ion-textarea autoGrow="true" class="message-input" rows="1" maxlength="500" [(ngModel)]="newMsg" (keyup.enter)="sendMessage(newMsg)"></ion-textarea>
+        <ion-textarea autoGrow="true" class="message-input" rows="1" maxlength="500" [(ngModel)]="newMsg"
+                      (keyup.enter)="sendMessage(newMsg)">
+        </ion-textarea>
       </ion-col>
       <ion-col size="2" style="background-color: rgb(232, 139, 114, .2)">
         <ion-button expand="block" fill="clear" [disabled]="newMsg === ''" (click)="sendMessage(newMsg)">

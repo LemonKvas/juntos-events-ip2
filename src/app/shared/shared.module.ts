@@ -10,20 +10,31 @@ import {UserEventsModalComponent} from "src/app/components/user-events-modal/use
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
 
-
 /**
  * Import of this Module is needed to provide declared Pipes and Components
  */
 
 @NgModule({
 
-  declarations: [FireStorageImgPipe, FootermenuComponent, NotificationsComponent, FriendComponent, UserEventsModalComponent],
+  declarations: [
+    FireStorageImgPipe,
+    FootermenuComponent,
+    NotificationsComponent,
+    FriendComponent,
+    UserEventsModalComponent,
+  ],
     imports: [
         CommonModule,
         IonicModule,
         RouterModule,
         ScrollingModule
     ],
-  exports: [FireStorageImgPipe, FootermenuComponent, NotificationsComponent, FriendComponent, UserEventsModalComponent]
+  exports: [
+    FireStorageImgPipe,
+    FootermenuComponent,
+    NotificationsComponent,
+    FriendComponent,
+    UserEventsModalComponent,
+  ]
 })
 export class SharedModule { }

@@ -25,6 +25,10 @@ ion-col {
 .chatUserCol {
   float: left;
 }
+.myFakeUploadInput {
+  position: absolute;
+  opacity: 0;
+}
 //Mobile Version
 @media screen and (max-width: 600px) {
   ion-card {
