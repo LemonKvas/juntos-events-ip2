@@ -63,8 +63,6 @@ const routes: Routes = [
       ),
     canActivate: [RoleGuard],
     data: { role: 0 }
-  }
-    data: {role: 0}
   },
   {
     path: 'chat/:cId',

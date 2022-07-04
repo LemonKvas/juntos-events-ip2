@@ -1,6 +1,8 @@
 import { Component, HostListener, Input } from '@angular/core';
 import { Event } from 'src/app/models/classes/event.model';
 import { Share } from '@capacitor/share';
+import {NavigationExtras, Router} from "@angular/router";
+import {EventService} from '../../services/event.service';
 
 /**
  * @deprecated
@@ -13,11 +15,12 @@ import { Share } from '@capacitor/share';
 export class EventItemComponent {
   @Input() event: Event;
   windowWithOver800: boolean;
+  selectedEvent: Event;
 
   /**
    * @ignore
    */
-  constructor() {
+  constructor(private eventService: EventService, private router: Router) {
     this.onResize();
   }
   /**
@@ -55,5 +58,31 @@ export class EventItemComponent {
         console.log('Error: Sharing not available!');
       }
     });
+  }
+  async eventDetailsState(id: string) {
+    this.selectedEvent = await this.eventService.getEventById(id);
+    const navigationExtras: NavigationExtras = {
+      state: {
+        name: this.selectedEvent.name,
+        photoURLs: this.selectedEvent.photoURLs,
+        creationDate: this.selectedEvent.creationDate,
+        eventDate: this.selectedEvent.eventDate,
+        price: this.selectedEvent.price,
+        bio: this.selectedEvent.bio,
+        categories: this.selectedEvent.categories,
+        participants: this.selectedEvent.participants,
+        maxParticipants: this.selectedEvent.maxParticipants,
+        address: this.selectedEvent.address,
+        publishStatus: this.selectedEvent.publishStatus,
+        eventId: this.selectedEvent.eventId,
+        creatorId: this.selectedEvent.creatorId
+      }
+    };
+    if (this.selectedEvent.long && this.selectedEvent.lat) {
+      navigationExtras.state.long = this.selectedEvent.long;
+      navigationExtras.state.lat = this.selectedEvent.lat;
+    }
+    console.log(navigationExtras);
+    await this.router.navigateByUrl(`event-details/${id}`, navigationExtras);
   }
 }
