@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {ChatService} from 'src/app/services/chat.service';
 import {UserDataService} from 'src/app/services/user-data.service';
 import {Message} from 'src/app/models/interfaces/message';
@@ -7,14 +7,14 @@ import {ActivatedRoute, Router} from '@angular/router';
 import User from 'src/app/models/classes/user';
 import {AlertService} from '../../services/alert.service';
 import {PhotoService} from '../../services/photo.service';
-import {IonContent} from "@ionic/angular";
+import {IonContent} from '@ionic/angular';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.page.html',
   styleUrls: ['./chat.page.scss'],
 })
-export class ChatPage implements OnInit{
+export class ChatPage implements OnInit, AfterViewInit {
   @ViewChild(IonContent) content: IonContent;
   newMsg = '';
   msg: Message;
@@ -35,9 +35,8 @@ export class ChatPage implements OnInit{
     await this.getChatInfo(this.chatGroupId);
     await this.getChatUsersData();
     await this.getMessages();
-    this.scrollToBottom();
+    await this.scrollToBottom();
   }
-
   /**
    * This function will get chat information with the given id by calling
    * getChatGroupById() from chatService to set value of local variable 'chatGroup'.
@@ -87,7 +86,7 @@ export class ChatPage implements OnInit{
     await this.chatService.addChatMessage(this.msg).catch((err) => console.log('Error: ', err));
     // Add both users as each others chat partner
     await this.userService.addChatPartner(this.chatGroupId, this.chatUser).catch((err) => console.log('Error: ', err));
-    this.scrollToBottom();
+    await this.scrollToBottom();
   }
 
   /**
@@ -116,6 +115,7 @@ export class ChatPage implements OnInit{
     await this.chatService.addChatMessage(this.msg).catch((err) => console.log('Error: ', err));
     // Add both users as each others chat partner
     await this.userService.addChatPartner(this.chatGroupId, this.chatUser).catch((err) => console.log('Error: ', err));
+    await this.scrollToBottom();
   }
   /**
    * This function will fetch all messages of current chat by calling getMessages() from
@@ -128,7 +128,7 @@ export class ChatPage implements OnInit{
         ...e.payload.doc.data() as Message
       }));
     });
-    this.scrollToBottom();
+    await this.scrollToBottom();
   }
 
   /**
@@ -172,6 +172,7 @@ export class ChatPage implements OnInit{
           text: 'Ja',
           handler: () => {
             this.chatService.deleteMessage(msg);
+            this.scrollToBottom();
           }
         },
         {
@@ -210,7 +211,23 @@ export class ChatPage implements OnInit{
       ],
     );
   }
-  scrollToBottom(){
-    this.content.scrollToBottom(1500).catch((err) => console.log('Error: ', err));
+
+  /**
+   * This function will open data with the given url string in a new tab.
+   *
+   * @param url
+   */
+  openImageNewTab(url: string){
+    window.open(url);
+  }
+
+  /**
+   * This function will scroll down to the bottom of the screen / content.
+   */
+  async scrollToBottom(){
+    this.content.scrollToBottom(1000).catch((err) => console.log('Error: ', err));
+  }
+  async ngAfterViewInit(){
+    await this.scrollToBottom().catch((err) => console.log('Error: ', err));
   }
 }
