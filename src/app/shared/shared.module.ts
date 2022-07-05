@@ -6,6 +6,9 @@ import {FootermenuComponent} from "../components/footermenu/footermenu.component
 import {IonicModule} from "@ionic/angular";
 import {RouterModule} from "@angular/router";
 import {FriendComponent} from "src/app/components/friend/friend.component";
+import {FeedbackComponent} from "../components/feedback/feedback.component";
+import {StarRatingModule} from "ionic5-star-rating";
+import {FormsModule} from "@angular/forms";
 
 
 /**
@@ -14,12 +17,14 @@ import {FriendComponent} from "src/app/components/friend/friend.component";
 
 @NgModule({
 
-  declarations: [FireStorageImgPipe, FootermenuComponent, NotificationsComponent, FriendComponent],
+  declarations: [FireStorageImgPipe, FootermenuComponent, NotificationsComponent, FriendComponent, FeedbackComponent],
     imports: [
         CommonModule,
         IonicModule,
-        RouterModule
+        RouterModule,
+        StarRatingModule,
+        FormsModule
     ],
-  exports: [FireStorageImgPipe, FootermenuComponent, NotificationsComponent, FriendComponent]
+  exports: [FireStorageImgPipe, FootermenuComponent, NotificationsComponent, FriendComponent, FeedbackComponent]
 })
 export class SharedModule { }

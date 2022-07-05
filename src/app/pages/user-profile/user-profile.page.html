@@ -116,7 +116,7 @@
                 <ion-row class="ion-align-items-center" size="12" *ngFor="let event of events; let i = index">
                   <ion-col  *ngIf="event.status == 3" class="ion-justify-content-center ion-align-items-center" size="auto">
                     <app-event-item class="ion-align-self-center" [event]="event"></app-event-item>
-                    <ion-button (click)="setOpen(true, event)">Feedback geben</ion-button>
+                    <app-feedback [feedBackEvent]="event"></app-feedback>
                   </ion-col>
                 </ion-row>
 
@@ -147,64 +147,7 @@
       </ion-grid>
     </div>
 
-    <ion-modal [isOpen]="isModalOpen">
-      <ng-template>
-        <ion-header>
-          <ion-toolbar>
-            <ion-title>Feedback: {{feedBackEvent.name}}</ion-title>
-            <ion-buttons slot="end">
-              <ion-button (click)="setOpen(false, null)"><ion-icon size="large" style="zoom:0.8" name="close-outline"></ion-icon></ion-button>
-            </ion-buttons>
-          </ion-toolbar>
-        </ion-header>
-        <ion-content class="ion-padding">
-          <ion-grid>
 
-            <ion-row>
-              <ion-col>
-                <h3>
-                  Sternerating
-                </h3>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col>
-
-                <form>
-                  <ionic5-star-rating #rating
-                                      activeColor = "#ff8766"
-                                      defaultColor = "#e06543"
-                                      readonly="false"
-                                      rating="4"
-                                      fontSize = "32px"
-                                      (ratingChanged)="logRatingChange($event)">
-                  </ionic5-star-rating>
-                </form>
-
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col>
-                <h3>
-                  Was kann man das nächste Mal besser machen?
-                </h3>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col>
-                <ion-item>
-                  <ion-textarea [(ngModel)]="feedback"></ion-textarea>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-
-          </ion-grid>
-        </ion-content>
-      </ng-template>
-    </ion-modal>
 
   </ion-content>
 </ng-container>

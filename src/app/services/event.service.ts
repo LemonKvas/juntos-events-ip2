@@ -83,6 +83,12 @@ export class EventService {
     await db.doc(event.eventId).update({participants: arrayUnion(...event.participants)});
   }
 
+  async saveFeedback(event: Event) {
+    const db = firebase.firestore().collection('events');
+    await db.doc(event.eventId).update({stars: arrayUnion(...event.stars)});
+    await db.doc(event.eventId).update({feedback: arrayUnion(...event.feedback)});
+  }
+
   /**
    * Gibt ein Observable zurück mit allen Events, deren Wert "promoted" auf true gesetzt ist
    */
