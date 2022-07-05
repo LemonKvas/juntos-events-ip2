@@ -1,0 +1,151 @@
+<ng-container *ngIf="userLoaded">
+  <!-- Header -->
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-buttons *ngIf="friendIds" slot="end">
+        <ion-icon
+          size="large"
+          style="zoom: 0.95"
+          (click)="openFriendlist()"
+          name="people-outline"></ion-icon>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ng-container *ngIf="ownProfile">
+          <ng-container *ngIf="user.rights === 0">
+            <ion-icon
+              size="large"
+              style="zoom: 0.8"
+              name="clipboard-outline"
+              [routerLink]="['/admin-dashboard']"></ion-icon>
+          </ng-container>
+          <ion-icon
+            size="large"
+            style="zoom: 0.8"
+            name="notifications-outline"
+            (click)="openNotifications($event)"></ion-icon>
+          <ion-icon
+            size="large"
+            style="zoom: 0.8"
+            name="settings-outline"
+            routerLink="/edit-user"
+            routerLinkActive="active"></ion-icon>
+          <ion-icon
+            size="large"
+            style="zoom: 0.8"
+            name="log-out-outline"
+            (click)="logOut()"></ion-icon>
+        </ng-container>
+        <ion-icon
+          *ngIf="followFriendsIndicator !== undefined"
+          size="large"
+          style="zoom: 0.8"
+          [name]="followFriendsIcon"
+          (click)="determineFollowFriendsButtonFunction({followFriendsIndicator})"></ion-icon>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- Profil Inhalt -->
+  <ion-content>
+    <ion-grid>
+      <ion-row class="ion-justify-content-center ion-align-items-center">
+        <ion-col size="auto">
+          <ion-avatar *ngIf="user.photoUrl">
+            <img
+              *ngIf="user.photoUrl.includes('.png') || user.photoUrl.includes('googleusercontent'); else noNeed"
+              alt="User avatar"
+              src="{{user.photoUrl}}" />
+            <ng-template #noNeed>
+              <img alt="User avatar" src="{{user.photoUrl | fireStorageImg: '/avatars' | async}}" />
+            </ng-template>
+          </ion-avatar>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-center ion-align-items-center">
+        <ion-col size="4" class="ion-align-self-center" style="text-align: center">
+          <!-- Name unter Bild festlegen -->
+          <h2 *ngIf="user.firstName else usernameCaption">{{user.firstName}}</h2>
+          <ng-template #usernameCaption>
+            <h2 *ngIf="user.userName">{{user.userName}}</h2>
+          </ng-template>
+          <!-- weiter mit User Bio -->
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12" *ngIf="user['description']">
+          <div class="userBio">
+            <p>{{user["description"]}}</p>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="10">
+          <ion-progress-bar value="{{socialPointsCalculated}}"></ion-progress-bar>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <div class="loginDiv">
+      <ion-grid>
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="12">
+            <ion-segment
+              (ionChange)="switchProfileEventAndBadges($event)"
+              [(ngModel)]="eventAndBadgesIndicator">
+              <ion-segment-button value="events">
+                <ion-label>Events</ion-label>
+              </ion-segment-button>
+              <ion-segment-button value="badges">
+                <ion-label>{{user["socialPoints"]}} SP</ion-label>
+              </ion-segment-button>
+            </ion-segment>
+          </ion-col>
+        </ion-row>
+        <ng-container [ngSwitch]="eventAndBadgesIndicator">
+          <ng-container *ngSwitchCase="'events'">
+            <ion-list lines="full" class="ion-align-items-center">
+              <ng-container *ngIf="events else noEvents">
+                <ion-row
+                  class="ion-align-items-center"
+                  size="12"
+                  *ngFor="let event of events; let i = index">
+                  <ion-col class="ion-justify-content-center ion-align-items-center" size="auto">
+                    <app-event-item class="ion-align-self-center" [event]="event"></app-event-item>
+                  </ion-col>
+                </ion-row>
+              </ng-container>
+              <ng-template #noEvents>
+                <ion-row class="ion-align-items-center ion-justify-content-center" size="12">
+                  <ion-col style="text-align: center">
+                    <p *ngIf="ownProfile else youText">
+                      Du hast dich leider noch zu keinem Event angemeldet..
+                    </p>
+                    <ng-template #youText>
+                      <p>{{user.userName}} hat sich leider noch zu keinem Event angemeldet..</p>
+                    </ng-template>
+                    <p>Finde jetzt Events die dir gefallen könnten:</p>
+                    <ion-button routerLink="/event-list" routerLinkActive="active"
+                      >Alle Events</ion-button
+                    >
+                  </ion-col>
+                </ion-row>
+              </ng-template>
+            </ion-list>
+          </ng-container>
+          <ng-container *ngSwitchCase="'badges'">
+            <ion-row class="ion-align-items-center ion-justify-content-center" size="12">
+              <ion-col style="text-align: center">
+                <p>Sammle Badges beim Besuchen von Events!</p>
+                <p>Bald verfügbar!</p>
+              </ion-col>
+            </ion-row>
+          </ng-container>
+        </ng-container>
+      </ion-grid>
+    </div>
+  </ion-content>
+</ng-container>
+
+<app-footermenu></app-footermenu>
