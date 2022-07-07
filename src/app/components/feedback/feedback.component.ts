@@ -4,6 +4,12 @@ import {EventService} from "../../services/event.service";
 import {AlertService} from "../../services/alert.service";
 import {ModalController} from "@ionic/angular";
 
+/**
+ * DE:
+ * Komponente, um das Feedback Modal zu öffnen
+ * EN:
+ * Compononent to open feedback modal
+ */
 @Component({
   selector: 'app-feedback',
   templateUrl: './feedback.component.html',
@@ -20,23 +26,41 @@ export class FeedbackComponent implements OnInit {
 
   ngOnInit() {}
 
+  /**
+   * DE:
+   * Setzt isModalOpen zum gegebenen boolean -> modal wird geöffnet oder geschlossen
+   * EN:
+   * Sets isModalOpen to given boolean -> openening or closing the modal
+   * @param {boolean} isOpen
+   *
+   * @example
+   * <ion-button (click)="setOpen(false)"><ion-icon size="large" style="zoom:0.8" name="close-outline"></ion-icon></ion-button>
+   */
   setOpen(isOpen: boolean) {
     this.isModalOpen = isOpen;
-
-    console.log(isOpen)
-    console.log(this.feedBackEvent)
   }
 
+  /**
+   * DE:
+   * Setzt starRating zur gegebenen number
+   * EN:
+   * Sets starRating to given number
+   * @param {number} rating
+   *
+   * @example
+   * <ionic5-star-rating #rating (ratingChanged)="logRatingChange($event)"></ionic5-star-rating>
+   */
   logRatingChange(rating) {
-    console.log("changed rating: ",rating);
     this.starRating = rating;
   }
 
+  /**
+   * DE:
+   * Speichert das Feedback in der Datenbank, das vorher gespeichert wurde
+   * EN:
+   * Saves the feedback in the database
+   */
   async saveFeedback() {
-    console.log('save')
-    console.log(this.starRating)
-    console.log(this.feedback)
-
     if (!this.feedBackEvent.stars) {
       this.feedBackEvent.stars = [];
     }
@@ -47,15 +71,13 @@ export class FeedbackComponent implements OnInit {
     this.feedBackEvent.feedback.unshift(this.feedback);
 
     await this.eventService.saveFeedback(this.feedBackEvent).then(() => {
-      this.alertService.basicAlert('', 'Dein Feedback wurde erfolgreich versendet. Vielen Dank! 😄', ['OK']);
+      this.alertService.basicAlert('', 'Dein Feedback wurde erfolgreich versendet. \n Vielen Dank für deine Hilfe! 😄', ['OK']);
     }).catch((e) => {
       console.log(e);
       this.alertService.basicAlert('', 'Beim Versenden des Feedbacks ist ein Fehler aufgetreten', ['OK']);
     })
     this.isModalOpen = false;
     await this.modal.dismiss();
-
-
   }
 
 }

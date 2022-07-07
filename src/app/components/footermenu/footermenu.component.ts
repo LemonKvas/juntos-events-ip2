@@ -2,6 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {UserDataService} from "../../services/user-data.service";
 
+/**
+ * DE:
+ * Komponente des Footermenüs
+ * EN:
+ * Component for the footer
+ */
 @Component({
   selector: 'app-footermenu',
   templateUrl: './footermenu.component.html',
@@ -16,10 +22,15 @@ export class FootermenuComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('this.router.url', this.router.url);
     this.getUser();
   }
 
+  /**
+   * DE:
+   * Holt die userId des aktuellen Users
+   * EN:
+   * Gets the userId of the current User
+   */
   async getUser() {
     this.currentUser = await this.userData.getCurrentUserID();
   }

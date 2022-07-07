@@ -5,6 +5,9 @@ import {Router} from "@angular/router";
 import {PhotoService} from "src/app/services/photo.service";
 
 /**
+ * DE:
+ * Seite, um das Nutzerprofil anzupassen
+ * EN:
  * Page for editing the user profile
  */
 @Component({
@@ -266,16 +269,23 @@ export class EditUserPage implements OnInit {
 
   ngOnInit() {
     this.getUserId()
-    //TODO: maybe get userdata from firestore and subscribe
-    //this.db.doc(`user/${id}`).valueChanges().subscribe(user => this.user = user);
   }
 
+  /**
+   *DE:
+   * Holt sich die UserId des aktuell eingeloggten Users
+   *EN:
+   * Gets the userId of the current user
+   */
   async getUserId() {
     this.userId = await this.userDataService.getCurrentUserID();
   }
 
 
   /**
+   * DE:
+   * Lässt den User ein Avatar hochladen, und aktualisiert den Avatar
+   * EN:
    * Let the user upload an avatar, and updates the avatar
    * @param event
    */
@@ -303,7 +313,10 @@ export class EditUserPage implements OnInit {
   }
 
   /**
-   * Deletes the photo in firestore storage with the given url
+   * DE:
+   * Löscht das Foto im Firebase Storage, welches in der URL hinterlegt ist
+   * EN:
+   * Deletes the photo in firebase storage with the given url
    * @param {string} url
    */
   deleteAvatar(url : string) {
@@ -311,6 +324,9 @@ export class EditUserPage implements OnInit {
   }
 
   /**
+   * DE:
+   * Schließt die editing page, ohne die Änderungen zu übernehmen
+   * EN:
    * Closes the editing page without saving the changes and deletes uploaded photos which are not used
    */
   close() {
@@ -329,7 +345,10 @@ export class EditUserPage implements OnInit {
   }
 
   /**
-   * Updates the user data in firestore
+   * DE:
+   * Aktualisiert die Nutzerdaten im Firestore, und leitet den User in sein Profil
+   * EN:
+   * Updates the user data in firestore, and redirects the user to his profile
    */
   updateUser() {
     if (this.userName.length === 0) {

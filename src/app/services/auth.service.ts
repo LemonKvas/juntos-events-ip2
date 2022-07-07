@@ -88,7 +88,7 @@ export class AuthService {
             return;
         }
         console.log('Email oder Passwort haben die Anforderungen nicht erfüllt');
-        //TODO: alerts einfügen statt console logs
+        this.alertService.basicAlert('Email oder Passwort haben die Anforderungen nicht erfüllt', 'Bitte versuchen Sie es mit anderen Werten', ['OK']);
     }
 
     EmailRegister(userType, email, password){
