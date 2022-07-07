@@ -58,11 +58,17 @@
 
       <ion-footer>
         <ion-toolbar>
-          <ion-button *ngIf="alreadyRated; else no" class="sendBtn" (click)="saveFeedback()" slot="end"
-            >Feedback abschicken</ion-button>
+          <ion-button
+            *ngIf="alreadyRated; else no"
+            class="sendBtn"
+            (click)="saveFeedback()"
+            slot="end"
+            >Feedback abschicken</ion-button
+          >
           <ng-template #no>
             <ion-button class="sendBtn" (click)="saveFeedback()" slot="end"
-            >Feedback bearbeiten</ion-button>
+              >Feedback bearbeiten</ion-button
+            >
           </ng-template>
         </ion-toolbar>
       </ion-footer>

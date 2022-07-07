@@ -28,7 +28,7 @@ export class Event {
     publishStatus?: boolean,
     eventId?: string,
     creatorId?: string,
-    status?: number,
+    status?: number
   ) {
     this.name = name;
     this.photoURLs = photoURLs;
