@@ -11,7 +11,10 @@ import { EventItemComponent } from 'src/app/components/event-item/event-item.com
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, IonicModule, UserProfilePageRoutingModule, SharedModule],
-  declarations: [UserProfilePage, EventItemComponent]
+    imports: [CommonModule, FormsModule, IonicModule, UserProfilePageRoutingModule, SharedModule],
+    exports: [
+        EventItemComponent
+    ],
+    declarations: [UserProfilePage, EventItemComponent]
 })
 export class UserProfilePageModule {}

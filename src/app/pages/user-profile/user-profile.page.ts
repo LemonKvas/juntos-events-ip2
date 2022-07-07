@@ -4,7 +4,7 @@ import { UserDataService } from 'src/app/services/user-data.service';
 import { Router } from '@angular/router';
 import { EventService } from 'src/app/services/event.service';
 import { Event } from 'src/app/models/classes/event.model';
-import { Platform, MenuController } from '@ionic/angular';
+import { Platform, MenuController, ActionSheetController } from '@ionic/angular';
 import User from 'src/app/models/classes/user';
 import { Subscription } from 'rxjs';
 import { FriendsService } from 'src/app/services/friends.service';
@@ -57,6 +57,7 @@ export class UserProfilePage implements OnInit, OnDestroy {
    * @param alertService
    * @param menu
    * @param auth
+   * @param actionSheetCtrl
    */
   constructor(
     private location: Location,
@@ -68,7 +69,8 @@ export class UserProfilePage implements OnInit, OnDestroy {
     private notificationService: NotificationService,
     private alertService: AlertService,
     public menu: MenuController,
-    private auth: AuthService
+    private auth: AuthService,
+    private actionSheetCtrl: ActionSheetController
   ) {
     this.followFriendsIndicator = undefined;
     this.isFriends = false;
@@ -107,7 +109,7 @@ export class UserProfilePage implements OnInit, OnDestroy {
    */
   ngOnDestroy() {
     this.userSubscription.unsubscribe();
-    this.currentUserSubscription.unsubscribe();
+    // this.currentUserSubscription.unsubscribe();
   }
 
   /**
@@ -316,5 +318,38 @@ export class UserProfilePage implements OnInit, OnDestroy {
    */
   logOut() {
     this.auth.signOut();
+  }
+
+  /**
+   * DE:
+   * Öffnet das ActionSheet auf der Profilseite, um weitere Funktionalitäten anzuzeigen.
+   * EN:
+   * This function will open an actionsheet on the profile page, which contains multiple settings.
+   */
+  async openActionSheet(){
+    const actionSheet = await this.actionSheetCtrl.create({
+      buttons: [
+        {
+          text: 'Profil bearbeiten',
+          handler: () => {
+            this.router.navigate(['/edit-user']);
+          }
+        },
+        {
+          text: 'Meine Events',
+          handler: () => {
+            this.router.navigate(['user-events', this.currentUserId]);
+          }
+        },
+        {
+          text: 'Abmelden',
+          role: 'destructive',
+          handler: () => {
+            this.logOut();
+          }
+        }
+      ]
+    });
+    await actionSheet.present();
   }
 }

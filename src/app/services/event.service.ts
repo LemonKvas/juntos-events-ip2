@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { Event } from 'src/app/models/classes/event.model';
 import { Observable } from 'rxjs';
-import { arrayRemove, documentId } from '@angular/fire/firestore';
+import { documentId } from '@angular/fire/firestore';
 
 import firebase from 'firebase/compat/app';
 import { CreatedEvent } from '../models/interfaces/created-event';
@@ -50,12 +50,22 @@ export class EventService {
       .snapshotChanges();
   }
 
+  getPublishedEventsFromUser(userId: string){
+    return this.afs
+      .collection('events', (ref) => ref
+        .where('publishStatus', '==', true)
+        .where('creatorId', '==', userId))
+      .snapshotChanges();
+  }
+
   /**
    * This function will return an observable with all event drafts
    */
-  getEventDrafts() {
+  getEventDraftsFromUser(userId: string) {
     return this.afs
-      .collection('events', (ref) => ref.where('publishStatus', '==', false))
+      .collection('events', (ref) => ref
+        .where('publishStatus', '==', false)
+        .where('creatorId', '==', userId))
       .snapshotChanges();
   }
 
@@ -74,6 +84,14 @@ export class EventService {
       });
     });
   }
+
+  async updateEvent(event: Event){
+    console.log('Event id: ', event.eventId);
+    const data = JSON.parse(JSON.stringify(event));
+    console.log('Data: ', data);
+    await this.afs.collection('events').doc(event.eventId).update(data);
+  }
+
   async removeEvent(id: string) {
     await firebase.firestore().collection('events').doc(id).delete();
   }
@@ -277,7 +295,7 @@ export class EventService {
     });
     const creatorEvents = creator.createdEvents;
 
-    // filter the creatoe events array
+    // filter the creator events array
     const newCreatorEvents = creatorEvents.filter((event) => event.eventId !== eventId);
 
     // update the doc with the filtered events

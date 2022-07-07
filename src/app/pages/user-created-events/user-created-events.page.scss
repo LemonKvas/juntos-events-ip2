@@ -1,0 +1,50 @@
+ion-title {
+  font-family: 'Yeseva One', cursive;
+}
+h3 {
+  font-size: 20px
+}
+ion-content {
+  .tabs {
+    margin-top: 20px;
+    font-family: 'Signika Negative', sans-serif;
+    ion-segment {
+      --background: none;
+      ion-segment-button {
+        font-size: 1rem;
+        --border-width: 0;
+        --padding-start: 8px !important;
+        --padding-bottom: 3px !important;
+        --padding-end: 8px !important;
+        --padding-top: 3px !important;
+        --background-checked: #ff8766;
+        --indicator-color: transparent !important;
+        --color-checked: #ffffff;
+        font-weight: bold;
+        border-radius: 15px;
+      }
+    }
+  }
+  ion-row {
+    justify-content: center;
+  }
+  ion-item {
+    width: 80%;
+  }
+  ion-card {
+    width: 80%;
+  }
+}
+@media only screen and (max-width: 360px){
+  ion-title {
+    font-size: 17px;
+  }
+  ion-segment-button {
+    ion-label {
+      font-size: 10px;
+    }
+  }
+  h3 {
+    font-size: 15px;
+  }
+}

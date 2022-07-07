@@ -2,7 +2,7 @@ import { Component, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Event } from 'src/app/models/classes/event.model';
-import { IonDatetime } from '@ionic/angular';
+import {IonDatetime, ModalController} from '@ionic/angular';
 import { EventService } from 'src/app/services/event.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AlertService } from 'src/app/services/alert.service';
@@ -21,6 +21,7 @@ export class EventCreatePage {
   @ViewChild('eventName')
   @ViewChild(IonDatetime, { static: true })
   datetime: IonDatetime;
+  eventId = '';
   eventName: string;
   photoURLs = [];
   creationDate = new Date();
@@ -47,6 +48,7 @@ export class EventCreatePage {
   creator: User;
   creatorId = '';
   createdEvent: CreatedEvent;
+  editMode = false;
   public createEventForm: FormGroup;
 
   constructor(
@@ -56,10 +58,10 @@ export class EventCreatePage {
     private eventService: EventService,
     public alertService: AlertService,
     public photoService: PhotoService,
-    private userService: UserDataService
+    private userService: UserDataService,
+    private modalCtrl: ModalController
   ) {
-    this.today = new Date();
-    this.getCreatorData();
+    this.eventId = this.route.snapshot.params.id;
     this.createEventForm = new FormGroup({
       eventName: new FormControl(),
       photoURLs: new FormControl(),
@@ -73,6 +75,32 @@ export class EventCreatePage {
       maxParticipants: new FormControl(),
       selectedCategories: new FormControl()
     });
+    if(this.eventId){
+      this.editMode = true;
+      this.getEventData().catch((err) => console.log('Error: ', err));
+      console.log('Edit 1: ', this.editMode);
+    } else if(this.eventId === undefined){
+      this.today = new Date();
+      this.getCreatorData().catch((err) => console.log('Error: ', err));
+    }
+  }
+  async getEventData(){
+    this.event = await this.eventService.getEventById(this.eventId);
+    this.eventId = this.event.eventId;
+    this.eventName = this.event.name;
+    this.photoURLs = this.event.photoURLs;
+    this.creationDate = this.event.creationDate;
+    this.eventDate = this.event.eventDate;
+    this.price = this.event.price;
+    this.eventBio = this.event.bio;
+    this.selectedCategories = this.event.categories;
+    this.maxParticipants = this.event.maxParticipants;
+    this.street = this.event.address['street'];
+    this.house = this.event.address['house'];
+    this.zipCode = this.event.address['zipCode'];
+    this.city = this.event.address['city'];
+    this.publishStatus = this.event.publishStatus;
+    this.creatorId = this.event.creatorId;
   }
   setInputValues() {
     this.address = {
@@ -93,7 +121,7 @@ export class EventCreatePage {
       this.maxParticipants,
       this.address,
       this.publishStatus,
-      'eventId',
+      this.eventId,
       this.creatorId
     );
   }
@@ -129,23 +157,49 @@ export class EventCreatePage {
       this.errors.set('categories', 'Wähle mind. eine Kategorie aus!');
     } else if (this.errors.size === 0) {
       this.setInputValues();
-      await this.eventService.addEvent(this.event);
-      this.createdEvent = await this.eventService.createdEventData(this.publishStatus);
-      await this.userService.addCreatedEvent(this.createdEvent);
-      await this.clearEventForm();
+      if(this.editMode === false){
+        if(this.uploadStatus === false){
+          await this.eventService.addEvent(this.event);
+          this.createdEvent = await this.eventService.createdEventData(this.publishStatus);
+          await this.userService.addCreatedEvent(this.createdEvent);
+          await this.clearEventForm();
+        } else {
+          await this.alertService.photoUpload();
+        }
+      } else if(this.editMode === true){
+        if(this.uploadStatus === false){
+          await this.eventService.updateEvent(this.event);
+          await this.clearEventForm();
+        } else {
+          await this.alertService.photoUpload();
+        }
+      }
     }
   }
   async saveEventAsDraft() {
+    console.log('Edit Draft: ', this.editMode);
     this.publishStatus = false;
     if (!this.eventName) {
       await this.alertService.eventDraftAlert();
       this.errors.set('eventName', 'Event Name darf nicht leer sein!');
-    } else {
-      this.setInputValues();
-      await this.eventService.addEvent(this.event);
-      this.createdEvent = await this.eventService.createdEventData(this.publishStatus);
-      await this.userService.addCreatedEvent(this.createdEvent);
-      await this.clearEventForm();
+    } else if(this.editMode === false){
+      if(this.uploadStatus === false){
+        this.setInputValues();
+        await this.eventService.addEvent(this.event);
+        this.createdEvent = await this.eventService.createdEventData(this.publishStatus);
+        await this.userService.addCreatedEvent(this.createdEvent);
+        await this.clearEventForm();
+      } else {
+        await this.alertService.photoUpload();
+      }
+    } else if(this.editMode === true){
+      if(this.uploadStatus === false){
+        this.setInputValues();
+        await this.eventService.updateEvent(this.event);
+        await this.clearEventForm();
+      } else {
+        await this.alertService.photoUpload();
+      }
     }
   }
   async getCreatorData() {
@@ -157,12 +211,13 @@ export class EventCreatePage {
     this.eventDate = null;
     this.photoUploads = [];
     this.publishStatus = false;
-    await this.router.navigate(['event-list']);
+    if(this.editMode === false){
+      await this.router.navigate(['event-list']);
+    } else if(this.editMode == true){
+      await this.router.navigate(['user-events', this.creatorId]);
+    }
   }
-  async remove(item) {
-    await this.eventService.removeEvent(item.id);
-    this.location.back();
-  }
+
   async back() {
     await this.alertService.unsaveAlert();
   }
@@ -173,7 +228,7 @@ export class EventCreatePage {
         if (res) {
           this.uploadStatus = false;
           this.photoUploads.unshift(res);
-          this.photoURLs.push(this.photoService.photoID);
+          this.photoURLs[0] = this.photoService.photoID;
         }
       },
       (error: any) => {
@@ -182,7 +237,41 @@ export class EventCreatePage {
       }
     );
   }
-  async addPhotoToGallery() {
-    await this.photoService.addNewToGallery();
+  async deletePhoto(){
+    this.photoURLs[0] = null;
+    const location = 'event-photos/';
+    await this.photoService.deletePhoto(this.photoURLs[0], location);
+  }
+  deleteEvent(){
+    this.alertService.basicAlert(
+      '',
+      'Wollen Sie wirklich dieses Event löschen?',
+      [
+        {
+          text: 'Ja',
+          handler: () => {
+            this.eventService.removeEvent(this.eventId).catch((err) => console.log('Error: ', err));
+            this.router.navigate(['user-events', this.creatorId]).catch((err) => console.log('Error: ', err));
+          }
+        },
+        {
+          text: 'Abbrechen',
+          role: 'cancel'
+        }
+        ]);
+  }
+  async openEventSupportMessageModal(userId: string, eventId: string){
+    await this.alertService.supportAlert();
+    // const modal = await this.modalCtrl.create({
+    //   component: SupportMessageComponent,
+    //   componentProps: {
+    //     userId: userId,
+    //     eventId: eventId,
+    //   }
+    // });
+    // await modal.present()
+    //   .then(() => console.log('No error with presenting modal'))
+    //   .catch(err => console.log('error modal: ', err));
+    // await modal.onDidDismiss();
   }
 }

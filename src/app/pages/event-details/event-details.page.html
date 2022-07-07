@@ -59,11 +59,10 @@
     <ion-row>
       <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
         <ion-segment-button value="information">
-          <ion-label style="font-size: 13px">Informationen</ion-label>
+          <ion-label>Informationen</ion-label>
         </ion-segment-button>
         <ion-segment-button value="participants">
-          <ion-label style="font-size: 13px"
-            >Teilnehmer*Innen ({{event.participants.length}}/{{event.maxParticipants}})</ion-label
+          <ion-label>Teilnehmer*Innen ({{event.participants.length}}/{{event.maxParticipants}})</ion-label
           >
         </ion-segment-button>
       </ion-segment>

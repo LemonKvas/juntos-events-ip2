@@ -6,11 +6,12 @@
         <ion-back-button></ion-back-button>
       </ion-buttons>
       <ion-buttons *ngIf="friendIds" slot="end">
-        <ion-icon
-          size="large"
-          style="zoom: 0.95"
-          (click)="openFriendlist()"
-          name="people-outline"></ion-icon>
+        <ion-button (click)="openFriendlist()">
+          <ion-icon
+            size="large"
+            style="zoom: 0.95"
+            name="people-outline"></ion-icon>
+        </ion-button>
       </ion-buttons>
       <ion-buttons slot="end">
         <ng-container *ngIf="ownProfile">
@@ -21,22 +22,16 @@
               name="clipboard-outline"
               [routerLink]="['/admin-dashboard']"></ion-icon>
           </ng-container>
-          <ion-icon
-            size="large"
-            style="zoom: 0.8"
-            name="notifications-outline"
-            (click)="openNotifications($event)"></ion-icon>
-          <ion-icon
-            size="large"
-            style="zoom: 0.8"
-            name="settings-outline"
-            routerLink="/edit-user"
-            routerLinkActive="active"></ion-icon>
-          <ion-icon
-            size="large"
-            style="zoom: 0.8"
-            name="log-out-outline"
-            (click)="logOut()"></ion-icon>
+          <ion-button (click)="openNotifications($event)">
+            <ion-icon
+              size="large"
+              style="zoom: 0.8"
+              name="notifications-outline">
+            </ion-icon>
+          </ion-button>
+          <ion-button class="action-sheets-profile" (click)="openActionSheet()">
+            <ion-icon name="options-outline"></ion-icon>
+          </ion-button>
         </ng-container>
         <ion-icon
           *ngIf="followFriendsIndicator !== undefined"

@@ -45,3 +45,13 @@ ion-segment-button {
   border-radius: 15px;
   font-weight: bold;
 }
+.action-sheets-destructive {
+  color: red;
+}
+@media only screen and (max-width: 300px){
+  ion-segment-button {
+    ion-label {
+      font-size: 10px;
+    }
+  }
+}

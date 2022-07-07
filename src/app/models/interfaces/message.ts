@@ -3,7 +3,11 @@ export interface Message {
   creator?: string;
   message?: string;
   date?: Date;
-  chatId?: string;
   creatorName?: string;
+  categories?: string[];
+  subject?: string;
+  eventId?: string;
+  reportUserId?: string;
+  chatId?: string;
   photo?: string;
 }

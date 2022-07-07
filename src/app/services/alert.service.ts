@@ -68,4 +68,30 @@ export class AlertService {
     });
     this.alert.present();
   }
+  async photoUpload(){
+    this.alert = await this.alertService.create({
+      message: 'Bitte warten Sie kurz. Ihr Foto wird noch hochgeladen.',
+      buttons: ['OK']
+    });
+    this.alert.present();
+  }
+  async supportAlert(){
+    this.alert = await this.alertService.create({
+      header: 'Probleme?',
+      message: 'Senden Sie unserem Support eine Nachricht und wir werden uns umgehend um ihr Anliegen kümmern.',
+      buttons: [
+        {
+          text: 'Abbrechen',
+          role: 'cancel'
+        },
+        {
+          text: 'Support kontaktieren',
+          handler: () => {
+            console.log('open support message modal.');
+          }
+        }
+      ]
+    });
+    this.alert.present();
+  }
 }
