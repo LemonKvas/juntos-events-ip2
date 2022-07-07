@@ -50,11 +50,11 @@ export class EventService {
       .snapshotChanges();
   }
 
-  getPublishedEventsFromUser(userId: string){
+  getPublishedEventsFromUser(userId: string) {
     return this.afs
-      .collection('events', (ref) => ref
-        .where('publishStatus', '==', true)
-        .where('creatorId', '==', userId))
+      .collection('events', (ref) =>
+        ref.where('publishStatus', '==', true).where('creatorId', '==', userId)
+      )
       .snapshotChanges();
   }
 
@@ -63,9 +63,9 @@ export class EventService {
    */
   getEventDraftsFromUser(userId: string) {
     return this.afs
-      .collection('events', (ref) => ref
-        .where('publishStatus', '==', false)
-        .where('creatorId', '==', userId))
+      .collection('events', (ref) =>
+        ref.where('publishStatus', '==', false).where('creatorId', '==', userId)
+      )
       .snapshotChanges();
   }
 
@@ -85,7 +85,7 @@ export class EventService {
     });
   }
 
-  async updateEvent(event: Event){
+  async updateEvent(event: Event) {
     console.log('Event id: ', event.eventId);
     const data = JSON.parse(JSON.stringify(event));
     console.log('Data: ', data);

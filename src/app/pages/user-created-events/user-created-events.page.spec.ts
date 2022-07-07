@@ -9,7 +9,7 @@ describe('UserCreatedEventsPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserCreatedEventsPage ],
+      declarations: [UserCreatedEventsPage],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

@@ -32,7 +32,9 @@
             <p>Du hast leider noch keine Events erstellt.</p>
           </ion-row>
           <ion-row class="ion-text-center">
-            <p (click)="createEvent()" style="color: var(--ion-color-secondary); text-decoration: underline">
+            <p
+              (click)="createEvent()"
+              style="color: var(--ion-color-secondary); text-decoration: underline">
               <strong>Jetzt Event erstellen!</strong>
             </p>
           </ion-row>
@@ -49,7 +51,9 @@
             <ion-col class="ion-justify-content-end" size="3">
               <ion-buttons>
                 <ion-button (click)="editEvent(pEvent.eventId)">
-                  <ion-icon name="create-outline" style="color: var(--ion-color-secondary)"></ion-icon>
+                  <ion-icon
+                    name="create-outline"
+                    style="color: var(--ion-color-secondary)"></ion-icon>
                 </ion-button>
               </ion-buttons>
             </ion-col>
@@ -68,7 +72,9 @@
             <p>Du hast noch keine Events als Entwurf gespeichert.</p>
           </ion-row>
           <ion-row class="ion-text-center">
-            <p (click)="createEvent()" style="color: var(--ion-color-secondary); text-decoration: underline">
+            <p
+              (click)="createEvent()"
+              style="color: var(--ion-color-secondary); text-decoration: underline">
               <strong>Jetzt ein Event erstellen?</strong>
             </p>
           </ion-row>
@@ -85,7 +91,9 @@
             <ion-col class="ion-justify-content-end" size="3">
               <ion-buttons>
                 <ion-button (click)="editEvent(dEvent.eventId)">
-                  <ion-icon name="create-outline" style="color: var(--ion-color-secondary)"></ion-icon>
+                  <ion-icon
+                    name="create-outline"
+                    style="color: var(--ion-color-secondary)"></ion-icon>
                 </ion-button>
               </ion-buttons>
             </ion-col>
@@ -94,5 +102,4 @@
       </ion-card>
     </ion-row>
   </div>
-
 </ion-content>

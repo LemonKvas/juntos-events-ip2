@@ -326,7 +326,7 @@ export class UserProfilePage implements OnInit, OnDestroy {
    * EN:
    * This function will open an actionsheet on the profile page, which contains multiple settings.
    */
-  async openActionSheet(){
+  async openActionSheet() {
     const actionSheet = await this.actionSheetCtrl.create({
       buttons: [
         {

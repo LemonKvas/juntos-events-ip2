@@ -83,9 +83,11 @@ const routes: Routes = [
   },
   {
     path: 'user-events/:id',
-    loadChildren: () => import('./pages/user-created-events/user-created-events.module').then( m => m.UserCreatedEventsPageModule)
+    loadChildren: () =>
+      import('./pages/user-created-events/user-created-events.module').then(
+        (m) => m.UserCreatedEventsPageModule
+      )
   }
-
 ];
 
 @NgModule({

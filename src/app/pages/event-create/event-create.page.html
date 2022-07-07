@@ -147,7 +147,9 @@
               (change)="uploadPhoto($event)"
               accept=".png,.jpg"
               multiple="false"></ion-input>
-            <p *ngIf="uploadStatus" style="color: var(--ion-color-secondary)">... wird hochgeladen</p>
+            <p *ngIf="uploadStatus" style="color: var(--ion-color-secondary)">
+              ... wird hochgeladen
+            </p>
             <ion-img
               *ngIf="photoURLs[0] !== null"
               id="photoPreview"
@@ -160,27 +162,40 @@
           <ng-template>
             <ion-content>
               <ion-list>
-                <ion-item (click)="deletePhoto()" [button]="true" [detail]="false" style="color: red">Löschen</ion-item>
+                <ion-item
+                  (click)="deletePhoto()"
+                  [button]="true"
+                  [detail]="false"
+                  style="color: red"
+                  >Löschen</ion-item
+                >
                 <ion-item [button]="true" [detail]="false">Abbrechen</ion-item>
               </ion-list>
             </ion-content>
           </ng-template>
         </ion-popover>
       </ion-row>
-
     </ion-list>
   </ion-grid>
 </ion-content>
 <ion-footer>
   <ion-row class="ion-align-items-center" id="eventSaveAndDraft" fixed>
     <ion-col class="ion-text-center" id="eventSaveAsDraftBtnCol" size-sm="6">
-      <p button id="eventDraftBtn" (click)="saveEventAsDraft()"
-         *ngIf="this.publishStatus === false">Entwurf speichern</p>
+      <p
+        button
+        id="eventDraftBtn"
+        (click)="saveEventAsDraft()"
+        *ngIf="this.publishStatus === false">
+        Entwurf speichern
+      </p>
     </ion-col>
     <ion-col class="ion-text-center" id="eventPublishBtnCol" size-sm="6">
-      <ion-button *ngIf="this.publishStatus === false" class="eventPublishBtn"
-                  (click)="addEvent()"> Veröffentlichen </ion-button>
-      <ion-button *ngIf="this.eventId !== '' && this.publishStatus === true" (click)="addEvent()"> Speichern </ion-button>
+      <ion-button *ngIf="this.publishStatus === false" class="eventPublishBtn" (click)="addEvent()">
+        Veröffentlichen
+      </ion-button>
+      <ion-button *ngIf="this.eventId !== '' && this.publishStatus === true" (click)="addEvent()">
+        Speichern
+      </ion-button>
     </ion-col>
   </ion-row>
 </ion-footer>

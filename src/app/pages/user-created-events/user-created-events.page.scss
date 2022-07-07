@@ -2,7 +2,7 @@ ion-title {
   font-family: 'Yeseva One', cursive;
 }
 h3 {
-  font-size: 20px
+  font-size: 20px;
 }
 ion-content {
   .tabs {
@@ -35,7 +35,7 @@ ion-content {
     width: 80%;
   }
 }
-@media only screen and (max-width: 360px){
+@media only screen and (max-width: 360px) {
   ion-title {
     font-size: 17px;
   }

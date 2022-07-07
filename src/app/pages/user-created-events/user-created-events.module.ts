@@ -7,16 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { UserCreatedEventsPageRoutingModule } from './user-created-events-routing.module';
 
 import { UserCreatedEventsPage } from './user-created-events.page';
-import {UserProfilePageModule} from "../user-profile/user-profile.module";
+import { UserProfilePageModule } from '../user-profile/user-profile.module';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        IonicModule,
-        UserCreatedEventsPageRoutingModule,
-        UserProfilePageModule
-    ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    UserCreatedEventsPageRoutingModule,
+    UserProfilePageModule
+  ],
   declarations: [UserCreatedEventsPage]
 })
 export class UserCreatedEventsPageModule {}
