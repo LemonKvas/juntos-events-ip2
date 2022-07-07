@@ -1,7 +1,7 @@
-import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {IonicModule} from '@ionic/angular';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { IonicModule } from '@ionic/angular';
 
-import {LoginPage} from 'src/app/pages/login/login.page';
+import { LoginPage } from 'src/app/pages/login/login.page';
 
 describe('LoginPage', () => {
   let component: LoginPage;
@@ -9,7 +9,7 @@ describe('LoginPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoginPage ],
+      declarations: [LoginPage],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
     fixture = TestBed.createComponent(LoginPage);
@@ -21,11 +21,11 @@ describe('LoginPage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('loginIndicator should be initialized with user', ()=>{
+  it('loginIndicator should be initialized with user', () => {
     expect(component.loginIndicator).toEqual('user');
   });
 
-  it('loginIndicator should have changed values after test call', ()=>{
+  it('loginIndicator should have changed values after test call', () => {
     expect(component.loginIndicator).toEqual('user');
     const mockEvent = {
       detail: {
@@ -35,8 +35,4 @@ describe('LoginPage', () => {
     component.switchUserLogin(mockEvent);
     expect(component.loginIndicator).toEqual('test');
   });
-
-
-
-
 });

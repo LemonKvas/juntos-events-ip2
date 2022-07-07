@@ -2,7 +2,7 @@
   border-radius: 5px;
   border: 1px solid lightgrey;
   text-align: start;
-  box-shadow:  2px 2px lightgrey;
+  box-shadow: 2px 2px lightgrey;
 }
 .userBio p {
   margin: 3px;
@@ -15,14 +15,13 @@ ion-content {
   background-color: #ffffff;
 }
 
-ion-avatar{
+ion-avatar {
   width: 30vw;
   height: 30vw;
 }
 
-
 @media (min-width: 820px) {
-  ion-avatar{
+  ion-avatar {
     width: 15rem;
     height: 15rem;
   }
@@ -36,14 +35,11 @@ ion-avatar{
 }
 
 ion-segment-button {
-  --indicator-box-shadow: transparent!important;
-  --background:white;
-  --color: var( --ion-color-secondary);
-  --background-checked: var(--ion-color-primary)!important;
+  --indicator-box-shadow: transparent !important;
+  --background: white;
+  --color: var(--ion-color-secondary);
+  --background-checked: var(--ion-color-primary) !important;
   --color-checked: black;
-  --indicator-color : transparent!important;
+  --indicator-color: transparent !important;
   font-family: Agrandir-Regular, serif !important;
 }
-
-
-

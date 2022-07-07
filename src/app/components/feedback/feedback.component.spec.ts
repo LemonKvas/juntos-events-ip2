@@ -9,7 +9,7 @@ describe('FeedbackComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ FeedbackComponent ],
+      declarations: [FeedbackComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

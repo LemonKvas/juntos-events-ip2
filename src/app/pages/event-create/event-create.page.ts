@@ -1,25 +1,26 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Event } from 'src/app/models/classes/event.model';
-import {IonDatetime} from '@ionic/angular';
-import {EventService} from 'src/app/services/event.service';
-import {FormControl, FormGroup} from '@angular/forms';
-import {AlertService} from 'src/app/services/alert.service';
-import {PhotoService} from 'src/app/services/photo.service';
-import {UserDataService} from 'src/app/services/user-data.service';
+import { IonDatetime } from '@ionic/angular';
+import { EventService } from 'src/app/services/event.service';
+import { FormControl, FormGroup } from '@angular/forms';
+import { AlertService } from 'src/app/services/alert.service';
+import { PhotoService } from 'src/app/services/photo.service';
+import { UserDataService } from 'src/app/services/user-data.service';
 import User from 'src/app/models/classes/user';
-import {CreatedEvent} from 'src/app/models/interfaces/created-event';
+import { CreatedEvent } from 'src/app/models/interfaces/created-event';
 
 @Component({
   selector: 'app-event-create',
   templateUrl: './event-create.page.html',
-  styleUrls: ['./event-create.page.scss'],
+  styleUrls: ['./event-create.page.scss']
 })
 export class EventCreatePage implements OnInit {
   @Input() event: Event;
   @ViewChild('eventName')
-  @ViewChild(IonDatetime, {static: true}) datetime: IonDatetime;
+  @ViewChild(IonDatetime, { static: true })
+  datetime: IonDatetime;
   eventName: string;
   photoURLs = [];
   creationDate = new Date();
@@ -49,10 +50,15 @@ export class EventCreatePage implements OnInit {
   createdEvent: CreatedEvent;
   public createEventForm: FormGroup;
 
-  constructor(private router: Router, private location: Location,
-              private route: ActivatedRoute, private eventService: EventService,
-              public alertService: AlertService, public photoService: PhotoService,
-              private userService: UserDataService) {
+  constructor(
+    private router: Router,
+    private location: Location,
+    private route: ActivatedRoute,
+    private eventService: EventService,
+    public alertService: AlertService,
+    public photoService: PhotoService,
+    private userService: UserDataService
+  ) {
     this.today = new Date();
     this.getCreatorData();
     this.event = new Event(
@@ -68,7 +74,7 @@ export class EventCreatePage implements OnInit {
       this.address,
       this.publishStatus,
       null,
-      this.creatorId,
+      this.creatorId
     );
     this.createEventForm = new FormGroup({
       eventName: new FormControl(),
@@ -81,17 +87,16 @@ export class EventCreatePage implements OnInit {
       city: new FormControl(),
       price: new FormControl(),
       maxParticipants: new FormControl(),
-      selectedCategories: new FormControl(),
+      selectedCategories: new FormControl()
     });
   }
-  ngOnInit() {
-  }
-  setInputValues(){
+  ngOnInit() {}
+  setInputValues() {
     this.address = {
       street: this.street,
       house: this.house,
       zipCode: this.zipCode,
-      city: this.city,
+      city: this.city
     };
     this.event = new Event(
       this.eventName,
@@ -110,37 +115,37 @@ export class EventCreatePage implements OnInit {
       this.status
     );
   }
-  async addEvent(){
+  async addEvent() {
     this.publishStatus = true;
     this.errors.clear();
-    if(!this.eventName){
+    if (!this.eventName) {
       await this.alertService.emptyInputsAlert();
       this.errors.set('eventName', 'Event Name darf nicht leer sein!');
-    } else if(!this.eventDate){
+    } else if (!this.eventDate) {
       await this.alertService.emptyInputsAlert();
       this.errors.set('eventDate', 'Datum und Uhrzeit darf nicht leer sein!');
-    } else if(!this.eventBio){
+    } else if (!this.eventBio) {
       await this.alertService.emptyInputsAlert();
       this.errors.set('eventBio', 'Beschreibung darf nicht leer sein!');
-    } else if(!this.street){
+    } else if (!this.street) {
       await this.alertService.emptyInputsAlert();
       this.errors.set('eventAddress', 'Straße darf nicht leer sein!');
-    } else if(!this.zipCode){
+    } else if (!this.zipCode) {
       await this.alertService.emptyInputsAlert();
       this.errors.set('eventAddress', 'PLZ darf nicht leer sein!');
-    } else if(!this.city){
+    } else if (!this.city) {
       await this.alertService.emptyInputsAlert();
       this.errors.set('eventAddress', 'Stadt darf nicht leer sein!');
-    } else if(!this.price){
+    } else if (!this.price) {
       await this.alertService.emptyInputsAlert();
       this.errors.set('price', 'Preis darf nicht leer sein!');
-    } else if(this.maxParticipants === undefined){
+    } else if (this.maxParticipants === undefined) {
       await this.alertService.emptyInputsAlert();
       this.errors.set('maxParticipants', 'Feld darf nicht leer sein!');
-    } else if(this.selectedCategories.length === 0){
+    } else if (this.selectedCategories.length === 0) {
       await this.alertService.emptyInputsAlert();
       this.errors.set('categories', 'Wähle mind. eine Kategorie aus!');
-    } else if(this.errors.size === 0){
+    } else if (this.errors.size === 0) {
       this.setInputValues();
       await this.eventService.addEvent(this.event);
       this.createdEvent = await this.eventService.createdEventData(this.publishStatus);
@@ -148,9 +153,9 @@ export class EventCreatePage implements OnInit {
       await this.clearEventForm();
     }
   }
-  async saveEventAsDraft(){
+  async saveEventAsDraft() {
     this.publishStatus = false;
-    if(!this.eventName){
+    if (!this.eventName) {
       await this.alertService.eventDraftAlert();
       this.errors.set('eventName', 'Event Name darf nicht leer sein!');
     } else {
@@ -161,39 +166,41 @@ export class EventCreatePage implements OnInit {
       await this.clearEventForm();
     }
   }
-  async getCreatorData(){
+  async getCreatorData() {
     this.creator = await this.userService.getCurrentUser();
     this.creatorId = this.creator.userId;
   }
-  async clearEventForm(){
+  async clearEventForm() {
     this.createEventForm.reset();
     this.eventDate = null;
     this.photoUploads = [];
     this.publishStatus = false;
     await this.router.navigate(['event-list']);
   }
-  async remove(item){
+  async remove(item) {
     await this.eventService.removeEvent(item.id);
     this.location.back();
   }
-  async back(){
+  async back() {
     await this.alertService.unsaveAlert();
   }
-  uploadPhoto(event){
+  uploadPhoto(event) {
     this.uploadStatus = true;
-    this.photoService.storePhoto(event.target.files[0]).then((res: any) => {
-      if(res){
-        this.uploadStatus = false;
-        this.photoUploads.unshift(res);
-        this.photoURLs.push(this.photoService.photoID);
-      }
-    },
-      (error: any) =>{
+    this.photoService.storePhoto(event.target.files[0]).then(
+      (res: any) => {
+        if (res) {
+          this.uploadStatus = false;
+          this.photoUploads.unshift(res);
+          this.photoURLs.push(this.photoService.photoID);
+        }
+      },
+      (error: any) => {
         this.uploadStatus = false;
         console.log(error);
-      });
+      }
+    );
   }
-  async addPhotoToGallery(){
+  async addPhotoToGallery() {
     await this.photoService.addNewToGallery();
   }
 }

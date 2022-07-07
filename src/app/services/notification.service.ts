@@ -1,20 +1,26 @@
 import { Injectable } from '@angular/core';
-import {UserDataService} from "src/app/services/user-data.service";
-import {BaseNotification, Notification} from "src/app/models/classes/notification.model";
-import {Observable} from 'rxjs';
-import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/compat/firestore";
-import {arrayRemove, arrayUnion, documentId, getDocs, query, where} from "@angular/fire/firestore";
-import {PopoverController} from "@ionic/angular";
-import {NotificationsComponent} from "src/app/components/notifications/notifications.component";
+import { UserDataService } from 'src/app/services/user-data.service';
+import { BaseNotification, Notification } from 'src/app/models/classes/notification.model';
+import { Observable } from 'rxjs';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import {
+  arrayRemove,
+  arrayUnion,
+  documentId,
+  getDocs,
+  query,
+  where
+} from '@angular/fire/firestore';
+import { PopoverController } from '@ionic/angular';
+import { NotificationsComponent } from 'src/app/components/notifications/notifications.component';
 import { AlertService } from './alert.service';
-import firebase from "firebase/compat";
+import firebase from 'firebase/compat';
 import CollectionReference = firebase.firestore.CollectionReference;
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
-
   //TODO: get names from senderIds and pass to array
   public notificationsSorted: Notification[] = [];
   private notifications: Notification[] = [];
@@ -26,8 +32,12 @@ export class NotificationService {
   private notificationCollectonRef: CollectionReference<any>;
   public hasNotifications: boolean;
 
-  constructor(private userDataService: UserDataService, private afs: AngularFirestore,
-              public popoverController: PopoverController, private alertService: AlertService) {
+  constructor(
+    private userDataService: UserDataService,
+    private afs: AngularFirestore,
+    public popoverController: PopoverController,
+    private alertService: AlertService
+  ) {
     this.currentUserId = undefined;
     this.currentUserObservable = undefined;
     this.hasNotifications = false;
@@ -36,63 +46,62 @@ export class NotificationService {
     this.notificationCollectonRef = this.notificationCollecton.ref;
   }
 
-  async updateUserId(){
+  async updateUserId() {
     try {
       this.currentUserId = await this.userDataService.getCurrentUserID();
-      this.currentUserObservable = await this.userDataService.getUserById_Observable(this.currentUserId);
-    }
-    catch {
+      this.currentUserObservable = await this.userDataService.getUserById_Observable(
+        this.currentUserId
+      );
+    } catch {
       this.currentUserId = undefined;
       this.currentUserObservable = undefined;
     }
   }
 
-  async getNotificationInitializer(){
+  async getNotificationInitializer() {
     try {
       if (this.currentUserId == null || this.currentUserObservable == null) {
         await this.updateUserId().catch(() => {
-          throw new Error("Could not get user data");
-        })
+          throw new Error('Could not get user data');
+        });
       }
       this.currentUserObservable.subscribe(async (userData) => {
         if (userData.notifications) {
           this.notificationIds = await userData.notifications;
           if (this.notificationIds.length > 0) {
-            this.NotificationObservable = this.afs.collection(this.notificationCollectonRef, ref => ref.where(documentId(), 'in', this.notificationIds))
-                .valueChanges({idField: 'notificationId'});
+            this.NotificationObservable = this.afs
+              .collection(this.notificationCollectonRef, (ref) =>
+                ref.where(documentId(), 'in', this.notificationIds)
+              )
+              .valueChanges({ idField: 'notificationId' });
             await this.getNotification();
-
           }
           //   } else {
           //
           //     //throw new Error("No notifications found");
           // }
         }
-      })
-    }
-    catch(e){
-    }
+      });
+    } catch (e) {}
   }
 
   getNotification() {
-    this.NotificationObservable.forEach(
-        (notificationDocs: any[]) => {
-          if(notificationDocs){
-            this.notifications = notificationDocs;
-            this.sortNotifications();
-            this.hasNotifications = true;
-          }
-        }
-    )
+    this.NotificationObservable.forEach((notificationDocs: any[]) => {
+      if (notificationDocs) {
+        this.notifications = notificationDocs;
+        this.sortNotifications();
+        this.hasNotifications = true;
+      }
+    });
   }
 
   sortNotifications() {
     this.notificationsSorted = this.notifications.sort((notification1, notification2) => {
       return notification1.date < notification2.date ? 1 : -1;
-    })
+    });
   }
 
-  async createNotification(notificationType, receiverId, content?, eventOrUserName?){
+  async createNotification(notificationType, receiverId, content?, eventOrUserName?) {
     try {
       const notificationId = this.afs.createId();
       const currentUser = await this.userDataService.getCurrentUser();
@@ -107,74 +116,94 @@ export class NotificationService {
         }
         case 1: {
           //EventCreated
-          notificationContent = ""
+          notificationContent = '';
           break;
         }
         case 2: {
           //EventJoined
-          notificationContent = ""
+          notificationContent = '';
           break;
         }
         case 3: {
           //FriendRequest
-          let doublicateCheck = await this.checkNotificationDoublication(notificationType, currentUser['userId'], receiverId);
-          if(doublicateCheck){
-            await this.alertService.basicAlert('ACHTUNG', 'du hast dieser Person bereits eine Freundschaftsanfrage geschickt.', ['OK']);
+          let doublicateCheck = await this.checkNotificationDoublication(
+            notificationType,
+            currentUser['userId'],
+            receiverId
+          );
+          if (doublicateCheck) {
+            await this.alertService.basicAlert(
+              'ACHTUNG',
+              'du hast dieser Person bereits eine Freundschaftsanfrage geschickt.',
+              ['OK']
+            );
             return;
           }
           alertText = 'du hast deine Freundschaftsanfrage erfolgereich versendet!';
-          notificationContent = currentUser.userName + " hat dir eine Freunschaftsanfrage geschickt";
+          notificationContent =
+            currentUser.userName + ' hat dir eine Freunschaftsanfrage geschickt';
           break;
         }
       }
-      newNotification = new Notification(currentUser.userName, receiverId, this.currentUserId,
-          notificationContent, notificationType, new Date(), notificationId);
+      newNotification = new Notification(
+        currentUser.userName,
+        receiverId,
+        this.currentUserId,
+        notificationContent,
+        notificationType,
+        new Date(),
+        notificationId
+      );
       const data = JSON.parse(JSON.stringify(newNotification));
-      await this.notificationCollecton.doc(notificationId).set(data)
-          .catch((err) => console.log(err));
-      await this.afs.collection('user').doc(receiverId).update({
-        notifications: arrayUnion(notificationId)
-      })
-        .then((res)=>{
-          this.alertService.basicAlert('VERSCHICKT', alertText, ['OK'])
+      await this.notificationCollecton
+        .doc(notificationId)
+        .set(data)
+        .catch((err) => console.log(err));
+      await this.afs
+        .collection('user')
+        .doc(receiverId)
+        .update({
+          notifications: arrayUnion(notificationId)
         })
-        .catch((err) => console.log(err))
-    }
-    catch (e) {
+        .then((res) => {
+          this.alertService.basicAlert('VERSCHICKT', alertText, ['OK']);
+        })
+        .catch((err) => console.log(err));
+    } catch (e) {
       console.log(e);
     }
   }
 
-  async checkNotificationDoublication(type, senderId, receiverId){
+  async checkNotificationDoublication(type, senderId, receiverId) {
     try {
       let result = false;
-      const query = await this.notificationCollectonRef.where('type', '==', type)
-          .where('senderId', '==', senderId)
-          .where('receiverId', '==', receiverId);
+      const query = await this.notificationCollectonRef
+        .where('type', '==', type)
+        .where('senderId', '==', senderId)
+        .where('receiverId', '==', receiverId);
       const querySnapshot = await getDocs(query);
       await querySnapshot.forEach((doc) => {
-        if(doc.exists()){
+        if (doc.exists()) {
           result = true;
         }
-      })
+      });
       return result;
-    }
-    catch (e) {
-      return true ;
+    } catch (e) {
+      return true;
     }
   }
-
 
   async removeNotification(notificationId) {
-      await this.notificationCollecton.doc(notificationId).delete();
-      await this.afs.collection('user').doc(this.currentUserId).update({
-            notifications: arrayRemove(notificationId)
-          }
-      )
+    await this.notificationCollecton.doc(notificationId).delete();
+    await this.afs
+      .collection('user')
+      .doc(this.currentUserId)
+      .update({
+        notifications: arrayRemove(notificationId)
+      });
   }
 
-
-   async presentPopover(ev: any) {
+  async presentPopover(ev: any) {
     const popover = await this.popoverController.create({
       component: NotificationsComponent,
       event: ev,
@@ -183,11 +212,7 @@ export class NotificationService {
       showBackdrop: false,
       alignment: 'start'
     });
-     return await popover.present();
-     /** Sync event from popover component */
+    return await popover.present();
+    /** Sync event from popover component */
   }
-
-
-
-
 }

@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/compat/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { Event } from 'src/app/models/classes/event.model';
-import {Observable} from 'rxjs';
-import {documentId} from "@angular/fire/firestore";
+import { Observable } from 'rxjs';
+import { documentId } from '@angular/fire/firestore';
 import firebase from 'firebase/compat/app';
-import {CreatedEvent} from '../models/interfaces/created-event';
-import {arrayUnion} from '@angular/fire/firestore';
-import {getDoc} from 'firebase/firestore';
-import {ref} from "@angular/fire/storage";
+import { CreatedEvent } from '../models/interfaces/created-event';
+import { arrayUnion } from '@angular/fire/firestore';
+import { getDoc } from 'firebase/firestore';
+import { ref } from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -22,77 +22,78 @@ export class EventService {
     this.eventsCollections = this.afs.collection('events');
   }
 
-  getAllEvents(){
+  getAllEvents() {
     return this.afs.collection('events').snapshotChanges();
   }
   //TODO: get published, open events
-  getOpenEvents(){
-    return this.afs.collection('events', ref => ref.where('status', '==', 1)).snapshotChanges();
+  getOpenEvents() {
+    return this.afs.collection('events', (ref) => ref.where('status', '==', 1)).snapshotChanges();
   }
-  getPublishedEvents(){
-    return this.afs.collection('events', ref => ref.where('publishStatus', '==', true)).snapshotChanges();
+  getPublishedEvents() {
+    return this.afs
+      .collection('events', (ref) => ref.where('publishStatus', '==', true))
+      .snapshotChanges();
   }
-  getEventDrafts(){
-    return this.afs.collection('events', ref => ref.where('publishStatus', '==', false)).snapshotChanges();
+  getEventDrafts() {
+    return this.afs
+      .collection('events', (ref) => ref.where('publishStatus', '==', false))
+      .snapshotChanges();
   }
-  async addEvent(event: Event): Promise<void>{
+  async addEvent(event: Event): Promise<void> {
     event.eventId = this.afs.createId();
     this.eventId = event.eventId;
     const data = JSON.parse(JSON.stringify(event));
-    await this.eventsCollections.doc(event.eventId).set(data)
-     .catch((err) => console.log(err));
+    await this.eventsCollections
+      .doc(event.eventId)
+      .set(data)
+      .catch((err) => console.log(err));
   }
-  async removeEvent(id: string){
+  async removeEvent(id: string) {
     await this.eventsCollections.doc(id).delete();
   }
 
-  getMultipleEventsByEventId(eventIds: []){
-    const userEventCollection = this.afs.collection('events',
-        ref => ref.where(documentId(), 'in', eventIds));
+  getMultipleEventsByEventId(eventIds: []) {
+    const userEventCollection = this.afs.collection('events', (ref) =>
+      ref.where(documentId(), 'in', eventIds)
+    );
     return userEventCollection.valueChanges();
   }
 
-  async getEventById(id: string){
+  async getEventById(id: string) {
     const docRef = this.eventsCollections.doc(id).ref;
     const docSnap = await getDoc(docRef);
     return docSnap.data() as Event;
   }
-  async createdEventData(publishStatus: boolean){
-    return this.createdEvent = {
+  async createdEventData(publishStatus: boolean) {
+    return (this.createdEvent = {
       eventId: this.eventId,
-      publishStatus,
-    };
+      publishStatus
+    });
   }
-  getPrice(event: Event): string{
-    if(event.price === '0' || event.price === undefined || event.price === null) {
+  getPrice(event: Event): string {
+    if (event.price === '0' || event.price === undefined || event.price === null) {
       event.price = 'Kostenlos';
       return event.price;
     }
     return event.price;
   }
-  freeEvent(event: Event): boolean{
-    if(event.price === '0' || event.price === 'Kostenlos'){
+  freeEvent(event: Event): boolean {
+    if (event.price === '0' || event.price === 'Kostenlos') {
       this.getPrice(event);
       return false;
     } else {
       return true;
     }
   }
-  async addRegisteredUser(event: Event){
+  async addRegisteredUser(event: Event) {
     const db = firebase.firestore().collection('events');
-    await db.doc(event.eventId).update({participants: arrayUnion(...event.participants)});
-  }
-
-  async saveFeedback(event: Event) {
-    const db = firebase.firestore().collection('events');
-    await db.doc(event.eventId).update({stars: arrayUnion(...event.stars)});
-    await db.doc(event.eventId).update({feedback: arrayUnion(...event.feedback)});
+    await db.doc(event.eventId).update({ participants: arrayUnion(...event.participants) });
   }
 
   /**
    * Gibt ein Observable zurück mit allen Events, deren Wert "promoted" auf true gesetzt ist
    */
   getPromotedEvents() {
-    return this.afs.collection('events', ref => ref.where('promoted', '==', true)).valueChanges();
+    return this.afs.collection('events', (ref) => ref.where('promoted', '==', true)).valueChanges();
   }
 }

@@ -27,7 +27,7 @@ import { SwiperModule } from 'swiper/angular';
     AngularFireAuthModule,
     AngularFireStorageModule,
     AngularFireDatabaseModule,
-    SharedModule,
+    SharedModule
   ],
   providers: [
     {

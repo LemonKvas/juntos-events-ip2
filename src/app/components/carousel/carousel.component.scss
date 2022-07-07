@@ -2,8 +2,7 @@
 @import 'swiper/swiper.min.css';
 @import 'swiper/swiper-bundle.css';
 
-
-.center{
+.center {
   display: -webkit-box;
   display: -ms-flexbox;
   display: -webkit-flex;
@@ -20,7 +19,6 @@
 
 .swiper {
   width: 100%;
-
 }
 .swiper-slide {
   text-align: center;
@@ -51,14 +49,13 @@
     background: #fff;
   }
 
-
   /* Center slide text vertically */
   @extend .center;
 }
 
 .swiper-slide img {
   padding-bottom: 1rem;
-//display: block;
+  //display: block;
   object-fit: cover;
   @media (max-width: 576px) {
     width: 150px;
@@ -76,27 +73,33 @@
   }
 }
 
-.swiper-slide h1, h2, h3, h4, h5, h6, .textBg{
+.swiper-slide h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.textBg {
   position: absolute;
   bottom: 5%;
-  color: rgba(300,300,300,0.8);
+  color: rgba(300, 300, 300, 0.8);
   @media (max-width: 576px) {
-    max-width:120px;
-    word-wrap:break-word;
+    max-width: 120px;
+    word-wrap: break-word;
   }
 
   @media (max-width: 820px) {
-    max-width:170px;
-    word-wrap:break-word;
+    max-width: 170px;
+    word-wrap: break-word;
   }
 
   @media (min-width: 820px) {
-    max-width:290px;
-    word-wrap:break-word;
+    max-width: 290px;
+    word-wrap: break-word;
   }
 }
 
-.textBg{
+.textBg {
   margin: 2%;
   //background-color: rgba(0,0,0,0.5);
   width: 300px;
@@ -105,10 +108,11 @@
   @extend .center;
 }
 
-.title{
+.title {
   display: inline-block;
   margin-bottom: 1.5rem;
   padding-bottom: 7%;
 }
 
-.info{}
+.info {
+}

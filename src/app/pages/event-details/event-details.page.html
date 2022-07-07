@@ -50,7 +50,9 @@
           <ion-label>Informationen</ion-label>
         </ion-segment-button>
         <ion-segment-button value="participants">
-          <ion-label>Teilnehmer*Innen ({{event.participants.length}}/{{event.maxParticipants}})</ion-label>
+          <ion-label
+            >Teilnehmer*Innen ({{event.participants.length}}/{{event.maxParticipants}})</ion-label
+          >
         </ion-segment-button>
       </ion-segment>
     </ion-row>
@@ -63,9 +65,12 @@
       </ion-row>
 
       <ion-row class="ion-justify-content-start">
-        <h2>Standort</h2> <br>
-        <p>{{event.address['street']}} {{event.address['house']}}
-          , {{event.address['zipCode']}} {{event.address['city']}}</p>
+        <h2>Standort</h2>
+        <br />
+        <p>
+          {{event.address['street']}} {{event.address['house']}} , {{event.address['zipCode']}}
+          {{event.address['city']}}
+        </p>
       </ion-row>
       <ion-row class="ion-justify-content-start">
         <h2>Kommentare</h2>
@@ -79,21 +84,24 @@
           <p>Nehme als Erste(r) an dem Event teil!</p>
         </ion-item>
         <ion-item *ngFor="let participant of participants">
-          <ion-row class="ion-justify-content-center" [routerLink]="['/profile/' + participant.userId]">
+          <ion-row
+            class="ion-justify-content-center"
+            [routerLink]="['/profile/' + participant.userId]">
             <ion-col size="5">
               <div class="profile-div">
                 <ion-img
                   *ngIf="participant.photoUrl.includes('.png') || participant.photoUrl.includes('googleusercontent'); else noNeed"
-                  alt="User avatar" src="{{participant.photoUrl}}"></ion-img>
-                  <ng-template #noNeed>
-                    <ion-img alt="User avatar" src="{{participant.photoUrl | fireStorageImg: '/avatars' | async}}"></ion-img>
-                  </ng-template>
+                  alt="User avatar"
+                  src="{{participant.photoUrl}}"></ion-img>
+                <ng-template #noNeed>
+                  <ion-img
+                    alt="User avatar"
+                    src="{{participant.photoUrl | fireStorageImg: '/avatars' | async}}"></ion-img>
+                </ng-template>
               </div>
             </ion-col>
             <ion-col size="4">
-              <p>
-                {{participant.firstName}} {{participant.lastName}}
-              </p>
+              <p>{{participant.firstName}} {{participant.lastName}}</p>
             </ion-col>
             <ion-col size="3">
               <ion-buttons class="chat-btn">

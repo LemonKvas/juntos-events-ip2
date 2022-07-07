@@ -9,7 +9,7 @@ describe('EventItemComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ EventItemComponent ],
+      declarations: [EventItemComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

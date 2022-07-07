@@ -6,7 +6,7 @@ p {
 }
 ion-title {
   --ion-font-family: 'Yeseva One';
-  font-family: "Yeseva One", cursive;
+  font-family: 'Yeseva One', cursive;
   font-size: 4.5vw;
 }
 ion-content {
@@ -35,7 +35,7 @@ ion-item {
 ion-input {
   padding: 2px;
   --placeholder-color: grey;
-  --placeholder-font-family: "Roboto", sans-serif;
+  --placeholder-font-family: 'Roboto', sans-serif;
   --placeholder-font-style: italic;
   --placeholder-font-size: 2vmin;
 }
@@ -44,7 +44,7 @@ ion-label {
 }
 ion-textarea {
   --placeholder-color: grey;
-  --placeholder-font-family: "Roboto", sans-serif;
+  --placeholder-font-family: 'Roboto', sans-serif;
   --placeholder-font-style: italic;
   --placeholder-font-size: 2vmin;
 }
@@ -57,11 +57,11 @@ ion-img {
   height: auto;
 }
 #eventDatePopover {
-  ion-backdrop  {
-    opacity: 0.20 !important
+  ion-backdrop {
+    opacity: 0.2 !important;
   }
-  .popover-wrapper{
-    #eventDateIonDatetime{
+  .popover-wrapper {
+    #eventDateIonDatetime {
       width: 50vw;
       height: 55vw;
       max-height: 100px;
@@ -69,7 +69,8 @@ ion-img {
     }
   }
 }
-#eventDraftBtn, #eventPublishBtn {
+#eventDraftBtn,
+#eventPublishBtn {
   font-size: 2.5vh;
 }
 #photoInput {
@@ -78,10 +79,11 @@ ion-img {
   //opacity: 0;
 }
 .fakeUploadBtn {
-  color: #FF8766;
+  color: #ff8766;
   padding-top: 2px;
 }
-#eventSaveAsDraftBtnCol, #eventPublishBtnCol {
+#eventSaveAsDraftBtnCol,
+#eventPublishBtnCol {
   padding: 5px;
 }
 #photoPreview {
