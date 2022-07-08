@@ -92,7 +92,9 @@
         </ion-col>
       </ion-row>
 
-      <ion-row class="ion-align-items-center" *ngIf="publishStatus === false && editMode === true || publishStatus === false && editMode === false">
+      <ion-row
+        class="ion-align-items-center"
+        *ngIf="publishStatus === false && editMode === true || publishStatus === false && editMode === false">
         <ion-col size="12" size-sm="6">
           <ion-item class="input-item">
             <ion-label position="stacked">Preis*</ion-label>
@@ -127,7 +129,10 @@
         <ion-col size="12" size-sm="6">
           <ion-item class="input-item">
             <ion-label position="stacked">Preis*</ion-label>
-            <ion-input disabled="true" placeholder="Gebe 0 für kostenlos ein." [(ngModel)]="price"></ion-input>
+            <ion-input
+              disabled="true"
+              placeholder="Gebe 0 für kostenlos ein."
+              [(ngModel)]="price"></ion-input>
           </ion-item>
           <p
             class="ion-text-end ion-padding-end"

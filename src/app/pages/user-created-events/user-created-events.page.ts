@@ -48,8 +48,7 @@ export class UserCreatedEventsPage implements OnInit {
    * During the initialization of the component, all published events and the drafts
    * of the logged in user are fetched.
    */
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   /**
    * DE:

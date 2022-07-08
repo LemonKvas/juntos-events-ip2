@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Event } from 'src/app/models/classes/event.model';
@@ -111,7 +111,7 @@ export class EventCreatePage implements OnInit {
     }
   }
 
-  async ngOnInit(){
+  async ngOnInit() {
     await this.getCreatorData().catch((err) => console.log('Error: ', err));
   }
   /**
@@ -149,7 +149,7 @@ export class EventCreatePage implements OnInit {
    * into the object 'event' from type 'Event'.
    */
   setInputValues() {
-    if(this.eventDate === null){
+    if (this.eventDate === null) {
       this.eventDate = new Date();
     }
     this.address = {
@@ -214,20 +214,20 @@ export class EventCreatePage implements OnInit {
     } else if (this.selectedCategories.length === 0) {
       await this.alertService.emptyInputsAlert();
       this.errors.set('categories', 'Wähle mind. eine Kategorie aus!');
-    } else if(this.photoURLs[0] === '') {
+    } else if (this.photoURLs[0] === '') {
       await this.alertService.emptyInputsAlert();
       this.errors.set('photo', 'Bitte lade ein Foto hoch!');
     } else if (this.errors.size === 0) {
       // If user is not in edit mode, a new document with event object will be added
       if (this.editMode === false) {
-        if(this.uploadStatus === false){
+        if (this.uploadStatus === false) {
           this.publishStatus = true;
           this.setInputValues();
           await this.eventService.addEvent(this.event);
           this.createdEvent = await this.eventService.createdEventData(this.publishStatus);
           await this.userService.addCreatedEvent(this.createdEvent);
           await this.clearEventForm();
-        } else if(this.uploadStatus === true) {
+        } else if (this.uploadStatus === true) {
           await this.alertService.photoUpload();
         }
         // If user is in edit mode, event object will be updated in firebase
@@ -432,7 +432,7 @@ export class EventCreatePage implements OnInit {
       component: SupportMessagePage,
       componentProps: {
         userId: userId,
-        eventId: eventId
+        eventId: eventId,
       }
     });
     await modal
