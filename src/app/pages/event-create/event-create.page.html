@@ -92,8 +92,8 @@
         </ion-col>
       </ion-row>
 
-      <ion-row class="ion-align-items-center" id="eventPriceAndMaxParticipantsRow">
-        <ion-col id="eventPriceCol" size="12" size-sm="6">
+      <ion-row class="ion-align-items-center" *ngIf="publishStatus === false && editMode === true || publishStatus === false && editMode === false">
+        <ion-col size="12" size-sm="6">
           <ion-item class="input-item">
             <ion-label position="stacked">Preis*</ion-label>
             <ion-input placeholder="Gebe 0 für kostenlos ein." [(ngModel)]="price"></ion-input>
@@ -105,10 +105,42 @@
             {{errors.get('price')}}
           </p>
         </ion-col>
-        <ion-col id="eventMaxParticipantsCol" size="12" size-sm="6">
+        <ion-col size="12" size-sm="6">
           <ion-item class="input-item">
             <ion-label position="stacked">Max. Teilnehmeranzahl*</ion-label>
             <ion-input
+              placeholder="z.B. 20"
+              type="number"
+              min="0"
+              [(ngModel)]="maxParticipants"></ion-input>
+          </ion-item>
+          <p
+            class="ion-text-end ion-padding-end"
+            style="color: var(--ion-color-danger)"
+            *ngIf="errors.get('maxParticipants')">
+            {{errors.get('maxParticipants')}}
+          </p>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-align-items-center" *ngIf="publishStatus === true && editMode === true">
+        <ion-col size="12" size-sm="6">
+          <ion-item class="input-item">
+            <ion-label position="stacked">Preis*</ion-label>
+            <ion-input disabled="true" placeholder="Gebe 0 für kostenlos ein." [(ngModel)]="price"></ion-input>
+          </ion-item>
+          <p
+            class="ion-text-end ion-padding-end"
+            style="color: var(--ion-color-danger)"
+            *ngIf="errors.get('price')">
+            {{errors.get('price')}}
+          </p>
+        </ion-col>
+        <ion-col size="12" size-sm="6">
+          <ion-item class="input-item">
+            <ion-label position="stacked">Max. Teilnehmeranzahl*</ion-label>
+            <ion-input
+              disabled="true"
               placeholder="z.B. 20"
               type="number"
               min="0"
@@ -144,7 +176,6 @@
           <ion-item class="input-item">
             <ion-label position="stacked">Foto</ion-label>
             <ion-input
-              *ngIf="photoURLs[0] === null"
               id="photoInput"
               type="file"
               (change)="uploadPhoto($event)"
@@ -154,12 +185,18 @@
               ... wird hochgeladen
             </p>
             <ion-img
-              *ngIf="photoURLs[0] !== null"
+              *ngIf="photoURLs[0] !== ''"
               id="photoPreview"
               [src]="photoURLs[0] | fireStorageImg: '/event-photos' | async"
               alt="event-image">
             </ion-img>
           </ion-item>
+          <p
+            class="ion-text-end ion-padding-end"
+            style="color: var(--ion-color-danger)"
+            *ngIf="errors.get('photo')">
+            {{errors.get('photo')}}
+          </p>
         </ion-col>
         <ion-popover trigger="photoPreview" [dismissOnSelect]="true">
           <ng-template>
@@ -196,7 +233,7 @@
       <ion-button *ngIf="this.publishStatus === false" class="eventPublishBtn" (click)="addEvent()">
         Veröffentlichen
       </ion-button>
-      <ion-button *ngIf="this.eventId !== '' && this.publishStatus === true" (click)="addEvent()">
+      <ion-button *ngIf="editMode === true && publishStatus === true" (click)="addEvent()">
         Speichern
       </ion-button>
     </ion-col>

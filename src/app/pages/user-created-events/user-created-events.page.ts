@@ -36,6 +36,8 @@ export class UserCreatedEventsPage implements OnInit {
     private eventService: EventService
   ) {
     this.currentUserId = this.route.snapshot.params.id;
+    this.getAllPublishedEvents();
+    this.getAllEventDrafts();
   }
 
   /**
@@ -46,9 +48,7 @@ export class UserCreatedEventsPage implements OnInit {
    * During the initialization of the component, all published events and the drafts
    * of the logged in user are fetched.
    */
-  async ngOnInit() {
-    await this.getAllPublishedEvents();
-    await this.getAllEventDrafts();
+  ngOnInit() {
   }
 
   /**
@@ -57,7 +57,7 @@ export class UserCreatedEventsPage implements OnInit {
    * EN:
    * This method fetches all published events of the user.
    */
-  async getAllPublishedEvents() {
+  getAllPublishedEvents() {
     this.eventService.getPublishedEventsFromUser(this.currentUserId).subscribe((res) => {
       this.publishedEvents = res.map((e) => ({
         eventId: e.payload.doc.id,
@@ -72,7 +72,7 @@ export class UserCreatedEventsPage implements OnInit {
    * EN:
    * This method fetches all events of the user that have been saved as a draft.
    */
-  async getAllEventDrafts() {
+  getAllEventDrafts() {
     this.eventService.getEventDraftsFromUser(this.currentUserId).subscribe((res) => {
       this.eventDrafts = res.map((e) => ({
         eventId: e.payload.doc.id,

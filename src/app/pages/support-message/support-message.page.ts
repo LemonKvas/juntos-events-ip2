@@ -23,6 +23,7 @@ export class SupportMessagePage {
   category: string[] = ['Event', 'NutzerIn'];
   eventProblems: string[] = [
     'Event löschen',
+    'Event Preis ändern',
     'TeilnehmerIn melden',
     'TeilnehmerIn verwalten',
     'Andere Probleme'
@@ -71,13 +72,10 @@ export class SupportMessagePage {
   async sendMessageToSupport() {
     if (!this.subject) {
       await this.alertService.emptyInputsAlert();
-      this.errors.set('subject', 'Betreff darf nicht leer sein!');
     } else if (!this.selectedCategory) {
       await this.alertService.emptyInputsAlert();
-      this.errors.set('selectedCategory', 'Kategorie darf nicht leer sein!');
     } else if (!this.textMsg) {
       await this.alertService.emptyInputsAlert();
-      this.errors.set('textMsg', 'Nachrichtenfeld darf nicht leer sein!');
     } else if (this.errors.size === 0) {
       this.msg = {
         subject: this.subject,

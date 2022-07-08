@@ -17,12 +17,6 @@
           <ion-label position="stacked">Betreff*</ion-label>
           <ion-input class="ion-text-start" [(ngModel)]="subject"></ion-input>
         </ion-item>
-        <p
-          class="ion-text-end ion-padding-end"
-          style="color: var(--ion-color-danger)"
-          *ngIf="errors.get('subject')">
-          {{errors.get('subject')}}
-        </p>
       </ion-row>
 
       <ion-row>
@@ -32,12 +26,6 @@
             <ion-select-option *ngFor="let entry of category">{{entry}}</ion-select-option>
           </ion-select>
         </ion-item>
-        <p
-          class="ion-text-end ion-padding-end"
-          style="color: var(--ion-color-danger)"
-          *ngIf="errors.get('selectedCategory')">
-          {{errors.get('selectedCategory')}}
-        </p>
       </ion-row>
 
       <ion-row *ngIf="selectedCategory === 'Event'">
@@ -51,12 +39,6 @@
             </div>
           </ion-select>
         </ion-item>
-        <p
-          class="ion-text-end ion-padding-end"
-          style="color: var(--ion-color-danger)"
-          *ngIf="errors.get('selectedProblem')">
-          {{errors.get('selectedProblem')}}
-        </p>
       </ion-row>
 
       <ion-row *ngIf="selectedCategory === 'NutzerIn'">
@@ -66,12 +48,6 @@
             <ion-select-option *ngFor="let problem of userProblems">{{problem}}</ion-select-option>
           </ion-select>
         </ion-item>
-        <p
-          class="ion-text-end ion-padding-end"
-          style="color: var(--ion-color-danger)"
-          *ngIf="errors.get('selectedProblem')">
-          {{errors.get('selectedProblem')}}
-        </p>
       </ion-row>
 
       <ion-row class="ion-align-items-center">
@@ -79,12 +55,6 @@
           <ion-label position="stacked">Ihre Nachricht*</ion-label>
           <ion-textarea class="ion-text-start" autoGrow="true" [(ngModel)]="textMsg"></ion-textarea>
         </ion-item>
-        <p
-          class="ion-text-end ion-padding-end"
-          style="color: var(--ion-color-danger)"
-          *ngIf="errors.get('textMsg')">
-          {{errors.get('textMsg')}}
-        </p>
       </ion-row>
 
       <ion-row class="ion-justify-content-center">

@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Event } from 'src/app/models/classes/event.model';
@@ -23,7 +23,7 @@ import { SupportMessagePage } from '../support-message/support-message.page';
   templateUrl: './event-create.page.html',
   styleUrls: ['./event-create.page.scss']
 })
-export class EventCreatePage {
+export class EventCreatePage implements OnInit {
   @Input() event: Event;
   @ViewChild('eventName')
   @ViewChild(IonDatetime, { static: true })
@@ -53,7 +53,7 @@ export class EventCreatePage {
   uploadStatus = false;
   photoUploads = [];
   creator: User;
-  creatorId = '';
+  creatorId: string;
   createdEvent: CreatedEvent;
   editMode = false;
   public createEventForm: FormGroup;
@@ -102,15 +102,18 @@ export class EventCreatePage {
       maxParticipants: new FormControl(),
       selectedCategories: new FormControl()
     });
+    this.photoURLs[0] = '';
     if (this.eventId) {
       this.editMode = true;
       this.getEventData().catch((err) => console.log('Error: ', err));
     } else if (this.eventId === undefined) {
       this.today = new Date();
-      this.getCreatorData().catch((err) => console.log('Error: ', err));
     }
   }
 
+  async ngOnInit(){
+    await this.getCreatorData().catch((err) => console.log('Error: ', err));
+  }
   /**
    * DE:
    * Diese Methode wird anhand der Event ID die restlichen Daten des Events mit der Methode getEventById()
@@ -146,6 +149,9 @@ export class EventCreatePage {
    * into the object 'event' from type 'Event'.
    */
   setInputValues() {
+    if(this.eventDate === null){
+      this.eventDate = new Date();
+    }
     this.address = {
       street: this.street,
       house: this.house,
@@ -180,7 +186,6 @@ export class EventCreatePage {
    * new data will be sent by calling the updateEvent().
    */
   async addEvent() {
-    this.publishStatus = true;
     this.errors.clear();
     if (!this.eventName) {
       await this.alertService.emptyInputsAlert();
@@ -209,28 +214,28 @@ export class EventCreatePage {
     } else if (this.selectedCategories.length === 0) {
       await this.alertService.emptyInputsAlert();
       this.errors.set('categories', 'Wähle mind. eine Kategorie aus!');
+    } else if(this.photoURLs[0] === '') {
+      await this.alertService.emptyInputsAlert();
+      this.errors.set('photo', 'Bitte lade ein Foto hoch!');
     } else if (this.errors.size === 0) {
-      this.setInputValues();
       // If user is not in edit mode, a new document with event object will be added
       if (this.editMode === false) {
-        // Check if photo upload is done
-        if (this.uploadStatus === false) {
+        if(this.uploadStatus === false){
+          this.publishStatus = true;
+          this.setInputValues();
           await this.eventService.addEvent(this.event);
           this.createdEvent = await this.eventService.createdEventData(this.publishStatus);
           await this.userService.addCreatedEvent(this.createdEvent);
           await this.clearEventForm();
-        } else {
+        } else if(this.uploadStatus === true) {
           await this.alertService.photoUpload();
         }
         // If user is in edit mode, event object will be updated in firebase
       } else if (this.editMode === true) {
-        if (this.uploadStatus === false) {
-          await this.eventService.updateEvent(this.event);
-          await this.clearEventForm();
-        } else {
-          // Check if photo upload is done
-          await this.alertService.photoUpload();
-        }
+        this.publishStatus = true;
+        this.setInputValues();
+        await this.eventService.updateEvent(this.event);
+        await this.clearEventForm();
       }
     }
   }
@@ -333,9 +338,9 @@ export class EventCreatePage {
     this.photoService.storePhoto(event.target.files[0]).then(
       (res: any) => {
         if (res) {
-          this.uploadStatus = false;
           this.photoUploads.unshift(res);
           this.photoURLs[0] = this.photoService.photoID;
+          this.uploadStatus = false;
         }
       },
       (error: any) => {

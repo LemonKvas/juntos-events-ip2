@@ -32,8 +32,8 @@ export class EventListPage implements OnInit {
    * EN:
    * When the component is initialized, a list of all published events is fetched.
    */
-  ngOnInit() {
-    this.getEvents();
+  async ngOnInit() {
+    await this.getEvents();
   }
 
   /**
@@ -42,7 +42,7 @@ export class EventListPage implements OnInit {
    * EN:
    * This method will fetch all data from published events.
    */
-  getEvents() {
+  async getEvents() {
     this.eventService.getPublishedEvents().subscribe((res) => {
       this.events = res.map((e) => ({
         eventId: e.payload.doc.id,
