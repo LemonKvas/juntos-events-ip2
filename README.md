@@ -117,7 +117,7 @@ A small extract to see which packages are used in this project. For further info
 ### EXTRA
 A little sneak peak of the app.
 
-<img src="../juntos-events-ip2/src/assets/images/Event-Liste.gif" alt="event-details" width="200">
+<img src="https://firebasestorage.googleapis.com/v0/b/juntos-ip2-ss22.appspot.com/o/readme%2FEvent-Liste.gif?alt=media&token=b487a17a-901e-48ad-ad12-671ccbda41af" alt="event-details" width="200">
 
 _For more examples, please refer to the [Documentation](https://juntos-docu.netlify.app/)_
 
