@@ -432,7 +432,7 @@ export class EventCreatePage implements OnInit {
       component: SupportMessagePage,
       componentProps: {
         userId: userId,
-        eventId: eventId,
+        eventId: eventId
       }
     });
     await modal
