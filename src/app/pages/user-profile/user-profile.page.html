@@ -95,12 +95,36 @@
           <ng-container *ngSwitchCase="'events'">
             <ion-list lines="full" class="ion-align-items-center">
               <ng-container *ngIf="events else noEvents">
+                <ion-item-divider>
+                  <p>Anstehende Events</p>
+                </ion-item-divider>
+
                 <ion-row
                   class="ion-align-items-center"
                   size="12"
                   *ngFor="let event of events; let i = index">
-                  <ion-col class="ion-justify-content-center ion-align-items-center" size="auto">
+                  <ion-col
+                    *ngIf="event.status == 1"
+                    class="ion-justify-content-center ion-align-items-center"
+                    size="auto">
                     <app-event-item class="ion-align-self-center" [event]="event"></app-event-item>
+                  </ion-col>
+                </ion-row>
+
+                <ion-item-divider>
+                  <p>Vergangene Events</p>
+                </ion-item-divider>
+
+                <ion-row
+                  class="ion-align-items-center"
+                  size="12"
+                  *ngFor="let event of events; let i = index">
+                  <ion-col
+                    *ngIf="event.status == 3"
+                    class="ion-justify-content-center ion-align-items-center"
+                    size="auto">
+                    <app-event-item class="ion-align-self-center" [event]="event"></app-event-item>
+                    <app-feedback [feedBackEvent]="event"></app-feedback>
                   </ion-col>
                 </ion-row>
               </ng-container>

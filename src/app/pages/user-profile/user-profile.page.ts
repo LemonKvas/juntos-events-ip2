@@ -41,6 +41,10 @@ export class UserProfilePage implements OnInit, OnDestroy {
   private currentLocation: Location;
   private userSubscription: Subscription;
   private currentUserSubscription: Subscription;
+  isModalOpen = false;
+  feedBackEvent: Event;
+  starRating: number;
+  feedback: string;
 
   /**
    * DE:
@@ -301,6 +305,19 @@ export class UserProfilePage implements OnInit, OnDestroy {
    */
   switchProfileEventAndBadges(event: any) {
     console.log('Segment changed', event);
+  }
+
+  setOpen(isOpen: boolean, event: Event) {
+    this.isModalOpen = isOpen;
+    this.feedBackEvent = event;
+
+    console.log('open');
+    console.log(this.feedBackEvent);
+  }
+
+  logRatingChange(rating) {
+    console.log('changed rating: ', rating);
+    this.starRating = rating;
   }
 
   /**
