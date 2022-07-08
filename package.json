@@ -16,7 +16,7 @@
     "prettier-format": "prettier --config .prettierrc.json src --write",
     "e2e": "ng e2e",
     "build:ci": "npm run clean && npm run test && npm run build:prod",
-    "compodoc": "npx compodoc -p tsconfig.json",
+    "compodoc": "npx compodoc -p tsconfig.doc.json",
     "prepare": "husky install .husky",
     "compodoc-serve": "compodoc -p tsconfig.doc.json -s"
   },
