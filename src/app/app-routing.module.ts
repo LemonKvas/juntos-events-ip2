@@ -65,6 +65,10 @@ const routes: Routes = [
     data: { role: 0 }
   },
   {
+    path: 'admin-dashboard/supporttickets',
+    loadChildren: () => import('./pages/admin-support/admin-support.module').then( m => m.AdminSupportPageModule)
+  },
+  {
     path: 'chat/:cId',
     loadChildren: () => import('src/app/pages/chat/chat.module').then((m) => m.ChatPageModule)
   },
