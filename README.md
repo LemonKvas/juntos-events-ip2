@@ -97,7 +97,7 @@ To get a local copy up and running follow these simple example steps.
    ```sh
    npm run build
    ```
-4. Run ionic serve
+4. Run npm start
    ```sh
    npm run start
    ```
