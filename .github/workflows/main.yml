@@ -40,15 +40,7 @@ jobs:
 
       - name: Build
         run: npm run build
-
-#      - name: Lint
-#        if: always()
-#        run: npm run lint-and-fix
-#
-#      - name: Unit Tests
-#        if: always()
-#        run: npm run test
-
+        
   lint:
     runs-on: ubuntu-latest
     name: Lint
@@ -76,43 +68,28 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_JUNTOS_IP2_SS22 }}'
           projectId: juntos-ip2-ss22
           channelId: live
-
-
-  deploy2:
-    name: Deploy2
-    #needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - run: npm install && npm run build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_JUNTOS_IP2_SS22 }}'
-          projectId: juntos-ip2-ss22
-          channelId: live
   
 
-  #hostDocuToNetlify:
-  #  runs-on: ubuntu-18.04
-  #  steps:
-  #    - uses: actions/checkout@v2
-
-
-   #   - name: Deploy to Netlify
-   #     uses: nwtgck/actions-netlify@v1.2
-   #     with:
-   #       publish-dir: './documentation'
-   #       production-branch: develop
-   #       github-token: ${{ secrets.GITHUB_TOKEN }}
-   #       deploy-message: "Documentation deployed from GithubActions"
-   #       enable-pull-request-comment: false
-   #       enable-commit-comment: true
-   #       overwrites-pull-request-comment: true
-   #     env:
-   #       NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-   #       NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-   #     timeout-minutes: 1
+  hostDocuToNetlify:
+    runs-on: ubuntu-18.04
+    needs: deploy
+    name: hostDocu
+    steps:
+      - name: Deploy to Netlify
+      - run: npm install --force && npm run compodoc
+      - uses: nwtgck/actions-netlify@v1.2
+        with:
+          publish-dir: './documentation'
+          production-branch: develop
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: "Documentation deployed from GithubActions"
+          enable-pull-request-comment: false
+          enable-commit-comment: true
+          overwrites-pull-request-comment: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        timeout-minutes: 1
 
 
 
