@@ -8,7 +8,6 @@
 <h3 align="center">Juntos</h3>
 
   <p align="center">
-    project_description
     <br />
     <a href="https://juntos-ip22-documentation.netlify.app/"><strong>Explore the docs »</strong></a>
     <br />
