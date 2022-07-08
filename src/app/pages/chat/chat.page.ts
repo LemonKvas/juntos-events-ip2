@@ -7,7 +7,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import User from 'src/app/models/classes/user';
 import { AlertService } from '../../services/alert.service';
 import { PhotoService } from '../../services/photo.service';
-import { IonContent } from '@ionic/angular';
+import {IonContent, ModalController} from '@ionic/angular';
+import {SupportMessagePage} from "../support-message/support-message.page";
 
 /**
  * DE:
@@ -45,6 +46,7 @@ export class ChatPage implements OnInit {
    * @param alertService
    * @param router
    * @param photoService
+   * @param modalCtrl
    */
   constructor(
     private chatService: ChatService,
@@ -52,7 +54,8 @@ export class ChatPage implements OnInit {
     private route: ActivatedRoute,
     private alertService: AlertService,
     private router: Router,
-    private photoService: PhotoService
+    private photoService: PhotoService,
+    private modalCtrl: ModalController
   ) {
     this.chatGroupId = this.route.snapshot.params.cId;
     this.chatUserId = this.route.snapshot.params.uId;
@@ -303,5 +306,58 @@ export class ChatPage implements OnInit {
    */
   async scrollToBottom() {
     this.content.scrollToBottom(1000).catch((err) => console.log('Error: ', err));
+  }
+  /**
+   * DE:
+   * Diese Methode öffnet ein Alert, um den / die NutzerIn darauf hinzuweisen, dass bei Problemen der
+   * Support angeschrieben werden kann.
+   * EN:
+   * This method opens an alert to inform the user that in case of problems the support can be contacted.
+   */
+  async supportAlert() {
+    await this.alertService.basicAlert(
+      'Probleme',
+      'Senden Sie unserem Support eine Nachricht und wir werden uns umgehend um ihr Anliegen kümmern.',
+      [
+        {
+          text: 'Abbrechen',
+          role: 'cancel'
+        },
+        {
+          text: 'Support kontaktieren',
+          handler: () => {
+            this.openEventSupportMessageModal(this.currentUser.userId, this.chatUserId);
+          }
+        }
+      ]
+    );
+  }
+
+  /**
+   * DE:
+   * Diese Methode ruft ein Alert auf und bietet den / der NutzerIn an, dass er / sie sich bei Problemen
+   * beim Support melden kann. Daten die der Funktion mitgegeben werden, werden dem Alert für den weiteren
+   * Verlauf übergeben.
+   * EN:
+   * This function will open an alert for user to contact support if there is a problem. User will be able
+   * to send support a message if he / she click on 'Support kontaktieren'. A modal with input fields
+   * will be opened for user to enter his / her message and given data will be sent to admin / support.
+   *
+   * @param currentUserId
+   * @param reportUserId
+   */
+  async openEventSupportMessageModal(currentUserId: string, reportUserId: string) {
+    const modal = await this.modalCtrl.create({
+      component: SupportMessagePage,
+      componentProps: {
+        userId: currentUserId,
+        reportUserId: reportUserId
+      }
+    });
+    await modal
+      .present()
+      .then(() => console.log('No error with presenting modal'))
+      .catch((err) => console.log('error modal: ', err));
+    await modal.onDidDismiss();
   }
 }
