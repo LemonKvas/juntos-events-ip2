@@ -93,12 +93,14 @@ jobs:
           channelId: live
   
 
-  #hostDocuToNetlify:
-  #  runs-on: ubuntu-18.04
-  #  steps:
-  #    - uses: actions/checkout@v2
-
-
+  hostDocuToNetlify:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: install and build
+      - run: npm install --force && npm run compodoc
+      
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1.2
         with:
