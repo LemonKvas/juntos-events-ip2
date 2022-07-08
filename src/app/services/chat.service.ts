@@ -1,13 +1,13 @@
-import {Injectable} from '@angular/core';
-import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/compat/firestore';
-import {UserDataService} from './user-data.service';
+import { Injectable } from '@angular/core';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { UserDataService } from './user-data.service';
 import User from '../models/classes/user';
-import {Message} from '../models/interfaces/message';
-import {ChatGroup} from '../models/classes/chat-group';
-import {Observable} from 'rxjs';
-import {getDoc} from 'firebase/firestore';
+import { Message } from '../models/interfaces/message';
+import { ChatGroup } from '../models/classes/chat-group';
+import { Observable } from 'rxjs';
+import { getDoc } from 'firebase/firestore';
 import firebase from 'firebase/compat/app';
-import {arrayUnion} from '@angular/fire/firestore';
+import { arrayUnion } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -26,9 +26,9 @@ export class ChatService {
    * This function will set value of the variable currentUser by calling getCurrentUser()
    * from userService.
    */
-  async getCurrentUser(){
+  async getCurrentUser() {
     this.currentUser = await this.userService.getCurrentUser();
-  };
+  }
 
   /**
    * This function will return chat data from firestore collection 'chats' by given chat id.
@@ -40,7 +40,7 @@ export class ChatService {
    * @param id
    * @returns chatData
    */
-  async getChatGroupById(id: string){
+  async getChatGroupById(id: string) {
     const docRef = await this.chatsCollections.doc(id).ref;
     const docSnap = await getDoc(docRef);
     return docSnap.data() as ChatGroup;
@@ -58,32 +58,36 @@ export class ChatService {
    * @param id
    * @returns chatData
    */
-  async getChatGroupByUsersId(id: string){
+  async getChatGroupByUsersId(id: string) {
     const user1: ChatGroup[] = [];
     const user2: ChatGroup[] = [];
     const db = firebase.firestore();
     // Looking for Chats containing chat user
-    await db.collection('chats')
+    await db
+      .collection('chats')
       .where('users', 'array-contains', id)
-      .get().then(snap => {
-        snap.forEach(doc => {
+      .get()
+      .then((snap) => {
+        snap.forEach((doc) => {
           user1.push(doc as ChatGroup);
         });
       });
     // Looking for Chats containing current user
-    await db.collection('chats')
+    await db
+      .collection('chats')
       .where('users', 'array-contains', this.currentUser.userId)
-      .get().then(snap => {
-        snap.forEach(doc => {
+      .get()
+      .then((snap) => {
+        snap.forEach((doc) => {
           user2.push(doc as ChatGroup);
         });
       });
     // Looking for a match
-    const result = user1.filter(u1 => user2.some(u2 => u1.id === u2.id));
-    if(result.length === 1){
-      return this.groupChat = result[0];
+    const result = user1.filter((u1) => user2.some((u2) => u1.id === u2.id));
+    if (result.length === 1) {
+      return (this.groupChat = result[0]);
     } else {
-      return this.groupChat = null;
+      return (this.groupChat = null);
     }
   }
 
@@ -106,19 +110,17 @@ export class ChatService {
    * @param user
    * @returns chatData
    */
-  async createChat(user: User){
+  async createChat(user: User) {
     // Looking for existing chat
     await this.getChatGroupByUsersId(user.userId);
     // If no existing chat was found, create a new chat
-    if(this.groupChat === null){
-      this.groupChat = new ChatGroup(
-        this.afs.createId(),
-        new Date(),
-        user.photoUrl
-      );
+    if (this.groupChat === null) {
+      this.groupChat = new ChatGroup(this.afs.createId(), new Date(), user.photoUrl);
       const data = JSON.parse(JSON.stringify(this.groupChat));
       // Add new created chat to collection 'chats'
-      await this.chatsCollections.doc(this.groupChat.id).set(data)
+      await this.chatsCollections
+        .doc(this.groupChat.id)
+        .set(data)
         .catch((err) => console.log('Error: ', err));
       // Add both users to sub-collection 'users' of new created chat
       await this.addUserToChat(this.groupChat.id, user);
@@ -142,16 +144,20 @@ export class ChatService {
    * @param chatId
    * @param user
    */
-  async addUserToChat(chatId: string, user: User){
+  async addUserToChat(chatId: string, user: User) {
     const db = firebase.firestore().collection('chats');
     const currentUser = JSON.parse(JSON.stringify(this.currentUser));
     const chatUser = JSON.parse(JSON.stringify(user));
     // Add both users to sub-collection 'users' of collection 'chats'
-    await this.chatsCollections.doc(chatId).collection('users').doc(currentUser.userId).set(currentUser);
+    await this.chatsCollections
+      .doc(chatId)
+      .collection('users')
+      .doc(currentUser.userId)
+      .set(currentUser);
     await this.chatsCollections.doc(chatId).collection('users').doc(chatUser.userId).set(chatUser);
     // Add users to users array of chat
-    await db.doc(chatId).update({users: arrayUnion(currentUser.userId)});
-    await db.doc(chatId).update({users: arrayUnion(chatUser.userId)});
+    await db.doc(chatId).update({ users: arrayUnion(currentUser.userId) });
+    await db.doc(chatId).update({ users: arrayUnion(chatUser.userId) });
   }
 
   /**
@@ -163,7 +169,7 @@ export class ChatService {
    *
    * @param msg
    */
-  async addChatMessage(msg: Message){
+  async addChatMessage(msg: Message) {
     msg.id = this.afs.createId();
     msg.creator = this.currentUser.userId;
     const data = JSON.parse(JSON.stringify(msg));
@@ -182,9 +188,12 @@ export class ChatService {
    * @param chatId
    * @return messages[]
    */
-  getMessages(chatId: string){
-    return this.afs.collection('chats').doc(chatId)
-      .collection('messages', ref => ref.orderBy('date', 'asc')).snapshotChanges();
+  getMessages(chatId: string) {
+    return this.afs
+      .collection('chats')
+      .doc(chatId)
+      .collection('messages', (ref) => ref.orderBy('date', 'asc'))
+      .snapshotChanges();
   }
 
   /**
@@ -198,21 +207,34 @@ export class ChatService {
    *
    * @param userId
    */
-  async deleteChat(userId: string){
+  async deleteChat(userId: string) {
     const chatData = await this.getChatGroupByUsersId(userId);
     // Get size / length of sub-collection 'users' from the collection 'chats'
     let usersSize;
-    await this.chatsCollections.doc(chatData.id).collection('users').get().subscribe((res) => {
-      usersSize = res.size;
-    });
+    await this.chatsCollections
+      .doc(chatData.id)
+      .collection('users')
+      .get()
+      .subscribe((res) => {
+        usersSize = res.size;
+      });
     // Delete chat partner from current / logged-in user sub-collection 'chatPartners'
-    await this.afs.collection('user').doc(this.currentUser.userId).collection('chatPartners').doc(userId).delete();
-    if(usersSize <= 1){
+    await this.afs
+      .collection('user')
+      .doc(this.currentUser.userId)
+      .collection('chatPartners')
+      .doc(userId)
+      .delete();
+    if (usersSize <= 1) {
       // Delete chat from collection 'chats'
       await this.chatsCollections.doc(chatData.id).delete();
     } else {
       // Delete current / logged-in user from chats sub-collection 'users'
-      await this.chatsCollections.doc(chatData.id).collection('users').doc(this.currentUser.userId).delete();
+      await this.chatsCollections
+        .doc(chatData.id)
+        .collection('users')
+        .doc(this.currentUser.userId)
+        .delete();
     }
   }
 
@@ -226,7 +248,7 @@ export class ChatService {
    *
    * @param msg
    */
-  async deleteMessage(msg: Message){
+  async deleteMessage(msg: Message) {
     await this.chatsCollections.doc(msg.chatId).collection('messages').doc(msg.id).delete();
   }
 }

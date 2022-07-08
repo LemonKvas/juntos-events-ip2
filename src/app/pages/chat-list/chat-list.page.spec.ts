@@ -9,7 +9,7 @@ describe('ChatListPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChatListPage ],
+      declarations: [ChatListPage],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import {ChatGroup} from 'src/app/models/classes/chat-group';
-import {ChatService} from 'src/app/services/chat.service';
-import {UserDataService} from 'src/app/services/user-data.service';
-import {Router} from '@angular/router';
+import { ChatGroup } from 'src/app/models/classes/chat-group';
+import { ChatService } from 'src/app/services/chat.service';
+import { UserDataService } from 'src/app/services/user-data.service';
+import { Router } from '@angular/router';
 import User from '../../models/classes/user';
-import {AlertService} from '../../services/alert.service';
+import { AlertService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-chat-list',
   templateUrl: './chat-list.page.html',
-  styleUrls: ['./chat-list.page.scss'],
+  styleUrls: ['./chat-list.page.scss']
 })
 export class ChatListPage implements OnInit {
   segment = 'chats';
@@ -17,15 +17,18 @@ export class ChatListPage implements OnInit {
   currentUser: User;
   friendsList: string[];
   chatPartners: User[];
-  constructor(private chatService: ChatService, private userService: UserDataService,
-              private router: Router, private alertService: AlertService) {
-  }
+  constructor(
+    private chatService: ChatService,
+    private userService: UserDataService,
+    private router: Router,
+    private alertService: AlertService
+  ) {}
 
   async ngOnInit() {
     await this.getCurrentUserData();
     await this.getChatPartners();
   }
-  segmentChanged(event: any){
+  segmentChanged(event: any) {
     console.log('Segment changed to ', event);
   }
 
@@ -33,7 +36,7 @@ export class ChatListPage implements OnInit {
    * This function will get data from current / logged-in user through getCurrentUser()
    * from userService to set values of local variables 'currentUser' & 'friendsList'.
    */
-  async getCurrentUserData(){
+  async getCurrentUserData() {
     this.currentUser = await this.userService.getCurrentUser();
     this.friendsList = this.currentUser.friends;
   }
@@ -42,11 +45,11 @@ export class ChatListPage implements OnInit {
    * This function will get all chat partners from current / logged-in user and
    * set value of local variable 'chatPartners[]'.
    */
-  async getChatPartners(){
+  async getChatPartners() {
     this.userService.getChatPartners(this.currentUser.userId).subscribe((res) => {
       this.chatPartners = res.map((e) => ({
         userId: e.payload.doc.id,
-        ...e.payload.doc.data() as User
+        ...(e.payload.doc.data() as User)
       }));
     });
   }
@@ -61,7 +64,7 @@ export class ChatListPage implements OnInit {
    *
    * @param userId
    */
-  async openChat(userId: string){
+  async openChat(userId: string) {
     const chatId = await this.chatService.getChatGroupByUsersId(userId);
     await this.router.navigate(['chat', chatId.id, userId]);
   }
@@ -76,22 +79,22 @@ export class ChatListPage implements OnInit {
    *
    * @param userId
    */
-  async deleteChat(userId: string){
+  async deleteChat(userId: string) {
     await this.alertService.basicAlert(
       '',
       'Sind Sie sicher, dass Sie diesen Chat löschen wollen?',
-        [
-          {
-            text: 'Ja',
-            handler: () => {
-              this.chatService.deleteChat(userId);
-            }
-          },
-          {
-            text: 'Abbrechen',
-            role: 'cancel',
+      [
+        {
+          text: 'Ja',
+          handler: () => {
+            this.chatService.deleteChat(userId);
           }
-        ],
+        },
+        {
+          text: 'Abbrechen',
+          role: 'cancel'
+        }
+      ]
     );
   }
 }

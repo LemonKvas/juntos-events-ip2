@@ -248,7 +248,7 @@ export class UserDataService {
    *
    * @param user
    */
-  async addChat(user: User){
+  async addChat(user: User) {
     const db = firebase.firestore().collection('user');
     const currentUser = await this.getCurrentUser();
     // Add both users to each other sub-collection 'chatPartners'
@@ -267,14 +267,27 @@ export class UserDataService {
    * @param chatId
    * @param user
    */
-  async addChatPartner(chatId: string, user: User){
+  async addChatPartner(chatId: string, user: User) {
     const currentUser = await this.getCurrentUser();
     // Add user(s) back into each other sub-collection 'chatPartners'
-    await this.userCollection.doc(currentUser.userId).collection('chatPartners').doc(user.userId).set(user);
-    await this.userCollection.doc(user.userId).collection('chatPartners').doc(currentUser.userId).set(currentUser);
+    await this.userCollection
+      .doc(currentUser.userId)
+      .collection('chatPartners')
+      .doc(user.userId)
+      .set(user);
+    await this.userCollection
+      .doc(user.userId)
+      .collection('chatPartners')
+      .doc(currentUser.userId)
+      .set(currentUser);
     // Add user(s) back into sub-collection 'users' of collection 'chats'
     await this.afs.collection('chats').doc(chatId).collection('users').doc(user.userId).set(user);
-    await this.afs.collection('chats').doc(chatId).collection('users').doc(currentUser.userId).set(currentUser);
+    await this.afs
+      .collection('chats')
+      .doc(chatId)
+      .collection('users')
+      .doc(currentUser.userId)
+      .set(currentUser);
   }
 
   /**
@@ -287,7 +300,7 @@ export class UserDataService {
    *
    * @param userId
    */
-  getChatPartners(userId: string){
+  getChatPartners(userId: string) {
     return this.userCollection.doc(userId).collection('chatPartners').snapshotChanges();
   }
 }

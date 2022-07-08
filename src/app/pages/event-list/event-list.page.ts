@@ -4,7 +4,6 @@ import { EventService } from 'src/app/services/event.service';
 import { Share } from '@capacitor/share';
 import { NavigationExtras, Router } from '@angular/router';
 import { GeoService } from 'src/app/services/geo.service';
-import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-event-list',
