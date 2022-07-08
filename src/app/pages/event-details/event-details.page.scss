@@ -33,8 +33,10 @@ ion-item {
   p {
     font-size: 15px;
   }
-  ion-label {
-    font-size: 20px;
+  ion-segment-button {
+    ion-label {
+      font-size: 10px;
+    }
   }
   .img-div {
     width: 100%;
@@ -67,11 +69,11 @@ ion-item {
   p {
     font-size: 15px;
   }
-  ion-label {
-    font-size: 20px;
-  }
   ion-segment-button {
-    min-width: auto;
+    width: auto;
+    ion-label {
+      font-size: 20px;
+    }
   }
   ion-row {
     justify-content: center;

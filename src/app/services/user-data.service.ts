@@ -206,7 +206,7 @@ export class UserDataService {
    *
    * @param event
    */
-  async addRegisteredEvent(event: any) {
+  async addRegisteredEvent(event: RegisteredEvent) {
     const user = await this.getCurrentUser();
     const userId = user.userId;
     await this.userCollection.doc(userId).update({ registeredEvents: arrayUnion(event) });
@@ -221,7 +221,7 @@ export class UserDataService {
    *
    * @param event
    */
-  async addCreatedEvent(event: any) {
+  async addCreatedEvent(event: CreatedEvent) {
     const user = await this.getCurrentUser();
     const userId = user.userId;
     await this.userCollection.doc(userId).update({ createdEvents: arrayUnion(event) });

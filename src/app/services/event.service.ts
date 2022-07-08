@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { Event } from 'src/app/models/classes/event.model';
 import { Observable } from 'rxjs';
-import { arrayRemove, documentId } from '@angular/fire/firestore';
+import { documentId } from '@angular/fire/firestore';
 
 import firebase from 'firebase/compat/app';
 import { CreatedEvent } from '../models/interfaces/created-event';
@@ -14,6 +14,12 @@ import { UserDataService } from 'src/app/services/user-data.service';
 import { GeoService } from 'src/app/services/geo.service';
 import { NavigationExtras, Router } from '@angular/router';
 
+/**
+ * DE:
+ * Service wird genutzt, um Events zu verwalten.
+ * EN:
+ * Service is used to manage events.
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -35,6 +41,9 @@ export class EventService {
   }
 
   /**
+   * DE:
+   * Diese Methode gibt ein Observable der Daten aller Events aus der Firebase Datenbank zurück.
+   * EN:
    * This function will return an observable with all events.
    */
   getAllEvents() {
@@ -42,7 +51,22 @@ export class EventService {
   }
 
   /**
+   * DE:
+   * Diese Methode gibt ein Observable mit allen veröffentlichten Ereignissen zurück.
+   * EN:
    * This function will return an observable with all published events.
+   *
+   * @example
+   * functionName() {
+   *     this.eventService.getPublishedEvents().subscribe((res) => {
+   *       this.events = res.map((e) => ({
+   *         eventId: e.payload.doc.id,
+   *         ...(e.payload.doc.data() as Event)
+   *       }));
+   *     });
+   *   }
+   *
+   * @returns Event[]
    */
   getPublishedEvents() {
     return this.afs
@@ -51,14 +75,70 @@ export class EventService {
   }
 
   /**
-   * This function will return an observable with all event drafts
+   * DE:
+   * Diese Methode gibt ein Observable der Daten aller veröffentlichen Events von einem/einer NutzerIn anhand
+   * der mitgegebenen ID.
+   * EN:
+   * This method returns an observable of the data of all published events from a user based on the given ID.
+   *
+   * @example
+   * Call it with a user ID as a string
+   * functionName() {
+   *     this.eventService.getPublishedEventsFromUser(userID).subscribe((res) => {
+   *       this.publishedEvents = res.map((e) => ({
+   *         eventId: e.payload.doc.id,
+   *         ...(e.payload.doc.data() as Event)
+   *       }));
+   *     });
+   *   }
+   *
+   * @param userId
+   * @returns Event[]
    */
-  getEventDrafts() {
+  getPublishedEventsFromUser(userId: string) {
     return this.afs
-      .collection('events', (ref) => ref.where('publishStatus', '==', false))
+      .collection('events', (ref) =>
+        ref.where('publishStatus', '==', true).where('creatorId', '==', userId)
+      )
       .snapshotChanges();
   }
 
+  /**
+   * DE:
+   * Diese Methode gibt ein Observable der Daten aller Event Entwürfe eines/einer NutzerIn zurück.
+   * EN:
+   * This function will return an observable with all event drafts of one user.
+   *
+   * @example
+   * Call it with a user ID as a string
+   * functionName() {
+   *     this.eventService.getEventDraftsFromUser(userID).subscribe((res) => {
+   *       this.eventDrafts = res.map((e) => ({
+   *         eventId: e.payload.doc.id,
+   *         ...(e.payload.doc.data() as Event)
+   *       }));
+   *     });
+   * }
+   *
+   * @param userId
+   * @returns Event[]
+   */
+  getEventDraftsFromUser(userId: string) {
+    return this.afs
+      .collection('events', (ref) =>
+        ref.where('publishStatus', '==', false).where('creatorId', '==', userId)
+      )
+      .snapshotChanges();
+  }
+
+  /**
+   * DE:
+   * Diese Methode erstellt ein Event und fügt diese in die Firebase Sammlung 'events'.
+   * EN:
+   * This method creates an event and adds it to the Firebase collection 'events'.
+   *
+   * @param event
+   */
   async addEvent(event: Event): Promise<void> {
     event.eventId = this.afs.createId();
     this.eventId = event.eventId;
@@ -75,10 +155,55 @@ export class EventService {
       });
     });
   }
-  async removeEvent(id: string) {
-    await firebase.firestore().collection('events').doc(id).delete();
+
+  /**
+   * DE:
+   * Diese Methode aktualisiert ein bestehendes Event mit neuen Daten.
+   * EN:
+   * This method updates an existing event with new data.
+   *
+   * @example
+   * Call it with an object of type 'Event'
+   * async functionName(){
+   *   await this.eventService.updateEvent(event: Event);
+   * }
+   *
+   * @param event
+   */
+  async updateEvent(event: Event) {
+    const data = JSON.parse(JSON.stringify(event));
+    await this.afs.collection('events').doc(event.eventId).update(data);
   }
 
+  /**
+   * DE:
+   * Diese Methode entfernt ein Event von der Firebase Sammlung 'events'.
+   * EN:
+   * This method removes an event from the Firebase collection 'events'.
+   * @param eventId
+   */
+  async removeEvent(eventId: string) {
+    await firebase.firestore().collection('events').doc(eventId).delete();
+  }
+
+  /**
+   * DE:
+   * Diese Methode holt mehrere Events Daten anhand eines Arrays mit mehreren Event IDs.
+   * EN:
+   * This method fetches multiple events data using an array of multiple event IDs.
+   *
+   * @example
+   * Call it with an array of IDs as string
+   * functionName(){
+   *  const attendedEventIds: string[] = [...];
+   *   this.eventService.getMultipleEventsByEventId(attendedEventIds).forEach((eventDocs: any[]) => {
+   *         this.events = eventDocs;
+   *       });
+   * }
+   *
+   * @param eventIds
+   * @returns Event[]
+   */
   getMultipleEventsByEventId(eventIds: []) {
     const userEventCollection = this.afs.collection('events', (ref) =>
       ref.where(documentId(), 'in', eventIds)
@@ -86,17 +211,46 @@ export class EventService {
     return userEventCollection.valueChanges();
   }
 
-  async getEventById(id: string) {
-    const docRef = this.eventsCollections.doc(id).ref;
+  /**
+   * DE:
+   * Diese Methode holt die Daten von einem Event anhand der Event ID.
+   * EN:
+   * This method fetches the data from an event based on the event ID.
+   * @param eventId
+   * @returns EventData
+   */
+  async getEventById(eventId: string) {
+    const docRef = this.eventsCollections.doc(eventId).ref;
     const docSnap = await getDoc(docRef);
     return docSnap.data() as Event;
   }
+
+  /**
+   * DE:
+   * Diese Methode erstellt ein Event Objekt von dem Typ 'CreatedEvent', um die Event ID
+   * sowie den Veröffentlichungsstatus des Events bei dem/die NutzerIn zu speichern.
+   * EN:
+   * This method creates an event object of the type 'CreatedEvent' to store the event ID
+   * and the publishing status of the event to the user data.
+   * @param publishStatus
+   */
   async createdEventData(publishStatus: boolean) {
     return (this.createdEvent = {
       eventId: this.eventId,
       publishStatus
     });
   }
+
+  /**
+   * DE:
+   * Diese Methode kontrolliert, ob der Preis eines Events 0 beträgt und ersetzt den Wert der
+   * Variable in 'Kostenlos'.
+   * EN:
+   * This method checks if the price of an event is 0 and replaces the value of the
+   * variable in 'Kostenlos'.
+   *
+   * @param event
+   */
   getPrice(event: Event): string {
     if (event.price === '0' || event.price === undefined || event.price === null) {
       event.price = 'Kostenlos';
@@ -104,6 +258,14 @@ export class EventService {
     }
     return event.price;
   }
+
+  /**
+   * DE:
+   * Diese Methode überprüft, ob ein Event kostenlos ist und gibt ein boolean zurück.
+   * EN:
+   * This method checks if an event is free and returns a boolean.
+   * @param event
+   */
   freeEvent(event: Event): boolean {
     if (event.price === '0' || event.price === 'Kostenlos') {
       this.getPrice(event);
@@ -112,11 +274,26 @@ export class EventService {
       return true;
     }
   }
+
+  /**
+   * DE:
+   * Diese Methode wird aufgerufen, um die TeilnehmerListe eines Events zu aktualisieren.
+   * EN:
+   * This method is called to update the participant list of an event.
+   * @param event
+   */
   async addRegisteredUser(event: Event) {
     const db = firebase.firestore().collection('events');
     await db.doc(event.eventId).update({ participants: arrayUnion(...event.participants) });
   }
 
+  /**
+   * DE:
+   * Diese Methode navigiert zu der Detailseite eines Events.
+   * EN:
+   * This method navigates to the details page of an event.
+   * @param id
+   */
   async navigateToEvent(id) {
     const event = await this.getEventById(id);
     const navigationExtras: NavigationExtras = {
@@ -144,14 +321,20 @@ export class EventService {
   }
 
   /**
-   * Gibt ein Observable zurück mit allen Events, deren Wert "promoted" auf true gesetzt ist
+   * DE:
+   * Gibt ein Observable zurück mit allen Events, deren Wert "promoted" auf true gesetzt ist.
+   * EN:
+   * Returns an observable with all events whose value "promoted" is set to true.
    */
   getPromotedEvents() {
     return this.afs.collection('events', (ref) => ref.where('promoted', '==', true)).valueChanges();
   }
 
   /**
+   * DE:
    * Gibt ein Observable zurück mit allen Events, deren creatorId mit dem Parameter UserId übereinstimmt.
+   * EN:
+   * Returns an observable with all events whose creatorId matches the UserId parameter.
    *
    * @param userId
    */
@@ -255,22 +438,21 @@ export class EventService {
   }
 
   /**
-   * EN:
-   * The event ID in the parameters is deleted from the user who created the event.
-   * This is done by storing the array "createdEvents", searching it for the event-id and storing it without the
-   * object which contains the ID. The original array is then merged with the
-   * with the filtered array in the database.
-   *
    * DE:
    * Die Event ID in den Parametern wird aus dem Nutzer, der das Event erstellt hat gelöscht.
    * Dabei wird das Array "createdEvents" gespeichert, nach der EventId durchsucht und ohne das
    * Object, welche die ID beinhaltet gespeichert. Das ursprüngliche Array wird daraufhin mit dem
    * gefilterten Array in der Datenbank ersetzt.
    *
+   * EN:
+   * The event ID in the parameters is deleted from the user who created the event.
+   * This is done by storing the array "createdEvents", searching it for the event-id and storing it without the
+   * object which contains the ID. The original array is then merged with the
+   * with the filtered array in the database.
+   *
    * @param creatorId
    * @param eventId
    */
-
   async removeEventFromCreator(creatorId, eventId) {
     let creator;
     await this.userDataService.getUserById(creatorId).then((user) => {
@@ -278,7 +460,7 @@ export class EventService {
     });
     const creatorEvents = creator.createdEvents;
 
-    // filter the creatoe events array
+    // filter the creator events array
     const newCreatorEvents = creatorEvents.filter((event) => event.eventId !== eventId);
 
     // update the doc with the filtered events

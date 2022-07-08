@@ -18,9 +18,13 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/edit-user/edit-user.module').then((m) => m.EditUserPageModule)
   },
-
   {
     path: 'event-create',
+    loadChildren: () =>
+      import('./pages/event-create/event-create.module').then((m) => m.EventCreatePageModule)
+  },
+  {
+    path: 'event-create/:id',
     loadChildren: () =>
       import('./pages/event-create/event-create.module').then((m) => m.EventCreatePageModule)
   },
@@ -80,6 +84,20 @@ const routes: Routes = [
     path: 'chat-list/:id',
     loadChildren: () =>
       import('src/app/pages/chat-list/chat-list.module').then((m) => m.ChatListPageModule)
+  },
+  {
+    path: 'user-events/:id',
+    loadChildren: () =>
+      import('./pages/user-created-events/user-created-events.module').then(
+        (m) => m.UserCreatedEventsPageModule
+      )
+  },
+  {
+    path: 'support-message',
+    loadChildren: () =>
+      import('./pages/support-message/support-message.module').then(
+        (m) => m.SupportMessagePageModule
+      )
   }
 ];
 

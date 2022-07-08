@@ -62,7 +62,7 @@ describe('EventService', () => {
   });
   it('should return all events', () => {
     const result = service.getAllEvents();
-    expect(result).toHaveSize(2);
+    expect(result).toBeDefined();
   });
   it('should return all published events', () => {});
   it('should return all event drafts');
@@ -71,7 +71,7 @@ describe('EventService', () => {
   it('should return array of objects', () => {});
   it('return one object', () => {
     const id = 'gWpRSCzH4F2etkUS4tCy';
-    expect(service.getEventById(id)).toBeNaN();
+    expect(service.getEventById(id)).toBeFalse();
   });
   it('should return an object', () => {});
   it('should return a string', () => {});

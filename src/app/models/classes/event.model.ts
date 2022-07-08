@@ -1,3 +1,9 @@
+/**
+ * DE:
+ * Klasse um ein Event zu repräsentieren.
+ * EN:
+ * Class to represent an event.
+ */
 export class Event {
   name?: string;
   photoURLs?: string[];
@@ -15,6 +21,29 @@ export class Event {
   long?: string;
   lat?: string;
 
+  /**
+   * DE:
+   * Setzt alle benötigten Parameter fest. Falls die optionalen Parameter nicht undefined sind,
+   * werden diese ebenfalls gespeichert.
+   * EN:
+   * Sets all required parameters. If the optional parameters are not undefined,
+   * they will be saved as well.
+   * @param name
+   * @param photoURLs
+   * @param creationDate
+   * @param eventDate
+   * @param price
+   * @param bio
+   * @param categories
+   * @param participants
+   * @param maxParticipants
+   * @param address
+   * @param publishStatus
+   * @param eventId
+   * @param creatorId
+   * @param long
+   * @param lat
+   */
   constructor(
     name?: string,
     photoURLs?: string[],
