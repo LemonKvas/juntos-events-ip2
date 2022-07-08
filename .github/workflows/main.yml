@@ -75,7 +75,7 @@ jobs:
     needs: deploy
     name: hostDocu
     steps:
-      - name: Deploy to Netlify
+      - uses: actions/checkout@v2
       - run: npm install --force && npm run compodoc
       - uses: nwtgck/actions-netlify@v1.2
         with:
