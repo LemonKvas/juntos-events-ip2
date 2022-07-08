@@ -10,7 +10,7 @@
   <p align="center">
     project_description
     <br />
-    <a href="https://github.com/LemonKvas/juntos-events-ip2"><strong>Explore the docs »</strong></a>
+    <a href="https://juntos-ip22-documentation.netlify.app/"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://juntos-ip2-ss22.firebaseapp.com/">View Demo</a>
@@ -80,7 +80,7 @@ of fun memories to look back at!
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
+This is how you set up this project locally.
 To get a local copy up and running follow these simple example steps.
 
 
@@ -96,11 +96,11 @@ To get a local copy up and running follow these simple example steps.
    ```
 3. Run npm build
    ```sh
-   npm build
+   npm run build
    ```
 4. Run ionic serve
    ```sh
-   npm serve
+   npm run start
    ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -119,7 +119,7 @@ A little sneak peak of the app.
 
 <img src="https://github.com/LemonKvas/juntos-events-ip2/blob/develop/src/assets/images/Event-Liste.gif" width="200">
 
-_For more examples, please refer to the [Documentation](https://juntos-docu.netlify.app/)_
+_For more examples, please refer to the [Documentation](https://juntos-ip22-documentation.netlify.app/)_
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
