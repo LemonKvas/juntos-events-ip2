@@ -1,8 +1,13 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 
+/**
+ * DE:
+ * Service wird genutzt, um Fotos in Firebase Storage hochzuladen und zu entfernen.
+ * EN:
+ * Service is used to upload and remove photos to Firebase Storage.
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -11,10 +16,34 @@ export class PhotoService {
   photoURL: string;
   location = 'event-photos/';
   photoID: string;
+
   constructor(private afs: AngularFirestore, private afStorage: AngularFireStorage) {}
+
+  /**
+   * DE:
+   * Diese Methode holt ein Foto aus Firebase Storage anhand der ID.
+   * EN:
+   * This method retrieves a photo from Firebase Storage based on the ID.
+   * @param id
+   */
   async getPhotoById(id: any) {
     return this.afStorage.ref(this.location + JSON.stringify(id));
   }
+
+  /**
+   * DE:
+   * Ein Foto mit den angegebenen Daten 'imgData' wird in dem Firebase Storage hochgeladen.
+   * Der Standardpfad ist 'event-photos', der ersetzt wird, wenn ein anderer
+   * Pfad angegeben wird, z.B. 'loc'. Diese Methode gibt die URL der Datei als Promise zurück.
+   * EN:
+   * A photo with the given data 'imgData' will be uploaded to the firebase storage.
+   * The default path location is 'event-photos', which will be replaced if there is another
+   * given path e.g. 'loc'. This function will return the URL of the file as a Promise.
+   *
+   * @param imgData
+   * @param loc
+   * @returns url
+   */
   async storePhoto(imgData: any, loc?: string) {
     try {
       if (loc) {
@@ -25,7 +54,7 @@ export class PhotoService {
         const photoRef = this.afStorage.ref(this.location + this.photoID);
         photoRef
           .put(imgData)
-          .then(function () {
+          .then(() => {
             photoRef.getDownloadURL().subscribe((url: any) => {
               resolve(url);
             });
@@ -39,6 +68,18 @@ export class PhotoService {
     }
     this.photos = [];
   }
+
+  /**
+   * DE:
+   * Eine Datei mit der angegebenen ID wird aus dem Firebase Storage gelöscht. Der Standardpfad ist
+   * "event-photos", wird aber ersetzt, wenn ein anderer Pfad angegeben wird, z. B. "loc".
+   * EN:
+   * A file with the given ID will be deleted from the firebase storage.
+   * The path default is 'event-photos' but will be replaced if there is another given path e.g. 'loc'.
+   *
+   * @param id
+   * @param loc
+   */
   async deletePhoto(id: string, loc?: string) {
     try {
       if (loc) {
@@ -50,20 +91,6 @@ export class PhotoService {
     } catch (e) {
       console.log(e);
     }
-  }
-  async addNewToGallery() {
-    const capturedPhoto = await Camera.getPhoto({
-      resultType: CameraResultType.DataUrl,
-      allowEditing: false,
-      source: CameraSource.Camera,
-      quality: 100
-    });
-    this.photos.unshift({
-      name: JSON.stringify(this.photoID),
-      webviewPath: capturedPhoto.webPath,
-      type: capturedPhoto.format
-    });
-    await this.storePhoto(capturedPhoto);
   }
 }
 export interface EventPhoto {

@@ -8,25 +8,39 @@ ion-img {
   position: center;
   object-fit: cover;
 }
+
+ion-content {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  --offset-bottom: 0 !important;
+  background-color: #ffffff;
+}
+
+ion-item {
+  width: 80%;
+}
 //Mobile Version
 @media screen and (max-width: 600px) {
   h1 {
-    font-size: 20px;
+    font-size: 30px;
     font-weight: bold;
     font-family: 'Yeseva One', cursive;
   }
   h2 {
-    font-size: 15px;
+    font-size: 25px;
+    color: black;
   }
   p {
-    font-size: 10px;
+    font-size: 15px;
   }
-  ion-label {
-    font-size: 10px;
+  ion-segment-button {
+    ion-label {
+      font-size: 10px;
+    }
   }
   .img-div {
     width: 100%;
-    height: 120px;
+    height: 200px;
   }
   .profile-div {
     width: 50px;
@@ -49,15 +63,17 @@ ion-img {
   }
   h2 {
     font-size: 20px;
+    color: black;
+    font-weight: bold;
   }
   p {
     font-size: 15px;
   }
-  ion-label {
-    font-size: 20px;
-  }
   ion-segment-button {
-    min-width: auto;
+    width: auto;
+    ion-label {
+      font-size: 20px;
+    }
   }
   ion-row {
     justify-content: center;
@@ -76,8 +92,4 @@ ion-img {
   .profile-img {
     border-radius: 50%;
   }
-  //#eventPartakeBtn {
-  //  height: 4vw;
-  //  justify-content: center;
-  //}
 }

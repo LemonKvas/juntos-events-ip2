@@ -20,6 +20,7 @@ import { StarRatingModule } from 'ionic5-star-rating';
     SharedModule,
     StarRatingModule
   ],
-  declarations: [UserProfilePage, EventItemComponent]
+  declarations: [UserProfilePage, EventItemComponent],
+  exports: [EventItemComponent]
 })
 export class UserProfilePageModule {}

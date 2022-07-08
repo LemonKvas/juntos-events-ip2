@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { APP_INITIALIZER } from '@angular/core';
@@ -14,9 +14,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { AuthService } from 'src/app/services/auth.service';
-import { SwiperModule } from 'swiper/angular';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { HttpClientModule } from '@angular/common/http';
+import { GeoService } from 'src/app/services/geo.service';
 
 @NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
@@ -27,7 +30,9 @@ import { SwiperModule } from 'swiper/angular';
     AngularFireAuthModule,
     AngularFireStorageModule,
     AngularFireDatabaseModule,
-    SharedModule
+    SharedModule,
+    HttpClientModule,
+    ScrollingModule
   ],
   providers: [
     {
@@ -39,6 +44,13 @@ import { SwiperModule } from 'swiper/angular';
       provide: APP_INITIALIZER,
       useFactory: (ds: AuthService) => () => ds.initalizeService(),
       deps: [AuthService],
+      multi: true
+    },
+    GeoService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (ds: GeoService) => () => ds.initGeoService(),
+      deps: [GeoService],
       multi: true
     }
   ],

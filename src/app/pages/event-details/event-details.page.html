@@ -29,23 +29,35 @@
       <h1>{{event.name}}</h1>
     </ion-row>
 
-    <ion-row>
+    <ion-row class="ion-justify-content-start">
       <ion-col>
-        <p>
-          <ion-icon name="calendar-outline"></ion-icon>
-          {{event.eventDate | date: 'dd.MM.yyyy'}}
-        </p>
+        <ion-row class="ion-justify-content-start">
+          <ion-col class="ion-text-center" size="2">
+            <p style="padding-top: 2px">
+              <ion-icon name="calendar-outline"></ion-icon>
+            </p>
+          </ion-col>
+          <ion-col class="ion-text-start" size="10">
+            <p>{{event.eventDate | date: 'dd.MM.yyyy'}}</p>
+          </ion-col>
+        </ion-row>
       </ion-col>
       <ion-col>
-        <p>
-          <ion-icon name="time-outline"></ion-icon>
-          {{event.eventDate | date: 'H:mm'}}
-        </p>
+        <ion-row class="ion-justify-content-start">
+          <ion-col class="ion-text-center" size="2">
+            <p style="padding-top: 2px">
+              <ion-icon name="time-outline"></ion-icon>
+            </p>
+          </ion-col>
+          <ion-col class="ion-text-start" size="10">
+            <p>{{event.eventDate | date: 'H:mm'}}</p>
+          </ion-col>
+        </ion-row>
       </ion-col>
     </ion-row>
 
     <ion-row>
-      <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
+      <ion-segment [(ngModel)]="segment">
         <ion-segment-button value="information">
           <ion-label>Informationen</ion-label>
         </ion-segment-button>
@@ -60,20 +72,28 @@
     <!-- Event Information Segment -->
     <div class="segment-divs" *ngIf="segment === 'information'">
       <ion-row class="ion-justify-content-start">
-        <h2>Beschreibung</h2>
-        <p>{{event.bio}}</p>
+        <ion-col>
+          <ion-row class="ion-justify-content-start">
+            <p><strong>Beschreibung</strong></p>
+          </ion-row>
+          <ion-row class="ion-justify-content-start">
+            <p style="margin-top: 0">{{event.bio}}</p>
+          </ion-row>
+        </ion-col>
       </ion-row>
 
       <ion-row class="ion-justify-content-start">
-        <h2>Standort</h2>
-        <br />
-        <p>
-          {{event.address['street']}} {{event.address['house']}} , {{event.address['zipCode']}}
-          {{event.address['city']}}
-        </p>
-      </ion-row>
-      <ion-row class="ion-justify-content-start">
-        <h2>Kommentare</h2>
+        <ion-col>
+          <ion-row class="ion-justify-content-start">
+            <p><strong>Standort</strong></p>
+          </ion-row>
+          <ion-row class="ion-justify-content-start">
+            <p style="margin-top: 0">
+              {{event.address['street']}} {{event.address['house']}}, {{event.address['zipCode']}}
+              {{event.address['city']}}
+            </p>
+          </ion-row>
+        </ion-col>
       </ion-row>
     </div>
 
@@ -83,35 +103,46 @@
         <ion-item class="ion-text-justify" *ngIf="event.participants.length === 0">
           <p>Nehme als Erste(r) an dem Event teil!</p>
         </ion-item>
-        <ion-item *ngFor="let participant of participants">
-          <ion-row
-            class="ion-justify-content-center"
-            [routerLink]="['/profile/' + participant.userId]">
-            <ion-col size="5">
-              <div class="profile-div">
-                <ion-img
-                  *ngIf="participant.photoUrl.includes('.png') || participant.photoUrl.includes('googleusercontent'); else noNeed"
-                  alt="User avatar"
-                  src="{{participant.photoUrl}}"></ion-img>
-                <ng-template #noNeed>
+        <ion-row class="ion-justify-content-center" *ngFor="let participant of participants">
+          <ion-item>
+            <ion-col size="4" [routerLink]="['/profile/' + participant.userId]" button>
+              <ion-row>
+                <ion-avatar class="profile-div">
                   <ion-img
-                    alt="User avatar"
-                    src="{{participant.photoUrl | fireStorageImg: '/avatars' | async}}"></ion-img>
-                </ng-template>
-              </div>
+                    class="profile-img"
+                    src="{{participant.photoUrl | fireStorageImg: '/avatars' | async }}"></ion-img>
+                </ion-avatar>
+              </ion-row>
             </ion-col>
-            <ion-col size="4">
-              <p>{{participant.firstName}} {{participant.lastName}}</p>
+            <ion-col size="6" [routerLink]="['/profile/' + participant.userId]" button>
+              <ion-row class="ion-text-start">
+                <p>{{participant.firstName}} {{participant.lastName}}</p>
+              </ion-row>
             </ion-col>
-            <ion-col size="3">
+            <ion-col
+              class="ion-justify-content-end"
+              size="2"
+              *ngIf="participant.userId !== this.currentUserId">
+              <ion-row class="ion-justify-content-end">
+                <ion-buttons class="chat-btn">
+                  <ion-button slot="end" (click)="openChat(participant)">
+                    <ion-icon name="chatbubble-ellipses-outline" size="small"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </ion-row>
+            </ion-col>
+            <ion-col size="2" *ngIf="participant.userId === this.currentUserId">
               <ion-buttons class="chat-btn">
-                <ion-button slot="end">
-                  <ion-icon name="chatbubble-ellipses-outline" size="small"></ion-icon>
+                <ion-button slot="end" disabled="true" (click)="openChat(participant)">
+                  <ion-icon
+                    name="chatbubble-ellipses-outline"
+                    size="small"
+                    style="color: white"></ion-icon>
                 </ion-button>
               </ion-buttons>
             </ion-col>
-          </ion-row>
-        </ion-item>
+          </ion-item>
+        </ion-row>
       </ion-list>
     </div>
   </ion-grid>
@@ -121,8 +152,8 @@
   <ion-toolbar>
     <ion-row class="ion-align-items-center">
       <ion-col class="ion-text-center" id="eventSaveAsDraftBtnCol" size-sm="6">
-        <h2 *ngIf="this.eventService.freeEvent(event)"><strong>{{event.price}}€/Ticket</strong></h2>
-        <h2 *ngIf="!this.eventService.freeEvent(event)"><strong>{{event.price}}</strong></h2>
+        <p *ngIf="this.eventService.freeEvent(event)"><strong>{{event.price}}€/Ticket</strong></p>
+        <p *ngIf="!this.eventService.freeEvent(event)"><strong>{{event.price}}</strong></p>
       </ion-col>
       <ion-col class="ion-text-center" size-sm="6">
         <ion-button id="eventPartakeBtn" (click)="attendEvent(event)">

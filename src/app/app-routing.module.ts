@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { LoggedInGuard } from 'src/app/guards/logged-in.guard';
+import { RoleGuard } from 'src/app/guards/role.guard';
 
 const routes: Routes = [
   {
@@ -17,9 +18,13 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/edit-user/edit-user.module').then((m) => m.EditUserPageModule)
   },
-
   {
     path: 'event-create',
+    loadChildren: () =>
+      import('./pages/event-create/event-create.module').then((m) => m.EventCreatePageModule)
+  },
+  {
+    path: 'event-create/:id',
     loadChildren: () =>
       import('./pages/event-create/event-create.module').then((m) => m.EventCreatePageModule)
   },
@@ -48,6 +53,47 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/friendlist/friendlist.module').then((m) => m.FriendlistPageModule),
     canActivate: [LoggedInGuard]
+  },
+  {
+    path: 'impressumUndDatenschutz',
+    loadChildren: () =>
+      import('./pages/impressum/impressum.module').then((m) => m.ImpressumPageModule)
+  },
+  {
+    path: 'admin-dashboard',
+    loadChildren: () =>
+      import('./pages/admin-dashboard/admin-dashboard.module').then(
+        (m) => m.AdminDashboardPageModule
+      ),
+    canActivate: [RoleGuard],
+    data: { role: 0 }
+  },
+  {
+    path: 'chat/:cId',
+    loadChildren: () => import('src/app/pages/chat/chat.module').then((m) => m.ChatPageModule)
+  },
+  {
+    path: 'chat/:cId/:uId',
+    loadChildren: () => import('src/app/pages/chat/chat.module').then((m) => m.ChatPageModule)
+  },
+  {
+    path: 'chat-list/:id',
+    loadChildren: () =>
+      import('src/app/pages/chat-list/chat-list.module').then((m) => m.ChatListPageModule)
+  },
+  {
+    path: 'user-events/:id',
+    loadChildren: () =>
+      import('./pages/user-created-events/user-created-events.module').then(
+        (m) => m.UserCreatedEventsPageModule
+      )
+  },
+  {
+    path: 'support-message',
+    loadChildren: () =>
+      import('./pages/support-message/support-message.module').then(
+        (m) => m.SupportMessagePageModule
+      )
   }
 ];
 

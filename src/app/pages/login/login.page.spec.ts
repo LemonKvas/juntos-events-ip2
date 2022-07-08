@@ -2,6 +2,9 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { LoginPage } from 'src/app/pages/login/login.page';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { environment } from 'src/environments/environment.prod';
+import { Router } from '@angular/router';
 
 describe('LoginPage', () => {
   let component: LoginPage;
@@ -10,11 +13,21 @@ describe('LoginPage', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [LoginPage],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot()],
+      providers: [
+        { provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig },
+        {
+          provide: Router,
+          useClass: class {
+            navigate = jasmine.createSpy('navigate');
+          }
+        }
+      ]
     }).compileComponents();
     fixture = TestBed.createComponent(LoginPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    component.loginIndicator = 'user';
   }));
 
   it('should create', () => {

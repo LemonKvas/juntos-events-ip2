@@ -32,7 +32,9 @@ ion-segment-button {
   --background: white;
   --color: var(--ion-color-secondary);
   --background-checked: var(--ion-color-primary) !important;
-  --color-checked: black;
+  --color-checked: white;
   --indicator-color: transparent !important;
   font-family: Agrandir-Regular, serif !important;
+  font-weight: bold;
+  border-radius: 15px;
 }

@@ -1,6 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FriendsService } from 'src/app/services/friends.service';
 
+/**
+ * DE:
+ * Eine Komponente die als Modal fungiert um alle Freunde eines Nutzers anzuzeigen
+ * EN:
+ * A component that acts as a modal to display all friends of an user
+ * */
+
 @Component({
   selector: 'app-friendlist',
   templateUrl: './friendlist.page.html',

@@ -5,9 +5,6 @@ import { Router } from '@angular/router';
 import { PhotoService } from 'src/app/services/photo.service';
 
 /**
- * DE:
- * Seite, um das Nutzerprofil anzupassen
- * EN:
  * Page for editing the user profile
  */
 @Component({
@@ -16,8 +13,6 @@ import { PhotoService } from 'src/app/services/photo.service';
   styleUrls: ['./edit-user.page.scss']
 })
 export class EditUserPage implements OnInit {
-  private userData;
-
   userId;
   firstName;
   lastName;
@@ -215,6 +210,7 @@ export class EditUserPage implements OnInit {
   beforeUrl;
   uploadStatus = false;
   photoUploads = [];
+  private userData;
 
   constructor(
     private userDataService: UserDataService,
@@ -224,8 +220,6 @@ export class EditUserPage implements OnInit {
   ) {
     this.userData = this.userDataService.getCurrentUser();
     this.userData = this.userData.__zone_symbol__value;
-    this.allLanguages;
-
     if (this.userData.id) {
       this.firstName = this.userData.firstName;
     } else {
@@ -271,27 +265,20 @@ export class EditUserPage implements OnInit {
 
   ngOnInit() {
     this.getUserId();
+    //TODO: maybe get userdata from firestore and subscribe
+    //this.db.doc(`user/${id}`).valueChanges().subscribe(user => this.user = user);
   }
 
-  /**
-   *DE:
-   * Holt sich die UserId des aktuell eingeloggten Users
-   *EN:
-   * Gets the userId of the current user
-   */
   async getUserId() {
     this.userId = await this.userDataService.getCurrentUserID();
   }
 
   /**
-   * DE:
-   * Lässt den User ein Avatar hochladen, und aktualisiert den Avatar
-   * EN:
    * Let the user upload an avatar, and updates the avatar
    * @param event
    */
   uploadAvatar(event) {
-    if (this.oldPhotoUrl != this.displayUrl) {
+    if (this.oldPhotoUrl !== this.displayUrl) {
       this.beforeUrl = this.displayUrl;
     }
     this.uploadStatus = true;
@@ -316,10 +303,7 @@ export class EditUserPage implements OnInit {
   }
 
   /**
-   * DE:
-   * Löscht das Foto im Firebase Storage, welches in der URL hinterlegt ist
-   * EN:
-   * Deletes the photo in firebase storage with the given url
+   * Deletes the photo in firestore storage with the given url
    * @param {string} url
    */
   deleteAvatar(url: string) {
@@ -327,9 +311,6 @@ export class EditUserPage implements OnInit {
   }
 
   /**
-   * DE:
-   * Schließt die editing page, ohne die Änderungen zu übernehmen
-   * EN:
    * Closes the editing page without saving the changes and deletes uploaded photos which are not used
    */
   close() {
@@ -342,7 +323,7 @@ export class EditUserPage implements OnInit {
       return;
     }
     // delete photo which is not in use
-    if (this.oldPhotoUrl != this.displayUrl) {
+    if (this.oldPhotoUrl !== this.displayUrl) {
       const tmp = this.displayUrl;
       this.displayUrl = this.oldPhotoUrl;
       this.deleteAvatar(tmp);
@@ -352,10 +333,7 @@ export class EditUserPage implements OnInit {
   }
 
   /**
-   * DE:
-   * Aktualisiert die Nutzerdaten im Firestore, und leitet den User in sein Profil
-   * EN:
-   * Updates the user data in firestore, and redirects the user to his profile
+   * Updates the user data in firestore
    */
   updateUser() {
     if (this.userName.length === 0) {
@@ -366,10 +344,10 @@ export class EditUserPage implements OnInit {
       );
       return;
     }
-    if (this.oldPhotoUrl != this.displayUrl) {
+    if (this.oldPhotoUrl !== this.displayUrl) {
       this.deleteAvatar(this.oldPhotoUrl);
     }
-    let data = {
+    const data = {
       firstName: this.firstName,
       lastName: this.lastName,
       userName: this.userName,

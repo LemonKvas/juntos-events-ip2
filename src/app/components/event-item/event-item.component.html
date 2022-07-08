@@ -34,13 +34,13 @@
   <ion-grid>
     <ion-row>
       <ng-container *ngIf="!windowWithOver800; else strechtedDetails">
-        <ion-col size="4">
+        <ion-col size="4" (click)="eventDetailsState(event.eventId)">
           <!-- get Photo through Photo Service by photoID or url -->
           <ion-img
             src="{{ event.photoURLs[0] | fireStorageImg: '/event-photos' | async }}"></ion-img>
         </ion-col>
 
-        <ion-col size="6">
+        <ion-col size="6" (click)="eventDetailsState(event.eventId)">
           <!-- (click) on event name or photo to go to the detail page of the event -->
           <h1>{{ event.name }}</h1>
           <p>{{ event.eventDate | date: 'dd.MM.yyyy' }} um {{ event.eventDate | date: 'H:mm' }}</p>

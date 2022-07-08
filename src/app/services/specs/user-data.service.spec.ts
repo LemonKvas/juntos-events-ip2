@@ -4,30 +4,26 @@ import { UserDataService } from 'src/app/services/user-data.service';
 import User from 'src/app/models/classes/user';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { environment } from 'src/environments/environment';
+import { AngularFireModule, FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 
 describe('UserDataService', () => {
   let service: UserDataService;
   let fireStore: AngularFirestore;
-  let getDoc: Function;
+  let getDoc: any;
 
-  const ReturnResult = new User('tedstId', 'super@test.de');
-
-  /*
-  const userDocSpy = jasmine.createSpyObj('testId',{
-      ref: ReturnResult
-  })
-
-   */
+  const returnResult = new User('tedstId', 'super@test.de');
 
   const userCollectionSpy = jasmine.createSpyObj('user', {
-    doc: ReturnResult
+    doc: returnResult
   });
 
   const userAfSpy = jasmine.createSpyObj('AngularFireStore', {
     collection: userCollectionSpy
   });
 
+  const mockGetDoc = () => Promise.resolve({ data: new User('testId', 'test@test.de') });
   function mockGetDoc() {
     return Promise.resolve({ data: new User('testId', 'test@test.de') });
   }
@@ -37,6 +33,11 @@ describe('UserDataService', () => {
       providers: [
         { provide: AngularFirestore, useValue: userAfSpy },
         { provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig },
+        { provide: getDoc, useValue: mockGetDoc() }
+      ],
+      imports: [
+        AngularFireModule.initializeApp(environment.firebaseConfig),
+        AngularFireDatabaseModule
         { provide: getDoc, useValue: mockGetDoc() }
       ]
     });

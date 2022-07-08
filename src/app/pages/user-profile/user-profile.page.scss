@@ -10,7 +10,7 @@
 
 ion-content {
   overflow-y: scroll;
-  overflow-x: scroll;
+  overflow-x: hidden;
   --offset-bottom: 0 !important;
   background-color: #ffffff;
 }
@@ -39,7 +39,19 @@ ion-segment-button {
   --background: white;
   --color: var(--ion-color-secondary);
   --background-checked: var(--ion-color-primary) !important;
-  --color-checked: black;
+  --color-checked: white;
   --indicator-color: transparent !important;
   font-family: Agrandir-Regular, serif !important;
+  border-radius: 15px;
+  font-weight: bold;
+}
+.action-sheets-destructive {
+  color: red;
+}
+@media only screen and (max-width: 300px) {
+  ion-segment-button {
+    ion-label {
+      font-size: 10px;
+    }
+  }
 }

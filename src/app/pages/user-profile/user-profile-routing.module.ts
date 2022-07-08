@@ -3,6 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { UserProfilePage } from 'src/app/pages/user-profile/user-profile.page';
 
+/**
+ * @ignore
+ */
 const routes: Routes = [
   {
     path: '',

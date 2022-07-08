@@ -9,6 +9,9 @@ import { FriendComponent } from 'src/app/components/friend/friend.component';
 import { FeedbackComponent } from '../components/feedback/feedback.component';
 import { StarRatingModule } from 'ionic5-star-rating';
 import { FormsModule } from '@angular/forms';
+import { UserEventsModalComponent } from 'src/app/components/user-events-modal/user-events-modal.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { MapComponent } from 'src/app/components/map/map.component';
 
 /**
  * Import of this Module is needed to provide declared Pipes and Components
@@ -20,7 +23,9 @@ import { FormsModule } from '@angular/forms';
     FootermenuComponent,
     NotificationsComponent,
     FriendComponent,
-    FeedbackComponent
+    FeedbackComponent,
+    UserEventsModalComponent,
+    MapComponent
   ],
   imports: [CommonModule, IonicModule, RouterModule, StarRatingModule, FormsModule],
   exports: [
@@ -28,7 +33,9 @@ import { FormsModule } from '@angular/forms';
     FootermenuComponent,
     NotificationsComponent,
     FriendComponent,
-    FeedbackComponent
+    FeedbackComponent,
+    MapComponent,
+    UserEventsModalComponent
   ]
 })
 export class SharedModule {}

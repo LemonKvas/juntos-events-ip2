@@ -1,0 +1,51 @@
+ion-title {
+  font-family: 'Yeseva One', cursive;
+}
+ion-content {
+  ion-row {
+    justify-content: center;
+  }
+}
+ion-row {
+  margin: 0;
+  padding: 0;
+}
+ion-col {
+  justify-items: center;
+}
+.currentUserMsg {
+  background-color: rgb(126, 222, 193, 0.7);
+}
+.currentUserCol {
+  float: right;
+}
+.chatUserMsg {
+  background-color: rgb(232, 139, 114, 0.7);
+}
+.chatUserCol {
+  float: left;
+}
+.myFakeUploadInput {
+  position: absolute;
+  opacity: 0;
+}
+//Mobile Version
+@media screen and (max-width: 600px) {
+  ion-card {
+    border-radius: 5px;
+    width: 60%;
+  }
+  p {
+    font-size: 15px;
+  }
+}
+//Desktop Version
+@media screen and (min-width: 610px) {
+  ion-card {
+    border-radius: 5px;
+    width: 40%;
+  }
+  p {
+    font-size: 15px;
+  }
+}

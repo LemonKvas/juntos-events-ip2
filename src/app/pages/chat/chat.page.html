@@ -1,0 +1,152 @@
+<!-- Header -->
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-button slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="deleteChat(chatUser.userId)">
+        <ion-icon name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<!-- Chat Content -->
+<ion-content class="ion-padding" id="content">
+  <ion-grid>
+    <ion-col *ngFor="let message of messages">
+      <ion-row *ngIf="message.creator === this.currentUser.userId" class="ion-justify-content-end">
+        <ion-col>
+          <ion-row class="ion-justify-content-end">
+            <ion-card class="currentUserMsg" id="{{message.id}}">
+              <ion-col>
+                <ion-card-content style="padding-bottom: 5px; padding-top: 5px">
+                  <ion-row class="ion-justify-content-start">
+                    <p><strong>{{message.creatorName}}</strong></p>
+                  </ion-row>
+                  <ion-row
+                    class="ion-justify-content-start"
+                    *ngIf="message.message !== '' || message.message !== null">
+                    <p>{{message.message}}</p>
+                  </ion-row>
+                  <ion-row
+                    class="ion-justify-content-center"
+                    *ngIf="message.message === '' || message.message === null">
+                    <ion-img src="{{message.photo}}" alt="photo-message"></ion-img>
+                  </ion-row>
+                  <ion-row class="ion-justify-content-end" style="margin-top: 10px">
+                    <p style="margin-right: 20px; font-size: 12px">
+                      {{message.date | date: 'dd.MM.yyyy HH:mm'}}
+                    </p>
+                  </ion-row>
+                </ion-card-content>
+              </ion-col>
+            </ion-card>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row
+        *ngIf="message.creator !== this.currentUser.userId"
+        class="ion-justify-content-start">
+        <ion-col>
+          <ion-row class="ion-justify-content-start">
+            <ion-card class="chatUserMsg" id="{{message.id}}">
+              <ion-col>
+                <ion-card-content style="padding-bottom: 5px; padding-top: 5px">
+                  <ion-row class="ion-justify-content-start">
+                    <p><strong>{{message.creatorName}}</strong></p>
+                  </ion-row>
+                  <ion-row
+                    class="ion-justify-content-start"
+                    *ngIf="message.message !== '' || message.message !== null">
+                    <p>{{message.message}}</p>
+                  </ion-row>
+                  <ion-row *ngIf="message.message === '' || message.message === null">
+                    <ion-img
+                      (click)="openImageNewTab(message.photo)"
+                      src="{{message.photo}}"></ion-img>
+                  </ion-row>
+                  <ion-row class="ion-justify-content-end" style="margin-top: 10px">
+                    <p style="margin-right: 20px; font-size: 12px">
+                      {{message.date | date: 'dd.MM.yyyy HH:mm'}}
+                    </p>
+                  </ion-row>
+                </ion-card-content>
+              </ion-col>
+            </ion-card>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-popover
+        trigger="{{message.id}}"
+        [dismissOnSelect]="true"
+        *ngIf="message.creator === currentUser.userId">
+        <ng-template>
+          <ion-content>
+            <ion-list>
+              <ion-item
+                *ngIf="message.message === '' || message.message === null"
+                (click)="openImageNewTab(message.photo)"
+                >Foto anzeigen</ion-item
+              >
+              <ion-item
+                [button]="true"
+                [detail]="false"
+                style="color: red"
+                (click)="deleteMessage(message)"
+                >Löschen</ion-item
+              >
+              <ion-item [button]="true" [detail]="false">Abbrechen</ion-item>
+            </ion-list>
+          </ion-content>
+        </ng-template>
+      </ion-popover>
+    </ion-col>
+    <span id="scrollBottom"></span>
+  </ion-grid>
+</ion-content>
+<!-- Footer with textarea, photo upload & send button -->
+<ion-footer>
+  <ion-toolbar>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="2" style="background-color: rgb(232, 139, 114, 0.2)">
+        <ion-buttons>
+          <ion-button>
+            <ion-input
+              [(ngModel)]="photo"
+              class="myFakeUploadInput"
+              type="file"
+              accept=".jpg"
+              multiple="false"
+              (change)="uploadPhoto($event)">
+            </ion-input>
+            <label>
+              <ion-icon name="document-outline" slot="icon-only" style="color: #ff8766"></ion-icon>
+            </label>
+          </ion-button>
+        </ion-buttons>
+      </ion-col>
+      <ion-col size="8" style="background-color: rgb(232, 139, 114, 0.2)">
+        <ion-textarea
+          autoGrow="true"
+          class="message-input"
+          rows="1"
+          maxlength="500"
+          [(ngModel)]="newMsg"
+          (keyup.enter)="sendMessage(newMsg)">
+        </ion-textarea>
+      </ion-col>
+      <ion-col size="2" style="background-color: rgb(232, 139, 114, 0.2)">
+        <ion-button
+          expand="block"
+          fill="clear"
+          [disabled]="newMsg === ''"
+          (click)="sendMessage(newMsg)">
+          <ion-icon name="send-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

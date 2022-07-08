@@ -4,38 +4,27 @@
     <ion-toolbar>
       <ion-buttons slot="start">
         <ion-back-button></ion-back-button>
-        <!--        <ion-button (click)="openMenu()">-->
-        <!--          <ion-icon name="menu-outline"></ion-icon>-->
-        <!--        </ion-button>-->
       </ion-buttons>
       <ion-buttons *ngIf="friendIds" slot="end">
-        <ion-icon
-          size="large"
-          style="zoom: 0.95"
-          (click)="openFriendlist()"
-          name="people-outline"></ion-icon>
+        <ion-button (click)="openFriendlist()">
+          <ion-icon size="large" style="zoom: 0.95" name="people-outline"></ion-icon>
+        </ion-button>
       </ion-buttons>
       <ion-buttons slot="end">
         <ng-container *ngIf="ownProfile">
-          <ion-icon
-            size="large"
-            style="zoom: 0.8"
-            name="notifications-outline"
-            (click)="openNotifications($event)"></ion-icon>
-          <!--          <ng-template #noNotis>-->
-          <!--            <ion-icon size="large" style="zoom:0.8" name="notifications-outline" (click)="openNotifications($event)"></ion-icon>-->
-          <!--          </ng-template>-->
-          <ion-icon
-            size="large"
-            style="zoom: 0.8"
-            name="settings-outline"
-            routerLink="/edit-user"
-            routerLinkActive="active"></ion-icon>
-          <ion-icon
-            size="large"
-            style="zoom: 0.8"
-            name="log-out-outline"
-            (click)="logOut()"></ion-icon>
+          <ng-container *ngIf="user.rights === 0">
+            <ion-icon
+              size="large"
+              style="zoom: 0.8"
+              name="clipboard-outline"
+              [routerLink]="['/admin-dashboard']"></ion-icon>
+          </ng-container>
+          <ion-button (click)="openNotifications($event)">
+            <ion-icon size="large" style="zoom: 0.8" name="notifications-outline"> </ion-icon>
+          </ion-button>
+          <ion-button class="action-sheets-profile" (click)="openActionSheet()">
+            <ion-icon name="options-outline"></ion-icon>
+          </ion-button>
         </ng-container>
         <ion-icon
           *ngIf="followFriendsIndicator !== undefined"
@@ -47,21 +36,12 @@
     </ion-toolbar>
   </ion-header>
 
-  <!--Titel Optionen-->
-  <ng-template #firstNameProfileTitle>
-    <ion-title *ngIf="user.firstName else standardProfileTitle">{{user.firstName}}</ion-title>
-  </ng-template>
-
-  <ng-template #standardProfileTitle>
-    <ion-title>Profile</ion-title>
-  </ng-template>
-
   <!-- Profil Inhalt -->
   <ion-content>
     <ion-grid>
       <ion-row class="ion-justify-content-center ion-align-items-center">
         <ion-col size="auto">
-          <ion-avatar>
+          <ion-avatar *ngIf="user.photoUrl">
             <img
               *ngIf="user.photoUrl.includes('.png') || user.photoUrl.includes('googleusercontent'); else noNeed"
               alt="User avatar"
