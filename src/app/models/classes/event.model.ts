@@ -18,6 +18,7 @@ export class Event {
   publishStatus?: boolean;
   eventId?: string;
   creatorId?: string;
+  status?: number;
   long?: string;
   lat?: string;
 
@@ -43,6 +44,7 @@ export class Event {
    * @param creatorId
    * @param long
    * @param lat
+   * @param status
    */
   constructor(
     name?: string,
@@ -59,7 +61,8 @@ export class Event {
     eventId?: string,
     creatorId?: string,
     long?: string,
-    lat?: string
+    lat?: string,
+    status?: number
   ) {
     this.name = name;
     this.photoURLs = photoURLs;
@@ -74,6 +77,7 @@ export class Event {
     this.publishStatus = publishStatus;
     this.eventId = eventId;
     this.creatorId = creatorId;
+    this.status = status;
     if (long != undefined) this.long = long;
     if (lat != undefined) this.lat = lat;
   }
