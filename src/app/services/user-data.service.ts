@@ -168,6 +168,8 @@ export class UserDataService {
     let average: any = sum / feedbacks.length;
     average = parseFloat(average).toFixed(2);
 
+    average = Math.round(average);
+
     return <number>average;
   }
 
