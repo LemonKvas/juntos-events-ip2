@@ -97,10 +97,10 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-      
       - name: install and build
       - run: npm install --force && npm run compodoc
       
+      - uses: actions/checkout@v2
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1.2
         with:
