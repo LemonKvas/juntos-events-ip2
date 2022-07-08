@@ -25,12 +25,7 @@ export class ChatGroup {
    * @param users
    * @param msg
    */
-  constructor(
-    id?: string,
-    date?: Date,
-    photo?: string,
-    users?: User[],
-    msg?: Message[]) {
+  constructor(id?: string, date?: Date, photo?: string, users?: User[], msg?: Message[]) {
     this.id = id;
     this.date = date;
     this.photo = photo;

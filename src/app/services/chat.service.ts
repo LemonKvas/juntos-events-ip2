@@ -33,9 +33,7 @@ export class ChatService {
    * @param userService
    * @param afs
    */
-  constructor(
-    private userService: UserDataService,
-    private afs: AngularFirestore) {
+  constructor(private userService: UserDataService, private afs: AngularFirestore) {
     this.chatsCollections = this.afs.collection('chats');
     this.getCurrentUser().catch((err) => console.log('Error: ', err));
   }

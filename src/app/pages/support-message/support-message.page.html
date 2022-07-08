@@ -29,9 +29,7 @@
         <ion-item class="input-item">
           <ion-label position="stacked">Kategorie*</ion-label>
           <ion-select [(ngModel)]="selectedCategory" multiple="false">
-            <ion-select-option *ngFor="let entry of category"
-            >{{entry}}</ion-select-option
-            >
+            <ion-select-option *ngFor="let entry of category">{{entry}}</ion-select-option>
           </ion-select>
         </ion-item>
         <p
@@ -47,7 +45,9 @@
           <ion-label position="stacked">Problem*</ion-label>
           <ion-select [(ngModel)]="selectedProblem" multiple="false">
             <div class="alert-tappable alert-radio">
-              <ion-select-option *ngFor="let problem of eventProblems">{{problem}}</ion-select-option>
+              <ion-select-option *ngFor="let problem of eventProblems"
+                >{{problem}}</ion-select-option
+              >
             </div>
           </ion-select>
         </ion-item>
@@ -63,9 +63,7 @@
         <ion-item class="input-item">
           <ion-label position="stacked">Problem*</ion-label>
           <ion-select [(ngModel)]="selectedProblem" multiple="false">
-            <ion-select-option *ngFor="let problem of userProblems"
-            >{{problem}}</ion-select-option
-            >
+            <ion-select-option *ngFor="let problem of userProblems">{{problem}}</ion-select-option>
           </ion-select>
         </ion-item>
         <p

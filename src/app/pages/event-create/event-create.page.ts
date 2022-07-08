@@ -10,7 +10,7 @@ import { PhotoService } from 'src/app/services/photo.service';
 import { UserDataService } from 'src/app/services/user-data.service';
 import User from 'src/app/models/classes/user';
 import { CreatedEvent } from 'src/app/models/interfaces/created-event';
-import { SupportMessagePage } from "../support-message/support-message.page";
+import { SupportMessagePage } from '../support-message/support-message.page';
 
 /**
  * DE:
@@ -86,7 +86,7 @@ export class EventCreatePage {
     public alertService: AlertService,
     public photoService: PhotoService,
     private userService: UserDataService,
-    private modalCtrl: ModalController,
+    private modalCtrl: ModalController
   ) {
     this.eventId = this.route.snapshot.params.id;
     this.createEventForm = new FormGroup({
@@ -366,23 +366,20 @@ export class EventCreatePage {
    * 'Ja', event object will be deleted from firebase.
    */
   deleteEvent() {
-    this.alertService.basicAlert(
-      '',
-      'Wollen Sie wirklich dieses Event löschen?',
-      [
-          {
-            text: 'Ja',
-            handler: () => {
-              this.eventService.removeEvent(this.eventId).catch((err) => console.log('Error: ', err));
-              this.router
-                .navigate(['user-events', this.creatorId])
-                .catch((err) => console.log('Error: ', err));
-            }
-          },
-          {
-            text: 'Abbrechen',
-            role: 'cancel'
-          }
+    this.alertService.basicAlert('', 'Wollen Sie wirklich dieses Event löschen?', [
+      {
+        text: 'Ja',
+        handler: () => {
+          this.eventService.removeEvent(this.eventId).catch((err) => console.log('Error: ', err));
+          this.router
+            .navigate(['user-events', this.creatorId])
+            .catch((err) => console.log('Error: ', err));
+        }
+      },
+      {
+        text: 'Abbrechen',
+        role: 'cancel'
+      }
     ]);
   }
 
@@ -430,12 +427,13 @@ export class EventCreatePage {
       component: SupportMessagePage,
       componentProps: {
         userId: userId,
-        eventId: eventId,
+        eventId: eventId
       }
     });
-    await modal.present()
+    await modal
+      .present()
       .then(() => console.log('No error with presenting modal'))
-      .catch(err => console.log('error modal: ', err));
+      .catch((err) => console.log('error modal: ', err));
     await modal.onDidDismiss();
   }
 }

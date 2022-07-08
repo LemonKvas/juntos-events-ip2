@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/compat/firestore";
-import {Message} from "../models/interfaces/message";
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { Message } from '../models/interfaces/message';
 
 /**
  * DE:
@@ -25,7 +25,7 @@ export class SupportService {
    * This method stores an object of the type 'Message' into the Firebase collection 'support'.
    * @param message
    */
-  async addSupportMessage(message: Message){
+  async addSupportMessage(message: Message) {
     message.id = this.afs.createId();
     const data = JSON.parse(JSON.stringify(message));
     await this.supportCollections.doc(message.id).set(data);

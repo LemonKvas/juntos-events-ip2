@@ -9,7 +9,7 @@ describe('SupportMessagePage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SupportMessagePage ],
+      declarations: [SupportMessagePage],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

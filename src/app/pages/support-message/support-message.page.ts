@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import {AlertService} from "../../services/alert.service";
-import {ModalController, NavParams} from "@ionic/angular";
-import {SupportService} from "../../services/support.service";
-import {Message} from "../../models/interfaces/message";
+import { AlertService } from '../../services/alert.service';
+import { ModalController, NavParams } from '@ionic/angular';
+import { SupportService } from '../../services/support.service';
+import { Message } from '../../models/interfaces/message';
 
 /**
  * DE:
@@ -13,7 +13,7 @@ import {Message} from "../../models/interfaces/message";
 @Component({
   selector: 'app-support-message',
   templateUrl: './support-message.page.html',
-  styleUrls: ['./support-message.page.scss'],
+  styleUrls: ['./support-message.page.scss']
 })
 export class SupportMessagePage {
   msg: Message;
@@ -21,7 +21,12 @@ export class SupportMessagePage {
   eventId: string = '';
   reportUserId: string = '';
   category: string[] = ['Event', 'NutzerIn'];
-  eventProblems: string[] = ['Event löschen', 'TeilnehmerIn melden', 'TeilnehmerIn verwalten', 'Andere Probleme'];
+  eventProblems: string[] = [
+    'Event löschen',
+    'TeilnehmerIn melden',
+    'TeilnehmerIn verwalten',
+    'Andere Probleme'
+  ];
   userProblems: string[] = ['NutzerIn melden', 'Nutzer Daten aktualisieren', 'Andere Probleme'];
   subject: string = '';
   textMsg: string = '';
@@ -44,10 +49,12 @@ export class SupportMessagePage {
    * @param navParams
    * @param supportService
    */
-  constructor(private alertService: AlertService,
-              private modalCtrl: ModalController,
-              private navParams: NavParams,
-              private supportService: SupportService) {
+  constructor(
+    private alertService: AlertService,
+    private modalCtrl: ModalController,
+    private navParams: NavParams,
+    private supportService: SupportService
+  ) {
     this.creatorId = this.navParams.get('userId');
     this.eventId = this.navParams.get('eventId');
     this.reportUserId = this.navParams.get('reportUserId');
@@ -61,27 +68,27 @@ export class SupportMessagePage {
    * This method checks if all required fields are filled in and sends the values as type
    * 'Message' with the addSupportMessage() function from the support service to Firebase.
    */
-  async sendMessageToSupport(){
-    if(!this.subject){
+  async sendMessageToSupport() {
+    if (!this.subject) {
       await this.alertService.emptyInputsAlert();
       this.errors.set('subject', 'Betreff darf nicht leer sein!');
-    } else if(!this.selectedCategory){
+    } else if (!this.selectedCategory) {
       await this.alertService.emptyInputsAlert();
       this.errors.set('selectedCategory', 'Kategorie darf nicht leer sein!');
-    } else if(!this.textMsg){
+    } else if (!this.textMsg) {
       await this.alertService.emptyInputsAlert();
       this.errors.set('textMsg', 'Nachrichtenfeld darf nicht leer sein!');
-    } else if(this.errors.size === 0){
+    } else if (this.errors.size === 0) {
       this.msg = {
         subject: this.subject,
         creator: this.creatorId,
-        date: new Date,
+        date: new Date(),
         message: this.textMsg,
         eventId: this.eventId,
         reportUserId: this.reportUserId,
         category: this.selectedCategory,
         problem: this.selectedProblem,
-        inProcess: this.inProcess,
+        inProcess: this.inProcess
       };
       await this.supportService.addSupportMessage(this.msg);
       this.dismissModal();
@@ -101,7 +108,7 @@ export class SupportMessagePage {
    * This function will be called when the user cancel the process by leaving the page without saving
    * data. He / she will be reminded that changes might be discarded.
    */
-  dismissModal(){
+  dismissModal() {
     this.modalCtrl.dismiss().catch((err) => console.log('Error: ', err));
   }
 }

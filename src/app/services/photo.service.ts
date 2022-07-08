@@ -17,10 +17,7 @@ export class PhotoService {
   location = 'event-photos/';
   photoID: string;
 
-  constructor(
-    private afs: AngularFirestore,
-    private afStorage: AngularFireStorage
-  ) {}
+  constructor(private afs: AngularFirestore, private afStorage: AngularFireStorage) {}
 
   /**
    * DE:

@@ -9,12 +9,7 @@ import { SupportMessagePageRoutingModule } from './support-message-routing.modul
 import { SupportMessagePage } from './support-message.page';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    SupportMessagePageRoutingModule
-  ],
+  imports: [CommonModule, FormsModule, IonicModule, SupportMessagePageRoutingModule],
   declarations: [SupportMessagePage]
 })
 export class SupportMessagePageModule {}

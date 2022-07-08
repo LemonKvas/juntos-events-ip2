@@ -90,7 +90,10 @@ const routes: Routes = [
   },
   {
     path: 'support-message',
-    loadChildren: () => import('./pages/support-message/support-message.module').then(m => m.SupportMessagePageModule)
+    loadChildren: () =>
+      import('./pages/support-message/support-message.module').then(
+        (m) => m.SupportMessagePageModule
+      )
   }
 ];
 
