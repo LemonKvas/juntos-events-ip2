@@ -1,4 +1,4 @@
-<ion-button class="openBtn"  (click)="setOpen(true)">Feedback geben</ion-button>
+<ion-button class="openBtn" (click)="setOpen(true)">Feedback geben</ion-button>
 
 <ion-modal id="modal" [isOpen]="isModalOpen" (ionModalDidDismiss)="setOpen(false)" animated="true">
   <ng-template>
@@ -55,10 +55,7 @@
 
       <ion-footer>
         <ion-toolbar>
-          <ion-button
-            class="sendBtn"
-            (click)="saveFeedback()"
-            slot="end"
+          <ion-button class="sendBtn" (click)="saveFeedback()" slot="end"
             >Feedback abschicken</ion-button
           >
         </ion-toolbar>
