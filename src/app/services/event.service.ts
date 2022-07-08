@@ -3,11 +3,11 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/comp
 import { Event } from 'src/app/models/classes/event.model';
 import { Observable } from 'rxjs';
 import { documentId } from '@angular/fire/firestore';
-
 import firebase from 'firebase/compat/app';
 import { CreatedEvent } from '../models/interfaces/created-event';
 import { arrayUnion } from '@angular/fire/firestore';
 import { getDoc } from 'firebase/firestore';
+import { ref } from '@angular/fire/storage';
 import { ModalController } from '@ionic/angular';
 import { UserEventsModalComponent } from 'src/app/components/user-events-modal/user-events-modal.component';
 import { UserDataService } from 'src/app/services/user-data.service';
@@ -49,7 +49,10 @@ export class EventService {
   getAllEvents() {
     return this.afs.collection('events').snapshotChanges();
   }
-
+  //TODO: get published, open events
+  getOpenEvents() {
+    return this.afs.collection('events', (ref) => ref.where('status', '==', 1)).snapshotChanges();
+  }
   /**
    * DE:
    * Diese Methode gibt ein Observable mit allen veröffentlichten Ereignissen zurück.
