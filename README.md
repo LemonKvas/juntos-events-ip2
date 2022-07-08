@@ -109,10 +109,17 @@ To get a local copy up and running follow these simple example steps.
 
 <!-- USAGE EXAMPLES -->
 ## Usage
+A small extract to see which packages are used in this project. For further information, please look into the package.json.
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+<img src="../juntos-events-ip2/src/assets/images/package-json-3.png" alt="package-json" width="200">
+<img src="../juntos-events-ip2/src/assets/images/package-json-4.png" alt="package-json2" width="200">
 
-_For more examples, please refer to the [Documentation](https://github.com/LemonKvas/juntos-events-ip2)_
+### EXTRA
+A little sneak peak of the app.
+
+<img src="../juntos-events-ip2/src/assets/images/Event-Liste.gif" alt="event-details" width="200">
+
+_For more examples, please refer to the [Documentation](https://juntos-docu.netlify.app/)_
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
