@@ -7,8 +7,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import User from 'src/app/models/classes/user';
 import { AlertService } from '../../services/alert.service';
 import { PhotoService } from '../../services/photo.service';
-import {IonContent, ModalController} from '@ionic/angular';
-import {SupportMessagePage} from "../support-message/support-message.page";
+import { IonContent, ModalController } from '@ionic/angular';
+import { SupportMessagePage } from '../support-message/support-message.page';
 
 /**
  * DE:
