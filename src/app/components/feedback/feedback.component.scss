@@ -9,3 +9,12 @@ ion-footer {
 .sendBtn {
   margin-right: 8px;
 }
+
+.openBtn {
+  margin: 10px !important;
+
+  @media only screen and (max-width: 600px) {
+    margin: 0 !important;
+  }
+}
+
