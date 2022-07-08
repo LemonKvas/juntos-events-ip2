@@ -1,18 +1,18 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {ChatService} from 'src/app/services/chat.service';
-import {UserDataService} from 'src/app/services/user-data.service';
-import {Message} from 'src/app/models/interfaces/message';
-import {ChatGroup} from 'src/app/models/classes/chat-group';
-import {ActivatedRoute, Router} from '@angular/router';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { ChatService } from 'src/app/services/chat.service';
+import { UserDataService } from 'src/app/services/user-data.service';
+import { Message } from 'src/app/models/interfaces/message';
+import { ChatGroup } from 'src/app/models/classes/chat-group';
+import { ActivatedRoute, Router } from '@angular/router';
 import User from 'src/app/models/classes/user';
-import {AlertService} from '../../services/alert.service';
-import {PhotoService} from '../../services/photo.service';
-import {IonContent} from '@ionic/angular';
+import { AlertService } from '../../services/alert.service';
+import { PhotoService } from '../../services/photo.service';
+import { IonContent } from '@ionic/angular';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.page.html',
-  styleUrls: ['./chat.page.scss'],
+  styleUrls: ['./chat.page.scss']
 })
 export class ChatPage implements OnInit, AfterViewInit {
   @ViewChild(IonContent) content: IonContent;
@@ -25,9 +25,14 @@ export class ChatPage implements OnInit, AfterViewInit {
   chatUser: User;
   currentUser: User;
   photo: string;
-  constructor(private chatService: ChatService, private userService: UserDataService,
-              private route: ActivatedRoute, private alertService: AlertService,
-              private router: Router, private photoService: PhotoService) {
+  constructor(
+    private chatService: ChatService,
+    private userService: UserDataService,
+    private route: ActivatedRoute,
+    private alertService: AlertService,
+    private router: Router,
+    private photoService: PhotoService
+  ) {
     this.chatGroupId = this.route.snapshot.params.cId;
     this.chatUserId = this.route.snapshot.params.uId;
   }
@@ -47,7 +52,7 @@ export class ChatPage implements OnInit, AfterViewInit {
    *
    * @param id
    */
-  async getChatInfo(id: string){
+  async getChatInfo(id: string) {
     this.chatGroup = await this.chatService.getChatGroupById(id);
   }
 
@@ -55,7 +60,7 @@ export class ChatPage implements OnInit, AfterViewInit {
    * This function will get both chat users data and set values of local variable
    * 'currentUser' and 'chatUser'.
    */
-  async getChatUsersData(){
+  async getChatUsersData() {
     this.currentUser = await this.userService.getCurrentUser();
     this.chatUser = await this.userService.getUserById(this.chatUserId);
   }
@@ -71,7 +76,7 @@ export class ChatPage implements OnInit, AfterViewInit {
    *
    * @param newMsg
    */
-  async sendMessage(newMsg: string){
+  async sendMessage(newMsg: string) {
     this.msg = {
       chatId: this.chatGroupId,
       creator: this.currentUser.userId,
@@ -79,13 +84,15 @@ export class ChatPage implements OnInit, AfterViewInit {
       id: '',
       message: newMsg,
       creatorName: this.currentUser.firstName,
-      photo: '',
+      photo: ''
     };
     this.newMsg = '';
     // Add chat message to sub-collection 'messages' of collection 'chats'
     await this.chatService.addChatMessage(this.msg).catch((err) => console.log('Error: ', err));
     // Add both users as each others chat partner
-    await this.userService.addChatPartner(this.chatGroupId, this.chatUser).catch((err) => console.log('Error: ', err));
+    await this.userService
+      .addChatPartner(this.chatGroupId, this.chatUser)
+      .catch((err) => console.log('Error: ', err));
     await this.scrollToBottom();
   }
 
@@ -100,7 +107,7 @@ export class ChatPage implements OnInit, AfterViewInit {
    *
    * @param photo
    */
-  async sendPhoto(photo: string){
+  async sendPhoto(photo: string) {
     this.msg = {
       chatId: this.chatGroupId,
       creator: this.currentUser.userId,
@@ -114,18 +121,20 @@ export class ChatPage implements OnInit, AfterViewInit {
     // Add chat message to sub-collection 'messages' of collection 'chats'
     await this.chatService.addChatMessage(this.msg).catch((err) => console.log('Error: ', err));
     // Add both users as each others chat partner
-    await this.userService.addChatPartner(this.chatGroupId, this.chatUser).catch((err) => console.log('Error: ', err));
+    await this.userService
+      .addChatPartner(this.chatGroupId, this.chatUser)
+      .catch((err) => console.log('Error: ', err));
     await this.scrollToBottom();
   }
   /**
    * This function will fetch all messages of current chat by calling getMessages() from
    * chatService and set value of local variable 'messages'.
    */
-  async getMessages(){
+  async getMessages() {
     this.chatService.getMessages(this.chatGroupId).subscribe((res) => {
       this.messages = res.map((e) => ({
         id: e.payload.doc.id,
-        ...e.payload.doc.data() as Message
+        ...(e.payload.doc.data() as Message)
       }));
     });
     await this.scrollToBottom();
@@ -141,17 +150,19 @@ export class ChatPage implements OnInit, AfterViewInit {
    *
    * @param event
    */
-  uploadPhoto(event){
+  uploadPhoto(event) {
     this.photo = event.target.files[0];
-    this.photoService.storePhoto(this.photo, 'chats/').then((res: any) => {
-      if(res){
-        this.photo = res;
-      }
-      this.sendPhoto(this.photo).catch((err) => console.log('Error: ', err));
-    },
+    this.photoService.storePhoto(this.photo, 'chats/').then(
+      (res: any) => {
+        if (res) {
+          this.photo = res;
+        }
+        this.sendPhoto(this.photo).catch((err) => console.log('Error: ', err));
+      },
       (error: any) => {
         console.log('Error: ', error);
-      });
+      }
+    );
   }
   /**
    * This function will open a modal to ask user if he / she wants to proceed and delete selected
@@ -163,24 +174,20 @@ export class ChatPage implements OnInit, AfterViewInit {
    *
    * @param msg
    */
-  async deleteMessage(msg: Message){
-    await this.alertService.basicAlert(
-      '',
-      'Wollen Sie diese Nachricht löschen?',
-      [
-        {
-          text: 'Ja',
-          handler: () => {
-            this.chatService.deleteMessage(msg);
-            this.scrollToBottom();
-          }
-        },
-        {
-          text: 'Abbrechen',
-          role: 'cancel',
+  async deleteMessage(msg: Message) {
+    await this.alertService.basicAlert('', 'Wollen Sie diese Nachricht löschen?', [
+      {
+        text: 'Ja',
+        handler: () => {
+          this.chatService.deleteMessage(msg);
+          this.scrollToBottom();
         }
-      ],
-    );
+      },
+      {
+        text: 'Abbrechen',
+        role: 'cancel'
+      }
+    ]);
   }
   /**
    * This function will delete chat with given chat id by calling deleteChat() from
@@ -192,7 +199,7 @@ export class ChatPage implements OnInit, AfterViewInit {
    *
    * @param userId
    */
-  async deleteChat(userId: string){
+  async deleteChat(userId: string) {
     await this.alertService.basicAlert(
       '',
       'Sind Sie sicher, dass Sie diesen Chat löschen wollen?',
@@ -206,9 +213,9 @@ export class ChatPage implements OnInit, AfterViewInit {
         },
         {
           text: 'Abbrechen',
-          role: 'cancel',
+          role: 'cancel'
         }
-      ],
+      ]
     );
   }
 
@@ -217,17 +224,17 @@ export class ChatPage implements OnInit, AfterViewInit {
    *
    * @param url
    */
-  openImageNewTab(url: string){
+  openImageNewTab(url: string) {
     window.open(url);
   }
 
   /**
    * This function will scroll down to the bottom of the screen / content.
    */
-  async scrollToBottom(){
+  async scrollToBottom() {
     this.content.scrollToBottom(1000).catch((err) => console.log('Error: ', err));
   }
-  async ngAfterViewInit(){
+  async ngAfterViewInit() {
     await this.scrollToBottom().catch((err) => console.log('Error: ', err));
   }
 }

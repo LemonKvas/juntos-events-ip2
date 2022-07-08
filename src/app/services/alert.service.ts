@@ -58,7 +58,12 @@ export class AlertService {
   }
   async partakeEvent(event: Event) {
     this.alert = await this.alertService.create({
-      message: 'Sie haben sich soeben erfolgreich zu '+ '<strong>' + event.name + '</strong>' + ' angemeldet!',
+      message:
+        'Sie haben sich soeben erfolgreich zu ' +
+        '<strong>' +
+        event.name +
+        '</strong>' +
+        ' angemeldet!',
       buttons: ['OK']
     });
     this.alert.present();

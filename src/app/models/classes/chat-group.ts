@@ -1,4 +1,4 @@
-import {Message} from '../interfaces/message';
+import { Message } from '../interfaces/message';
 import User from './user';
 
 export class ChatGroup {
