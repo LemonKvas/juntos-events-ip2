@@ -2,7 +2,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/LemonKvas/juntos-events-ip2">
-    <img src="https://github.com/LemonKvas/juntos-events-ip2/blob/develop/src/assets/images/IP2_Logo.png" alt="Logo" width="80" height="80">
+    <img src="https://github.com/LemonKvas/juntos-events-ip2/blob/develop/src/assets/images/IP2_Logo.png" alt="Logo" width="150" height="150">
   </a>
 
 <h3 align="center">Juntos</h3>
@@ -111,8 +111,8 @@ To get a local copy up and running follow these simple example steps.
 ## Usage
 A small extract to see which packages are used in this project. For further information, please look into the package.json.
 
-<img src="../juntos-events-ip2/src/assets/images/package-json-3.png" alt="package-json" width="200">
-<img src="../juntos-events-ip2/src/assets/images/package-json-4.png" alt="package-json2" width="200">
+<img src="https://github.com/LemonKvas/juntos-events-ip2/blob/develop/src/assets/images/package-json-3.png" alt="package-json" width="200">
+<img src="https://github.com/LemonKvas/juntos-events-ip2/blob/develop/src/assets/images/package-json-4.png" width="200">
 
 ### EXTRA
 A little sneak peak of the app.
