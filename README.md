@@ -1,19 +1,3 @@
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-
-
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -99,13 +83,6 @@ of fun memories to look back at!
 This is an example of how you may give instructions on setting up your project locally.
 To get a local copy up and running follow these simple example steps.
 
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
 
 ### Installation
 
@@ -140,21 +117,6 @@ _For more examples, please refer to the [Documentation](https://github.com/Lemon
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
-
-<!-- ROADMAP -->
-## Roadmap
-
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-  - [ ] Nested Feature
-
-See the [open issues](https://github.com/LemonKvas/juntos-events-ip2/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
 <!-- CONTRIBUTING -->
 ## Contributing
 
@@ -172,16 +134,6 @@ Don't forget to give the project a star! Thanks again!
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
-
-<!-- LICENSE -->
-## License
-
-Distributed under the MIT License. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
 <!-- CONTACT -->
 ## Contact
 
@@ -196,9 +148,10 @@ Project Link: [https://github.com/LemonKvas/juntos-events-ip2](https://github.co
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
+* [Ionic](https://ionicframework.com/docs)
+* [Simon Grimm](https://www.youtube.com/c/SimonGrimmDev)
 * []()
-* []()
-* []()
+* [Ionic Icons](https://ionic.io/ionicons)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -206,19 +159,6 @@ Project Link: [https://github.com/LemonKvas/juntos-events-ip2](https://github.co
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/LemonKvas/juntos-events-ip2.svg?style=for-the-badge
-[contributors-url]: https://github.com/LemonKvas/juntos-events-ip2/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/LemonKvas/juntos-events-ip2.svg?style=for-the-badge
-[forks-url]: https://github.com/LemonKvas/juntos-events-ip2/network/members
-[stars-shield]: https://img.shields.io/github/stars/LemonKvas/juntos-events-ip2.svg?style=for-the-badge
-[stars-url]: https://github.com/LemonKvas/juntos-events-ip2/stargazers
-[issues-shield]: https://img.shields.io/github/issues/LemonKvas/juntos-events-ip2.svg?style=for-the-badge
-[issues-url]: https://github.com/LemonKvas/juntos-events-ip2/issues
-[license-shield]: https://img.shields.io/github/license/LemonKvas/juntos-events-ip2.svg?style=for-the-badge
-[license-url]: https://github.com/LemonKvas/juntos-events-ip2/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/linkedin_username
-[product-screenshot]: ../juntos-events-ip2/src/assets/images/Homepage.png
 [Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
 [Angular-url]: https://angular.io/
 [Ionic.io]: https://img.shields.io/badge/Ionic-DD0031?style=for-the-badge&logo=ionic&logoColor=white
