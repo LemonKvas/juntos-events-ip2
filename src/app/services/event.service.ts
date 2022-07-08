@@ -143,6 +143,7 @@ export class EventService {
     event.eventId = this.afs.createId();
     this.eventId = event.eventId;
     const data = JSON.parse(JSON.stringify(event));
+    await this.geoService.getLongLat(event.address);
     await this.geoService.getLongLat(event.address).then(async (longlatOb) => {
       await longlatOb.subscribe((longlat) => {
         data.lat = longlat['latt'];
