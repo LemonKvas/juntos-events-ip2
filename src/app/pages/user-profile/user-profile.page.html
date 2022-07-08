@@ -104,7 +104,7 @@
                   size="12"
                   *ngFor="let event of events; let i = index">
                   <ion-col
-                    *ngIf="event.status == 1"
+                    *ngIf="event.status !== 3"
                     class="ion-justify-content-center ion-align-items-center"
                     size="auto">
                     <app-event-item class="ion-align-self-center" [event]="event"></app-event-item>
