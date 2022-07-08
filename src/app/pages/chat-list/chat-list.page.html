@@ -1,0 +1,64 @@
+<!-- Header -->
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Nachrichten</ion-title>
+  </ion-toolbar>
+</ion-header>
+<!-- Chat List Content -->
+<ion-content>
+  <div class="tabs ion-padding">
+    <ion-row>
+      <ion-segment [(ngModel)]="segment" style="width: 100%">
+        <ion-segment-button value="chats" style="width: 100%">
+          <ion-label>Chats</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="friends" style="width: 100%">
+          <ion-label>Freunde</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-row>
+  </div>
+
+  <!-- Chats Segment -->
+  <div class="segment-divs" *ngIf="segment === 'chats'">
+    <ion-row *ngFor="let user of chatPartners">
+      <ion-item *ngIf="chatPartners.length === 0">
+        <ion-row class="ion-text-center">
+          <p>Du hast keine offenen Chats.</p>
+        </ion-row>
+      </ion-item>
+      <ion-item button="true" class="chat-item" *ngIf="chatPartners.length !== 0">
+        <ion-col size="3" (click)="openChat(user.userId)">
+          <ion-row class="ion-justify-content-start">
+            <ion-avatar>
+              <ion-img src="{{user.photoUrl | fireStorageImg: '/avatars' | async }}"></ion-img>
+            </ion-avatar>
+          </ion-row>
+        </ion-col>
+        <ion-col size="6" (click)="openChat(user.userId)">
+          <ion-row class="ion-text-start">
+            <p>{{user.firstName}} {{user.lastName}}</p>
+          </ion-row>
+        </ion-col>
+        <ion-col size="3">
+          <ion-row class="ion-justify-content-end">
+            <ion-buttons>
+              <ion-button (click)="deleteChat(user.userId)">
+                <ion-icon name="trash-outline" size="small"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-row>
+        </ion-col>
+      </ion-item>
+    </ion-row>
+  </div>
+
+  <!-- Friendslist Segment -->
+  <div class="segment-divs" *ngIf="segment === 'friends'">
+    <ion-row *ngFor="let friend of friendsList">
+      <app-friend [userId]="friend"></app-friend>
+    </ion-row>
+  </div>
+</ion-content>
+
+<app-footermenu></app-footermenu>
