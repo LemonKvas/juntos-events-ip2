@@ -42,7 +42,7 @@
           </ion-item-option>
           <ion-item-option
             *ngIf="openTicket.category === 'NutzerIn'"
-            (click)="openProfile(openTicket.userId)"
+            (click)="openProfile(openTicket.reportUserId)"
             color="secondary">
             <ion-icon slot="end" name="golf-outline"></ion-icon>
             NutzerIn
@@ -84,7 +84,7 @@
           </ion-item-option>
           <ion-item-option
             *ngIf="processTicket.category === 'NutzerIn'"
-            (click)="openProfile(processTicket.userId)"
+            (click)="openProfile(processTicket.reportUserId)"
             color="secondary">
             <ion-icon slot="end" name="golf-outline"></ion-icon>
             NutzerIn
@@ -130,7 +130,7 @@
           </ion-item-option>
           <ion-item-option
             *ngIf="doneTicket.category === 'NutzerIn'"
-            (click)="openProfile(doneTicket.userId)"
+            (click)="openProfile(doneTicket.reportUserId)"
             color="secondary">
             <ion-icon slot="end" name="golf-outline"></ion-icon>
             NutzerIn
