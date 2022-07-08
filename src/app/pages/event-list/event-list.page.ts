@@ -5,6 +5,12 @@ import { Share } from '@capacitor/share';
 import { NavigationExtras, Router } from '@angular/router';
 import { GeoService } from 'src/app/services/geo.service';
 
+/**
+ * DE:
+ * Seite zur Anzeige von allen veröffentlichen Events.
+ * EN:
+ * Page to display all published events.
+ */
 @Component({
   selector: 'app-event-list',
   templateUrl: './event-list.page.html',
@@ -20,10 +26,22 @@ export class EventListPage implements OnInit {
     public geoService: GeoService
   ) {}
 
+  /**
+   * DE:
+   * Bei Initialisierung der Komponente wird eine Liste von allen veröffentlichen Events geholt.
+   * EN:
+   * When the component is initialized, a list of all published events is fetched.
+   */
   ngOnInit() {
     this.getEvents();
   }
 
+  /**
+   * DE:
+   * Diese Methode wird alle Daten von veröffentlichen Events holen.
+   * EN:
+   * This method will fetch all data from published events.
+   */
   getEvents() {
     this.eventService.getPublishedEvents().subscribe((res) => {
       this.events = res.map((e) => ({
@@ -34,6 +52,13 @@ export class EventListPage implements OnInit {
       this.geoService.setMarkerArray(this.events);
     });
   }
+
+  /**
+   * DE:
+   * Mit dieser Methode kann der/die NutzerIn das Event mit anderen teilen.
+   * EN:
+   * With this method, the user can share the event with others.
+   */
   async shareEvent() {
     const msgText = 'Hallo,\n';
     Share.canShare().then((canShare) => {
@@ -50,12 +75,31 @@ export class EventListPage implements OnInit {
       }
     });
   }
+
+  /**
+   * DE:
+   * Diese Methode leitet den/die NutzerIn zu dem Event Formular.
+   * EN:
+   * This method directs the user to the event form.
+   */
   createEvent() {
-    this.router.navigate(['event-create']);
+    this.router.navigate(['event-create']).catch((err) => console.log('Error: ', err));
   }
-  /* Navigate to Event Details */
-  async eventDetailsState(id: string) {
-    this.selectedEvent = await this.eventService.getEventById(id);
+
+  /**
+   * DE:
+   * Diese Methode leitet den/die NutzerIn zu der Detailansicht des ausgewählten Events.
+   * EN:
+   * This method directs the user to the detail view of the selected event.
+   *
+   * @example
+   * Call it with an event ID as a string
+   * eventDetailsState(eventId: string)
+   *
+   * @param eventId
+   */
+  async eventDetailsState(eventId: string) {
+    this.selectedEvent = await this.eventService.getEventById(eventId);
     const navigationExtras: NavigationExtras = {
       state: {
         name: this.selectedEvent.name,
@@ -78,7 +122,6 @@ export class EventListPage implements OnInit {
       navigationExtras.state.lat = this.selectedEvent.lat;
     }
     console.log(navigationExtras);
-    await this.router.navigateByUrl(`event-details/${id}`, navigationExtras);
-    // await this.router.navigate(['event-details', this.selectedEvent.eventId]);
+    await this.router.navigateByUrl(`event-details/${eventId}`, navigationExtras);
   }
 }

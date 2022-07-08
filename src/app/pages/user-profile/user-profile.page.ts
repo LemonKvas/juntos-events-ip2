@@ -109,7 +109,7 @@ export class UserProfilePage implements OnInit, OnDestroy {
    */
   ngOnDestroy() {
     this.userSubscription.unsubscribe();
-    // this.currentUserSubscription.unsubscribe();
+    this.currentUserSubscription.unsubscribe();
   }
 
   /**

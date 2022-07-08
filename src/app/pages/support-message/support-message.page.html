@@ -1,0 +1,99 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Support kontaktieren</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <ion-list>
+      <ion-row class="ion-align-items-center">
+        <ion-item class="input-item">
+          <ion-label position="stacked">Betreff*</ion-label>
+          <ion-input class="ion-text-start" [(ngModel)]="subject"></ion-input>
+        </ion-item>
+        <p
+          class="ion-text-end ion-padding-end"
+          style="color: var(--ion-color-danger)"
+          *ngIf="errors.get('subject')">
+          {{errors.get('subject')}}
+        </p>
+      </ion-row>
+
+      <ion-row>
+        <ion-item class="input-item">
+          <ion-label position="stacked">Kategorie*</ion-label>
+          <ion-select [(ngModel)]="selectedCategory" multiple="false">
+            <ion-select-option *ngFor="let entry of category"
+            >{{entry}}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+        <p
+          class="ion-text-end ion-padding-end"
+          style="color: var(--ion-color-danger)"
+          *ngIf="errors.get('selectedCategory')">
+          {{errors.get('selectedCategory')}}
+        </p>
+      </ion-row>
+
+      <ion-row *ngIf="selectedCategory === 'Event'">
+        <ion-item class="input-item">
+          <ion-label position="stacked">Problem*</ion-label>
+          <ion-select [(ngModel)]="selectedProblem" multiple="false">
+            <div class="alert-tappable alert-radio">
+              <ion-select-option *ngFor="let problem of eventProblems">{{problem}}</ion-select-option>
+            </div>
+          </ion-select>
+        </ion-item>
+        <p
+          class="ion-text-end ion-padding-end"
+          style="color: var(--ion-color-danger)"
+          *ngIf="errors.get('selectedProblem')">
+          {{errors.get('selectedProblem')}}
+        </p>
+      </ion-row>
+
+      <ion-row *ngIf="selectedCategory === 'NutzerIn'">
+        <ion-item class="input-item">
+          <ion-label position="stacked">Problem*</ion-label>
+          <ion-select [(ngModel)]="selectedProblem" multiple="false">
+            <ion-select-option *ngFor="let problem of userProblems"
+            >{{problem}}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+        <p
+          class="ion-text-end ion-padding-end"
+          style="color: var(--ion-color-danger)"
+          *ngIf="errors.get('selectedProblem')">
+          {{errors.get('selectedProblem')}}
+        </p>
+      </ion-row>
+
+      <ion-row class="ion-align-items-center">
+        <ion-item class="input-item" id="textMsg">
+          <ion-label position="stacked">Ihre Nachricht*</ion-label>
+          <ion-textarea class="ion-text-start" autoGrow="true" [(ngModel)]="textMsg"></ion-textarea>
+        </ion-item>
+        <p
+          class="ion-text-end ion-padding-end"
+          style="color: var(--ion-color-danger)"
+          *ngIf="errors.get('textMsg')">
+          {{errors.get('textMsg')}}
+        </p>
+      </ion-row>
+
+      <ion-row class="ion-justify-content-center">
+        <ion-buttons>
+          <ion-button (click)="sendMessageToSupport()" id="sendMsgBtn">Nachricht senden</ion-button>
+        </ion-buttons>
+      </ion-row>
+    </ion-list>
+  </ion-grid>
+</ion-content>

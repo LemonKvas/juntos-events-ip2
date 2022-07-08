@@ -1,3 +1,4 @@
+<!-- Header -->
 <ion-header>
   <ion-toolbar>
     <ion-buttons>
@@ -12,7 +13,7 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
+<!-- Chat Content -->
 <ion-content class="ion-padding" id="content">
   <ion-grid>
     <ion-col *ngFor="let message of messages">
@@ -35,8 +36,7 @@
                     *ngIf="message.message === '' || message.message === null">
                     <ion-img
                       src="{{message.photo}}"
-                      alt="photo-message"
-                      (click)="openImageNewTab(message.photo)"></ion-img>
+                      alt="photo-message"></ion-img>
                   </ion-row>
                   <ion-row class="ion-justify-content-end" style="margin-top: 10px">
                     <p style="margin-right: 20px; font-size: 12px">
@@ -66,9 +66,8 @@
                     <p>{{message.message}}</p>
                   </ion-row>
                   <ion-row *ngIf="message.message === '' || message.message === null">
-                    <ion-img
-                      src="{{message.photo}}"
-                      (click)="openImageNewTab(message.photo)"></ion-img>
+                    <ion-img (click)="openImageNewTab(message.photo)"
+                      src="{{message.photo}}"></ion-img>
                   </ion-row>
                   <ion-row class="ion-justify-content-end" style="margin-top: 10px">
                     <p style="margin-right: 20px; font-size: 12px">
@@ -88,13 +87,12 @@
         <ng-template>
           <ion-content>
             <ion-list>
+              <ion-item *ngIf="message.message === '' || message.message === null" (click)="openImageNewTab(message.photo)">Foto anzeigen</ion-item>
               <ion-item
                 [button]="true"
                 [detail]="false"
                 style="color: red"
-                (click)="deleteMessage(message)"
-                >Löschen</ion-item
-              >
+                (click)="deleteMessage(message)">Löschen</ion-item>
               <ion-item [button]="true" [detail]="false">Abbrechen</ion-item>
             </ion-list>
           </ion-content>
@@ -104,7 +102,7 @@
     <span id="scrollBottom"></span>
   </ion-grid>
 </ion-content>
-
+<!-- Footer with textarea, photo upload & send button -->
 <ion-footer>
   <ion-toolbar>
     <ion-row class="ion-justify-content-center">

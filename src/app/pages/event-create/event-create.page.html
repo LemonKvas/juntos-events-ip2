@@ -13,7 +13,7 @@
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="end" *ngIf="editMode === true && publishStatus === true">
-      <ion-button (click)="openEventSupportMessageModal(this.creatorId, this.eventId)">
+      <ion-button (click)="supportAlert()">
         <ion-icon name="warning-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -78,7 +78,7 @@
         <ion-col id="eventBioCol" size="12" size-sm="6">
           <ion-item class="input-item">
             <ion-label position="stacked">Beschreibung*</ion-label>
-            <ion-textarea [(ngModel)]="eventBio" placeholder="Das Event ist..."></ion-textarea>
+            <ion-textarea [(ngModel)]="eventBio" autoGrow="true" placeholder="Das Event ist..."></ion-textarea>
           </ion-item>
           <p
             class="ion-text-end ion-padding-end"

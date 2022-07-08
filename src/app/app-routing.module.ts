@@ -87,6 +87,10 @@ const routes: Routes = [
       import('./pages/user-created-events/user-created-events.module').then(
         (m) => m.UserCreatedEventsPageModule
       )
+  },
+  {
+    path: 'support-message',
+    loadChildren: () => import('./pages/support-message/support-message.module').then(m => m.SupportMessagePageModule)
   }
 ];
 
