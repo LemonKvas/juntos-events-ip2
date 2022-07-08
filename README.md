@@ -2,7 +2,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/LemonKvas/juntos-events-ip2">
-    <img src="../juntos-events-ip2/src/assets/images/IP2_Logo.png" alt="Logo" width="80" height="80">
+    <img src="https://github.com/LemonKvas/juntos-events-ip2/blob/develop/src/assets/images/IP2_Logo.png" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">Juntos</h3>
