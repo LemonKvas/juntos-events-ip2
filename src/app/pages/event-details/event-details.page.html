@@ -32,7 +32,7 @@
 
     </ion-row>
 
-    <ion-row class="ion-justify-content-start">
+    <ion-row class="ion-justify-content-start" *ngIf="creatorRating">
       <ionic5-star-rating
         #rating
         activeColor="#ff8766"
@@ -106,6 +106,19 @@
             <p style="margin-top: 0">
               {{event.address['street']}} {{event.address['house']}}, {{event.address['zipCode']}}
               {{event.address['city']}}
+            </p>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-justify-content-start">
+        <ion-col>
+          <ion-row class="ion-justify-content-start">
+            <p><strong>Veranstalter</strong></p>
+          </ion-row>
+          <ion-row class="ion-justify-content-start">
+            <p style="margin-top: 0">
+              {{creatorName}}
             </p>
           </ion-row>
         </ion-col>

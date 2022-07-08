@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { EventService } from 'src/app/services/event.service';
-import { Event } from 'src/app/models/classes/event.model';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {EventService} from 'src/app/services/event.service';
+import {Event} from 'src/app/models/classes/event.model';
 import User from 'src/app/models/classes/user';
-import { RegisteredEvent } from 'src/app/models/interfaces/registered-event';
-import { AuthService } from 'src/app/services/auth.service';
-import { UserDataService } from 'src/app/services/user-data.service';
-import { AlertService } from 'src/app/services/alert.service';
-import { ChatService } from 'src/app/services/chat.service';
+import {RegisteredEvent} from 'src/app/models/interfaces/registered-event';
+import {AuthService} from 'src/app/services/auth.service';
+import {UserDataService} from 'src/app/services/user-data.service';
+import {AlertService} from 'src/app/services/alert.service';
+import {ChatService} from 'src/app/services/chat.service';
 
 /**
  * DE:
@@ -30,6 +30,7 @@ export class EventDetailsPage implements OnInit {
   currentUserId: string;
   segment = 'information';
   creatorRating: number | boolean;
+  creatorName;
 
   /**
    * DE:
@@ -65,13 +66,17 @@ export class EventDetailsPage implements OnInit {
    * creator and the list of event participants will be fetched.
    */
   async ngOnInit() {
-    this.currentUserId = await this.userService.getCurrentUserID();
-    this.creatorRating = await this.userService.getRating(this.creator.userId);
-
-    console.log(this.creatorRating)
-
     await this.getCreatorData();
     await this.getUserlist();
+    this.currentUserId = await this.userService.getCurrentUserID();
+    this.creatorRating = await this.userService.getRating(this.creator.userId);
+    this.creatorName = this.creator.userName;
+
+    console.log(this.creatorRating)
+    console.log(this.creator)
+
+
+
   }
 
   /**
@@ -81,7 +86,13 @@ export class EventDetailsPage implements OnInit {
    * This method will fetch the data from the logged in user.
    */
   async getCreatorData() {
-    this.creator = await this.userService.getUserById(this.event.eventId);
+    await this.userService.getUserById(this.event.creatorId).then((user) => {
+      this.creator = user;
+      console.log(this.creator)
+    }).catch((e) => {
+      console.log('fail')
+    });
+
   }
 
   /**
