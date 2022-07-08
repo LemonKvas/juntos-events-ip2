@@ -24,7 +24,6 @@ describe('UserDataService', () => {
 
   const mockGetDoc = () => Promise.resolve({ data: new User('testId', 'test@test.de') });
 
-
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
