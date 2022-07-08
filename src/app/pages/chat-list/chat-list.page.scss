@@ -1,7 +1,14 @@
 ion-title {
-  font-family: "Yeseva One", cursive;
+  font-family: 'Yeseva One', cursive;
 }
 //Mobile Version
+@media only screen and (max-width: 360px) {
+  ion-segment-button {
+    ion-label {
+      font-size: 10px;
+    }
+  }
+}
 @media screen and (max-width: 600px) {
   ion-content {
     .tabs {

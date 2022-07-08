@@ -4,7 +4,7 @@ import { UserDataService } from 'src/app/services/user-data.service';
 import { Router } from '@angular/router';
 import { EventService } from 'src/app/services/event.service';
 import { Event } from 'src/app/models/classes/event.model';
-import { Platform, MenuController } from '@ionic/angular';
+import { Platform, MenuController, ActionSheetController } from '@ionic/angular';
 import User from 'src/app/models/classes/user';
 import { Subscription } from 'rxjs';
 import { FriendsService } from 'src/app/services/friends.service';
@@ -41,6 +41,10 @@ export class UserProfilePage implements OnInit, OnDestroy {
   private currentLocation: Location;
   private userSubscription: Subscription;
   private currentUserSubscription: Subscription;
+  isModalOpen = false;
+  feedBackEvent: Event;
+  starRating: number;
+  feedback: string;
 
   /**
    * DE:
@@ -57,6 +61,7 @@ export class UserProfilePage implements OnInit, OnDestroy {
    * @param alertService
    * @param menu
    * @param auth
+   * @param actionSheetCtrl
    */
   constructor(
     private location: Location,
@@ -68,7 +73,8 @@ export class UserProfilePage implements OnInit, OnDestroy {
     private notificationService: NotificationService,
     private alertService: AlertService,
     public menu: MenuController,
-    private auth: AuthService
+    private auth: AuthService,
+    private actionSheetCtrl: ActionSheetController
   ) {
     this.followFriendsIndicator = undefined;
     this.isFriends = false;
@@ -106,8 +112,12 @@ export class UserProfilePage implements OnInit, OnDestroy {
    * are resolved.
    */
   ngOnDestroy() {
-    this.userSubscription.unsubscribe();
-    this.currentUserSubscription.unsubscribe();
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
+    if (this.currentUserSubscription) {
+      this.currentUserSubscription.unsubscribe();
+    }
   }
 
   /**
@@ -297,6 +307,19 @@ export class UserProfilePage implements OnInit, OnDestroy {
     console.log('Segment changed', event);
   }
 
+  setOpen(isOpen: boolean, event: Event) {
+    this.isModalOpen = isOpen;
+    this.feedBackEvent = event;
+
+    console.log('open');
+    console.log(this.feedBackEvent);
+  }
+
+  logRatingChange(rating) {
+    console.log('changed rating: ', rating);
+    this.starRating = rating;
+  }
+
   /**
    * DE:
    * Öffnet die Methode presentPopover im notificationsService, bzw. zeigt die Benachrichtigungen des Nutzers an.
@@ -316,5 +339,38 @@ export class UserProfilePage implements OnInit, OnDestroy {
    */
   logOut() {
     this.auth.signOut();
+  }
+
+  /**
+   * DE:
+   * Öffnet das ActionSheet auf der Profilseite, um weitere Funktionalitäten anzuzeigen.
+   * EN:
+   * This function will open an actionsheet on the profile page, which contains multiple settings.
+   */
+  async openActionSheet() {
+    const actionSheet = await this.actionSheetCtrl.create({
+      buttons: [
+        {
+          text: 'Profil bearbeiten',
+          handler: () => {
+            this.router.navigate(['/edit-user']);
+          }
+        },
+        {
+          text: 'Meine Events',
+          handler: () => {
+            this.router.navigate(['user-events', this.currentUserId]);
+          }
+        },
+        {
+          text: 'Abmelden',
+          role: 'destructive',
+          handler: () => {
+            this.logOut();
+          }
+        }
+      ]
+    });
+    await actionSheet.present();
   }
 }

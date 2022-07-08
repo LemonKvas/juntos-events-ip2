@@ -26,7 +26,21 @@
     </ion-row>
 
     <ion-row class="ion-justify-content-start">
-      <h1>{{event.name}}</h1>
+      <ion-col>
+        <h1>{{event.name}}</h1>
+      </ion-col>
+
+    </ion-row>
+
+    <ion-row class="ion-justify-content-start" *ngIf="creatorRating">
+      <ionic5-star-rating
+        #rating
+        activeColor="#ff8766"
+        defaultColor="#e06543"
+        readonly="true"
+        rating="{{ creatorRating }}"
+        fontSize="32px" style="margin-top: 20px">
+      </ionic5-star-rating>
     </ion-row>
 
     <ion-row class="ion-justify-content-start">
@@ -38,9 +52,7 @@
             </p>
           </ion-col>
           <ion-col class="ion-text-start" size="10">
-            <p>
-              {{event.eventDate | date: 'dd.MM.yyyy'}}
-            </p>
+            <p>{{event.eventDate | date: 'dd.MM.yyyy'}}</p>
           </ion-col>
         </ion-row>
       </ion-col>
@@ -52,21 +64,22 @@
             </p>
           </ion-col>
           <ion-col class="ion-text-start" size="10">
-            <p>
-              {{event.eventDate | date: 'H:mm'}}
-            </p>
+            <p>{{event.eventDate | date: 'H:mm'}}</p>
           </ion-col>
         </ion-row>
       </ion-col>
     </ion-row>
 
     <ion-row>
-      <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
+      <ion-segment [(ngModel)]="segment">
         <ion-segment-button value="information">
-          <ion-label style="font-size: 13px">Informationen</ion-label>
+          <ion-label>Informationen</ion-label>
         </ion-segment-button>
         <ion-segment-button value="participants">
-          <ion-label style="font-size: 13px">Teilnehmer*Innen ({{event.participants.length}}/{{event.maxParticipants}})</ion-label>
+          <ion-label
+          >Teilnehmer*Innen ({{event.participants.length}}/{{event.maxParticipants}})
+          </ion-label
+          >
         </ion-segment-button>
       </ion-segment>
     </ion-row>
@@ -90,7 +103,23 @@
             <p><strong>Standort</strong></p>
           </ion-row>
           <ion-row class="ion-justify-content-start">
-            <p style="margin-top: 0">{{event.address['street']}} {{event.address['house']}}, {{event.address['zipCode']}} {{event.address['city']}}</p>
+            <p style="margin-top: 0">
+              {{event.address['street']}} {{event.address['house']}}, {{event.address['zipCode']}}
+              {{event.address['city']}}
+            </p>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-justify-content-start">
+        <ion-col>
+          <ion-row class="ion-justify-content-start">
+            <p><strong>Veranstalter</strong></p>
+          </ion-row>
+          <ion-row class="ion-justify-content-start">
+            <p style="margin-top: 0">
+              {{creatorName}}
+            </p>
           </ion-row>
         </ion-col>
       </ion-row>
@@ -107,7 +136,9 @@
             <ion-col size="4" [routerLink]="['/profile/' + participant.userId]" button>
               <ion-row>
                 <ion-avatar class="profile-div">
-                  <ion-img class="profile-img" src="{{participant.photoUrl | fireStorageImg: '/avatars' | async }}"></ion-img>
+                  <ion-img
+                    class="profile-img"
+                    src="{{participant.photoUrl | fireStorageImg: '/avatars' | async }}"></ion-img>
                 </ion-avatar>
               </ion-row>
             </ion-col>
@@ -116,7 +147,10 @@
                 <p>{{participant.firstName}} {{participant.lastName}}</p>
               </ion-row>
             </ion-col>
-            <ion-col class="ion-justify-content-end" size="2" *ngIf="participant.userId !== this.currentUserId">
+            <ion-col
+              class="ion-justify-content-end"
+              size="2"
+              *ngIf="participant.userId !== this.currentUserId">
               <ion-row class="ion-justify-content-end">
                 <ion-buttons class="chat-btn">
                   <ion-button slot="end" (click)="openChat(participant)">
@@ -128,7 +162,10 @@
             <ion-col size="2" *ngIf="participant.userId === this.currentUserId">
               <ion-buttons class="chat-btn">
                 <ion-button slot="end" disabled="true" (click)="openChat(participant)">
-                  <ion-icon name="chatbubble-ellipses-outline" size="small" style="color: white;"></ion-icon>
+                  <ion-icon
+                    name="chatbubble-ellipses-outline"
+                    size="small"
+                    style="color: white"></ion-icon>
                 </ion-button>
               </ion-buttons>
             </ion-col>

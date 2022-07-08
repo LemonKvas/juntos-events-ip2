@@ -10,14 +10,14 @@
             <ion-icon  size="small" style="zoom:0.8; position:absolute;" name="close-outline"></ion-icon>
           </ion-buttons>
           -->
-        <ion-label *ngIf="notification">
-          <h2 *ngIF="notification.senderName; else placeholderTitle">
+        <ion-label class="ion-text-wrap" *ngIf="notification">
+          <h2 *ngIf="notification.senderName; else placeholderTitle">
             {{ notification.senderName }}
           </h2>
           <ng-template #placeholderTitle>
             <h2>Freundschaftsanfrage</h2>
           </ng-template>
-          <p>{{ notification.content }}</p>
+          <p class="ion-text-wrap">{{ notification.content }}</p>
           <ng-container *ngIf="notification.type === 3">
             <ion-button slot="start" (click)="acceptFriendRequest(notification)">
               <ion-icon size="large" style="zoom: 0.8" name="checkmark-outline"></ion-icon>

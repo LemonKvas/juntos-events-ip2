@@ -1,0 +1,105 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Meine erstellten Events</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="backToProfile()">
+        <ion-icon size="large" style="zoom: 0.8" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="tabs ion-padding">
+    <ion-row>
+      <ion-segment [(ngModel)]="segment" style="width: 100%">
+        <ion-segment-button value="published" style="width: 100%">
+          <ion-label>Öffentlich</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="draft" style="width: 100%">
+          <ion-label>Entwürfe</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-row>
+  </div>
+
+  <!-- Published Events Segment -->
+  <div class="segment-divs" *ngIf="segment === 'published'">
+    <ion-row>
+      <ion-item *ngIf="publishedEvents.length === 0">
+        <ion-col>
+          <ion-row class="ion-text-center">
+            <p>Du hast leider noch keine Events erstellt.</p>
+          </ion-row>
+          <ion-row class="ion-text-center">
+            <p
+              (click)="createEvent()"
+              style="color: var(--ion-color-secondary); text-decoration: underline">
+              <strong>Jetzt Event erstellen!</strong>
+            </p>
+          </ion-row>
+        </ion-col>
+      </ion-item>
+    </ion-row>
+    <ion-row *ngFor="let pEvent of publishedEvents">
+      <ion-card>
+        <ion-card-content>
+          <ion-row>
+            <ion-col class="ion-text-start" size="9">
+              <h3>{{pEvent.name}}</h3>
+            </ion-col>
+            <ion-col class="ion-justify-content-end" size="3">
+              <ion-buttons>
+                <ion-button (click)="editEvent(pEvent.eventId)">
+                  <ion-icon
+                    name="create-outline"
+                    style="color: var(--ion-color-secondary)"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-row>
+  </div>
+
+  <!-- Event Drafts Segment -->
+  <div class="segment-divs" *ngIf="segment === 'draft'">
+    <ion-row>
+      <ion-item *ngIf="eventDrafts.length === 0">
+        <ion-col>
+          <ion-row class="ion-text-center">
+            <p>Du hast noch keine Events als Entwurf gespeichert.</p>
+          </ion-row>
+          <ion-row class="ion-text-center">
+            <p
+              (click)="createEvent()"
+              style="color: var(--ion-color-secondary); text-decoration: underline">
+              <strong>Jetzt ein Event erstellen?</strong>
+            </p>
+          </ion-row>
+        </ion-col>
+      </ion-item>
+    </ion-row>
+    <ion-row *ngFor="let dEvent of eventDrafts">
+      <ion-card>
+        <ion-card-content>
+          <ion-row>
+            <ion-col class="ion-text-start" size="9">
+              <h3>{{dEvent.name}}</h3>
+            </ion-col>
+            <ion-col class="ion-justify-content-end" size="3">
+              <ion-buttons>
+                <ion-button (click)="editEvent(dEvent.eventId)">
+                  <ion-icon
+                    name="create-outline"
+                    style="color: var(--ion-color-secondary)"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-row>
+  </div>
+</ion-content>

@@ -1,0 +1,65 @@
+<ion-button class="openBtn" (click)="setOpen(true)">Feedback geben</ion-button>
+
+<ion-modal id="modal" [isOpen]="isModalOpen" (ionModalDidDismiss)="setOpen(false)" animated="true">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Feedback: {{ feedBackEvent.name }}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="setOpen(false)"
+            ><ion-icon size="large" style="zoom: 0.8" name="close-outline"></ion-icon
+          ></ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <h3>Sternerating</h3>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <form>
+              <ionic5-star-rating
+                #rating
+                activeColor="#ff8766"
+                defaultColor="#e06543"
+                readonly="false"
+                rating="{{ starRating }}"
+                fontSize="32px"
+                (ratingChanged)="logRatingChange($event)">
+              </ionic5-star-rating>
+            </form>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <h3>Wie war dein Eindruck?</h3>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-textarea
+                placeholder="Schildere deinen Eindruck"
+                [(ngModel)]="feedback"></ion-textarea>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-footer>
+        <ion-toolbar>
+          <ion-button class="sendBtn" (click)="saveFeedback()" slot="end"
+            >Feedback abschicken</ion-button
+          >
+        </ion-toolbar>
+      </ion-footer>
+    </ion-content>
+  </ng-template>
+</ion-modal>

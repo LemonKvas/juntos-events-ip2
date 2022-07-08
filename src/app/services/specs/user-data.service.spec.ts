@@ -33,7 +33,8 @@ describe('UserDataService', () => {
       ],
       imports: [
         AngularFireModule.initializeApp(environment.firebaseConfig),
-        AngularFireDatabaseModule
+        AngularFireDatabaseModule,
+        { provide: getDoc, useValue: mockGetDoc() }
       ]
     });
     service = TestBed.inject(UserDataService);

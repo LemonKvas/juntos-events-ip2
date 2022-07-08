@@ -18,9 +18,13 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/edit-user/edit-user.module').then((m) => m.EditUserPageModule)
   },
-
   {
     path: 'event-create',
+    loadChildren: () =>
+      import('./pages/event-create/event-create.module').then((m) => m.EventCreatePageModule)
+  },
+  {
+    path: 'event-create/:id',
     loadChildren: () =>
       import('./pages/event-create/event-create.module').then((m) => m.EventCreatePageModule)
   },
@@ -65,6 +69,13 @@ const routes: Routes = [
     data: { role: 0 }
   },
   {
+    path: 'admin-dashboard/supporttickets',
+    loadChildren: () =>
+      import('./pages/admin-support/admin-support.module').then((m) => m.AdminSupportPageModule),
+    canActivate: [RoleGuard],
+    data: { role: 0 }
+  },
+  {
     path: 'chat/:cId',
     loadChildren: () => import('src/app/pages/chat/chat.module').then((m) => m.ChatPageModule)
   },
@@ -76,6 +87,20 @@ const routes: Routes = [
     path: 'chat-list/:id',
     loadChildren: () =>
       import('src/app/pages/chat-list/chat-list.module').then((m) => m.ChatListPageModule)
+  },
+  {
+    path: 'user-events/:id',
+    loadChildren: () =>
+      import('./pages/user-created-events/user-created-events.module').then(
+        (m) => m.UserCreatedEventsPageModule
+      )
+  },
+  {
+    path: 'support-message',
+    loadChildren: () =>
+      import('./pages/support-message/support-message.module').then(
+        (m) => m.SupportMessagePageModule
+      )
   }
 ];
 

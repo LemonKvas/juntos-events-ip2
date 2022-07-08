@@ -8,6 +8,8 @@ import { AlertService } from 'src/app/services/alert.service';
 import { arrayUnion } from '@angular/fire/firestore';
 import { RegisteredEvent } from '../models/interfaces/registered-event';
 import { CreatedEvent } from '../models/interfaces/created-event';
+import { Feedback } from '../models/interfaces/feedback';
+import { Router } from '@angular/router';
 
 /**
  * EN:
@@ -21,7 +23,11 @@ import { CreatedEvent } from '../models/interfaces/created-event';
 export class UserDataService {
   private readonly userCollection!: AngularFirestoreCollection;
 
-  constructor(private afs: AngularFirestore, public alertService: AlertService) {
+  constructor(
+    private afs: AngularFirestore,
+    private router: Router,
+    public alertService: AlertService
+  ) {
     this.userCollection = this.afs.collection(`user`);
   }
 
@@ -136,9 +142,73 @@ export class UserDataService {
    * @param userCredential
    * @param userType
    */
+  /**
+   * DE:
+   * Gibt das durchschnittliche Rating des Users zurück
+   * EN:
+   * Returns the average rating of the user
+   * @param {string} userId
+   *
+   * @returns the average rating of the user or false if the user does not have a single rating
+   */
+  async getRating(userId: string): Promise<number | boolean> {
+    const docRef = this.userCollection.doc(userId).ref;
+    const docSnap = await getDoc(docRef);
+    const feedbacks = <Feedback[]>docSnap.data().feedback;
+
+    if (!feedbacks) {
+      return <boolean>false;
+    }
+
+    let sum: number = 0;
+    for (let idx in feedbacks) {
+      sum += feedbacks[idx].rating;
+    }
+
+    let average: any = sum / feedbacks.length;
+    average = parseFloat(average).toFixed(2);
+
+    average = Math.round(average);
+
+    return <number>average;
+  }
+
+  /**
+   * DE:
+   * Schaut nach, ob der User das Event bereits bewertet hat
+   * EN:
+   * Sees if the user has already given feedback for this event
+   * @param {string} creatorId
+   * @param {string} eventId
+   *
+   * @returns Promise<boolean | Feedback>
+   */
+  async hasUserAlreadyRated(creatorId: string, eventId: string): Promise<boolean | Feedback> {
+    const currentUserId: string = await this.getCurrentUserID();
+
+    const docRef = this.userCollection.doc(creatorId).ref;
+    const docSnap = await getDoc(docRef);
+    const feedbacks = <Feedback[]>docSnap.data().feedback;
+
+    // the creator does not have rating -> user has not rated him
+    if (!feedbacks) {
+      return <boolean>false;
+    }
+
+    for (let idx in feedbacks) {
+      // User already rated this event
+      if (feedbacks[idx].userId == currentUserId && feedbacks[idx].eventId == eventId)
+        return <Feedback>feedbacks[idx];
+    }
+    // user has not rated the event
+    return <boolean>false;
+  }
+
+  /*** CRUD Firestore User ***/
+
   async createNewUserInFirestore(userCredential: UserCredential | any, userType: string | number) {
     let user: User;
-    if (userCredential.additionalUserInfo.providerId === 'google.com') {
+    if (userCredential.additionalUserInfo.providerId == 'google.com') {
       user = new User(
         String(userCredential.user.uid),
         userCredential.additionalUserInfo.profile.email || 'Please contact Juntos',
@@ -206,7 +276,7 @@ export class UserDataService {
    *
    * @param event
    */
-  async addRegisteredEvent(event: any) {
+  async addRegisteredEvent(event: RegisteredEvent) {
     const user = await this.getCurrentUser();
     const userId = user.userId;
     await this.userCollection.doc(userId).update({ registeredEvents: arrayUnion(event) });
@@ -221,7 +291,7 @@ export class UserDataService {
    *
    * @param event
    */
-  async addCreatedEvent(event: any) {
+  async addCreatedEvent(event: CreatedEvent) {
     const user = await this.getCurrentUser();
     const userId = user.userId;
     await this.userCollection.doc(userId).update({ createdEvents: arrayUnion(event) });
@@ -248,7 +318,7 @@ export class UserDataService {
    *
    * @param user
    */
-  async addChat(user: User){
+  async addChat(user: User) {
     const db = firebase.firestore().collection('user');
     const currentUser = await this.getCurrentUser();
     // Add both users to each other sub-collection 'chatPartners'
@@ -267,14 +337,27 @@ export class UserDataService {
    * @param chatId
    * @param user
    */
-  async addChatPartner(chatId: string, user: User){
+  async addChatPartner(chatId: string, user: User) {
     const currentUser = await this.getCurrentUser();
     // Add user(s) back into each other sub-collection 'chatPartners'
-    await this.userCollection.doc(currentUser.userId).collection('chatPartners').doc(user.userId).set(user);
-    await this.userCollection.doc(user.userId).collection('chatPartners').doc(currentUser.userId).set(currentUser);
+    await this.userCollection
+      .doc(currentUser.userId)
+      .collection('chatPartners')
+      .doc(user.userId)
+      .set(user);
+    await this.userCollection
+      .doc(user.userId)
+      .collection('chatPartners')
+      .doc(currentUser.userId)
+      .set(currentUser);
     // Add user(s) back into sub-collection 'users' of collection 'chats'
     await this.afs.collection('chats').doc(chatId).collection('users').doc(user.userId).set(user);
-    await this.afs.collection('chats').doc(chatId).collection('users').doc(currentUser.userId).set(currentUser);
+    await this.afs
+      .collection('chats')
+      .doc(chatId)
+      .collection('users')
+      .doc(currentUser.userId)
+      .set(currentUser);
   }
 
   /**
@@ -287,7 +370,24 @@ export class UserDataService {
    *
    * @param userId
    */
-  getChatPartners(userId: string){
+  getChatPartners(userId: string) {
     return this.userCollection.doc(userId).collection('chatPartners').snapshotChanges();
+  }
+
+  /**
+   * DE:
+   * Speichert das gegebene Feedback in den gegebenen User
+   * EN:
+   * Saves the given event in the given user
+   * @param {feedback} feedback
+   * @param {string} userId
+   *
+   * @example
+   * await this.userService.addFeedback(newFeedback, this.feedBackEvent.creatorId)
+   */
+
+  async addFeedback(feedback: Feedback, userId: string) {
+    const db = firebase.firestore().collection('user');
+    await db.doc(userId).update({ feedback: arrayUnion(feedback) });
   }
 }

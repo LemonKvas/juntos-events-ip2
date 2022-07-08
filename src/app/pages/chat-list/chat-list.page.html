@@ -1,13 +1,14 @@
+<!-- Header -->
 <ion-header>
   <ion-toolbar>
     <ion-title class="ion-text-center">Nachrichten</ion-title>
   </ion-toolbar>
 </ion-header>
-
+<!-- Chat List Content -->
 <ion-content>
   <div class="tabs ion-padding">
     <ion-row>
-      <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)" style="width: 100%">
+      <ion-segment [(ngModel)]="segment" style="width: 100%">
         <ion-segment-button value="chats" style="width: 100%">
           <ion-label>Chats</ion-label>
         </ion-segment-button>
@@ -53,7 +54,7 @@
   </div>
 
   <!-- Friendslist Segment -->
-  <div  class="segment-divs" *ngIf="segment === 'friends'">
+  <div class="segment-divs" *ngIf="segment === 'friends'">
     <ion-row *ngFor="let friend of friendsList">
       <app-friend [userId]="friend"></app-friend>
     </ion-row>

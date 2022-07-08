@@ -1,4 +1,4 @@
-<ion-header translucent>
+<ion-header translucent="true">
   <ion-toolbar>
     <ion-title>{{title}}</ion-title>
     <ion-buttons slot="end">
@@ -10,7 +10,7 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content fullscreen>
+<ion-content fullscreen="true">
   <ion-list *ngFor="let friend of friendIds; let i=index">
     <ng-container *ngIf="i < limiter">
       <app-friend [userId]="friend" [isLoggedIn]="isLoggedIn"></app-friend>

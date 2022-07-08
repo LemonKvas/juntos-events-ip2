@@ -1,0 +1,148 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Support Tickets</ion-title>
+    <ion-buttons slot="end" [routerLink]="['../']">
+      <ion-icon size="large" style="zoom: 0.8" name="clipboard-outline"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item-divider>
+      <ion-label> Offene Tickets </ion-label>
+    </ion-item-divider>
+    <ng-container *ngFor="let openTicket of openTickets">
+      <ion-item-sliding>
+        <ion-item>
+          <ion-label>
+            <h2>Betreff: {{openTicket.subject}}</h2>
+            <p>Nachricht: {{openTicket.message}}</p>
+          </ion-label>
+          <ion-label slot="end">
+            <h4>Kategorie: {{openTicket.category}}</h4>
+            <p>Datum: {{openTicket.date | date: 'medium'}}</p>
+          </ion-label>
+          <ion-icon slot="end" name="chevron-back-outline"></ion-icon>
+        </ion-item>
+        <ion-item-options>
+          <ion-item-option color="primary" (click)="openProfile(openTicket.creator)">
+            <ion-icon slot="end" name="person-outline"></ion-icon>
+            Absender
+          </ion-item-option>
+          <ion-item-option
+            *ngIf="openTicket.category === 'Event'"
+            color="secondary"
+            (click)="openEvent(openTicket.eventId)">
+            <ion-icon slot="end" name="golf-outline"></ion-icon>
+            Event
+          </ion-item-option>
+          <ion-item-option
+            *ngIf="openTicket.category === 'NutzerIn'"
+            (click)="openProfile(openTicket.reportUserId)"
+            color="secondary">
+            <ion-icon slot="end" name="golf-outline"></ion-icon>
+            NutzerIn
+          </ion-item-option>
+          <ion-item-option color="warning" (click)="changeTicketStatus(openTicket.ticketId, 1)">
+            <ion-icon slot="end" name="build-outline"></ion-icon>
+            bearbeiten
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ng-container>
+    <ion-item-divider>
+      <ion-label> Tickets in Bearbeitung </ion-label>
+    </ion-item-divider>
+    <ng-container *ngFor="let processTicket of inProcessTickets">
+      <ion-item-sliding>
+        <ion-item>
+          <ion-label>
+            <h2>Betreff: {{processTicket.subject}}</h2>
+            <p>Nachricht: {{processTicket.message}}</p>
+          </ion-label>
+          <ion-label slot="end">
+            <h4>Kategorie: {{processTicket.category}}</h4>
+            <p>Datum: {{processTicket.date | date: 'medium'}}</p>
+          </ion-label>
+          <ion-icon slot="end" name="chevron-back-outline"></ion-icon>
+        </ion-item>
+        <ion-item-options>
+          <ion-item-option color="primary" (click)="openProfile(processTicket.creator)">
+            <ion-icon slot="end" name="person-outline"></ion-icon>
+            Absender
+          </ion-item-option>
+          <ion-item-option
+            *ngIf="processTicket.category === 'Event'"
+            color="secondary"
+            (click)="openEvent(processTicket.eventId)">
+            <ion-icon slot="end" name="golf-outline"></ion-icon>
+            Event
+          </ion-item-option>
+          <ion-item-option
+            *ngIf="processTicket.category === 'NutzerIn'"
+            (click)="openProfile(processTicket.reportUserId)"
+            color="secondary">
+            <ion-icon slot="end" name="golf-outline"></ion-icon>
+            NutzerIn
+          </ion-item-option>
+          <ion-item-option color="danger" (click)="changeTicketStatus(processTicket.ticketId, 0)">
+            <ion-icon slot="end" name="return-up-back-outline"></ion-icon>
+            Öffnen
+          </ion-item-option>
+          <ion-item-option color="success" (click)="changeTicketStatus(processTicket.ticketId, 2)">
+            <ion-icon name="checkmark-outline"></ion-icon>
+            Abschließen
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ng-container>
+    <ion-item-divider>
+      <ion-label> Abgeschlossene Tickets </ion-label>
+    </ion-item-divider>
+    <ng-container *ngFor="let doneTicket of doneTickets">
+      <ion-item-sliding>
+        <ion-item>
+          <ion-label>
+            <h2>Betreff: {{doneTicket.subject}}</h2>
+            <p>Nachricht: {{doneTicket.message}}</p>
+          </ion-label>
+          <ion-label slot="end">
+            <h4>Kategorie: {{doneTicket.category}}</h4>
+            <p>Datum: {{doneTicket.date | date: 'medium'}}</p>
+          </ion-label>
+          <ion-icon slot="end" name="chevron-back-outline"></ion-icon>
+        </ion-item>
+        <ion-item-options>
+          <ion-item-option color="primary" (click)="openProfile(doneTicket.creator)">
+            <ion-icon slot="end" name="person-outline"></ion-icon>
+            Absender
+          </ion-item-option>
+          <ion-item-option
+            *ngIf="doneTicket.category === 'Event'"
+            color="secondary"
+            (click)="openEvent(doneTicket.eventId)">
+            <ion-icon slot="end" name="golf-outline"></ion-icon>
+            Event
+          </ion-item-option>
+          <ion-item-option
+            *ngIf="doneTicket.category === 'NutzerIn'"
+            (click)="openProfile(doneTicket.reportUserId)"
+            color="secondary">
+            <ion-icon slot="end" name="golf-outline"></ion-icon>
+            NutzerIn
+          </ion-item-option>
+          <ion-item-option color="warning" (click)="changeTicketStatus(doneTicket.ticketId, 1)">
+            <ion-icon slot="end" name="return-up-back-outline"></ion-icon>
+            bearbeiten
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ng-container>
+  </ion-list>
+</ion-content>
+
+<app-footermenu> </app-footermenu>

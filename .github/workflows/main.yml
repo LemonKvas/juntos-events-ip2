@@ -41,27 +41,19 @@ jobs:
       - name: Build
         run: npm run build
 
-#      - name: Lint
-#        if: always()
-#        run: npm run lint-and-fix
-#
-#      - name: Unit Tests
-#        if: always()
-#        run: npm run test
-
   lint:
     runs-on: ubuntu-latest
     name: Lint
     steps:
       - uses: actions/checkout@v3
-      - run: npm install && npm run lint-and-fix
+      - run: npm install --force && npm run lint-and-fix
 
   unit_tests:
     runs-on: ubuntu-latest
     name: Unit Tests
     steps:
       - uses: actions/checkout@v3
-      - run: npm ci && npm run test
+      - run: npm ci --force && npm run test
 
   deploy:
     name: Deploy
@@ -69,7 +61,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: npm install && npm run build
+      - run: npm install --force && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
@@ -77,32 +69,15 @@ jobs:
           projectId: juntos-ip2-ss22
           channelId: live
 
-
-  deploy2:
-    name: Deploy2
-    #needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - run: npm install && npm run build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_JUNTOS_IP2_SS22 }}'
-          projectId: juntos-ip2-ss22
-          channelId: live
-  
 
   hostDocuToNetlify:
     runs-on: ubuntu-18.04
+    needs: deploy
+    name: hostDocu
     steps:
       - uses: actions/checkout@v2
-      - name: install and build
       - run: npm install --force && npm run compodoc
-      
-      - uses: actions/checkout@v2
-      - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@v1.2
+      - uses: nwtgck/actions-netlify@v1.2
         with:
           publish-dir: './documentation'
           production-branch: develop

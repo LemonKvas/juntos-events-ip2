@@ -1,0 +1,33 @@
+ion-title {
+  --ion-font-family: 'Yeseva One';
+  font-family: 'Yeseva One', cursive;
+  font-size: 4.5vw;
+}
+.input-item {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin: 10px auto;
+  border: 1px solid white;
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  align-content: start;
+  width: 80%;
+}
+ion-textarea {
+  height: 300px;
+}
+textMsg {
+  height: 200px;
+}
+ion-select-option {
+  font-size: 10px;
+}
+#sendMsgBtn {
+  height: 50px;
+  width: 180px;
+  background-color: #ff8766;
+  color: white;
+  border-radius: 15px;
+  margin-top: 20px;
+}
