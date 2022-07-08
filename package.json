@@ -51,7 +51,6 @@
     "firebase-functions": "^3.22.0",
     "ionic-rating": "^2.0.0",
     "ionic-rating-component": "^1.2.1",
-    "ionic5-star-rating": "https://github.com/JeongJun-Lee/ionic5-star-rating/tarball/master",
     "puppeteer": "^14.2.1",
     "rxjs": "~7.5.5",
     "swiper": "^6.8.4",
