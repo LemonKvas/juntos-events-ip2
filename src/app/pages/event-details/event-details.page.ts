@@ -50,9 +50,8 @@ export class EventDetailsPage implements OnInit {
     private userService: UserDataService,
     public alertService: AlertService,
     private route: ActivatedRoute,
-    private chatService: ChatService
-  ) //public geoService: GeoService
-  {
+    private chatService: ChatService //public geoService: GeoService
+  ) {
     this.event = this.router.getCurrentNavigation().extras.state;
   }
 
