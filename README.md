@@ -150,7 +150,6 @@ Project Link: [https://github.com/LemonKvas/juntos-events-ip2](https://github.co
 
 * [Ionic](https://ionicframework.com/docs)
 * [Simon Grimm](https://www.youtube.com/c/SimonGrimmDev)
-* []()
 * [Ionic Icons](https://ionic.io/ionicons)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
