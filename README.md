@@ -100,7 +100,7 @@ To get a local copy up and running follow these simple example steps.
    ```
 4. Run ionic serve
    ```sh
-   npm serve
+   npm run start
    ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
