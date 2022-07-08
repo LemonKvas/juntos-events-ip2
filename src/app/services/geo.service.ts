@@ -53,7 +53,7 @@ export class GeoService {
   async getLongLat(address) {
     let concatAddress =
       address.street + ' ' + address.house + ' ' + address.zipCode + ' ' + address.city;
-      console.log(concatAddress, address);
+    console.log(concatAddress, address);
     let params = new HttpParams();
     params = await params.append('auth', '112611770720734e15737329x13374');
     params = await params.append('locate', concatAddress);
