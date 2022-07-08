@@ -26,7 +26,21 @@
     </ion-row>
 
     <ion-row class="ion-justify-content-start">
-      <h1>{{event.name}}</h1>
+      <ion-col>
+        <h1>{{event.name}}</h1>
+      </ion-col>
+
+    </ion-row>
+
+    <ion-row>
+      <ionic5-star-rating
+        #rating
+        activeColor="#ff8766"
+        defaultColor="#e06543"
+        readonly="true"
+        rating="{{ creatorRating }}"
+        fontSize="32px" style="margin-top: 20px">
+      </ionic5-star-rating>
     </ion-row>
 
     <ion-row class="ion-justify-content-start">
@@ -63,7 +77,8 @@
         </ion-segment-button>
         <ion-segment-button value="participants">
           <ion-label
-            >Teilnehmer*Innen ({{event.participants.length}}/{{event.maxParticipants}})</ion-label
+          >Teilnehmer*Innen ({{event.participants.length}}/{{event.maxParticipants}})
+          </ion-label
           >
         </ion-segment-button>
       </ion-segment>

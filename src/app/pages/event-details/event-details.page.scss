@@ -19,6 +19,12 @@ ion-content {
 ion-item {
   width: 80%;
 }
+
+ionic5-star-rating {
+  margin-top: 20px !important;
+  margin-bottom: 10px !important;
+}
+
 //Mobile Version
 @media screen and (max-width: 600px) {
   h1 {

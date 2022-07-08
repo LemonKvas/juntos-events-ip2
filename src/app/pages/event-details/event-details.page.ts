@@ -29,6 +29,7 @@ export class EventDetailsPage implements OnInit {
   creator: User;
   currentUserId: string;
   segment = 'information';
+  creatorRating: number | boolean;
 
   /**
    * DE:
@@ -65,6 +66,10 @@ export class EventDetailsPage implements OnInit {
    */
   async ngOnInit() {
     this.currentUserId = await this.userService.getCurrentUserID();
+    this.creatorRating = await this.userService.getRating(this.creator.userId);
+
+    console.log(this.creatorRating)
+
     await this.getCreatorData();
     await this.getUserlist();
   }
