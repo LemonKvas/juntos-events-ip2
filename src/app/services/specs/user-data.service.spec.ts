@@ -6,7 +6,6 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { environment } from 'src/environments/environment';
 import { AngularFireModule, FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
-import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 
 describe('UserDataService', () => {
   let service: UserDataService;
@@ -24,9 +23,7 @@ describe('UserDataService', () => {
   });
 
   const mockGetDoc = () => Promise.resolve({ data: new User('testId', 'test@test.de') });
-  function mockGetDoc() {
-    return Promise.resolve({ data: new User('testId', 'test@test.de') });
-  }
+
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -37,7 +34,7 @@ describe('UserDataService', () => {
       ],
       imports: [
         AngularFireModule.initializeApp(environment.firebaseConfig),
-        AngularFireDatabaseModule
+        AngularFireDatabaseModule,
         { provide: getDoc, useValue: mockGetDoc() }
       ]
     });

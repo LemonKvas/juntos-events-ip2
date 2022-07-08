@@ -70,7 +70,10 @@ const routes: Routes = [
   },
   {
     path: 'admin-dashboard/supporttickets',
-    loadChildren: () => import('./pages/admin-support/admin-support.module').then( m => m.AdminSupportPageModule)
+    loadChildren: () =>
+      import('./pages/admin-support/admin-support.module').then((m) => m.AdminSupportPageModule),
+    canActivate: [RoleGuard],
+    data: { role: 0 }
   },
   {
     path: 'chat/:cId',

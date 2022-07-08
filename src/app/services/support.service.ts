@@ -31,7 +31,6 @@ export class SupportService {
     await this.supportCollection.doc(message.id).set(data);
   }
 
-
   /**
    * DE:
    * Ruft die Methode getTicketsByStatus(status) auf mit dem Parameter
@@ -41,7 +40,7 @@ export class SupportService {
    * 0 and then returns an observable
    * @return Observable
    */
-  async getAllOpenTickets(){
+  async getAllOpenTickets() {
     return await this.getTicketsByStatus(0);
   }
 
@@ -55,7 +54,7 @@ export class SupportService {
    *
    * @return Promise<Observable>
    */
-  async getAllInProcessTickets(){
+  async getAllInProcessTickets() {
     return await this.getTicketsByStatus(1);
   }
 
@@ -68,7 +67,7 @@ export class SupportService {
    * 2 and then returns an observable
    * @return Promise<Observable>
    */
-  async getAllDoneTickets(){
+  async getAllDoneTickets() {
     return await this.getTicketsByStatus(2);
   }
 
@@ -88,10 +87,11 @@ export class SupportService {
    *
    * @return Promise<Observable>
    */
-  async getTicketsByStatus(status: number){
+  async getTicketsByStatus(status: number) {
     const supportCollection = await this.afs.collection('support', (ref) =>
-        ref.where("inProcess", '==', status));
-    return supportCollection.valueChanges({idField: 'ticketId'});
+      ref.where('inProcess', '==', status)
+    );
+    return supportCollection.valueChanges({ idField: 'ticketId' });
   }
 
   /**
@@ -105,11 +105,9 @@ export class SupportService {
    * @param ticketId
    * @param status
    */
-  async changeWorkingStatusOfTicket(ticketId, status){
+  async changeWorkingStatusOfTicket(ticketId, status) {
     await this.supportCollection.doc(ticketId).update({
       inProcess: status
-        }
-    )
+    });
   }
-
 }

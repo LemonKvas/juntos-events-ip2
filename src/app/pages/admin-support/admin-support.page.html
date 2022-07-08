@@ -5,9 +5,7 @@
     </ion-buttons>
     <ion-title>Support Tickets</ion-title>
     <ion-buttons slot="end" [routerLink]="['../']">
-      <ion-icon  size="large"
-                 style="zoom: 0.8"
-                 name="clipboard-outline"></ion-icon>
+      <ion-icon size="large" style="zoom: 0.8" name="clipboard-outline"></ion-icon>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -15,9 +13,7 @@
 <ion-content>
   <ion-list>
     <ion-item-divider>
-      <ion-label>
-        Offene Tickets
-      </ion-label>
+      <ion-label> Offene Tickets </ion-label>
     </ion-item-divider>
     <ng-container *ngFor="let openTicket of openTickets">
       <ion-item-sliding>
@@ -37,11 +33,17 @@
             <ion-icon slot="end" name="person-outline"></ion-icon>
             Absender
           </ion-item-option>
-          <ion-item-option *ngIf="openTicket.category === 'Event'" color="secondary" (click)="openEvent(openTicket.eventId)">
+          <ion-item-option
+            *ngIf="openTicket.category === 'Event'"
+            color="secondary"
+            (click)="openEvent(openTicket.eventId)">
             <ion-icon slot="end" name="golf-outline"></ion-icon>
             Event
           </ion-item-option>
-          <ion-item-option *ngIf="openTicket.category === 'NutzerIn'" (click)="openProfile(openTicket.userId)" color="secondary">
+          <ion-item-option
+            *ngIf="openTicket.category === 'NutzerIn'"
+            (click)="openProfile(openTicket.userId)"
+            color="secondary">
             <ion-icon slot="end" name="golf-outline"></ion-icon>
             NutzerIn
           </ion-item-option>
@@ -53,9 +55,7 @@
       </ion-item-sliding>
     </ng-container>
     <ion-item-divider>
-      <ion-label>
-        Tickets in Bearbeitung
-      </ion-label>
+      <ion-label> Tickets in Bearbeitung </ion-label>
     </ion-item-divider>
     <ng-container *ngFor="let processTicket of inProcessTickets">
       <ion-item-sliding>
@@ -75,11 +75,17 @@
             <ion-icon slot="end" name="person-outline"></ion-icon>
             Absender
           </ion-item-option>
-          <ion-item-option *ngIf="processTicket.category === 'Event'" color="secondary" (click)="openEvent(processTicket.eventId)">
+          <ion-item-option
+            *ngIf="processTicket.category === 'Event'"
+            color="secondary"
+            (click)="openEvent(processTicket.eventId)">
             <ion-icon slot="end" name="golf-outline"></ion-icon>
             Event
           </ion-item-option>
-          <ion-item-option *ngIf="processTicket.category === 'NutzerIn'" (click)="openProfile(processTicket.userId)" color="secondary">
+          <ion-item-option
+            *ngIf="processTicket.category === 'NutzerIn'"
+            (click)="openProfile(processTicket.userId)"
+            color="secondary">
             <ion-icon slot="end" name="golf-outline"></ion-icon>
             NutzerIn
           </ion-item-option>
@@ -95,9 +101,7 @@
       </ion-item-sliding>
     </ng-container>
     <ion-item-divider>
-      <ion-label>
-        Abgeschlossene Tickets
-      </ion-label>
+      <ion-label> Abgeschlossene Tickets </ion-label>
     </ion-item-divider>
     <ng-container *ngFor="let doneTicket of doneTickets">
       <ion-item-sliding>
@@ -117,11 +121,17 @@
             <ion-icon slot="end" name="person-outline"></ion-icon>
             Absender
           </ion-item-option>
-          <ion-item-option *ngIf="doneTicket.category === 'Event'" color="secondary" (click)="openEvent(doneTicket.eventId)">
+          <ion-item-option
+            *ngIf="doneTicket.category === 'Event'"
+            color="secondary"
+            (click)="openEvent(doneTicket.eventId)">
             <ion-icon slot="end" name="golf-outline"></ion-icon>
             Event
           </ion-item-option>
-          <ion-item-option *ngIf="doneTicket.category === 'NutzerIn'" (click)="openProfile(doneTicket.userId)" color="secondary">
+          <ion-item-option
+            *ngIf="doneTicket.category === 'NutzerIn'"
+            (click)="openProfile(doneTicket.userId)"
+            color="secondary">
             <ion-icon slot="end" name="golf-outline"></ion-icon>
             NutzerIn
           </ion-item-option>
@@ -136,4 +146,3 @@
 </ion-content>
 
 <app-footermenu> </app-footermenu>
-
